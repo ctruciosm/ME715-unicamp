@@ -1,0 +1,352 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Introdução"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+editor: visual
+---
+
+# O que é econometria?
+
+## O que é econometria?
+
+::: columns
+::: {.column width="40%"}
+![](imagens/duvida_econometrics.png)
+:::
+
+::: {.column width="60%"}
+<center>*"Ask a half dozen econometricians what econometrics is, and you could get a half dozen different answers".* **James H. Stock and Mark W. Watson (2020)**</center>
+:::
+:::
+
+## O que é econometria?
+
+**Econometria:**
+
+::: incremental
+-   Ciência de testar teorias econômicas.
+-   Conjunto de ferramentas utilizadas para fazer previsão de variaveis economicas.
+-   Processo de ajustar modelos economicos-matemáticos em conjuntos de dados reais.
+-   Ciência e arte de utilizar dados historicos para fazer recomendacoes (baseadas em resultados quantitativos) em governos e empresas.
+-   etc
+:::
+
+. . .
+
+::: callout-tip
+## Minha definicão favorita:
+
+*É a ciência que combina teoria econômica, estatística e ciência da computacão para responder perguntas de tipo causa-efeito.* **Hill, Judge e Griffiths** (2010)
+:::
+
+# Material e Software
+
+## Material
+
+Existem muitos bons livros de econometria:
+
+-   Greene, W. H. (2003). Econometric Analysis. Pearson Education.
+-   Hill, R. C., Griffiths, W. E., & Judge, G. G. (2010). Econometria. Saraiva, 3ed
+-   Johnston, J., & DiNardo, J. (1997). Econometric Methods. Mc Graw Hill, 4ed
+-   Stock, J. H., & Watson, M. W. (2020). Introduction to Econometrics. Pearson, 4ed (Global)
+-   Wooldridge, J. M. (2023). Introdução à Econometria: Uma Abordagem Moderna. Cengage Lerning, 4ed.
+- [Hanck, C., Arnold, M., Gerber, A., and Schmelzer, M. (2023). Introduction to Econometrics with R (Online book)](https://www.econometrics-with-r.org/)
+-   etc
+
+## Material
+
+Eu pretendo utilizar:
+
+::: columns
+::: {.column width="25%"}
+<center>![](imagens/livro_01.jpeg)</center>
+:::
+
+::: {.column width="75%"}
+<center>![](imagens/livros_02.png)</center>
+:::
+:::
+
+Os autores de *Using R/Python/Julia for Introductory Econometrics* disponibilizaram o PDF dos livros gratuitamente [aqui](https://www.urfie.net/readOnline.html)
+
+## O Software
+
+<center>![](imagens/RPythonJulia.png)</center>
+
+A materia será ministrada utilizando, principalmente, R e algumas vezes Julia. Contudo, os alunos são "encorajados" a utilizarem as três linguagens e compararem os resultados (**parte da sua nota depende disso**).
+
+# Introdução
+
+## Introdução
+
+#### Quando a modelagem Econométrica entra em cena?
+
+-   Temos uma teoria econômica para testar
+-   Temos em mente uma relação que apresenta alguma importância na tomada de decisão
+-   Queremos saber como o aumento/diminuição em uma variavel influencia em outra.
+-   Queremos fazer previsão
+-   Queremos avaliar/implementar políticas de governos e de negócios.
+
+## Introdução
+
+Suponha que estamos interessados em entender/explicar/prever $Y$ em função de um conjunto de $p$ características (variáveis) $X_1, X_2, \ldots,X_p$.
+
+. . .
+
+Vamos supor também que a relação entre $Y$ e $X_1, X_2, \ldots, X_p$ é da forma \color{violet} $$Y = f(X_1, X_2, \ldots, X_p) + u$$ \color{black} em que $u$ é um termo de erro (que contém fatores não observados e termos aleatórios), com $\mathbb{E}(u|\textbf{X}) = 0$.
+
+. . .
+
+-   Na prática, nunca conhecemos $f(\cdot)$,
+-   Utilizando os dados estimamos $f(\cdot)$ por $\widehat{f}(\cdot)$
+-   Assim, o valor estimado de $Y$, $\widehat{Y}$, é dado por $\widehat{Y}= \mathbb{E}(Y|\textbf{X}) = \widehat{f}(X_1, X_2, \ldots, X_p)$
+-   Focaremos no caso em que $Y = \underbrace{\beta_0 + \beta_1X_1 + \cdots + \beta_p X_p}_{f(X_1, \ldots, X_p)} + u$
+
+# Dados: experimentais vs. observacionais
+
+## Dados
+
+#### Dados experimentais
+
+-   São frequentemente coletados em ambiente de laboratório.
+-   Vêm de experimentos controlados e são desenhados para estudar problemas de causa-efeito (ensaios randomizados).
+-   Embora sejam possíveis nas ciências sociais (quando aprovados por algúm comite de ética), são extramente caros.
+-   Em geral, é impossível conduzir os tipos de experimentos controlados necessários para avaliar questões econômicas, não apenas por serem muito caros, mas por serem considerados moralmente ofensivos.
+
+## Dados
+
+#### Dados observacionais
+
+-   Não são obtidos por meio de experimentos controlados de individuos\*
+-   Obtidos através da observacão do atual comportamento do grupo de estudo.
+-   Geralmente obtidos utilizando enquetes.
+-   São os dados que usualmente chegam até nós.
+-   Dados observacionais possuem um desafio ainda maior para estimar relacões de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.
+
+## Dados
+
+Independente de termos dados experimentais ou observacionais, os conjuntos de dados aos quais nos enfrentamos podem ser classificados em:
+
+-   Corte transversal
+-   Séries temporais
+-   Corte transversal agrupados
+-   Painel (ou longitudinais)
+
+. . .
+
+> As características inherentes a cada tipo de dados devem ser levadas em consideracão no processo da modelagem para podermos extrair a maior informacão possível contida nos dados.
+
+## Dados
+
+::: callout-note
+## Corte transversal
+
+Consiste em uma amostra de indivídios\* (consumidores, empresas, cidades, paises, etc) tomadas em determino período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma **foto** (panoramica).
+:::
+
+. . .
+
+::: callout-note
+## Séries temporais
+
+Consiste em observações sobre uma (ou várias) variaveis ao **longo do tempo**. A diferença dos dados e corte transversal, dados de séries temporais são ordenados de forma cronológica.
+:::
+
+. . .
+
+::: callout-note
+## Corte transversal agrupados
+
+Agrupar várias amostras de corte transversal (cada uma tomada em diferentes períodos de tempo)
+:::
+
+. . .
+
+::: callout-note
+## Painel (ou longitudinais)
+
+Consiste em uma série temporal para cada observação de corte transversal. A diferença dos dados de corte transversal agrupados, nos dados de painel as **mesmas unidades** são acompanhadas ao longo do tempo
+:::
+
+## Dados
+
+<center>
+
+[X: aleatório ou não aleatório?]{style="color:red;"}
+
+![](imagens/duvida.png)
+
+</center>
+
+
+. . . 
+
+::: callout-important
+## X: aleatorio ou não aleatorio?
+
+[_"The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables"_. (Extraido do StackExchange)](https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression)
+
+:::
+
+## Dados
+
+<center>
+
+[Mas, e quando X incluir elementos não aleatorios como um termo constante, uma variável dummy ou uma tendência temporal?]{style="color:red;"}
+
+![](imagens/duvida_meme.jpg)
+
+</center>
+
+. . . 
+
+::: callout-note
+### Greene (2003)
+
+_"...vamos a permitir que **X** seja uma mistura de variáveis aleatórioas e não aleatórias, e que a média e a variância de_ $u_i$ _sejam independentes de todos os elementos de **X**"_
+
+:::
+
+
+
+# Ceteris paribus
+
+## Ceteris paribus
+
+-   O interesse da análise econométrica está em encontrar relacões de causa-efeito (queremos inferir que uma variável tem efieto causal sobre outra).
+-   A nocão de *ceteris paribus* desempenha um papel importante nesta análise de causalidade.
+-   *Ceteris paribus* significa "outros fatores (relevantes) permanecendo iguais/fixos/constantes".
+-   Se outros fatores não são mantidos fixos, não podemos conhecer o efeito causal que uma variável exerce sobre outra.
+-   Embora pareca simples, é muito dificil manter todos os outros fatores fixos.
+-   Então, a questão fundamental é se foram mantidos fixos um número suficiente de fatores para que possamos inferir causalide.
+
+# Exemplos (Wooldridge, 2023)
+
+## Efeitos dos fertilizantes sobre a produção agricola
+
+- Estamos interessados em analisar os efeitos da quantidade de fertilizante sobre a produção de soja.
+
+- Como a quantidade de fertilizante é apenas um fator que afeta a produção (outros fatores são chuva, qualidade da terra, presença de pragas, etc), essa questão deve ser levantada como uma questão _ceteris paribus_.
+
+. . . 
+
+- Uma maneira de determinar o efeito causal é conduzir um experimento em que se delimite várias áreas de um hectare de terra, se aplique diferentes quantidades de fertilizante em cada área e, finalmente, se avalie a produção. 
+
+. . . 
+
+- Observe que nada foi dito acerca de delimitar áreas cuja qualidade da terra sejam idênticas. Como então sabemos que os resultados do experimento podem ser usados para medir o efeito _ceteris paribus_ dos fertilizantes?
+
+## Efeitos dos fertilizantes sobre a produção agricola (Wooldridge, 2023)
+
+> Se os níveis de fertilizante são atribuidos independentemente de outras características da área (_i.e._ se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível `r emo::ji("smile")`. 
+
+
+<center>
+![](imagens/meme_yes.png)
+</center>
+
+
+
+
+## Retorno da educação 
+
+
+- Pense na seguinte pergunta: _"se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salario aumentado?"_
+
+. . . 
+
+- Esta é uma questão _ceteris paribus_ (implica que todos os outros fatores permanecem fixos).
+
+. . . 
+
+- Suponha que selecionamos um grupo de pessoas e atribuimos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.
+
+. . .
+
+- Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc). Basta coletar o salario de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.
+
+## Retorno da educação
+
+
+- **Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizados na prática.**
+
+
+. . . 
+
+- O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as proprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna dificil estimar o efeito _ceteris paribus da educação_ `r emo::ji("sad")`.
+
+. . . 
+
+- Ao longo da matéria aprenderemos a lidar com este tipo de problemas.
+
+
+## Lei e criminalidade 
+
+
+<center>
+[A presença de mais policiais nas ruas detém a criminalidade?]{style="color:red;"}
+
+</center>
+
+. . . 
+
+- Se uma cidade fosse escolhida ao acaso e recebese 100 policiais a mais, em quanto suas taxas de criminalidade cairiam?
+
+. . . 
+
+- Se duas cidades, A e B, forem identicas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?
+
+
+. . . 
+
+- Novamente, é uma questão _ceteris paribus_
+
+## Lei e criminalidade 
+
+
+O problema? . . . é impossível encontrar duas cidades idênticas em todos os aspectos, o que torna dificil estimar o efeito _ceteris paribus_
+
+
+<center>
+![](imagens/triste_meme.png)
+</center>
+
+
+. . . 
+
+Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletas sobre os níveis de criminalidade  e o tamanho da sua força policial podem ser visto como sendo relativos a um experimento. **Veremos isto mais adiante na matéria.**
+
+
+## Comentários finais
+
+- Ao longo da disciplina aprenderamos a teoria e prática para lidar com estes e outros tipos de problemas.
+- Sua participação é muito importante, necessária e faz parte da sua avaliação constante.
+- Toda semana terão exercícios para entregar (e discutirmos em sala de aula).
+- A seguir veremos algumas questões referentes ao plano de desenvolvimento da disciplina.

@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+
+// fonts
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap';
+
+$font-family-sans-serif: "Atkinson Hyperlegible", sans-serif;
+$presentation-heading-color: #00589b;
+$presentation-title-slide-text-align: "left";
+$code-block-font-size: 0.6em;
+$backgroundColor: #fcfbf9;
+
+
+/*-- scss:rules --*/
+.reveal .title {
+  padding-right: 550px;
+}
+
+.reveal h1 {
+    color: #A60024;
+}
+
+#title-slide {
+  text-align: left;
+
+  .institute, .quarto-title-affiliation {
+    font-style: normal;
+    font-size: 100%;
+  }
+  
+  .subtitle, .quarto-subtitle-affiliation {
+    font-style: normal;
+    font-size: 160%;
+    color: $body-color;
+  }
+
+  .author, .quarto-title-author-name {
+    color: $body-color;
+  }
+
+  .quarto-title-authors {
+    display: flex;
+    justify-content: left;
+  
+    .quarto-title-author {
+      padding-left: 0em;
+      padding-right: 0em;
+      width: 100%;
+    }
+  }
+  p.author::before, div.quarto-title-author::before {
+    content: "";
+    display: block;
+    border: none;
+    background-color: $body-color;
+    color: $body-color;
+    height: 3px;
+    margin-bottom: 1em;
+  }
+
+  p, a {
+    color: #7F7F7F;
+  }
+}
+
+
