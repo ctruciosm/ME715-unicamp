@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="ME715_Aula01_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ME715_Aula01_files/libs/quarto-html/tabby.min.js"></script>
-<script src="ME715_Aula01_files/libs/quarto-html/popper.min.js"></script>
-<script src="ME715_Aula01_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="ME715_Aula01_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ME715_Aula01_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="ME715_Aula01_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="ME715_Aula02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ME715_Aula02_files/libs/quarto-html/tabby.min.js"></script>
+<script src="ME715_Aula02_files/libs/quarto-html/popper.min.js"></script>
+<script src="ME715_Aula02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="ME715_Aula02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ME715_Aula02_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="ME715_Aula02_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.2.269">
 
   <meta name="author" content="Prof.&nbsp;Carlos Trucíos  ctrucios@unicamp.br">
@@ -14,8 +14,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="ME715_Aula01_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="ME715_Aula01_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="ME715_Aula02_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="ME715_Aula02_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -28,14 +28,78 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="ME715_Aula01_files/libs/revealjs/dist/theme/quarto.css" id="theme">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="ME715_Aula01_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="ME715_Aula02_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="ME715_Aula02_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -327,7 +391,7 @@
 
 <section id="title-slide" data-background-image="imagens/unicamp.png" data-background-opacity="1" data-background-position="99% 5%" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">ME715 - Econometria</h1>
-  <p class="subtitle">Introdução</p>
+  <p class="subtitle">Modelo de Regressão Linear</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -342,414 +406,432 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 
 </section>
 <section>
-<section id="o-que-é-econometria" class="title-slide slide level1 center">
-<h1>O que é econometria?</h1>
+<section id="o-modelo" class="title-slide slide level1 center">
+<h1>O modelo</h1>
 
 </section>
-<section id="o-que-é-econometria-1" class="slide level2">
-<h2>O que é econometria?</h2>
+<section id="o-modelo-1" class="slide level2">
+<h2>O modelo</h2>
 <div class="columns">
 <div class="column" style="width:40%;">
-<p><img data-src="imagens/duvida_econometrics.png"></p>
-</div><div class="column" style="width:60%;">
 <center>
-<em>“Ask a half dozen econometricians what econometrics is, and you could get a half dozen different answers”.</em> <strong>James H. Stock and Mark W. Watson (2020)</strong>
+<img data-src="imagens/Francis_Galton.jpg">
 </center>
+</div><div class="column" style="width:60%;">
+<p>Embora Legendre e Gauss tenham utilizado o método de mínimos quadrados muito antes do que Galton (a começos de 1800), o termo “regressão” aparece por primeira vez em 1886, no trabalho de Francis Galton intitulado <a href="https://www.jstor.org/stable/2841583?casa_token=Hbb88KLhX8kAAAAA%3AAAJt5rJGYRZdDJNiqMigl6XspV56TVYrSjcrGHis2NRsF55BUR_8m5RUpVpf-Mg1PCtNALWYY0DVjP_mE3-uYU8QZucaVsLDp4KvzbKwdLxadXgW21p1"><em>Regression towards mediocrity in hereditary stature</em></a> e é a este a quem lhe é atribuido o método.</p>
+</div>
+</div>
+
+<aside><div>
+<p>Um interessante passeio pela história de Galton e o modelo de regressão pode ser encontrado <a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/j.1740-9713.2011.00509.x">aqui.</a></p>
+</div></aside></section>
+<section id="o-modelo-2" class="slide level2">
+<h2>O modelo</h2>
+<p>Quando trabalhamos com modelos de regressão, estamos interessados em “explicar Y em termos de <strong>X</strong>” ou “estudar como Y varia com variações em <strong>X</strong>”.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:45%;">
+<h4 id="regressão-linear-simples">Regressão Linear Simples</h4>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X_1 + u\]</span></p>
+</div><div class="column" style="width:55%;">
+<h4 id="regressão-linear-multipla">Regressão Linear Multipla</h4>
+<p><span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k + u\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Y</th>
+<th style="text-align: center;">Xs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">variável dependente</td>
+<td style="text-align: center;">variável independente</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">variável explicada</td>
+<td style="text-align: center;">variável explicativa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">variável resposta</td>
+<td style="text-align: center;">variável de controle</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">variável prevista</td>
+<td style="text-align: center;">variável previsora</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">regressando</td>
+<td style="text-align: center;">regressor</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">variável <em>target</em></td>
+<td style="text-align: center;">covariável / <em>feature</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p><strong><span class="math inline">\(u\)</span> é o termo de erro ou perturbação, representa outros fatores (não observados), além dos <span class="math inline">\(X\)</span>, que afetam <span class="math inline">\(Y\)</span>.</strong></p>
+</div>
+</section>
+<section id="o-modelo-3" class="slide level2">
+<h2>O modelo</h2>
+<p>Pense no modelo de regressão linear simples. Se todos os outros fatores em <span class="math inline">\(u\)</span> permanecerem fixos, <span class="math display">\[\Delta Y = \beta_1 \Delta X_1, \quad \text{pois} \quad \Delta u = 0.\]</span></p>
+<div class="fragment">
+<ul>
+<li class="fragment">A variação de <span class="math inline">\(Y\)</span> é <span class="math inline">\(\beta_1\)</span> multiplicado pela variação em <span class="math inline">\(X_1\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\beta_1\)</span> é o parâmetro de inclinação da relação entre <span class="math inline">\(Y\)</span> e <span class="math inline">\(X_1\)</span> (mantendo fixos todos os outros fatores).</li>
+<li class="fragment"><span class="math inline">\(\beta_0\)</span> é chamado parâmetro de intercepto</li>
+</ul>
+</div>
+</section>
+<section id="o-modelo-4" class="slide level2">
+<h2>O modelo</h2>
+<p><span style="color:blue;">Dado que <span class="math inline">\(\beta_1\)</span> mede o efeto de <span class="math inline">\(X_1\)</span> sobre <span class="math inline">\(Y\)</span> mantendo todos os outros fatores fixos, então é facil tirar conclusões <em>ceteris paribus</em>, certo?</span></p>
+<center>
+<img data-src="imagens/gatinho_shrek.jpg">
+</center>
+<div class="fragment">
+<p><span style="color:red;"><strong>Infelizmente não. Como podemos aprender algo sobre o efeito <em>ceteris paribus</em> de <span class="math inline">\(X_1\)</span> sobre <span class="math inline">\(Y\)</span> mantendo os outros fatores fixos se estamos ignorando todos os outros fatores?</strong></span></p>
+</div>
+</section>
+<section id="o-modelo-5" class="slide level2">
+<h2>O modelo</h2>
+<center>
+<p><strong>Então, como podemos estar certos de que estamos capturando uma relação <em>ceteris paribus</em> entre Y e <span class="math inline">\(X_1\)</span>?</strong></p>
+<p><img data-src="imagens/homero_duvida.gif"></p>
+</center>
+<div class="fragment">
+<p>Precisamos de algumas suposições (hipóteses do modelo) que restrinjam a maneira como <span class="math inline">\(u\)</span> está relacionado com <span class="math inline">\(X_1\)</span> (respectivamente <span class="math inline">\(\textbf{X}\)</span>)</p>
+</div>
+</section></section>
+<section>
+<section id="hipóteses-do-modelo" class="title-slide slide level1 center">
+<h1>Hipóteses do modelo</h1>
+
+</section>
+<section id="hipóteses-do-modelo-1" class="slide level2">
+<h2>Hipóteses do modelo</h2>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment"><strong>HRLM1</strong>: O modelo populacional é linear nos parâmetros, <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + u\)</span> (equivalentemete, em forma matrcial, <span class="math inline">\(Y = \textbf{X} \beta + \textbf{u}\)</span>).</li>
+<li class="fragment"><strong>HRLM2</strong>: <span class="math inline">\((Y_1, X_{1,1}, \ldots, X_{1,k}), \cdots, (Y_n, X_{n,1}, \ldots, X_{n,k})\)</span> constituem uma a.a. de tamanho <span class="math inline">\(n\)</span> do modelo populacional.</li>
+<li class="fragment"><strong>HRLM3</strong>: Não existe colinearidade perfeita entre as variáveis independentes e nenhuma das variáveis independentes é constante.</li>
+<li class="fragment"><strong>HRLM4</strong>: <span class="math inline">\(\mathbb{E}(\textbf{u}|\textbf{X}) = 0\)</span></li>
+<li class="fragment"><strong>HRLM5</strong>: Os erros tem variância constante (homocedasticidade), <span class="math inline">\(\mathbb{V}(\textbf{u}|\textbf{X}) = \sigma^2 \textbf{I}\)</span></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><strong>Estas hipóteses são conhecidas como as hipóteses do modelo linear clássico.</strong></p>
+</div>
+</section></section>
+<section>
+<section id="interpretação" class="title-slide slide level1 center">
+<h1>Interpretação</h1>
+
+</section>
+<section id="interpretação-1" class="slide level2">
+<h2>Interpretação</h2>
+<p>Aplicando <span class="math inline">\(\mathbb{E}(\cdot|X)\)</span> no modelo de RLS,</p>
+<p><span class="math display">\[\mathbb{E}(Y|X) = \beta_0 + \beta_1 X,\]</span></p>
+<div class="fragment">
+<p>ou seja, o aumento em uma unidade em <span class="math inline">\(X\)</span> faz com que o <strong>valor esperado</strong> de <span class="math inline">\(Y\)</span> varie em <span class="math inline">\(\beta_1\)</span> unidades. Por outro lado, o <strong>valor esperado</strong> de <span class="math inline">\(Y\)</span> quando <span class="math inline">\(X = 0\)</span> é <span class="math inline">\(\beta_0\)</span>.</p>
+</div>
+<div class="fragment">
+<p>No caso do modelo de RLM, <span class="math display">\[\mathbb{E}(Y|\textbf{X}) = \beta_0 + \beta_1 X_1 + \cdots + \beta_k X_k,\quad ou \quad \mathbb{E}(Y|\textbf{X}) = \textbf{X} \beta\]</span></p>
+<p>e temos uma interpretação semelhante.</p>
+</div>
+</section>
+<section id="interpretação-2" class="slide level2">
+<h2>Interpretação</h2>
+<p>Na prática, nunca conhecemos os <span class="math inline">\(\beta\)</span>s e os estimamos. Assim,</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="regressão-linear-simples-1">Regressão Linear Simples</h4>
+<p><span class="math display">\[\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i},\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\hat{u}_i = y_i - \hat{y}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_i\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\Delta \hat{y} = \hat{\beta}_1 \Delta x\)</span> (<span class="math inline">\(\hat{\beta}_1\)</span> nos diz quanto varia <span class="math inline">\(\hat{y}\)</span> quando <span class="math inline">\(x\)</span> aumenta em uma unidade).</li>
+<li class="fragment">Quando <span class="math inline">\(X = x_i\)</span>, estimamos o valor de <span class="math inline">\(y_i\)</span> em <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span>.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h4 id="regressão-linear-multipla-1">Regressão Linear Multipla</h4>
+<p><span class="math display">\[\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i,1} + \cdots + \hat{\beta}_k x_{i,k},\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\hat{u}_i = y_i - \hat{y}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_{i,1} - \cdots - \hat{\beta}_k x_{i,k}\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\Delta \hat{y} = \hat{\beta}_1 \Delta x_1\)</span> (<span class="math inline">\(\hat{\beta}_1\)</span> nos diz quando varia <span class="math inline">\(\hat{y}\)</span> quando <span class="math inline">\(x_1\)</span> aumenta em uma unidade e todos os outros fatores permanecem fixos.).</li>
+<li class="fragment">Quando <span class="math inline">\(\textbf{X} = \textbf{x}_i\)</span>, estimamos o valor de <span class="math inline">\(y_i\)</span> em <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_{i,1} + \cdots + \hat{\beta}_k x_{i,k}\)</span>.</li>
+</ul>
 </div>
 </div>
 </section>
-<section id="o-que-é-econometria-2" class="slide level2">
-<h2>O que é econometria?</h2>
-<p><strong>Econometria:</strong></p>
+<section id="interpretação-3" class="slide level2">
+<h2>Interpretação</h2>
+<div class="callout callout-warning callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
 <div>
 <ul>
-<li class="fragment">Ciência de testar teorias econômicas.</li>
-<li class="fragment">Conjunto de ferramentas utilizadas para fazer previsão de variaveis economicas.</li>
-<li class="fragment">Processo de ajustar modelos economicos-matemáticos em conjuntos de dados reais.</li>
-<li class="fragment">Ciência e arte de utilizar dados historicos para fazer recomendacoes (baseadas em resultados quantitativos) em governos e empresas.</li>
-<li class="fragment">etc</li>
+<li><span class="math inline">\(\hat{u}_i = y_i - \hat{y}_i\)</span> é chamado de resíduo.</li>
+<li>Resíduo (<span class="math inline">\(\hat{u}_i\)</span>) e Erro (<span class="math inline">\(u_i\)</span>) <strong>não são a mesma coisa!</strong></li>
+<li>De fato, é facil ver que <span class="math inline">\(\hat{u}_i = u_i + (\beta_1 - \hat{\beta}_1) x_{i,1} + \cdots + (\beta_k - \hat{\beta}_k) x_{i,k}\)</span></li>
 </ul>
 </div>
+</div>
+</div>
+</div>
+</section>
+<section id="interpretação-4" class="slide level2">
+<h2>Interpretação</h2>
+<h4 id="case">Case:</h4>
+<p>Imagine que estamos interessamos em saber se os anos de educação formal (<em>educ</em>) influenciam o salário-hora (<em>wage</em>). Para isto, utilizamos o conjunto de datos <em>WAGE1</em>, que contém informação de 516 pessoas que fazem parte da população economicamente ativa dos Estados Unidos em 1976.</p>
 <div class="fragment">
-<div class="callout callout-tip callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">glimpse</span>(wage1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 526
+Columns: 24
+$ wage     &lt;dbl&gt; 3.10, 3.24, 3.00, 6.00, 5.30, 8.75, 11.25, 5.00, 3.60, 18.18,…
+$ educ     &lt;int&gt; 11, 12, 11, 8, 12, 16, 18, 12, 12, 17, 16, 13, 12, 12, 12, 16…
+$ exper    &lt;int&gt; 2, 22, 2, 44, 7, 9, 15, 5, 26, 22, 8, 3, 15, 18, 31, 14, 10, …
+$ tenure   &lt;int&gt; 0, 2, 0, 28, 2, 8, 7, 3, 4, 21, 2, 0, 0, 3, 15, 0, 0, 10, 0, …
+$ nonwhite &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ female   &lt;int&gt; 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1…
+$ married  &lt;int&gt; 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0…
+$ numdep   &lt;int&gt; 2, 3, 2, 0, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 1, 0, 0, 3, 0, 0…
+$ smsa     &lt;int&gt; 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ northcen &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ south    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ west     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ construc &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ ndurman  &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ trcommpu &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ trade    &lt;int&gt; 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ services &lt;int&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ profserv &lt;int&gt; 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1…
+$ profocc  &lt;int&gt; 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1…
+$ clerocc  &lt;int&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0…
+$ servocc  &lt;int&gt; 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+$ lwage    &lt;dbl&gt; 1.1314021, 1.1755733, 1.0986123, 1.7917595, 1.6677068, 2.1690…
+$ expersq  &lt;int&gt; 4, 484, 4, 1936, 49, 81, 225, 25, 676, 484, 64, 9, 225, 324, …
+$ tenursq  &lt;int&gt; 0, 4, 0, 784, 4, 64, 49, 9, 16, 441, 4, 0, 0, 9, 225, 0, 0, 1…</code></pre>
 </div>
-<p><strong>Minha definicão favorita:</strong></p>
-</div>
-<div class="callout-content">
-<p><em>É a ciência que combina teoria econômica, estatística e ciência da computacão para responder perguntas de tipo causa-efeito.</em> <strong>Hill, Judge e Griffiths</strong> (2010)</p>
 </div>
 </div>
-</div>
-</div>
-</section></section>
-<section>
-<section id="material-e-software" class="title-slide slide level1 center">
-<h1>Material e Software</h1>
-
 </section>
-<section id="material" class="slide level2">
-<h2>Material</h2>
-<p>Existem muitos bons livros de econometria:</p>
-<ul>
-<li class="fragment">Greene, W. H. (2003). Econometric Analysis. Pearson Education.</li>
-<li class="fragment">Hill, R. C., Griffiths, W. E., &amp; Judge, G. G. (2010). Econometria. Saraiva, 3ed</li>
-<li class="fragment">Johnston, J., &amp; DiNardo, J. (1997). Econometric Methods. Mc Graw Hill, 4ed</li>
-<li class="fragment">Stock, J. H., &amp; Watson, M. W. (2020). Introduction to Econometrics. Pearson, 4ed (Global)</li>
-<li class="fragment">Wooldridge, J. M. (2023). Introdução à Econometria: Uma Abordagem Moderna. Cengage Lerning, 4ed.</li>
-<li class="fragment"><a href="https://www.econometrics-with-r.org/">Hanck, C., Arnold, M., Gerber, A., and Schmelzer, M. (2023). Introduction to Econometrics with R (Online book)</a></li>
-<li class="fragment">etc</li>
-</ul>
+<section id="interpretação-5" class="slide level2">
+<h2>Interpretação</h2>
+<p>Como queremos <span class="math display">\[\underbrace{wage}_{Y} = \beta_0 + \beta_1 \underbrace{educ}_{X} + u,\]</span> utilizamos um modelo de regressão linear simples.</p>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> educ, <span class="at">data =</span> wage1)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">coef</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        educ 
+ -0.9048516   0.5413593 </code></pre>
+</div>
+</div>
+</div>
 </section>
-<section id="material-1" class="slide level2">
-<h2>Material</h2>
-<p>Eu pretendo utilizar:</p>
+<section id="interpretação-6" class="slide level2">
+<h2>Interpretação</h2>
 <div class="columns">
-<div class="column" style="width:25%;">
-<center>
-<img data-src="imagens/livro_01.jpeg">
-</center>
-</div><div class="column" style="width:75%;">
-<center>
-<img data-src="imagens/livros_02.png">
-</center>
+<div class="column" style="width:40%;">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">coef</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        educ 
+ -0.9048516   0.5413593 </code></pre>
 </div>
 </div>
-<p>Os autores de <em>Using R/Python/Julia for Introductory Econometrics</em> disponibilizaram o PDF dos livros gratuitamente <a href="https://www.urfie.net/readOnline.html">aqui</a></p>
-</section>
-<section id="o-software" class="slide level2">
-<h2>O Software</h2>
-<center>
-<img data-src="imagens/RPythonJulia.png">
-</center>
-<p>A materia será ministrada utilizando, principalmente, R e algumas vezes Julia. Contudo, os alunos são “encorajados” a utilizarem as três linguagens e compararem os resultados (<strong>parte da sua nota depende disso</strong>).</p>
-</section></section>
-<section>
-<section id="introdução" class="title-slide slide level1 center">
-<h1>Introdução</h1>
-
-</section>
-<section id="introdução-1" class="slide level2">
-<h2>Introdução</h2>
-<h4 id="quando-a-modelagem-econométrica-entra-em-cena">Quando a modelagem Econométrica entra em cena?</h4>
+</div><div class="column" style="width:60%;">
+<div>
 <ul>
-<li class="fragment">Temos uma teoria econômica para testar</li>
-<li class="fragment">Temos em mente uma relação que apresenta alguma importância na tomada de decisão</li>
-<li class="fragment">Queremos saber como o aumento/diminuição em uma variavel influencia em outra.</li>
-<li class="fragment">Queremos fazer previsão</li>
-<li class="fragment">Queremos avaliar/implementar políticas de governos e de negócios.</li>
+<li class="fragment">Isso significa que uma pessoa sem nenhum ano de eduacação formal tem um salário-hora de <span class="math inline">\(\approx\)</span> USD$-0.90?</li>
+<li class="fragment">Isso faz sentido? O que poderia estar acontecendo?</li>
 </ul>
-</section>
-<section id="introdução-2" class="slide level2">
-<h2>Introdução</h2>
-<p>Suponha que estamos interessados em entender/explicar/prever <span class="math inline">\(Y\)</span> em função de um conjunto de <span class="math inline">\(p\)</span> características (variáveis) <span class="math inline">\(X_1, X_2, \ldots,X_p\)</span>.</p>
-<div class="fragment">
-<p>Vamos supor também que a relação entre <span class="math inline">\(Y\)</span> e <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span> é da forma <span class="math display">\[Y = f(X_1, X_2, \ldots, X_p) + u\]</span> em que <span class="math inline">\(u\)</span> é um termo de erro (que contém fatores não observados e termos aleatórios), com <span class="math inline">\(\mathbb{E}(u|\textbf{X}) = 0\)</span>.</p>
+</div>
+</div>
 </div>
 <div class="fragment">
-<ul>
-<li class="fragment">Na prática, nunca conhecemos <span class="math inline">\(f(\cdot)\)</span>,</li>
-<li class="fragment">Utilizando os dados estimamos <span class="math inline">\(f(\cdot)\)</span> por <span class="math inline">\(\widehat{f}(\cdot)\)</span></li>
-<li class="fragment">Assim, o valor estimado de <span class="math inline">\(Y\)</span>, <span class="math inline">\(\widehat{Y}\)</span>, é dado por <span class="math inline">\(\widehat{Y}= \mathbb{E}(Y|\textbf{X}) = \widehat{f}(X_1, X_2, \ldots, X_p)\)</span></li>
-<li class="fragment">Focaremos no caso em que <span class="math inline">\(Y = \underbrace{\beta_0 + \beta_1X_1 + \cdots + \beta_p X_p}_{f(X_1, \ldots, X_p)} + u\)</span></li>
-</ul>
+<p><strong>Resultados contra-intuitivos precisam de maior atenção</strong>. Se avaliarmos a amostra, temos pouquissimas observações com níveis de educação baixos. Assim, não é de se surpreender que a reta de regressão não faça boas predições para níveis de educação muito baixos.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">table</span>(wage1<span class="sc">$</span>educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18 
+  2   1   1   3   1   6   4  22  17  30  29 198  39  53  21  68  12  19 </code></pre>
+</div>
+</div>
 </div>
 </section></section>
 <section>
-<section id="dados-experimentais-vs.-observacionais" class="title-slide slide level1 center">
-<h1>Dados: experimentais vs.&nbsp;observacionais</h1>
+<section id="estimação" class="title-slide slide level1 center">
+<h1>Estimação</h1>
 
 </section>
-<section id="dados" class="slide level2">
-<h2>Dados</h2>
-<h4 id="dados-experimentais">Dados experimentais</h4>
-<ul>
-<li class="fragment">São frequentemente coletados em ambiente de laboratório.</li>
-<li class="fragment">Vêm de experimentos controlados e são desenhados para estudar problemas de causa-efeito (ensaios randomizados).</li>
-<li class="fragment">Embora sejam possíveis nas ciências sociais (quando aprovados por algúm comite de ética), são extramente caros.</li>
-<li class="fragment">Em geral, é impossível conduzir os tipos de experimentos controlados necessários para avaliar questões econômicas, não apenas por serem muito caros, mas por serem considerados moralmente ofensivos.</li>
-</ul>
-</section>
-<section id="dados-1" class="slide level2">
-<h2>Dados</h2>
-<h4 id="dados-observacionais">Dados observacionais</h4>
-<ul>
-<li class="fragment">Não são obtidos por meio de experimentos controlados de individuos*</li>
-<li class="fragment">Obtidos através da observacão do atual comportamento do grupo de estudo.</li>
-<li class="fragment">Geralmente obtidos utilizando enquetes.</li>
-<li class="fragment">São os dados que usualmente chegam até nós.</li>
-<li class="fragment">Dados observacionais possuem um desafio ainda maior para estimar relacões de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.</li>
-</ul>
-</section>
-<section id="dados-2" class="slide level2">
-<h2>Dados</h2>
-<p>Independente de termos dados experimentais ou observacionais, os conjuntos de dados aos quais nos enfrentamos podem ser classificados em:</p>
-<ul>
-<li class="fragment">Corte transversal</li>
-<li class="fragment">Séries temporais</li>
-<li class="fragment">Corte transversal agrupados</li>
-<li class="fragment">Painel (ou longitudinais)</li>
-</ul>
+<section id="estimação-1" class="slide level2">
+<h2>Estimação</h2>
+<p>No caso mais geral (regressão linear multipla), pode-se provar que o estimador MQO é dado por <span class="math display">\[\hat{\beta} = (X'X)^{-1}X'Y\]</span></p>
 <div class="fragment">
-<blockquote>
-<p>As características inherentes a cada tipo de dados devem ser levadas em consideracão no processo da modelagem para podermos extrair a maior informacão possível contida nos dados.</p>
-</blockquote>
+<p><strong>Demostração: (no quadro) </strong></p>
 </div>
 </section>
-<section id="dados-3" class="slide level2">
-<h2>Dados</h2>
-<div class="callout callout-note callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Corte transversal</strong></p>
-</div>
-<div class="callout-content">
-<p>Consiste em uma amostra de indivídios* (consumidores, empresas, cidades, paises, etc) tomadas em determino período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma <strong>foto</strong> (panoramica).</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Séries temporais</strong></p>
-</div>
-<div class="callout-content">
-<p>Consiste em observações sobre uma (ou várias) variaveis ao <strong>longo do tempo</strong>. A diferença dos dados e corte transversal, dados de séries temporais são ordenados de forma cronológica.</p>
+<section id="estimação-2" class="slide level2">
+<h2>Estimação</h2>
+<p>Na prática, utilizamos algum software para fazer a estimação e não nos preocupamos com a implementação (<strong>embora, saber implementar é importante</strong>).</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">R</a></li><li><a href="#tabset-1-2">Python</a></li><li><a href="#tabset-1-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> educ, <span class="at">data =</span> wage1)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">coef</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        educ 
+ -0.9048516   0.5413593 </code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Corte transversal agrupados</strong></p>
-</div>
-<div class="callout-content">
-<p>Agrupar várias amostras de corte transversal (cada uma tomada em diferentes períodos de tempo)</p>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-note callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Painel (ou longitudinais)</strong></p>
-</div>
-<div class="callout-content">
-<p>Consiste em uma série temporal para cada observação de corte transversal. A diferença dos dados de corte transversal agrupados, nos dados de painel as <strong>mesmas unidades</strong> são acompanhadas ao longo do tempo</p>
+<div id="tabset-1-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>modelo <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'wage ~ educ'</span>, data <span class="op">=</span> wage1)</span>
+<span id="cb11-6"><a href="#cb11-6"></a>results <span class="op">=</span> modelo.fit()</span>
+<span id="cb11-7"><a href="#cb11-7"></a>results.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept   -0.904852
+educ         0.541359
+dtype: float64</code></pre>
 </div>
 </div>
 </div>
+<div id="tabset-1-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">DataFrames</span>, <span class="bu">GLM</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb13-4"><a href="#cb13-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(wage <span class="op">~</span> educ), wage1);</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="fu">coef</span>(modelo)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>2-element Array{Float64,1}:
+ -0.9048516119571958
+  0.5413592546651733</code></pre>
 </div>
-</section>
-<section id="dados-4" class="slide level2">
-<h2>Dados</h2>
-<center>
-<p><span style="color:red;">X: aleatório ou não aleatório?</span></p>
-<p><img data-src="imagens/duvida.png"></p>
-</center>
-<div class="fragment">
-<div class="callout callout-important callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>X: aleatorio ou não aleatorio?</strong></p>
-</div>
-<div class="callout-content">
-<p><a href="https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression"><em>“The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables”</em>. (Extraido do StackExchange)</a></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="dados-5" class="slide level2">
-<h2>Dados</h2>
-<center>
-<p><span style="color:red;">Mas, e quando X incluir elementos não aleatorios como um termo constante, uma variável dummy ou uma tendência temporal?</span></p>
-<p><img data-src="imagens/duvida_meme.jpg"></p>
-</center>
-<div class="fragment">
-<div class="callout callout-note callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Greene (2003)</strong></p>
-</div>
-<div class="callout-content">
-<p><em>“…vamos a permitir que <strong>X</strong> seja uma mistura de variáveis aleatórioas e não aleatórias, e que a média e a variância de</em> <span class="math inline">\(u_i\)</span> <em>sejam independentes de todos os elementos de <strong>X</strong>”</em></p>
 </div>
 </div>
 </div>
 </div>
 </section></section>
 <section>
-<section id="ceteris-paribus" class="title-slide slide level1 center">
-<h1>Ceteris paribus</h1>
+<section id="propriedades" class="title-slide slide level1 center">
+<h1>Propriedades</h1>
 
 </section>
-<section id="ceteris-paribus-1" class="slide level2">
-<h2>Ceteris paribus</h2>
+<section id="propriedades-1" class="slide level2">
+<h2>Propriedades</h2>
+<p>Além das suas propriedades assintóticas (que veremos na próxima aula), o estimador MQO possui algumas propriedades interessantes, entre elas:</p>
 <ul>
-<li class="fragment">O interesse da análise econométrica está em encontrar relacões de causa-efeito (queremos inferir que uma variável tem efieto causal sobre outra).</li>
-<li class="fragment">A nocão de <em>ceteris paribus</em> desempenha um papel importante nesta análise de causalidade.</li>
-<li class="fragment"><em>Ceteris paribus</em> significa “outros fatores (relevantes) permanecendo iguais/fixos/constantes”.</li>
-<li class="fragment">Se outros fatores não são mantidos fixos, não podemos conhecer o efeito causal que uma variável exerce sobre outra.</li>
-<li class="fragment">Embora pareca simples, é muito dificil manter todos os outros fatores fixos.</li>
-<li class="fragment">Então, a questão fundamental é se foram mantidos fixos um número suficiente de fatores para que possamos inferir causalide.</li>
+<li class="fragment"><span class="math inline">\(\displaystyle \sum_{i = 1}^n \hat{u}_i = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\displaystyle \sum_{i = 1}^n x_{i,k} \hat{u}_i = 0,\quad \forall k\)</span></li>
+<li class="fragment"><span class="math inline">\((\bar{x}_1, \cdots, \bar{x}_k, \bar{y})\)</span> sempre está sobre a reta MQO.</li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\hat{\beta}) = \beta\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\beta}|\textbf{X}) = \sigma^2 (X'X)^{-1}\)</span></li>
 </ul>
 </section></section>
 <section>
-<section id="exemplos-wooldridge-2023" class="title-slide slide level1 center">
-<h1>Exemplos (Wooldridge, 2023)</h1>
+<section id="teorema-de-gauss-markov" class="title-slide slide level1 center">
+<h1>Teorema de Gauss-Markov</h1>
 
 </section>
-<section id="efeitos-dos-fertilizantes-sobre-a-produção-agricola" class="slide level2">
-<h2>Efeitos dos fertilizantes sobre a produção agricola</h2>
-<ul>
-<li class="fragment"><p>Estamos interessados em analisar os efeitos da quantidade de fertilizante sobre a produção de soja.</p></li>
-<li class="fragment"><p>Como a quantidade de fertilizante é apenas um fator que afeta a produção (outros fatores são chuva, qualidade da terra, presença de pragas, etc), essa questão deve ser levantada como uma questão <em>ceteris paribus</em>.</p></li>
-</ul>
-<div class="fragment">
-<ul>
-<li class="fragment">Uma maneira de determinar o efeito causal é conduzir um experimento em que se delimite várias áreas de um hectare de terra, se aplique diferentes quantidades de fertilizante em cada área e, finalmente, se avalie a produção.</li>
-</ul>
+<section id="teorema-de-gauss-markov-1" class="slide level2">
+<h2>Teorema de Gauss-Markov</h2>
+<div class="callout callout-tip no-icon callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<p><strong>Teorema</strong></p>
 </div>
-<div class="fragment">
-<ul>
-<li class="fragment">Observe que nada foi dito acerca de delimitar áreas cuja qualidade da terra sejam idênticas. Como então sabemos que os resultados do experimento podem ser usados para medir o efeito <em>ceteris paribus</em> dos fertilizantes?</li>
-</ul>
+<div class="callout-content">
+<p>Sob HRLM1–HRLM5, <span class="math inline">\(\hat{\beta}\)</span> é o melhor estimador linear não viesado de <span class="math inline">\(\beta\)</span>.</p>
 </div>
-</section>
-<section id="efeitos-dos-fertilizantes-sobre-a-produção-agricola-wooldridge-2023" class="slide level2">
-<h2>Efeitos dos fertilizantes sobre a produção agricola (Wooldridge, 2023)</h2>
-<blockquote>
-<p>Se os níveis de fertilizante são atribuidos independentemente de outras características da área (<em>i.e.</em> se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível 😄.</p>
-</blockquote>
-<center>
-<img data-src="imagens/meme_yes.png">
-</center>
-</section>
-<section id="retorno-da-educação" class="slide level2">
-<h2>Retorno da educação</h2>
-<ul>
-<li class="fragment">Pense na seguinte pergunta: <em>“se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salario aumentado?”</em></li>
-</ul>
-<div class="fragment">
-<ul>
-<li class="fragment">Esta é uma questão <em>ceteris paribus</em> (implica que todos os outros fatores permanecem fixos).</li>
-</ul>
 </div>
-<div class="fragment">
-<ul>
-<li class="fragment">Suponha que selecionamos um grupo de pessoas e atribuimos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.</li>
-</ul>
 </div>
-<div class="fragment">
-<ul>
-<li class="fragment">Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc). Basta coletar o salario de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.</li>
-</ul>
-</div>
-</section>
-<section id="retorno-da-educação-1" class="slide level2">
-<h2>Retorno da educação</h2>
-<ul>
-<li class="fragment"><strong>Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizados na prática.</strong></li>
-</ul>
-<div class="fragment">
-<ul>
-<li class="fragment">O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as proprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna dificil estimar o efeito <em>ceteris paribus da educação</em> 🙍.</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li class="fragment">Ao longo da matéria aprenderemos a lidar com este tipo de problemas.</li>
-</ul>
-</div>
-</section>
-<section id="lei-e-criminalidade" class="slide level2">
-<h2>Lei e criminalidade</h2>
-<center>
-<span style="color:red;">A presença de mais policiais nas ruas detém a criminalidade?</span>
-</center>
-<div class="fragment">
-<ul>
-<li class="fragment">Se uma cidade fosse escolhida ao acaso e recebese 100 policiais a mais, em quanto suas taxas de criminalidade cairiam?</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li class="fragment">Se duas cidades, A e B, forem identicas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?</li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li class="fragment">Novamente, é uma questão <em>ceteris paribus</em></li>
-</ul>
-</div>
-</section>
-<section id="lei-e-criminalidade-1" class="slide level2">
-<h2>Lei e criminalidade</h2>
-<p>O problema? . . . é impossível encontrar duas cidades idênticas em todos os aspectos, o que torna dificil estimar o efeito <em>ceteris paribus</em></p>
-<center>
-<img data-src="imagens/triste_meme.png">
-</center>
-<div class="fragment">
-<p>Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletas sobre os níveis de criminalidade e o tamanho da sua força policial podem ser visto como sendo relativos a um experimento. <strong>Veremos isto mais adiante na matéria.</strong></p>
-</div>
-</section>
-<section id="comentários-finais" class="slide level2">
-<h2>Comentários finais</h2>
-<ul>
-<li class="fragment">Ao longo da disciplina aprenderamos a teoria e prática para lidar com estes e outros tipos de problemas.</li>
-<li class="fragment">Sua participação é muito importante, necessária e faz parte da sua avaliação constante.</li>
-<li class="fragment">Toda semana terão exercícios para entregar (e discutirmos em sala de aula).</li>
-<li class="fragment">A seguir veremos algumas questões referentes ao plano de desenvolvimento da disciplina.</li>
-</ul>
+<p><strong>Demostração (no quadro)</strong></p>
 
-<img src="imagens/imecc.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<p><img src="imagens/imecc.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
 </div>
-</section></section>
+<aside><div>
+<p>Um passo a passo da demostração pode também ser encontrado <a href="https://ctruciosm.github.io/posts/2021-02-28-teorema-de-gauss-markov/">aqui</a>.</p>
+</div></aside></section></section>
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="ME715_Aula01_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="ME715_Aula01_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="ME715_Aula02_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

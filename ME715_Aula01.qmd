@@ -29,7 +29,6 @@ format:
             data-background-size: 20%
             data-background-position: 99% 5%
             data-background-opacity: "1"
-editor: visual
 ---
 
 # O que é econometria?
@@ -77,7 +76,7 @@ Existem muitos bons livros de econometria:
 -   Johnston, J., & DiNardo, J. (1997). Econometric Methods. Mc Graw Hill, 4ed
 -   Stock, J. H., & Watson, M. W. (2020). Introduction to Econometrics. Pearson, 4ed (Global)
 -   Wooldridge, J. M. (2023). Introdução à Econometria: Uma Abordagem Moderna. Cengage Lerning, 4ed.
-- [Hanck, C., Arnold, M., Gerber, A., and Schmelzer, M. (2023). Introduction to Econometrics with R (Online book)](https://www.econometrics-with-r.org/)
+-   [Hanck, C., Arnold, M., Gerber, A., and Schmelzer, M. (2023). Introduction to Econometrics with R (Online book)](https://www.econometrics-with-r.org/)
 -   etc
 
 ## Material
@@ -205,14 +204,12 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 </center>
 
-
-. . . 
+. . .
 
 ::: callout-important
 ## X: aleatorio ou não aleatorio?
 
-[_"The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables"_. (Extraido do StackExchange)](https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression)
-
+[*"The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables"*. (Extraido do StackExchange)](https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression)
 :::
 
 ## Dados
@@ -225,16 +222,13 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 </center>
 
-. . . 
+. . .
 
 ::: callout-note
 ### Greene (2003)
 
-_"...vamos a permitir que **X** seja uma mistura de variáveis aleatórioas e não aleatórias, e que a média e a variância de_ $u_i$ _sejam independentes de todos os elementos de **X**"_
-
+*"...vamos a permitir que **X** seja uma mistura de variáveis aleatórioas e não aleatórias, e que a média e a variância de* $u_i$ *sejam independentes de todos os elementos de **X**"*
 :::
-
-
 
 # Ceteris paribus
 
@@ -251,102 +245,81 @@ _"...vamos a permitir que **X** seja uma mistura de variáveis aleatórioas e n�
 
 ## Efeitos dos fertilizantes sobre a produção agricola
 
-- Estamos interessados em analisar os efeitos da quantidade de fertilizante sobre a produção de soja.
+-   Estamos interessados em analisar os efeitos da quantidade de fertilizante sobre a produção de soja.
 
-- Como a quantidade de fertilizante é apenas um fator que afeta a produção (outros fatores são chuva, qualidade da terra, presença de pragas, etc), essa questão deve ser levantada como uma questão _ceteris paribus_.
-
-. . . 
-
-- Uma maneira de determinar o efeito causal é conduzir um experimento em que se delimite várias áreas de um hectare de terra, se aplique diferentes quantidades de fertilizante em cada área e, finalmente, se avalie a produção. 
-
-. . . 
-
-- Observe que nada foi dito acerca de delimitar áreas cuja qualidade da terra sejam idênticas. Como então sabemos que os resultados do experimento podem ser usados para medir o efeito _ceteris paribus_ dos fertilizantes?
-
-## Efeitos dos fertilizantes sobre a produção agricola (Wooldridge, 2023)
-
-> Se os níveis de fertilizante são atribuidos independentemente de outras características da área (_i.e._ se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível `r emo::ji("smile")`. 
-
-
-<center>
-![](imagens/meme_yes.png)
-</center>
-
-
-
-
-## Retorno da educação 
-
-
-- Pense na seguinte pergunta: _"se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salario aumentado?"_
-
-. . . 
-
-- Esta é uma questão _ceteris paribus_ (implica que todos os outros fatores permanecem fixos).
-
-. . . 
-
-- Suponha que selecionamos um grupo de pessoas e atribuimos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.
+-   Como a quantidade de fertilizante é apenas um fator que afeta a produção (outros fatores são chuva, qualidade da terra, presença de pragas, etc), essa questão deve ser levantada como uma questão *ceteris paribus*.
 
 . . .
 
-- Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc). Basta coletar o salario de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.
+-   Uma maneira de determinar o efeito causal é conduzir um experimento em que se delimite várias áreas de um hectare de terra, se aplique diferentes quantidades de fertilizante em cada área e, finalmente, se avalie a produção.
+
+. . .
+
+-   Observe que nada foi dito acerca de delimitar áreas cuja qualidade da terra sejam idênticas. Como então sabemos que os resultados do experimento podem ser usados para medir o efeito *ceteris paribus* dos fertilizantes?
+
+## Efeitos dos fertilizantes sobre a produção agricola (Wooldridge, 2023)
+
+> Se os níveis de fertilizante são atribuidos independentemente de outras características da área (*i.e.* se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível `r emo::ji("smile")`.
+
+<center>![](imagens/meme_yes.png)</center>
 
 ## Retorno da educação
 
+-   Pense na seguinte pergunta: *"se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salario aumentado?"*
 
-- **Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizados na prática.**
+. . .
 
+-   Esta é uma questão *ceteris paribus* (implica que todos os outros fatores permanecem fixos).
 
-. . . 
+. . .
 
-- O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as proprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna dificil estimar o efeito _ceteris paribus da educação_ `r emo::ji("sad")`.
+-   Suponha que selecionamos um grupo de pessoas e atribuimos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.
 
-. . . 
+. . .
 
-- Ao longo da matéria aprenderemos a lidar com este tipo de problemas.
+-   Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc). Basta coletar o salario de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.
 
+## Retorno da educação
 
-## Lei e criminalidade 
+-   **Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizados na prática.**
 
+. . .
 
-<center>
-[A presença de mais policiais nas ruas detém a criminalidade?]{style="color:red;"}
+-   O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as proprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna dificil estimar o efeito *ceteris paribus da educação* `r emo::ji("sad")`.
 
-</center>
+. . .
 
-. . . 
+-   Ao longo da matéria aprenderemos a lidar com este tipo de problemas.
 
-- Se uma cidade fosse escolhida ao acaso e recebese 100 policiais a mais, em quanto suas taxas de criminalidade cairiam?
+## Lei e criminalidade
 
-. . . 
+<center>[A presença de mais policiais nas ruas detém a criminalidade?]{style="color:red;"}</center>
 
-- Se duas cidades, A e B, forem identicas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?
+. . .
 
+-   Se uma cidade fosse escolhida ao acaso e recebese 100 policiais a mais, em quanto suas taxas de criminalidade cairiam?
 
-. . . 
+. . .
 
-- Novamente, é uma questão _ceteris paribus_
+-   Se duas cidades, A e B, forem identicas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?
 
-## Lei e criminalidade 
+. . .
 
+-   Novamente, é uma questão *ceteris paribus*
 
-O problema? . . . é impossível encontrar duas cidades idênticas em todos os aspectos, o que torna dificil estimar o efeito _ceteris paribus_
+## Lei e criminalidade
 
+O problema? . . . é impossível encontrar duas cidades idênticas em todos os aspectos, o que torna dificil estimar o efeito *ceteris paribus*
 
-<center>
-![](imagens/triste_meme.png)
-</center>
+<center>![](imagens/triste_meme.png)</center>
 
+. . .
 
-. . . 
-
-Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletas sobre os níveis de criminalidade  e o tamanho da sua força policial podem ser visto como sendo relativos a um experimento. **Veremos isto mais adiante na matéria.**
-
+Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletas sobre os níveis de criminalidade e o tamanho da sua força policial podem ser visto como sendo relativos a um experimento. **Veremos isto mais adiante na matéria.**
 
 ## Comentários finais
 
-- Ao longo da disciplina aprenderamos a teoria e prática para lidar com estes e outros tipos de problemas.
-- Sua participação é muito importante, necessária e faz parte da sua avaliação constante.
-- Toda semana terão exercícios para entregar (e discutirmos em sala de aula).
-- A seguir veremos algumas questões referentes ao plano de desenvolvimento da disciplina.
+-   Ao longo da disciplina aprenderamos a teoria e prática para lidar com estes e outros tipos de problemas.
+-   Sua participação é muito importante, necessária e faz parte da sua avaliação constante.
+-   Toda semana terão exercícios para entregar (e discutirmos em sala de aula).
+-   A seguir veremos algumas questões referentes ao plano de desenvolvimento da disciplina.
