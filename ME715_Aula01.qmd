@@ -62,7 +62,7 @@ format:
 ::: callout-tip
 ## Minha definicão favorita:
 
-*É a ciência que combina teoria econômica, estatística e ciência da computacão para responder perguntas de tipo causa-efeito.* **Hill, Judge e Griffiths** (2010)
+*É a ciência que combina teoria econômica, estatística e ciência da computacão para responder perguntas de tipo causa-efeito e/ou fazer previsões.* **Hill, Judge e Griffiths** (2010)
 :::
 
 # Material e Software
@@ -147,7 +147,7 @@ Vamos supor também que a relação entre $Y$ e $X_1, X_2, \ldots, X_p$ é da fo
 -   Obtidos através da observacão do atual comportamento do grupo de estudo.
 -   Geralmente obtidos utilizando enquetes.
 -   São os dados que usualmente chegam até nós.
--   Dados observacionais possuem um desafio ainda maior para estimar relacões de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.
+-   Dados observacionais possuem um desafio ainda maior para estimar relaçcões de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.
 
 ## Dados
 
@@ -167,7 +167,7 @@ Independente de termos dados experimentais ou observacionais, os conjuntos de da
 ::: callout-note
 ## Corte transversal
 
-Consiste em uma amostra de indivídios\* (consumidores, empresas, cidades, paises, etc) tomadas em determino período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma **foto** (panoramica).
+Consiste em uma amostra de indivídios\* (consumidores, empresas, cidades, paises, etc) tomadas em determinado período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma **foto** (panorâmica).
 :::
 
 . . .
@@ -235,7 +235,7 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 ## Ceteris paribus
 
 -   O interesse da análise econométrica está em encontrar relacões de causa-efeito (queremos inferir que uma variável tem efieto causal sobre outra).
--   A nocão de *ceteris paribus* desempenha um papel importante nesta análise de causalidade.
+-   A noção de *ceteris paribus* desempenha um papel importante nesta análise de causalidade.
 -   *Ceteris paribus* significa "outros fatores (relevantes) permanecendo iguais/fixos/constantes".
 -   Se outros fatores não são mantidos fixos, não podemos conhecer o efeito causal que uma variável exerce sobre outra.
 -   Embora pareca simples, é muito dificil manter todos os outros fatores fixos.
@@ -281,7 +281,7 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 ## Retorno da educação
 
--   **Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizados na prática.**
+-   **Obviamente, este tipo de experimento é inviável (e de fato, anti-ético e imoral) e não é realizado na prática.**
 
 . . .
 
@@ -315,7 +315,7 @@ O problema? . . . é impossível encontrar duas cidades idênticas em todos os a
 
 . . .
 
-Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletas sobre os níveis de criminalidade e o tamanho da sua força policial podem ser visto como sendo relativos a um experimento. **Veremos isto mais adiante na matéria.**
+Felizmente, não precisamos disso. O que precisamos é saber se os dados que podemos coletar sobre os níveis de criminalidade e o tamanho da sua força policial podem ser vistos como sendo relativos a um experimento. **Veremos isto mais adiante na matéria.**
 
 ## Comentários finais
 
