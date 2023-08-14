@@ -406,23 +406,12 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 
 </section>
 <section>
-<section id="propriedades-assintóticas-do-emqo" class="title-slide slide level1 center">
-<h1>Propriedades Assintóticas do EMQO</h1>
+<section id="outras-propriedades" class="title-slide slide level1 center">
+<h1>Outras propriedades</h1>
 
 </section>
-<section id="propriedades-assintóticas-do-emqo-1" class="slide level2">
-<h2>Propriedades Assintóticas do EMQO</h2>
-<p>Teoria assintótica nos permite relaxar algumas suposições do modelo necessárias para obter a distribuição amostral dos estimador desde que o tamanho amostral seja suficientemente grande.</p>
-<div class="fragment">
-<p>Distribuições amostrais são importantes pois nos permitem obter intervalos de confiança e realizar testes de hipóteses sobre <span class="math inline">\(\beta\)</span>.</p>
-</div>
-<div class="fragment">
-<p>Duas propriedades interessante são:</p>
-<p><span class="math display">\[\hat{\beta} \rightarrow_p \beta \quad e\]</span> <span class="math display">\[\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})\]</span></p>
-</div>
-</section>
-<section id="propriedades-assintóticas-do-emqo-2" class="slide level2">
-<h2>Propriedades Assintóticas do EMQO</h2>
+<section id="outras-propriedades-1" class="slide level2">
+<h2>Outras propriedades</h2>
 <h3 id="hipóteses-do-modelo">Hipóteses do modelo</h3>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
@@ -447,11 +436,35 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 <p>Além ds hipóteses já vistas, a seguente hipótese é algumas vezes também utilizada.</p>
 <center>
-<strong>HRLM6</strong>: <span class="math inline">\(u\)</span> é independente das variáveis explicativas e <span class="math inline">\(u \sim N(0,\sigma^2)\)</span>.
+<strong>HRLM6</strong>: <span class="math inline">\(u\)</span> é independente das variáveis explicativas e <span class="math inline">\(u | \textbf{X} \sim N(0,\sigma^2 I)\)</span>.
 </center>
 <p><strong>HRLM1–HRLM6</strong> são conhecidas como as hipóteses do modelo linear clássico.</p>
 </section>
-<section id="propriedades-assintóticas-do-emqo-3" class="slide level2">
+<section id="outras-propriedades-2" class="slide level2">
+<h2>Outras propriedades</h2>
+<p>Sob <strong>HRLM1–HRLM6</strong>, condicional em <span class="math inline">\(\textbf{X}\)</span>:</p>
+<p><span class="math display">\[\hat{\beta} - \beta \sim N(0, \sigma^2 (X'X)^{-1}),\]</span></p>
+<p><span class="math display">\[\dfrac{(n-k-1)s^2}{\sigma^2}\sim \chi^2_{n-k-1},\]</span></p>
+<p><span class="math display">\[\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j|X)}} \sim t_{n-k-1},\]</span></p>
+<p>em que <span class="math inline">\(s^2 = \dfrac{\hat{u}' \hat{u}}{n-k-1}\)</span> e <span class="math inline">\(\widehat{\mathbb{V}}(\hat{\beta}|X) = s^2 (X'X)^{-1}.\)</span></p>
+</section></section>
+<section>
+<section id="propriedades-assintóticas-do-emqo" class="title-slide slide level1 center">
+<h1>Propriedades Assintóticas do EMQO</h1>
+
+</section>
+<section id="propriedades-assintóticas-do-emqo-1" class="slide level2">
+<h2>Propriedades Assintóticas do EMQO</h2>
+<p>Teoria assintótica nos permite relaxar algumas suposições do modelo necessárias para obter a distribuição amostral dos estimador desde que o tamanho amostral seja suficientemente grande.</p>
+<div class="fragment">
+<p>Distribuições amostrais são importantes pois nos permitem obter intervalos de confiança e realizar testes de hipóteses sobre <span class="math inline">\(\beta\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Duas propriedades interessante são:</p>
+<p><span class="math display">\[\hat{\beta} \rightarrow_p \beta \quad e\]</span> <span class="math display">\[\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})\]</span></p>
+</div>
+</section>
+<section id="propriedades-assintóticas-do-emqo-2" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <p>Para ilustrar a primeira propriedade, pense no seguinte DGP.</p>
 <div class="cell" data-layout-align="center">
@@ -472,13 +485,13 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 </div>
 </section>
-<section id="propriedades-assintóticas-do-emqo-4" class="slide level2">
+<section id="propriedades-assintóticas-do-emqo-3" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <center>
 <img data-src="imagens/convergence_prob.png">
 </center>
 </section>
-<section id="propriedades-assintóticas-do-emqo-5" class="slide level2">
+<section id="propriedades-assintóticas-do-emqo-4" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <p>Para ilustrar a segunda, pense no seguinte:</p>
 <div class="cell" data-layout-align="center">
@@ -506,17 +519,17 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 
 <img data-src="imagens/sim_01.png" class="r-stretch"></section>
-<section id="propriedades-assintóticas-do-emqo-6" class="slide level2">
+<section id="propriedades-assintóticas-do-emqo-5" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <ol type="1">
 <li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 25\)</span>?</li>
 <li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 1000\)</span>?</li>
 <li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 25\)</span> e <span class="math inline">\(u = \dfrac{v-1}{\sqrt{2}}\)</span>, em que <span class="math inline">\(v \sim X^2_1\)</span>?</li>
 <li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 100\)</span> e <span class="math inline">\(u = \dfrac{v-1}{\sqrt{2}}\)</span>, em que <span class="math inline">\(v \sim X^2_1\)</span>?</li>
-<li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 100\)</span> e <span class="math inline">\(u = \dfrac{v-1}{\sqrt{2}}\)</span>, em que <span class="math inline">\(v \sim X^2_1\)</span>?</li>
+<li class="fragment">O que é de se esperar se utilizarmos <span class="math inline">\(n = 1000\)</span> e <span class="math inline">\(u = \dfrac{v-1}{\sqrt{2}}\)</span>, em que <span class="math inline">\(v \sim X^2_1\)</span>?</li>
 </ol>
 </section>
-<section id="propriedades-assintóticas-do-emqo-7" class="slide level2">
+<section id="propriedades-assintóticas-do-emqo-6" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <ul>
 <li class="fragment"><strong>HRLM1–HRLM6</strong> garante que a distribuição de <span class="math inline">\(\beta\)</span> seja normalmente distribuida (independente do tamanho amostral).</li>
@@ -545,7 +558,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   1.745144    1.101554 </code></pre>
+   1.606539    1.231892 </code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -553,7 +566,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         x_n 
-   1.745144    5.507772 </code></pre>
+   1.606539    6.159458 </code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -561,7 +574,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>       x 
-5.507772 </code></pre>
+6.159458 </code></pre>
 </div>
 </div>
 </div>
@@ -583,7 +596,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   1.835751    1.135079 </code></pre>
+   1.618696    1.271063 </code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -591,7 +604,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         x_n 
-   1.835751    5.675396 </code></pre>
+   1.618696    6.355316 </code></pre>
 </div>
 </div>
 </div>
@@ -614,18 +627,18 @@ lm(formula = y ~ x)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.0318 -0.5256  0.1102  0.5905  2.7406 
+-2.2954 -0.5471  0.0936  0.6098  3.4874 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   1.8358     0.1004   18.29   &lt;2e-16 ***
-x             1.1351     0.1082   10.49   &lt;2e-16 ***
+(Intercept)  1.61870    0.09369   17.28   &lt;2e-16 ***
+x            1.27106    0.08549   14.87   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.002 on 98 degrees of freedom
-Multiple R-squared:  0.5288,    Adjusted R-squared:  0.524 
-F-statistic:   110 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.9334 on 98 degrees of freedom
+Multiple R-squared:  0.6929,    Adjusted R-squared:  0.6897 
+F-statistic: 221.1 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -641,18 +654,18 @@ lm(formula = y ~ x_n)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.0318 -0.5256  0.1102  0.5905  2.7406 
+-2.2954 -0.5471  0.0936  0.6098  3.4874 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   1.8358     0.1004   18.29   &lt;2e-16 ***
-x_n           5.6754     0.5412   10.49   &lt;2e-16 ***
+(Intercept)  1.61870    0.09369   17.28   &lt;2e-16 ***
+x_n          6.35532    0.42744   14.87   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.002 on 98 degrees of freedom
-Multiple R-squared:  0.5288,    Adjusted R-squared:  0.524 
-F-statistic:   110 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.9334 on 98 degrees of freedom
+Multiple R-squared:  0.6929,    Adjusted R-squared:  0.6897 
+F-statistic: 221.1 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
@@ -675,7 +688,7 @@ F-statistic:   110 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)      log(x) 
-  -3.404715    8.233328 </code></pre>
+  -4.934455    9.043904 </code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -683,7 +696,7 @@ F-statistic:   110 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    log(x_n) 
-   9.846315    8.233328 </code></pre>
+   9.621147    9.043904 </code></pre>
 </div>
 </div>
 </section></section>

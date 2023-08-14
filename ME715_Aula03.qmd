@@ -32,28 +32,8 @@ format:
 ---
 
 
-# Propriedades Assintóticas do EMQO
-## Propriedades Assintóticas do EMQO
-
-Teoria assintótica nos permite relaxar algumas suposições do modelo necessárias para obter a distribuição amostral dos estimador desde que o tamanho amostral seja suficientemente grande.
-
-
-. . . 
-
-
-Distribuições amostrais são importantes pois nos permitem obter intervalos de confiança e realizar testes de hipóteses sobre $\beta$.
-
-
-. . . 
-
-
-Duas propriedades interessante são:
-
-$$\hat{\beta} \rightarrow_p \beta \quad e$$
-$$\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})$$
-
-
-## Propriedades Assintóticas do EMQO
+# Outras propriedades
+## Outras propriedades
 
 
 ### Hipóteses do modelo
@@ -73,10 +53,46 @@ $$\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})$$
 Além ds hipóteses já vistas, a seguente hipótese é algumas vezes também utilizada.
 
 <center>
-**HRLM6**: $u$ é independente das variáveis explicativas e $u \sim N(0,\sigma^2)$.
+**HRLM6**: $u$ é independente das variáveis explicativas e $u | \textbf{X} \sim N(0,\sigma^2 I)$.
 </center>
 
 **HRLM1--HRLM6** são conhecidas como as hipóteses do modelo linear clássico.
+
+
+
+## Outras propriedades
+
+Sob **HRLM1--HRLM6**, condicional em $\textbf{X}$: 
+
+$$\hat{\beta} - \beta \sim N(0, \sigma^2 (X'X)^{-1}),$$
+
+$$\dfrac{(n-k-1)s^2}{\sigma^2}\sim \chi^2_{n-k-1},$$
+
+$$\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j|X)}} \sim t_{n-k-1},$$
+
+em que $s^2 = \dfrac{\hat{u}' \hat{u}}{n-k-1}$ e $\widehat{\mathbb{V}}(\hat{\beta}|X) = s^2 (X'X)^{-1}.$
+
+
+
+# Propriedades Assintóticas do EMQO
+## Propriedades Assintóticas do EMQO
+
+Teoria assintótica nos permite relaxar algumas suposições do modelo necessárias para obter a distribuição amostral dos estimador desde que o tamanho amostral seja suficientemente grande.
+
+
+. . . 
+
+
+Distribuições amostrais são importantes pois nos permitem obter intervalos de confiança e realizar testes de hipóteses sobre $\beta$.
+
+
+. . . 
+
+
+Duas propriedades interessante são:
+
+$$\hat{\beta} \rightarrow_p \beta \quad e$$
+$$\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})$$
 
 
 ## Propriedades Assintóticas do EMQO
@@ -149,7 +165,7 @@ ggplot(b_hat, aes(x = values, group = betas, color = betas)) + geom_density()
 2. O que é de se esperar se utilizarmos $n = 1000$? 
 3. O que é de se esperar se utilizarmos $n = 25$ e $u = \dfrac{v-1}{\sqrt{2}}$, em que $v \sim X^2_1$?
 4. O que é de se esperar se utilizarmos $n = 100$ e $u = \dfrac{v-1}{\sqrt{2}}$, em que $v \sim X^2_1$?
-5. O que é de se esperar se utilizarmos $n = 100$ e $u = \dfrac{v-1}{\sqrt{2}}$, em que $v \sim X^2_1$?
+5. O que é de se esperar se utilizarmos $n = 1000$ e $u = \dfrac{v-1}{\sqrt{2}}$, em que $v \sim X^2_1$?
 
 
 ## Propriedades Assintóticas do EMQO
