@@ -1,0 +1,90 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Modelo de Regressão Linear III"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Teste T
+## Teste T
+
+
+# Teste F
+## Teste F
+
+
+
+# Testes de hipóteses avançados
+## Testes de hipóteses avançados
+
+Imagine os seguintes casos:
+
+
+| Caso:    | Hipóteses           |
+|:-------:|:-------------------:|
+| Caso 1  | $H_0: \beta_i = 0$  |
+| Caso 2  | $H_0: \beta_i = b_i$|
+| Caso 3  | $H_0: \beta_i + \beta_j = b$|
+| Caso 4  | $H_0: \beta_i = \beta_j$ |
+| Caso 5  | $H_0: [\beta_1, \cdots, \beta_k]' = 0$ |
+| Caso 6  | $H_0: \boldsymbol{\beta}_2 = 0$ |
+
+Em que $\boldsymbol{\beta} = [\boldsymbol{\beta}_1, \boldsymbol{\beta}_2]$ com $\boldsymbol{\beta}_1$ de dimensão $k_1$ e $\boldsymbol{\beta}_2$ de dimensão $k_2$
+
+<center>
+[Os casos 1 e 2 são os casos mais simples, mas como fazer se estivermos interessados nos casos 3, 4, 5 ou 6?]{style="color:blue;"}
+</center>
+
+
+## Testes de hipóteses avançados
+
+
+Todos os casos anteriores estão dentro do seguinte caso: $$H_0: R \boldsymbol{\beta} = r \quad ou \quad \equiv \quad H_0: R \boldsymbol{\beta} - r = 0$$
+
+em que 
+
+- $R_{q \times k + 1}$ com $q < k+1$, 
+- $r_{q \times 1}$ e
+- $\boldsymbol{\beta} = [\beta_0, \beta_1, \cdots, \beta_k]'$
+
+
+## Testes de hipóteses avançados
+
+
+
+| Hipóteses           | $R, r \text{ e } q$ |
+|:-------------------|:---------------------:|
+| $H_0: \beta_i = 0$  | $R = [0, \cdots, 0, \underbrace{1}_{i-th}, 0, \cdots, 0]$, r = 0, q = 1 |
+| $H_0: \beta_i = b_i$| $R = [0, \cdots, 0, \underbrace{1}_{i-th}, 0, \cdots, 0]$, r = $b_i$, q = 1 |
+| $H_0: \beta_i + \beta_j = b$| $R = [0, \cdots,  \underbrace{1}_{i-th}, 0, \cdots, \underbrace{1}_{j-th}, \cdots 0]$, r = $b$, q = 1 |
+| $H_0: \beta_i = \beta_j$ | $R = [0, \cdots,  \underbrace{1}_{i-th}, 0, \cdots, \underbrace{-1}_{j-th}, \cdots 0]$, r = 0, q = 1 |
+| $H_0: [\beta_1, \cdots, \beta_k]' = 0$ | $R = [0, \textbf{I}_{k}]$, r = 0, q = k |
+| $H_0: \boldsymbol{\beta}_2 = 0$ | $R = [0_{k_2 \times k_1 }, \textbf{I}_{k_2}]$, r = 0, q = k_2 |
+

@@ -340,11 +340,11 @@ coef(modelo)
 Além das suas propriedades assintóticas (que veremos na próxima aula), o estimador MQO possui algumas propriedades interessantes, entre elas:
 
 
-- $\displaystyle \sum_{i = 1}^n \hat{u}_i = 0$
-- $\displaystyle \sum_{i = 1}^n x_{i,k} \hat{u}_i = 0,\quad \forall k$
-- $(\bar{x}_1, \cdots, \bar{x}_k, \bar{y})$ sempre está sobre a reta MQO.
 - $\mathbb{E}(\hat{\beta}) = \beta$
 - $\mathbb{V}(\hat{\beta}|\textbf{X}) = \sigma^2 (X'X)^{-1}$
+- $\displaystyle \sum_{i = 1}^n \hat{u}_i = 0$
+- $\displaystyle \sum_{i = 1}^n x_{i,k} \hat{u}_i = 0,\quad \forall k$
+
 
 
 
