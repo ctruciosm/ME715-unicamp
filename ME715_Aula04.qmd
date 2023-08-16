@@ -32,17 +32,382 @@ format:
 ---
 
 
-# Teste T
-## Teste T
+# Teste t
+## Teste t
+
+Sob HRLM1--HRLM6 e condicional aos valores amostrais de $X$, $$\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\mathbb{V}(\hat{\beta}_j | X)}} \sim N(0,1)$$
+
+. . . 
+
+- **O bom:** $\sim N(0,1)$
+-  **O problema:** $\mathbb{V}(\hat{\beta}_j | X)$ depende de $\sigma^2$ mas nós nunca conhecemos $\sigma^2$, então substituimos $\sigma^2$ por $\hat{\sigma}^2$, obtendo assim nosso $\widehat{\mathbb{V}}(\hat{\beta}_j | X)$
+
+. . . 
+
+$$\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j | X)}} \sim t_{n- k - 1}$$
+
+
+## Teste t
+
+No modelo $$Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_kX_k +u$$
+
+Geralmente, estamos interessados em testar $$H_0: \beta_j = b \quad vs \quad H_1: \beta_j \neq b$$
+
+$$H_0: \beta_j \leq b \quad vs \quad H_1: \beta_j > b$$
+
+$$H_0: \beta_j \geq b \quad vs \quad H_1: \beta_j < b$$
+
+
+<center>[Usualmente $b = 0$ (mas outros valores também são utilizados) ]{style="color:red;"}</center>
+
+
+## Teste t
+
+
+Para testar hipóteses  é preciso uma **estatística de teste**. A estatística utilizada no **Teste T** é chamada de **estatística t**
+
+$$t_{\hat{\beta}_j} = \dfrac{\hat{\beta}_j - b}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j|X)}} \stackrel{H_0}{\sim} t_{n-(k+1)}$$
+
+**Quando:**
+
+- $H_0: \beta_j = b \quad \text{vs} \quad H_1: \beta_j \neq b$, **rejeitamos** $H_0$ se $|t_{\hat{\beta}_j}|> c_0$
+- $H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j < b$, **rejeitamos** $H_0$ se $t_{\hat{\beta}_j} < c_1$
+- $H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j > b$, **rejeitamos** $H_0$ se $t_{\hat{\beta}_j} > c_2$
+
+. . . 
+
+em que $c$ é um quantil da distribuição $t_{n-k-1}$ e depende do _nível de significância_ $\alpha$.
+
+
+## Teste t
+
+
+Para um nível de significância$\alpha$:
+
+**Teste Bilateral:** $$H_0: \beta_j = b \quad \text{vs} \quad H_1: \beta_j \neq b,$$ rejeitamos $H_0$  se $|t_{\hat{\beta}_j}|> c_0 = |t_{\alpha/2,n-(k+1)}| = t_{1-\alpha/2,n-(k+1)}$
+
+
+. . . 
+
+**Teste Unilateral:**
+
+$$H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j < b,$$  rejeitamos $H_0$ se $t_{\hat{\beta}_j} < c_1 = t_{\alpha,n-(k+1)}.$
+
+. . . 
+
+$$H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j > b,$$   rejeitamos $H_0$ se $t_{\hat{\beta}_j} > c_2 = t_{1-\alpha,n-(k+1)}.$
+
+## Teste t: Bilateral $H_1: \beta_j \neq 0$
+
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.width = 12, fig.height = 6}
+f = function(x) dnorm(x)
+plot(f,-5,5)
+polygon(x=c(-5,seq(-5,-1.96,l=50),-1.96), y=c(0,f(seq(-5,-1.96,l=50)), 0), col="gray")
+polygon(x=c(1.96,seq(1.96,5,l=50),5), y=c(0,f(seq(1.96,5,l=50)), 0), col="gray")
+```
+
+
+
+## Teste t: Unilateral $H_1: \beta_j < 0$
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.width = 12, fig.height = 6}
+f = function(x) dnorm(x)
+plot(f,-5,5)
+polygon(x=c(-5,seq(-5,-1.64,l=50),-1.64), y=c(0,f(seq(-5,-1.64,l=50)), 0), col="gray")
+```
+
+
+## Teste t: Unilateral $H_1: \beta_j > 0$
+
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.width = 12, fig.height = 6}
+f = function(x) dnorm(x)
+plot(f,-5,5)
+polygon(x=c(1.64,seq(1.64,5,l=50),5), y=c(0,f(seq(1.64,5,l=50)), 0), col="gray")
+```
+
+
+## Teste t
+
+
+Resumindo, para testar hipóteses precisamos:
+
+0. Definir o nível de significância $\alpha$. 
+1. Calcular a estatística de teste $t_{\hat{\beta}_j}$.
+2. Comparar:
+    - Para $H_0: \beta_j = b \quad vs. \quad H_1: \beta_j \neq b,$ rejeitar $H_0$ se $|t_{\hat{\beta}_j}| > |t_{\alpha/2,n-(k+1)}|$
+    - Para $H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j < b,$ rejeitar $H_0$ se  $t_{\hat{\beta}_j} < t_{\alpha,n-(k+1)}$ 
+    - Para  $H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j > b,$ rejeitar $H_0$ se $t_{\hat{\beta}_j} > t_{1-\alpha,n-(k+1)}.$
+3. Se não temos evidência para rejeitar $H_0$, então  **não rejeitamos $H_0$**.
+
+
+## Teste t
+
+O valor $c$ é obtido do quantil da distribuição $t_{n-k-1}$, por exemplo:
+```{r}
+#| echo: true
+n = 100; k = 5; alpha = 0.05
+# Hipótese Bilateral
+qt(1 - alpha/2, df = n - k - 1)
+# Hipótese Unilateral
+qt(alpha, df = n - k - 1) # ou 
+qt(1 - alpha, df = n - k - 1)
+```
+
+
+## Teste t
+
+- A maioria de softwares testam a hipótese $H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0$, e fornecem os *p-valores*.
+- Olhando para os *p-valores* podemos rejeitar ou não $H_0$ sem precisar calcular $c$
+- **Cuidado**, se nosso interesse é testar $H_0: \beta_j = b$ (com $b \neq 0$) precisaremos fazer as contas **manualmente**
+
+
+## Teste t: Exemplo
+
+Assumindo que todas as suposições do modelo são verificadas, quais variáveis são estatísticamente significativas? ($\beta_j \neq 0$)
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| echo: true
+library(wooldridge)
+modelo = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+round(summary(modelo)$coefficients,4)
+```
+
+## Python
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import statsmodels.formula.api as smf
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ educ + exper + tenure', data=wage1) 
+results = modelo.fit()
+results.summary()
+```
+
+
+## Julia
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames
+
+wage1 = DataFrame(wooldridge("wage1"));
+modelo = lm(@formula(log(wage) ~ educ + exper + tenure), wage1);
+table_reg = coeftable(modelo);
+table_reg
+```
+
+
+
+:::
+
+
+## Teste t
+
+E se quisermos testar $H_0: \beta_{educ} \geq 0 \quad \text{vs} \quad \beta_{educ} < 0$?
+
+```{r}
+#| echo: true
+round(summary(modelo)$coefficients,4)
+```
+
+- **Não podemos utilizar $P(> |t|)$** (Por quê?)
+- Note que $P_{H_o}( |T| > |t|) = 2 P_{H_0} (T > |t|) = 2 P_{H_0} (T < -|t|)$
+- Então: *p-valor* unilateral = $P_{H_o}( |T| > |t|)/2$
+
+
+## Teste t
+
+E se quisermos testar $H_0: \beta_{educ} = 1 \quad \text{vs} \quad \beta_{educ} \neq 1$?
+
+
+```{r}
+#| echo: true
+round(summary(modelo)$coefficients,4)
+```
+
+- **Não podemos utilizar nem "t value" nem $P(> |t|)$** (Por quê?)
+- $t_{\hat{\beta}_{educ}} = \dfrac{\hat{\beta}_{educ} - 1}{\sqrt{\widehat{V}(\hat{\beta}_{educ})}} = \dfrac{0.0920-1}{0.0073} = -124.3836$
+- Como é um teste de Hipóteses Bilateral rejeitamos $H_0$ se $\underbrace{|t_{\hat{\beta}_{educ}}|} = {124.3836} > \underbrace{|c|}_{1.964519},$ 
+
+
 
 
 # Teste F
 ## Teste F
 
+- A **estatística t** é utilizada para testar **individualmente** os parâmetros do modelo.
+- Seja o modelo $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k$$ e suponha que queremos testar $$H_0: \beta_2 = 0, \beta_3 = 0, \beta_5 = 0 \quad \text{vs} \quad H_1: H_0 \text{ não é verdadeiro}$$
+- Fazer um **teste t** para cada $\beta$?
+- **Não!**. Precisamos fazer o teste de forma conjunta!
+- O teste F nos permite testar $H_0$ de forma conjunta!
 
 
-# Testes de hipóteses avançados
-## Testes de hipóteses avançados
+## Teste F
+
+Seja o modelo \textbf{irrestrito} $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k +u$$ E seja $H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_q = 0$. Então, o modelo \textbf{restrito} (sob $H_0$) é dado por $$y = \beta_0 + \beta_{q+1} x_{q+1} + \beta_{q+2} x_{q+2} + \ldots + \beta_k x_k +u$$
+
+. . . 
+
+> Sob HRLM1--HRLM6, o \textbf{teste F} é dado por $$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}$$
+
+
+## Teste F
+
+$$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}$$
+
+- Intuitivamente, estamos analisando quanto aumenta a SQR quando retiramos algumas das variáveis.
+- Se o aumento no SQR for grande (em relação ao SQR do modelo irrestrito) rejeitamos $H_0$ (pois a eliminação dessas variáveis aumeta muito a SQR)
+- Isto implica que se $F$ for suficientemente grande, rejeitamos $H_0$
+- Quão grande? depende do nível de significância $\alpha$.
+- Como $SQR_r \geq SQR_i$ (sempre) o numerador será sempre $\geq 0$, e valores grandes de $F$ nos levarão a rejeitar $H_0$ (teste unilateral).
+
+## Teste F
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, fig.width = 12, fig.height = 6}
+f = function(x) df(x, 5, 120)
+plot(f,0,5)
+polygon(x=c(2.76,seq(2.76,5,l=50),5), y=c(0,f(seq(2.76,5,l=50)), 0), col="gray")
+```
+
+## Teste F
+
+No modelo $\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 tenure + u$
+
+
+Queremos testar: $H_0: \beta_1=0, \beta_3 = 0 \quad \text{vs} \quad H_1: H_0 \text{ não é verdadeira}$
+
+$$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}$$
+
+```{r}
+#| echo: true
+modeloi = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+modelor = lm(log(wage) ~ exper, data = wage1)
+SQRi = sum(residuals(modeloi)^2)
+SQRr = sum(residuals(modelor)^2)
+n = nrow(wage1); k = 3; q = 2
+est_F = ((SQRr - SQRi)/SQRi)*((n - k - 1)/q)
+est_F
+qf(p = 0.95, df1 = q, df2 = n - k - 1)
+```
+
+Como $\underbrace{F}_{115.8532} > \underbrace{c}_{3.012991}$, então rejeitamos $H_0$ com um nível de significância $\alpha = 0.05$.
+
+
+## Teste F
+
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| echo: true
+modeloi = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+modelor = lm(log(wage) ~ exper, data = wage1)
+anova(modelor, modeloi)
+```
+
+
+
+## Python
+```{python}
+#| echo: true
+modeloi = smf.ols(formula = 'np.log(wage) ~ educ + exper + tenure', data=wage1) 
+hypotheses = ['educ = 0', 'tenure = 0']
+ftest = results.f_test(hypotheses)
+ftest
+```
+
+
+
+## Julia
+
+```{julia}
+#| echo: true
+
+using WooldridgeDatasets, GLM, DataFrames
+wage1 = DataFrame(wooldridge("wage1"));
+
+modeloi = lm(@formula(log(wage) ~ educ + exper + tenure), wage1);
+modelor = lm(@formula(log(wage) ~ exper), wage1);
+teste_F = ftest(modelor.model, modeloi.model);
+teste_F
+```
+
+:::
+
+
+## Teste F (significância geral do modelo)
+
+Dado um modelo da forma $$Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_k X_k + u,$$
+
+um teste bastante rotineiro nos modelos de regressão é:
+
+$$H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_k=0 \quad \text{vs} \quad H_0: H_1 \text{ não é verdadeiro}$$
+
+. . . 
+
+Estes testes são geralmente feitos por padrão nos pacotes e quando encontrar "Teste F" estão-se referindo ao teste da significância global do modelo.
+
+
+## Teste F (significância geral do modelo)
+
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| echo: true
+modeloi = lm(log(wage) ~ educ + exper + tenure, data = wage1)
+summary(modeloi)
+```
+
+
+
+## Python
+```{python}
+#| echo: true
+modeloi = smf.ols(formula = 'np.log(wage) ~ educ + exper + tenure', data=wage1) 
+results = modeloi.fit()
+results.summary()
+```
+
+
+
+## Julia
+
+```{julia}
+#| echo: true
+
+using WooldridgeDatasets, GLM, DataFrames
+wage1 = DataFrame(wooldridge("wage1"));
+
+modeloi = lm(@formula(log(wage) ~ educ + exper + tenure), wage1);
+modelor = lm(@formula(log(wage) ~ 1), wage1);
+teste_F = ftest(modelor.model, modeloi.model);
+teste_F
+```
+
+:::
+
+
+## Teste F
+
+## Teste F
+
+- O **teste F** a diferença do **teste T**, permite que testemos conjuntamente hipóteses com mais de uma restrição.
+- Às vezes os resultados obtidos pelos testes **t** e **F** podem levar a conclusões diferentes, nestes casos é preciso analisar cuidadosamente cada caso (em geral, na presença de multicolinearidade, o teste F é menos afetado. Por outro lado, quado utilizamos múltiplos testes T, [aumenta a chance de obtermos falsos positivos](https://stats.stackexchange.com/questions/152805/difference-between-f-test-and-separate-t-tests-on-each-variable).).
+- No **teste F** quando $q = 1$, o **teste F** e o **teste t** são equivalentes.
+
+# Testes de hipóteses mais gerais
+## Testes de hipóteses mais gerais
 
 Imagine os seguintes casos:
 
@@ -59,14 +424,14 @@ Imagine os seguintes casos:
 Em que $\boldsymbol{\beta} = [\boldsymbol{\beta}_1, \boldsymbol{\beta}_2]$ com $\boldsymbol{\beta}_1$ de dimensão $k_1$ e $\boldsymbol{\beta}_2$ de dimensão $k_2$
 
 <center>
-[Os casos 1 e 2 são os casos mais simples, mas como fazer se estivermos interessados nos casos 3, 4, 5 ou 6?]{style="color:blue;"}
+[Os casos 1, 2 e 5 são os casos mais simples, mas como fazer se estivermos interessados nos casos 3, 4 ou 6?]{style="color:blue;"}
 </center>
 
 
-## Testes de hipóteses avançados
+## Testes de hipóteses mais gerais
 
 
-Todos os casos anteriores estão dentro do seguinte caso: $$H_0: R \boldsymbol{\beta} = r \quad ou \quad \equiv \quad H_0: R \boldsymbol{\beta} - r = 0$$
+Todos os casos anteriores estão dentro do seguinte escopo: $$H_0: R \boldsymbol{\beta} = r \quad ou \quad \equiv \quad H_0: R \boldsymbol{\beta} - r = 0$$
 
 em que 
 
@@ -75,7 +440,7 @@ em que
 - $\boldsymbol{\beta} = [\beta_0, \beta_1, \cdots, \beta_k]'$
 
 
-## Testes de hipóteses avançados
+## Testes de hipóteses mais gerais
 
 
 
@@ -86,5 +451,122 @@ em que
 | $H_0: \beta_i + \beta_j = b$| $R = [0, \cdots,  \underbrace{1}_{i-th}, 0, \cdots, \underbrace{1}_{j-th}, \cdots 0]$, r = $b$, q = 1 |
 | $H_0: \beta_i = \beta_j$ | $R = [0, \cdots,  \underbrace{1}_{i-th}, 0, \cdots, \underbrace{-1}_{j-th}, \cdots 0]$, r = 0, q = 1 |
 | $H_0: [\beta_1, \cdots, \beta_k]' = 0$ | $R = [0, \textbf{I}_{k}]$, r = 0, q = k |
-| $H_0: \boldsymbol{\beta}_2 = 0$ | $R = [0_{k_2 \times k_1 }, \textbf{I}_{k_2}]$, r = 0, q = k_2 |
+| $H_0: \boldsymbol{\beta}_2 = 0$ | $R = [0_{k_2 \times k_1 }, \textbf{I}_{k_2}]$, r = 0, q = $k_2$ |
+
+
+## Testes de hipóteses mais gerais
+
+Sob as hipóteses do modelo linear clássico e condicional em $\textbf{X}$, $$\hat{\beta} \sim N(\beta, \sigma^2 (X'X)^{-1}),$$
+
+. . . 
+
+$$R\hat{\beta} \sim N(R\beta, \sigma^2 R(X'X)^{-1}R'),$$
+
+. . . 
+
+$$R\hat{\beta} - R\beta \sim N(0, \sigma^2 R(X'X)^{-1}R'),$$
+
+. . . 
+
+Sob $H_0$
+
+$$R\hat{\beta} - r \sim N(0, \sigma^2 R(X'X)^{-1}R'),$$
+
+. . . 
+
+$$(R\hat{\beta} - r)' [\sigma^2 R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r) \sim \chi^2_q,$$
+
+
+
+
+## Testes de hipóteses mais gerais
+
+Por outro lado, sabemos que $$(n - k - 1)s^2/\sigma^2 = \dfrac{\hat{u}'\hat{u}}{\sigma^2} \sim \chi^2_{n-k-1}$$
+
+. . . 
+
+Então,
+$$\dfrac{(R\hat{\beta} - r)' [R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q}{\hat{u}'\hat{u}/(n-k-1)}\sim F(q, n-k-1)$$
+ou, equivalentemente,
+
+$$(R\hat{\beta} - r)' [s^2(X'X)^{-1}]^{-1}(R\hat{\beta} - r)/q\sim F(q, n-k-1)$$
+
+
+> **Observação** $t^2_n = F(1, n)$
+
+
+## Testes de hipóteses mais gerais
+
+- Caso 2: $H_0: \beta_i = b$
+
+. . . 
+
+$$H_0: R\beta = b$$
+
+- $R = [0, \cdots, 0, 1, 0, \cdots, 1]$, $r = b$ e $q =1$.
+- $(R\hat{\beta} - r)' [s^2R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q \rightarrow \dfrac{(\hat{\beta}_j - b)^2}{s^2[X'X]^{-1}_{jj}} \sim F(1, n-k-1)$
+- $\dfrac{\hat{\beta}_j - b}{s \sqrt{[X'X]^{-1}_{jj}}} \sim t_{n - k- 1}$
+
+## Testes de hipóteses mais gerais
+
+- Caso 6: $H_0: \boldsymbol{\beta}_2 = 0$
+
+. . . 
+
+$$H_0: R\beta = 0$$
+
+- $R = [0_{k_2 \times k_1} \textbf{I}_{k_2}]$, $r = 0$ e $q = k_2$.
+- Se particionarmos $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$, temos que $X'X =
+  \left[ {\begin{array}{cc}
+    X_1' X_1 & X_1'X_2 \\
+    X_2'X_1 & X_2'X_2 \\
+  \end{array} } \right]$
+  
+. . . 
+
+::: callout-tip
+$A =
+  \left[ {\begin{array}{cc}
+    A_{11} & A_{12} \\
+    A_{21} & A_{22} \\
+  \end{array} } \right] \rightarrow A^{-1} = \left[ {\begin{array}{cc}
+    A_{11}^{-1} + A_{11}^{-1}A_{12}B_{22}A_{21}A_{11}^{-1} & -A_{11}^{-1}A_{12}B_{22}  \\
+  -B_{22}A_{21}A_{11}^{-1}   & B_{22} \\
+  \end{array} } \right],$ em que $B_{22} = (A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1}$
+:::
+  
+
+## Testes de hipóteses mais gerais
+
+Note que: $$B_{22} = (A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1} =$$ $$(\underbrace{X_2'X_2 - X_2'X_1(X_1'X_1)^{-1}X_1'X_2}_{\underbrace{X_2'(I - X_1(X_1'X_1)^{-1}X_1') X_2}_{X_2'M_1 X_2}})^{-1}$$
+
+. . . 
+
+Então, $(R\hat{\beta} - r)' [s^2R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q \rightarrow (\hat{\boldsymbol{\beta}}_2)'(s^{-2} X_2'M_1X_2) (\hat{\boldsymbol{\beta}}_2)/k_2 \sim F_{k_2, n - k - 1}$
+
+## Testes de hipóteses mais gerais
+
+
+Por outro lado,
+
+$$Y = [X_1, X_1][\boldsymbol{\hat{\beta}}_1,\boldsymbol{\hat{\beta}}_2]'+ \hat{u}$$
+
+. . . 
+
+$$M_1 Y = \underbrace{M_1X_1 \boldsymbol{\hat{\beta}}_1}_{0} + M_1X_2 \boldsymbol{\hat{\beta}}_2 + \underbrace{M_1 \hat{u}}_{\hat{u}}$$
+
+. . . 
+
+$$\underbrace{Y'M_1'M_1Y}_{Y'M_1Y} = \boldsymbol{\hat{\beta}}_2'X_2' M_1X_2 \boldsymbol{\hat{\beta}}_2 + \hat{u}'\hat{u}$$
+
+. . . 
+
+$$\dfrac{(Y'M_1Y - \hat{u}'\hat{u})/k_2}{\hat{u}'\hat{u}/(n - k -1)} = \dfrac{(SQRr - SQRi)/k_2}{SQRi/(n - k - 1)} \sim F_{k_2, n - k -1}$$
+
+## Testes de hipóteses mais gerais
+
+- Todos os testes foram obtidos sob HRLM1--HRML6.
+- O que acontece se HRML6 não se verifica? A estatística t e estatística F não terão mais distribuições t e F, respecivamente.
+- Quando o tamanho amostral é grande, a estaística t e estatística F terão distribuições aproximadamente t e F, respectivamente.
+- E se o tamanho amostral não for grande? Bootstrap!
 

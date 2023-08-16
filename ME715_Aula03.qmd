@@ -92,7 +92,7 @@ Distribuições amostrais são importantes pois nos permitem obter intervalos de
 Duas propriedades interessante são:
 
 $$\hat{\beta} \rightarrow_p \beta \quad e$$
-$$\sqrt{n}(\hat{\beta} - \beta) \rightarrow_d N(0, \sigma^2 (X'X)^{-1})$$
+$$\hat{\beta} - \beta \rightarrow_d N(0, \sigma^2 (X'X)^{-1})$$
 
 
 ## Propriedades Assintóticas do EMQO

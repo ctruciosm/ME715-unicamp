@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="ME715_Aula04_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="ME715_Aula04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -343,11 +407,294 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </section>
 <section>
 <section id="teste-t" class="title-slide slide level1 center">
-<h1>Teste T</h1>
+<h1>Teste t</h1>
 
 </section>
 <section id="teste-t-1" class="slide level2">
-<h2>Teste T</h2>
+<h2>Teste t</h2>
+<p>Sob HRLM1–HRLM6 e condicional aos valores amostrais de <span class="math inline">\(X\)</span>, <span class="math display">\[\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\mathbb{V}(\hat{\beta}_j | X)}} \sim N(0,1)\]</span></p>
+<div class="fragment">
+<ul>
+<li class="fragment"><strong>O bom:</strong> <span class="math inline">\(\sim N(0,1)\)</span></li>
+<li class="fragment"><strong>O problema:</strong> <span class="math inline">\(\mathbb{V}(\hat{\beta}_j | X)\)</span> depende de <span class="math inline">\(\sigma^2\)</span> mas nós nunca conhecemos <span class="math inline">\(\sigma^2\)</span>, então substituimos <span class="math inline">\(\sigma^2\)</span> por <span class="math inline">\(\hat{\sigma}^2\)</span>, obtendo assim nosso <span class="math inline">\(\widehat{\mathbb{V}}(\hat{\beta}_j | X)\)</span></li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j | X)}} \sim t_{n- k - 1}\]</span></p>
+</div>
+</section>
+<section id="teste-t-2" class="slide level2">
+<h2>Teste t</h2>
+<p>No modelo <span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_kX_k +u\]</span></p>
+<p>Geralmente, estamos interessados em testar <span class="math display">\[H_0: \beta_j = b \quad vs \quad H_1: \beta_j \neq b\]</span></p>
+<p><span class="math display">\[H_0: \beta_j \leq b \quad vs \quad H_1: \beta_j &gt; b\]</span></p>
+<p><span class="math display">\[H_0: \beta_j \geq b \quad vs \quad H_1: \beta_j &lt; b\]</span></p>
+<center>
+<span style="color:red;">Usualmente <span class="math inline">\(b = 0\)</span> (mas outros valores também são utilizados)</span>
+</center>
+</section>
+<section id="teste-t-3" class="slide level2">
+<h2>Teste t</h2>
+<p>Para testar hipóteses é preciso uma <strong>estatística de teste</strong>. A estatística utilizada no <strong>Teste T</strong> é chamada de <strong>estatística t</strong></p>
+<p><span class="math display">\[t_{\hat{\beta}_j} = \dfrac{\hat{\beta}_j - b}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j|X)}} \stackrel{H_0}{\sim} t_{n-(k+1)}\]</span></p>
+<p><strong>Quando:</strong></p>
+<ul>
+<li class="fragment"><span class="math inline">\(H_0: \beta_j = b \quad \text{vs} \quad H_1: \beta_j \neq b\)</span>, <strong>rejeitamos</strong> <span class="math inline">\(H_0\)</span> se <span class="math inline">\(|t_{\hat{\beta}_j}|&gt; c_0\)</span></li>
+<li class="fragment"><span class="math inline">\(H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j &lt; b\)</span>, <strong>rejeitamos</strong> <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &lt; c_1\)</span></li>
+<li class="fragment"><span class="math inline">\(H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j &gt; b\)</span>, <strong>rejeitamos</strong> <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &gt; c_2\)</span></li>
+</ul>
+<div class="fragment">
+<p>em que <span class="math inline">\(c\)</span> é um quantil da distribuição <span class="math inline">\(t_{n-k-1}\)</span> e depende do <em>nível de significância</em> <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</section>
+<section id="teste-t-4" class="slide level2">
+<h2>Teste t</h2>
+<p>Para um nível de significância<span class="math inline">\(\alpha\)</span>:</p>
+<p><strong>Teste Bilateral:</strong> <span class="math display">\[H_0: \beta_j = b \quad \text{vs} \quad H_1: \beta_j \neq b,\]</span> rejeitamos <span class="math inline">\(H_0\)</span> se <span class="math inline">\(|t_{\hat{\beta}_j}|&gt; c_0 = |t_{\alpha/2,n-(k+1)}| = t_{1-\alpha/2,n-(k+1)}\)</span></p>
+<div class="fragment">
+<p><strong>Teste Unilateral:</strong></p>
+<p><span class="math display">\[H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j &lt; b,\]</span> rejeitamos <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &lt; c_1 = t_{\alpha,n-(k+1)}.\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j &gt; b,\]</span> rejeitamos <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &gt; c_2 = t_{1-\alpha,n-(k+1)}.\)</span></p>
+</div>
+</section>
+<section id="teste-t-bilateral-h_1-beta_j-neq-0" class="slide level2">
+<h2>Teste t: Bilateral <span class="math inline">\(H_1: \beta_j \neq 0\)</span></h2>
+
+<img data-src="ME715_Aula04_files/figure-revealjs/unnamed-chunk-1-1.png" width="1152" class="r-stretch quarto-figure-center"></section>
+<section id="teste-t-unilateral-h_1-beta_j-0" class="slide level2">
+<h2>Teste t: Unilateral <span class="math inline">\(H_1: \beta_j &lt; 0\)</span></h2>
+
+<img data-src="ME715_Aula04_files/figure-revealjs/unnamed-chunk-2-1.png" width="1152" class="r-stretch quarto-figure-center"></section>
+<section id="teste-t-unilateral-h_1-beta_j-0-1" class="slide level2">
+<h2>Teste t: Unilateral <span class="math inline">\(H_1: \beta_j &gt; 0\)</span></h2>
+
+<img data-src="ME715_Aula04_files/figure-revealjs/unnamed-chunk-3-1.png" width="1152" class="r-stretch quarto-figure-center"></section>
+<section id="teste-t-5" class="slide level2">
+<h2>Teste t</h2>
+<p>Resumindo, para testar hipóteses precisamos:</p>
+<ol start="0" type="1">
+<li class="fragment">Definir o nível de significância <span class="math inline">\(\alpha\)</span>.</li>
+<li class="fragment">Calcular a estatística de teste <span class="math inline">\(t_{\hat{\beta}_j}\)</span>.</li>
+<li class="fragment">Comparar:
+<ul>
+<li class="fragment">Para <span class="math inline">\(H_0: \beta_j = b \quad vs. \quad H_1: \beta_j \neq b,\)</span> rejeitar <span class="math inline">\(H_0\)</span> se <span class="math inline">\(|t_{\hat{\beta}_j}| &gt; |t_{\alpha/2,n-(k+1)}|\)</span></li>
+<li class="fragment">Para <span class="math inline">\(H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j &lt; b,\)</span> rejeitar <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &lt; t_{\alpha,n-(k+1)}\)</span></li>
+<li class="fragment">Para <span class="math inline">\(H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j &gt; b,\)</span> rejeitar <span class="math inline">\(H_0\)</span> se <span class="math inline">\(t_{\hat{\beta}_j} &gt; t_{1-\alpha,n-(k+1)}.\)</span></li>
+</ul></li>
+<li class="fragment">Se não temos evidência para rejeitar <span class="math inline">\(H_0\)</span>, então <strong>não rejeitamos <span class="math inline">\(H_0\)</span></strong>.</li>
+</ol>
+</section>
+<section id="teste-t-6" class="slide level2">
+<h2>Teste t</h2>
+<p>O valor <span class="math inline">\(c\)</span> é obtido do quantil da distribuição <span class="math inline">\(t_{n-k-1}\)</span>, por exemplo:</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>n <span class="ot">=</span> <span class="dv">100</span>; k <span class="ot">=</span> <span class="dv">5</span>; alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># Hipótese Bilateral</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> n <span class="sc">-</span> k <span class="sc">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.985523</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Hipótese Unilateral</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">qt</span>(alpha, <span class="at">df =</span> n <span class="sc">-</span> k <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># ou </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.661226</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">df =</span> n <span class="sc">-</span> k <span class="sc">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.661226</code></pre>
+</div>
+</div>
+</section>
+<section id="teste-t-7" class="slide level2">
+<h2>Teste t</h2>
+<ul>
+<li class="fragment">A maioria de softwares testam a hipótese <span class="math inline">\(H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0\)</span>, e fornecem os <em>p-valores</em>.</li>
+<li class="fragment">Olhando para os <em>p-valores</em> podemos rejeitar ou não <span class="math inline">\(H_0\)</span> sem precisar calcular <span class="math inline">\(c\)</span></li>
+<li class="fragment"><strong>Cuidado</strong>, se nosso interesse é testar <span class="math inline">\(H_0: \beta_j = b\)</span> (com <span class="math inline">\(b \neq 0\)</span>) precisaremos fazer as contas <strong>manualmente</strong></li>
+</ul>
+</section>
+<section id="teste-t-exemplo" class="slide level2">
+<h2>Teste t: Exemplo</h2>
+<p>Assumindo que todas as suposições do modelo são verificadas, quais variáveis são estatísticamente significativas? (<span class="math inline">\(\beta_j \neq 0\)</span>)</p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">R</a></li><li><a href="#tabset-1-2">Python</a></li><li><a href="#tabset-1-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>modelo <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> tenure, <span class="at">data =</span> wage1)</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">round</span>(<span class="fu">summary</span>(modelo)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   0.2844     0.1042  2.7292   0.0066
+educ          0.0920     0.0073 12.5552   0.0000
+exper         0.0041     0.0017  2.3914   0.0171
+tenure        0.0221     0.0031  7.1331   0.0000</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>modelo <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ educ + exper + tenure'</span>, data<span class="op">=</span>wage1) </span>
+<span id="cb9-7"><a href="#cb9-7"></a>results <span class="op">=</span> modelo.fit()</span>
+<span id="cb9-8"><a href="#cb9-8"></a>results.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tbody><tr>
+  <th>Dep. Variable:</th>      <td>np.log(wage)</td>   <th>  R-squared:         </th> <td>   0.316</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.312</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   80.39</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Wed, 16 Aug 2023</td> <th>  Prob (F-statistic):</th> <td>9.13e-43</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:06:17</td>     <th>  Log-Likelihood:    </th> <td> -313.55</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   526</td>      <th>  AIC:               </th> <td>   635.1</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   522</td>      <th>  BIC:               </th> <td>   652.2</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     3</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</tbody></table>
+<table class="simpletable">
+<tbody><tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    0.2844</td> <td>    0.104</td> <td>    2.729</td> <td> 0.007</td> <td>    0.080</td> <td>    0.489</td>
+</tr>
+<tr>
+  <th>educ</th>      <td>    0.0920</td> <td>    0.007</td> <td>   12.555</td> <td> 0.000</td> <td>    0.078</td> <td>    0.106</td>
+</tr>
+<tr>
+  <th>exper</th>     <td>    0.0041</td> <td>    0.002</td> <td>    2.391</td> <td> 0.017</td> <td>    0.001</td> <td>    0.008</td>
+</tr>
+<tr>
+  <th>tenure</th>    <td>    0.0221</td> <td>    0.003</td> <td>    7.133</td> <td> 0.000</td> <td>    0.016</td> <td>    0.028</td>
+</tr>
+</tbody></table>
+<table class="simpletable">
+<tbody><tr>
+  <th>Omnibus:</th>       <td>11.534</td> <th>  Durbin-Watson:     </th> <td>   1.769</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.003</td> <th>  Jarque-Bera (JB):  </th> <td>  20.941</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.021</td> <th>  Prob(JB):          </th> <td>2.84e-05</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 3.977</td> <th>  Cond. No.          </th> <td>    135.</td>
+</tr>
+</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</div>
+</div>
+</div>
+<div id="tabset-1-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb10-4"><a href="#cb10-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> educ <span class="op">+</span> exper <span class="op">+</span> tenure), wage1);</span>
+<span id="cb10-5"><a href="#cb10-5"></a>table_reg <span class="op">=</span> <span class="fu">coeftable</span>(modelo);</span>
+<span id="cb10-6"><a href="#cb10-6"></a>table_reg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>─────────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error      t  Pr(&gt;|t|)    Lower 95%   Upper 95%
+─────────────────────────────────────────────────────────────────────────────
+(Intercept)  0.28436     0.10419      2.73    0.0066  0.0796756    0.489044
+educ         0.092029    0.00732992  12.56    &lt;1e-31  0.0776292    0.106429
+exper        0.00412111  0.00172328   2.39    0.0171  0.000735698  0.00750652
+tenure       0.0220672   0.00309365   7.13    &lt;1e-11  0.0159897    0.0281447
+─────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="teste-t-8" class="slide level2">
+<h2>Teste t</h2>
+<p>E se quisermos testar <span class="math inline">\(H_0: \beta_{educ} \geq 0 \quad \text{vs} \quad \beta_{educ} &lt; 0\)</span>?</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(modelo)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   0.2844     0.1042  2.7292   0.0066
+educ          0.0920     0.0073 12.5552   0.0000
+exper         0.0041     0.0017  2.3914   0.0171
+tenure        0.0221     0.0031  7.1331   0.0000</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment"><strong>Não podemos utilizar <span class="math inline">\(P(&gt; |t|)\)</span></strong> (Por quê?)</li>
+<li class="fragment">Note que <span class="math inline">\(P_{H_o}( |T| &gt; |t|) = 2 P_{H_0} (T &gt; |t|) = 2 P_{H_0} (T &lt; -|t|)\)</span></li>
+<li class="fragment">Então: <em>p-valor</em> unilateral = <span class="math inline">\(P_{H_o}( |T| &gt; |t|)/2\)</span></li>
+</ul>
+</section>
+<section id="teste-t-9" class="slide level2">
+<h2>Teste t</h2>
+<p>E se quisermos testar <span class="math inline">\(H_0: \beta_{educ} = 1 \quad \text{vs} \quad \beta_{educ} \neq 1\)</span>?</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">round</span>(<span class="fu">summary</span>(modelo)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   0.2844     0.1042  2.7292   0.0066
+educ          0.0920     0.0073 12.5552   0.0000
+exper         0.0041     0.0017  2.3914   0.0171
+tenure        0.0221     0.0031  7.1331   0.0000</code></pre>
+</div>
+</div>
+<ul>
+<li class="fragment"><strong>Não podemos utilizar nem “t value” nem <span class="math inline">\(P(&gt; |t|)\)</span></strong> (Por quê?)</li>
+<li class="fragment"><span class="math inline">\(t_{\hat{\beta}_{educ}} = \dfrac{\hat{\beta}_{educ} - 1}{\sqrt{\widehat{V}(\hat{\beta}_{educ})}} = \dfrac{0.0920-1}{0.0073} = -124.3836\)</span></li>
+<li class="fragment">Como é um teste de Hipóteses Bilateral rejeitamos <span class="math inline">\(H_0\)</span> se <span class="math inline">\(\underbrace{|t_{\hat{\beta}_{educ}}|} = {124.3836} &gt; \underbrace{|c|}_{1.964519},\)</span></li>
+</ul>
 </section></section>
 <section>
 <section id="teste-f" class="title-slide slide level1 center">
@@ -356,14 +703,297 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </section>
 <section id="teste-f-1" class="slide level2">
 <h2>Teste F</h2>
+<ul>
+<li class="fragment">A <strong>estatística t</strong> é utilizada para testar <strong>individualmente</strong> os parâmetros do modelo.</li>
+<li class="fragment">Seja o modelo <span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k\]</span> e suponha que queremos testar <span class="math display">\[H_0: \beta_2 = 0, \beta_3 = 0, \beta_5 = 0 \quad \text{vs} \quad H_1: H_0 \text{ não é verdadeiro}\]</span></li>
+<li class="fragment">Fazer um <strong>teste t</strong> para cada <span class="math inline">\(\beta\)</span>?</li>
+<li class="fragment"><strong>Não!</strong>. Precisamos fazer o teste de forma conjunta!</li>
+<li class="fragment">O teste F nos permite testar <span class="math inline">\(H_0\)</span> de forma conjunta!</li>
+</ul>
+</section>
+<section id="teste-f-2" class="slide level2">
+<h2>Teste F</h2>
+<p>Seja o modelo <span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k +u\]</span> E seja <span class="math inline">\(H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_q = 0\)</span>. Então, o modelo (sob <span class="math inline">\(H_0\)</span>) é dado por <span class="math display">\[y = \beta_0 + \beta_{q+1} x_{q+1} + \beta_{q+2} x_{q+2} + \ldots + \beta_k x_k +u\]</span></p>
+<div class="fragment">
+<blockquote>
+<p>Sob HRLM1–HRLM6, o é dado por <span class="math display">\[F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}\]</span></p>
+</blockquote>
+</div>
+</section>
+<section id="teste-f-3" class="slide level2">
+<h2>Teste F</h2>
+<p><span class="math display">\[F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}\]</span></p>
+<ul>
+<li class="fragment">Intuitivamente, estamos analisando quanto aumenta a SQR quando retiramos algumas das variáveis.</li>
+<li class="fragment">Se o aumento no SQR for grande (em relação ao SQR do modelo irrestrito) rejeitamos <span class="math inline">\(H_0\)</span> (pois a eliminação dessas variáveis aumeta muito a SQR)</li>
+<li class="fragment">Isto implica que se <span class="math inline">\(F\)</span> for suficientemente grande, rejeitamos <span class="math inline">\(H_0\)</span></li>
+<li class="fragment">Quão grande? depende do nível de significância <span class="math inline">\(\alpha\)</span>.</li>
+<li class="fragment">Como <span class="math inline">\(SQR_r \geq SQR_i\)</span> (sempre) o numerador será sempre <span class="math inline">\(\geq 0\)</span>, e valores grandes de <span class="math inline">\(F\)</span> nos levarão a rejeitar <span class="math inline">\(H_0\)</span> (teste unilateral).</li>
+</ul>
+</section>
+<section id="teste-f-4" class="slide level2">
+<h2>Teste F</h2>
+
+<img data-src="ME715_Aula04_files/figure-revealjs/unnamed-chunk-10-1.png" width="1152" class="r-stretch quarto-figure-center"></section>
+<section id="teste-f-5" class="slide level2">
+<h2>Teste F</h2>
+<p>No modelo <span class="math inline">\(\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 tenure + u\)</span></p>
+<p>Queremos testar: <span class="math inline">\(H_0: \beta_1=0, \beta_3 = 0 \quad \text{vs} \quad H_1: H_0 \text{ não é verdadeira}\)</span></p>
+<p><span class="math display">\[F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}\]</span></p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>modeloi <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> tenure, <span class="at">data =</span> wage1)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>modelor <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> exper, <span class="at">data =</span> wage1)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>SQRi <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(modeloi)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a>SQRr <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(modelor)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(wage1); k <span class="ot">=</span> <span class="dv">3</span>; q <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>est_F <span class="ot">=</span> ((SQRr <span class="sc">-</span> SQRi)<span class="sc">/</span>SQRi)<span class="sc">*</span>((n <span class="sc">-</span> k <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>q)</span>
+<span id="cb16-7"><a href="#cb16-7"></a>est_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 115.8532</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">qf</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">df1 =</span> q, <span class="at">df2 =</span> n <span class="sc">-</span> k <span class="sc">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.012991</code></pre>
+</div>
+</div>
+<p>Como <span class="math inline">\(\underbrace{F}_{115.8532} &gt; \underbrace{c}_{3.012991}\)</span>, então rejeitamos <span class="math inline">\(H_0\)</span> com um nível de significância <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+</section>
+<section id="teste-f-6" class="slide level2">
+<h2>Teste F</h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">R</a></li><li><a href="#tabset-2-2">Python</a></li><li><a href="#tabset-2-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>modeloi <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> tenure, <span class="at">data =</span> wage1)</span>
+<span id="cb20-2"><a href="#cb20-2"></a>modelor <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> exper, <span class="at">data =</span> wage1)</span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">anova</span>(modelor, modeloi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: log(wage) ~ exper
+Model 2: log(wage) ~ educ + exper + tenure
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    524 146.49                                  
+2    522 101.46  2    45.034 115.85 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a>modeloi <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ educ + exper + tenure'</span>, data<span class="op">=</span>wage1) </span>
+<span id="cb22-2"><a href="#cb22-2"></a>hypotheses <span class="op">=</span> [<span class="st">'educ = 0'</span>, <span class="st">'tenure = 0'</span>]</span>
+<span id="cb22-3"><a href="#cb22-3"></a>ftest <span class="op">=</span> results.f_test(hypotheses)</span>
+<span id="cb22-4"><a href="#cb22-4"></a>ftest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'statsmodels.stats.contrast.ContrastResults'&gt;
+&lt;F test: F=115.85321268596624, p=2.3026210669031218e-42, df_denom=522, df_num=2&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a>modeloi <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> educ <span class="op">+</span> exper <span class="op">+</span> tenure), wage1);</span>
+<span id="cb24-5"><a href="#cb24-5"></a>modelor <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> exper), wage1);</span>
+<span id="cb24-6"><a href="#cb24-6"></a>teste_F <span class="op">=</span> <span class="fu">ftest</span>(modelor.model, modeloi.model);</span>
+<span id="cb24-7"><a href="#cb24-7"></a>teste_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>F-test: 2 models fitted on 526 observations
+────────────────────────────────────────────────────────────────────
+     DOF  ΔDOF       SSR      ΔSSR      R²     ΔR²        F*   p(&gt;F)
+────────────────────────────────────────────────────────────────────
+[1]    3        146.4899            0.0124                          
+[2]    5     2  101.4556  -45.0343  0.3160  0.3036  115.8532  &lt;1e-41
+────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="teste-f-significância-geral-do-modelo" class="slide level2">
+<h2>Teste F (significância geral do modelo)</h2>
+<p>Dado um modelo da forma <span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_k X_k + u,\]</span></p>
+<p>um teste bastante rotineiro nos modelos de regressão é:</p>
+<p><span class="math display">\[H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_k=0 \quad \text{vs} \quad H_0: H_1 \text{ não é verdadeiro}\]</span></p>
+<div class="fragment">
+<p>Estes testes são geralmente feitos por padrão nos pacotes e quando encontrar “Teste F” estão-se referindo ao teste da significância global do modelo.</p>
+</div>
+</section>
+<section id="teste-f-significância-geral-do-modelo-1" class="slide level2">
+<h2>Teste F (significância geral do modelo)</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">R</a></li><li><a href="#tabset-3-2">Python</a></li><li><a href="#tabset-3-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>modeloi <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> tenure, <span class="at">data =</span> wage1)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">summary</span>(modeloi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = log(wage) ~ educ + exper + tenure, data = wage1)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.05802 -0.29645 -0.03265  0.28788  1.42809 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.284360   0.104190   2.729  0.00656 ** 
+educ        0.092029   0.007330  12.555  &lt; 2e-16 ***
+exper       0.004121   0.001723   2.391  0.01714 *  
+tenure      0.022067   0.003094   7.133 3.29e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4409 on 522 degrees of freedom
+Multiple R-squared:  0.316, Adjusted R-squared:  0.3121 
+F-statistic: 80.39 on 3 and 522 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1"></a>modeloi <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ educ + exper + tenure'</span>, data<span class="op">=</span>wage1) </span>
+<span id="cb28-2"><a href="#cb28-2"></a>results <span class="op">=</span> modeloi.fit()</span>
+<span id="cb28-3"><a href="#cb28-3"></a>results.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tbody><tr>
+  <th>Dep. Variable:</th>      <td>np.log(wage)</td>   <th>  R-squared:         </th> <td>   0.316</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.312</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   80.39</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Wed, 16 Aug 2023</td> <th>  Prob (F-statistic):</th> <td>9.13e-43</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>16:07:07</td>     <th>  Log-Likelihood:    </th> <td> -313.55</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   526</td>      <th>  AIC:               </th> <td>   635.1</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   522</td>      <th>  BIC:               </th> <td>   652.2</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     3</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</tbody></table>
+<table class="simpletable">
+<tbody><tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P&gt;|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    0.2844</td> <td>    0.104</td> <td>    2.729</td> <td> 0.007</td> <td>    0.080</td> <td>    0.489</td>
+</tr>
+<tr>
+  <th>educ</th>      <td>    0.0920</td> <td>    0.007</td> <td>   12.555</td> <td> 0.000</td> <td>    0.078</td> <td>    0.106</td>
+</tr>
+<tr>
+  <th>exper</th>     <td>    0.0041</td> <td>    0.002</td> <td>    2.391</td> <td> 0.017</td> <td>    0.001</td> <td>    0.008</td>
+</tr>
+<tr>
+  <th>tenure</th>    <td>    0.0221</td> <td>    0.003</td> <td>    7.133</td> <td> 0.000</td> <td>    0.016</td> <td>    0.028</td>
+</tr>
+</tbody></table>
+<table class="simpletable">
+<tbody><tr>
+  <th>Omnibus:</th>       <td>11.534</td> <th>  Durbin-Watson:     </th> <td>   1.769</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.003</td> <th>  Jarque-Bera (JB):  </th> <td>  20.941</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.021</td> <th>  Prob(JB):          </th> <td>2.84e-05</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 3.977</td> <th>  Cond. No.          </th> <td>    135.</td>
+</tr>
+</tbody></table><br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb29-3"><a href="#cb29-3"></a></span>
+<span id="cb29-4"><a href="#cb29-4"></a>modeloi <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> educ <span class="op">+</span> exper <span class="op">+</span> tenure), wage1);</span>
+<span id="cb29-5"><a href="#cb29-5"></a>modelor <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> <span class="fl">1</span>), wage1);</span>
+<span id="cb29-6"><a href="#cb29-6"></a>teste_F <span class="op">=</span> <span class="fu">ftest</span>(modelor.model, modeloi.model);</span>
+<span id="cb29-7"><a href="#cb29-7"></a>teste_F</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>F-test: 2 models fitted on 526 observations
+────────────────────────────────────────────────────────────────────
+     DOF  ΔDOF       SSR      ΔSSR       R²     ΔR²       F*   p(&gt;F)
+────────────────────────────────────────────────────────────────────
+[1]    2        148.3297            -0.0000                         
+[2]    5     3  101.4556  -46.8742   0.3160  0.3160  80.3909  &lt;1e-42
+────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="teste-f-7" class="slide level2">
+<h2>Teste F</h2>
+</section>
+<section id="teste-f-8" class="slide level2">
+<h2>Teste F</h2>
+<ul>
+<li class="fragment">O <strong>teste F</strong> a diferença do <strong>teste T</strong>, permite que testemos conjuntamente hipóteses com mais de uma restrição.</li>
+<li class="fragment">Às vezes os resultados obtidos pelos testes <strong>t</strong> e <strong>F</strong> podem levar a conclusões diferentes, nestes casos é preciso analisar cuidadosamente cada caso (em geral, na presença de multicolinearidade, o teste F é menos afetado. Por outro lado, quado utilizamos múltiplos testes T, <a href="https://stats.stackexchange.com/questions/152805/difference-between-f-test-and-separate-t-tests-on-each-variable">aumenta a chance de obtermos falsos positivos</a>.).</li>
+<li class="fragment">No <strong>teste F</strong> quando <span class="math inline">\(q = 1\)</span>, o <strong>teste F</strong> e o <strong>teste t</strong> são equivalentes.</li>
+</ul>
 </section></section>
 <section>
-<section id="testes-de-hipóteses-avançados" class="title-slide slide level1 center">
-<h1>Testes de hipóteses avançados</h1>
+<section id="testes-de-hipóteses-mais-gerais" class="title-slide slide level1 center">
+<h1>Testes de hipóteses mais gerais</h1>
 
 </section>
-<section id="testes-de-hipóteses-avançados-1" class="slide level2">
-<h2>Testes de hipóteses avançados</h2>
+<section id="testes-de-hipóteses-mais-gerais-1" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
 <p>Imagine os seguintes casos:</p>
 <table>
 <thead>
@@ -401,12 +1031,12 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </table>
 <p>Em que <span class="math inline">\(\boldsymbol{\beta} = [\boldsymbol{\beta}_1, \boldsymbol{\beta}_2]\)</span> com <span class="math inline">\(\boldsymbol{\beta}_1\)</span> de dimensão <span class="math inline">\(k_1\)</span> e <span class="math inline">\(\boldsymbol{\beta}_2\)</span> de dimensão <span class="math inline">\(k_2\)</span></p>
 <center>
-<span style="color:blue;">Os casos 1 e 2 são os casos mais simples, mas como fazer se estivermos interessados nos casos 3, 4, 5 ou 6?</span>
+<span style="color:blue;">Os casos 1, 2 e 5 são os casos mais simples, mas como fazer se estivermos interessados nos casos 3, 4 ou 6?</span>
 </center>
 </section>
-<section id="testes-de-hipóteses-avançados-2" class="slide level2">
-<h2>Testes de hipóteses avançados</h2>
-<p>Todos os casos anteriores estão dentro do seguinte caso: <span class="math display">\[H_0: R \boldsymbol{\beta} = r \quad ou \quad \equiv \quad H_0: R \boldsymbol{\beta} - r = 0\]</span></p>
+<section id="testes-de-hipóteses-mais-gerais-2" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<p>Todos os casos anteriores estão dentro do seguinte escopo: <span class="math display">\[H_0: R \boldsymbol{\beta} = r \quad ou \quad \equiv \quad H_0: R \boldsymbol{\beta} - r = 0\]</span></p>
 <p>em que</p>
 <ul>
 <li class="fragment"><span class="math inline">\(R_{q \times k + 1}\)</span> com <span class="math inline">\(q &lt; k+1\)</span>,</li>
@@ -414,8 +1044,8 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li class="fragment"><span class="math inline">\(\boldsymbol{\beta} = [\beta_0, \beta_1, \cdots, \beta_k]'\)</span></li>
 </ul>
 </section>
-<section id="testes-de-hipóteses-avançados-3" class="slide level2">
-<h2>Testes de hipóteses avançados</h2>
+<section id="testes-de-hipóteses-mais-gerais-3" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
 <table>
 <colgroup>
 <col style="width: 46%">
@@ -450,10 +1080,110 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(H_0: \boldsymbol{\beta}_2 = 0\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(R = [0_{k_2 \times k_1 }, \textbf{I}_{k_2}]\)</span>, r = 0, q = k_2</td>
+<td style="text-align: center;"><span class="math inline">\(R = [0_{k_2 \times k_1 }, \textbf{I}_{k_2}]\)</span>, r = 0, q = <span class="math inline">\(k_2\)</span></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-4" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<p>Sob as hipóteses do modelo linear clássico e condicional em <span class="math inline">\(\textbf{X}\)</span>, <span class="math display">\[\hat{\beta} \sim N(\beta, \sigma^2 (X'X)^{-1}),\]</span></p>
+<div class="fragment">
+<p><span class="math display">\[R\hat{\beta} \sim N(R\beta, \sigma^2 R(X'X)^{-1}R'),\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[R\hat{\beta} - R\beta \sim N(0, \sigma^2 R(X'X)^{-1}R'),\]</span></p>
+</div>
+<div class="fragment">
+<p>Sob <span class="math inline">\(H_0\)</span></p>
+<p><span class="math display">\[R\hat{\beta} - r \sim N(0, \sigma^2 R(X'X)^{-1}R'),\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[(R\hat{\beta} - r)' [\sigma^2 R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r) \sim \chi^2_q,\]</span></p>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-5" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<p>Por outro lado, sabemos que <span class="math display">\[(n - k - 1)s^2/\sigma^2 = \dfrac{\hat{u}'\hat{u}}{\sigma^2} \sim \chi^2_{n-k-1}\]</span></p>
+<div class="fragment">
+<p>Então, <span class="math display">\[\dfrac{(R\hat{\beta} - r)' [R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q}{\hat{u}'\hat{u}/(n-k-1)}\sim F(q, n-k-1)\]</span> ou, equivalentemente,</p>
+<p><span class="math display">\[(R\hat{\beta} - r)' [s^2(X'X)^{-1}]^{-1}(R\hat{\beta} - r)/q\sim F(q, n-k-1)\]</span></p>
+<blockquote>
+<p><strong>Observação</strong> <span class="math inline">\(t^2_n = F(1, n)\)</span></p>
+</blockquote>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-6" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<ul>
+<li class="fragment">Caso 2: <span class="math inline">\(H_0: \beta_i = b\)</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[H_0: R\beta = b\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(R = [0, \cdots, 0, 1, 0, \cdots, 1]\)</span>, <span class="math inline">\(r = b\)</span> e <span class="math inline">\(q =1\)</span>.</li>
+<li class="fragment"><span class="math inline">\((R\hat{\beta} - r)' [s^2R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q \rightarrow \dfrac{(\hat{\beta}_j - b)^2}{s^2[X'X]^{-1}_{jj}} \sim F(1, n-k-1)\)</span></li>
+<li class="fragment"><span class="math inline">\(\dfrac{\hat{\beta}_j - b}{s \sqrt{[X'X]^{-1}_{jj}}} \sim t_{n - k- 1}\)</span></li>
+</ul>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-7" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<ul>
+<li class="fragment">Caso 6: <span class="math inline">\(H_0: \boldsymbol{\beta}_2 = 0\)</span></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[H_0: R\beta = 0\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(R = [0_{k_2 \times k_1} \textbf{I}_{k_2}]\)</span>, <span class="math inline">\(r = 0\)</span> e <span class="math inline">\(q = k_2\)</span>.</li>
+<li class="fragment">Se particionarmos <span class="math inline">\(\textbf{X} = [\textbf{X}_1 \textbf{X}_2]\)</span>, temos que <span class="math inline">\(X'X = \left[ {\begin{array}{cc}  X_1' X_1 &amp; X_1'X_2 \\  X_2'X_1 &amp; X_2'X_2 \\ \end{array} } \right]\)</span></li>
+</ul>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(A =  \left[ {\begin{array}{cc}  A_{11} &amp; A_{12} \\  A_{21} &amp; A_{22} \\  \end{array} } \right] \rightarrow A^{-1} = \left[ {\begin{array}{cc}  A_{11}^{-1} + A_{11}^{-1}A_{12}B_{22}A_{21}A_{11}^{-1} &amp; -A_{11}^{-1}A_{12}B_{22} \\  -B_{22}A_{21}A_{11}^{-1} &amp; B_{22} \\  \end{array} } \right],\)</span> em que <span class="math inline">\(B_{22} = (A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-8" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<p>Note que: <span class="math display">\[B_{22} = (A_{22} - A_{21}A_{11}^{-1}A_{12})^{-1} =\]</span> <span class="math display">\[(\underbrace{X_2'X_2 - X_2'X_1(X_1'X_1)^{-1}X_1'X_2}_{\underbrace{X_2'(I - X_1(X_1'X_1)^{-1}X_1') X_2}_{X_2'M_1 X_2}})^{-1}\]</span></p>
+<div class="fragment">
+<p>Então, <span class="math inline">\((R\hat{\beta} - r)' [s^2R(X'X)^{-1}R']^{-1}(R\hat{\beta} - r)/q \rightarrow (\hat{\boldsymbol{\beta}}_2)'(s^{-2} X_2'M_1X_2) (\hat{\boldsymbol{\beta}}_2)/k_2 \sim F_{k_2, n - k - 1}\)</span></p>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-9" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<p>Por outro lado,</p>
+<p><span class="math display">\[Y = [X_1, X_1][\boldsymbol{\hat{\beta}}_1,\boldsymbol{\hat{\beta}}_2]'+ \hat{u}\]</span></p>
+<div class="fragment">
+<p><span class="math display">\[M_1 Y = \underbrace{M_1X_1 \boldsymbol{\hat{\beta}}_1}_{0} + M_1X_2 \boldsymbol{\hat{\beta}}_2 + \underbrace{M_1 \hat{u}}_{\hat{u}}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\underbrace{Y'M_1'M_1Y}_{Y'M_1Y} = \boldsymbol{\hat{\beta}}_2'X_2' M_1X_2 \boldsymbol{\hat{\beta}}_2 + \hat{u}'\hat{u}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\dfrac{(Y'M_1Y - \hat{u}'\hat{u})/k_2}{\hat{u}'\hat{u}/(n - k -1)} = \dfrac{(SQRr - SQRi)/k_2}{SQRi/(n - k - 1)} \sim F_{k_2, n - k -1}\]</span></p>
+</div>
+</section>
+<section id="testes-de-hipóteses-mais-gerais-10" class="slide level2">
+<h2>Testes de hipóteses mais gerais</h2>
+<ul>
+<li class="fragment">Todos os testes foram obtidos sob HRLM1–HRML6.</li>
+<li class="fragment">O que acontece se HRML6 não se verifica? A estatística t e estatística F não terão mais distribuições t e F, respecivamente.</li>
+<li class="fragment">Quando o tamanho amostral é grande, a estaística t e estatística F terão distribuições aproximadamente t e F, respectivamente.</li>
+<li class="fragment">E se o tamanho amostral não for grande? Bootstrap!</li>
+</ul>
 
 <img src="imagens/imecc.png" class="slide-logo r-stretch"><div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>

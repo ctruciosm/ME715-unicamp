@@ -1,0 +1,33 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Heterocedasticidade"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
