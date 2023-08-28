@@ -31,3 +31,341 @@ format:
             data-background-opacity: "1"
 ---
 
+# Introdução
+
+## Introdução
+
+- Até agora, temos assumido que HRLM5 acontece, ou seja $\mathbb{V}(u|\textbf{X}) = \sigma^2 \textbf{I}$
+
+- Mas, o que acontece se esta hipótese não se verifica?
+- Suponha que em geral, temos: $$\mathbb{V}(u|\textbf{X}) = \begin{bmatrix}
+\sigma^2_1 & 0 & 0 &\cdots & 0\\
+0 & \sigma^2_2 & 0 & \cdots & 0 \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+0 & 0 & 0 & \cdots & \sigma^2_n \\
+\end{bmatrix} = \sigma^2 \Omega $$
+
+
+# Consequências
+
+## Consequências
+
+Seja $$Y = X \beta + u, \quad com \quad \mathbb{E}(u|X) = 0 \quad e \quad \mathbb{V}(u|X) = \sigma^2 \Omega.$$
+
+- $\hat{\beta}$ continua sendo não viesado.
+- $\mathbb{V}(\hat{\beta}|X) \neq \sigma^2(X'X)^{-1}$.
+- $\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}X'\Omega X(X'X)^{-1}$
+
+. . . 
+
+> Na presença de heterocedasticidade, $\hat{\beta}_{MQO}$ ainda são não viesados, mas para podermos fazer inferência, precisamos estimar $\mathbb{V}(\hat{\beta}|X)$ corretamente.
+
+# Estimador de White
+
+## Estimador de White
+
+- $\sigma^2 \Omega$ contém $n$ parametros. Assim, no total temos $n + k + 1$ parâmetros a serem estimados.
+- Temos apenas $n$ observações. Isto torna o problema impossível de ser resolvido.
+- [White (1980)](https://www.jstor.org/stable/1912934) mostrou que não precisamos estimar $\sigma^2 \Omega$. De fato, podemos resolver o problema estimando $X'\sigma^2 \Omega X$ (que tem dimensão bem menor).
+- Note que, $X'\sigma^2 \Omega X = \displaystyle \sum_{i = 1}^n \sigma_i^2 x_i x_i'$
+- O estimador de White substitui $\sigma_i^2$ com $\hat{u}^2_i$ ($i = 1, \cdots, n$), em que $\hat{u}_i = y_i - x_i' \hat{\beta}_{MQO}$ como usual.
+- Com esta correção, teremos testes f, F e qualquer teste da forma $H_0: R\beta = r$ assintóticamente validos.
+
+
+## Estimador de White
+
+- O estimador de White funciona bem quando $n \rightarrow \infty$.
+- Pode não funcionar muito bem quando $n$ é pequeno.
+- Em amostras pequenas, utilizar $n\hat{u}_i^2/(n - k - 1)$ ou $\hat{u}_i^2/(1-h_i)$ em lugar de $\hat{u}_i^2$ ($h_i = x_i'(X'X)^{-1}x_i$) melhora o desempenho do estimador.
+
+
+## Estimador de White
+
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data=wage1)
+summary(modelo)$coefficients
+# Estimador de White
+library(car) # Contém a função para o estimador de White
+white_estimator <- hccm(modelo, type = "hc0") 
+## hco: White clássico, 
+## hc1: correção para pequenas amostras
+round(sqrt(diag(white_estimator)), 8)
+```
+
+
+## Python
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+table = pd.DataFrame({'b': round(results.params, 4), 'se': round(results.bse, 4)})
+print(table)
+
+results_white = modelo.fit(cov_type = 'HC0')
+table_white = pd.DataFrame({'b': round(results_white.params, 4), 'se': round(results_white.bse, 4)})
+print(table_white)
+```
+
+
+## Julia
+
+Não existe um função pronta em Julia. Opções:
+
+a. Implementar nossa propria função (ver lista de exercícios).
+b. Chamar funções do R ou do Python para funcionarem em Julia (mas precisa configurar corretamente o ambiente para isso).
+
+
+
+:::
+
+
+## Estimador de White
+
+
+- No exemplo anterior, os valores estimados do desvio padrão são muito próximos. 
+- Muito provavelmente, teremos que no exemplo a hipótese de homocedasticidade não pode ser rejeitada.
+- O estimador de White funciona também quando temos homocedasticidade.
+- Se White também funciona sob homocedasticidade, por que não usar diretamente este estimador?
+- O estimador de White tem um bom desempenho quando $n \rightarrow \infty$. Em amostras pequenas (mesmo depois da correção), se todas as outras hipóteses forem satisfeitas, é melhor utilizar a versão padrão de $\widehat{\mathbb{V}}(\hat{\beta}|X)$.
+- Em amostras grandes, podemos sim utilizar diretamente White.
+
+
+
+# Testes para detetar heterocedasticidade
+
+## Testes para detetar heterocedasticidade
+
+
+- Sob HRML4, $\mathbb{E}(u|\textbf{X}) = 0$.
+- Isto implica que, $\mathbb{V}(u|\textbf{X}) = \mathbb{E}(u^2|\textbf{X})$.
+- Assim, homocedasticidade equivale a $\mathbb{E}(u^2|\textbf{X}) = \sigma^2I$.
+- Assim, para verificar homocedasticidade, podemos verificar se $u^2$ está relacionado a uma ou mais variáveis explicativas. Por exemplo, ajustar a regressão $u^2 = \delta_0 + \delta_1 x_1 + \cdots + \delta_k x_k + \nu$ e verificar se $H_0: \delta_1 = \delta_2 = \cdots = \delta_k = 0$.
+- Nunca conhecemos $u_i$, mas temos estimativas dele ($\hat{u}_i$). Assim, podemos testar homocedasticidade verificando se $\hat{u}^2$ está relacionado a uma ou mais variáveis explicativas
+
+## Testes para detetar heterocedasticidade
+
+
+### Teste de White
+
+O procedimento consiste em fazer uma regressão auxiliar de $\hat{u}^2$ sob todas as variaveis, seus quadrados e produtos cruzados.
+
+. . . 
+
+Sob $H_0$ (homocedasticidade), $$nR^2 \sim \chi^2_q,$$ em que $q$ é o número de variáveis no modelo auxiliar.
+
+. . . 
+
+[Se rejeitamos $H_0$, temos evidência de heterocedasticidade (mas não sabemos a forma que tem).]{style="color:red;"}
+
+. . . 
+
+> Uma outra desvantagem do teste é que se no modelo $k$ for grande, no modelo auxiliar q = k(k+1)/2 - 1. Esse número elevado torna o teste com pouco poder (rejeitar $H_0$ quando $H_0$ é falso)
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de White
+
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| echo: true
+library(lmtest)
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data=wage1)
+bptest(modelo, ~ fitted(modelo) + I(fitted(modelo)^2) )
+```
+
+
+## Python
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+X_wh = pd.DataFrame({'const': 1, 
+                     'fitted_reg': results.fittedvalues,
+                     'fitted_reg_sq': results.fittedvalues**2}) 
+result_white = sm.stats.diagnostic.het_breuschpagan(results.resid, X_wh)
+result_white[1] # pvalor
+```
+
+
+
+
+## Julia
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, HypothesisTests
+
+wage1 = DataFrame(wooldridge("wage1"));
+modelo = lm(@formula(log(wage) ~ married * female + educ + exper + (exper^2) + tenure + (tenure^2)), wage1);
+
+X_wh = hcat(ones(size(wage1)[1]), predict(modelo), predict(modelo).^ 2);
+result_white = WhiteTest(X_wh, residuals(modelo), type=:linear);
+pvalue(result_white)
+```
+
+
+:::
+
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+Seja o modelo $$Y = X\beta + u, \quad com \quad \mathbb{E}(u|X) = 0 \quad e \quad \mathbb{V}(u_i) = \sigma_i^2 = h(z_i'\alpha),$$ em que:
+
+::: {non-incremental}
+- $z_i' = [1, z_{i1}, \cdots, z_{pi}]$ é um vetor de variáveis
+- $\alpha = [\alpha_1, \alpha_2, \cdots, \alpha_p]$ é um vetor de coeficientes desconhecidos e
+- $h(\cdot): \mathbb{R} \rightarrow \mathbb{R}^{+}$
+:::
+
+. . . 
+
+$$H_0: \alpha_2 = \cdots = \alpha_p = 0 \quad (homocedasticidade)$$
+
+. . . 
+
+Sob $H_0$, $\sigma_i^2 = h(\alpha_1), \forall i$ (ou seja, homocedasticidade)
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+O procedimento funciona da seguinte forma:
+
+1. Estimar o modelo original por MQO e obter $\hat{u}_i = y_i - \hat{y}_i$ e $\tilde{\sigma}^2 = \displaystyle \sum_{i = 1}^n \hat{u}_i^2/n$.
+2. Regredir $\hat{u}_i^2/\tilde{\sigma}^2$ sob $z$ por MQO e calcular a soma de quadrado explicada (SQE).
+3. Sob $H_0$, $0.5 SQE \sim \chi^1_{p-1}$
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+- Um teste assintóticamente equivalente consiste em regredir $\hat{u}_i^2$ sob $z$. Nesse caso, $nR^2 \sim \chi_{p-1}^2$.
+- O teste requer que conhecamos as variáveis $z$ que podem causar a heterocedasticidade. Na prática essas variáveis não são conhecidas e usualmente utilizamos algumas (todas?) das variáveis em $x$. Isto faz com que o teste seja basicamente um caso ad-hoc do teste de White.
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| echo: true
+library(lmtest)
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data = wage1)
+bptest(modelo)
+```
+
+
+## Python
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import patsy as pt
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+y, X_bp = pt.dmatrices('np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1, return_type = 'dataframe')
+
+result_bp = sm.stats.diagnostic.het_breuschpagan(results.resid, X_bp)
+result_bp[1] # pvalor
+
+X_bp
+```
+
+
+
+
+## Julia
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, HypothesisTests, StatsModels
+
+function getMats(formula, df)
+  f = apply_schema(formula, schema(formula, df)) 
+  resp, pred = modelcols(f, df)
+  return (resp, pred)
+end
+
+wage1 = DataFrame(wooldridge("wage1"));
+f = @formula(log(wage) ~ married * female + educ + exper + (exper^2) + tenure + (tenure^2));
+modelo = lm(f, wage1);
+
+X_bp =  hcat(ones(size(wage1)[1]), getMats(f, wage1)[2]);
+
+result_bp = WhiteTest(X_bp, residuals(modelo), type=:linear);
+pvalue(result_bp)
+```
+
+
+:::
+
+
+
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Goldfeld-Quandt
+
+Teste simples que pode ser aplicado quando apenas uma variável é quem causa a heterocedasticidade. Para ilustrar o procedimento, imagine que $\sigma_i^2$ esteja poitivamente correlacionado com $X_k$. O teste funciona da seguinte forma:
+
+1. Reordenar as observações pelo valor de $x_k$.
+2. Omitir as $c$ observações centrais.
+3. Ajustar dois modelos de regressão por MQO (cada um com $(n - c)/2$ observações).
+4. Calcular a Soma de Quadrados dos Residuos em ambas as regressões e então calcular $R = \dfrac{SQR_2}{SQR_1}$.
+5. Sob $H_0$, $R \sim F_{(n - c - 2(k+1))/2, (n - c - 2(k+1))/2}$
+
+. . . 
+
+> O poder do teste depende do valor $c$. Um valor usual é $c = n/3$
+
+
+# Estimação
+
+## Estimação

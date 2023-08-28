@@ -479,7 +479,61 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </details>
 
 </div>
-<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
+<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="variáveis-irrelevantes-no-modelo-de-regressão-5" class="slide level2">
+<h2>Variáveis irrelevantes no modelo de regressão</h2>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Teorema FWL (Frisch-Waugh-Lovell)</strong></p>
+</div>
+<div class="callout-content">
+<p>Sejam os modelos <span class="math display">\[Y = \textbf{X}_1\beta_1 + \textbf{X}_2 \beta_2 + u \quad e \quad M_1Y = M_1 \textbf{X}_2 \beta_2 + \nu,\]</span> em que <span class="math inline">\(M_1 = \textbf{I}- X_1(X_1'X_1)^{-1}X_1'\)</span></p>
+<ol type="1">
+<li class="fragment"><span class="math inline">\(\hat{\beta_2}\)</span> em ambas as regressões é numericamente idêntico.</li>
+<li class="fragment"><span class="math inline">\(\hat{u}\)</span> e <span class="math inline">\(\hat{\nu}\)</span> são numericamente idênticos.</li>
+</ol>
+</div>
+</div>
+</div>
+<p><strong>Demostração</strong> (ver lista)</p>
+</section>
+<section id="variáveis-irrelevantes-no-modelo-de-regressão-6" class="slide level2">
+<h2>Variáveis irrelevantes no modelo de regressão</h2>
+<p>Suponha que estimamos o modelo <span class="math display">\[Y = \textbf{X}\delta + \textbf{Z}\gamma + u, \quad u \sim IID(0, \sigma^2I )\]</span></p>
+<p>mas o verdadeiro modelo é <span class="math display">\[Y = \textbf{X}\beta + u,  \quad u \sim IID(0, \sigma^2I ).\]</span></p>
+<div class="fragment">
+<ul>
+<li class="fragment">Pelo teorema FWL, <span class="math inline">\(\hat{\delta} = (X'M_z X)^{-1} X' M_zY\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\hat{\delta} = (X'M_z X)^{-1} X' M_z(X \beta + u)\)</span></li>
+<li class="fragment"><span class="math inline">\(\hat{\delta} = \beta + (X'M_z X)^{-1} X' M_z u\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\hat{\delta}|X,Z) = \beta + (X'M_z X)^{-1} X' M_z \underbrace{\mathbb{E}(u|X,Z)}_{0}\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\hat{\delta}) = \beta\)</span></li>
+</ul>
+</div>
+</section>
+<section id="variáveis-irrelevantes-no-modelo-de-regressão-7" class="slide level2">
+<h2>Variáveis irrelevantes no modelo de regressão</h2>
+<center>
+Então podemos incluir variáveis sem nenhum prejuizo?
+</center>
+<p>Não!.</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) = \sigma^2 (X' M_z X)^{-1}\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span>.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li class="fragment">Provar que <span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span> é equivalente a provar que <span class="math inline">\(\mathbb{V}(\hat{\beta}|X)^{-1} \geq \mathbb{V}(\hat{\delta}|X,Z)^{-1}\)</span></li>
+<li class="fragment">Mas <span class="math inline">\(X'X - X'M_zX = X'(I - M_z)X = X'P_z'P_zX = (P_z X)'P_zX \geq 0\)</span>.</li>
+<li class="fragment">Então, <span class="math inline">\(\underbrace{\sigma^{-2} X'X}_{\mathbb{V}(\hat{\beta}|X)^{-1}} - \underbrace{\sigma^{-2}X'M_zX}_{\mathbb{V}(\hat{\delta}|X,Z)^{-1}} \geq 0\)</span>.</li>
+<li class="fragment">Logo, <span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span>.</li>
+</ul>
+</div>
+</section></section>
 <section>
 <section id="variáveis-omitidas" class="title-slide slide level1 center">
 <h1>Variáveis omitidas</h1>
@@ -518,9 +572,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <span id="cb2-13"><a href="#cb2-13"></a>  betas_o[i, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span>
 <span id="cb2-14"><a href="#cb2-14"></a>}</span>
 <span id="cb2-15"><a href="#cb2-15"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="fu">boxplot</span>(betas)</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="fu">boxplot</span>(betas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb2-17"><a href="#cb2-17"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="fu">boxplot</span>(betas_o)</span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="fu">boxplot</span>(betas_o, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb2-19"><a href="#cb2-19"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas - omitidas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
@@ -546,9 +600,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <span id="cb3-13"><a href="#cb3-13"></a>  betas_o[i, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span>
 <span id="cb3-14"><a href="#cb3-14"></a>}</span>
 <span id="cb3-15"><a href="#cb3-15"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="fu">boxplot</span>(betas)</span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="fu">boxplot</span>(betas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="fu">boxplot</span>(betas_o)</span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="fu">boxplot</span>(betas_o, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb3-19"><a href="#cb3-19"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas - omitidas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
@@ -574,9 +628,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <span id="cb4-13"><a href="#cb4-13"></a>  betas_o[i, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span>
 <span id="cb4-14"><a href="#cb4-14"></a>}</span>
 <span id="cb4-15"><a href="#cb4-15"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="fu">boxplot</span>(betas)</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="fu">boxplot</span>(betas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb4-17"><a href="#cb4-17"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="fu">boxplot</span>(betas_o)</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="fu">boxplot</span>(betas_o, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
 <span id="cb4-19"><a href="#cb4-19"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas - omitidas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
@@ -601,7 +655,47 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <div class="fragment">
 <p><strong>Muitas vezes é dificil determinar o sinal do vies, mas o importante aqui é saber que, resultados contraintuitivos, podem ser fruto de estimadores viesados.</strong></p>
 </div>
-</section></section>
+</section>
+<section id="variáveis-omitidas-6" class="slide level2">
+<h2>Variáveis omitidas</h2>
+<p>Sejam <span class="math inline">\(\textbf{X} = [\textbf{X}_1 \textbf{X}_2]\)</span> e <span class="math inline">\(\beta = [\beta_1 \beta_2]'\)</span> e seja o modelo populacional</p>
+<p><span class="math display">\[Y = \textbf{X} \beta + u\]</span></p>
+<div class="fragment">
+<ul>
+<li class="fragment">Vamos supor que trabalhamos como se o modelo fosse <span class="math inline">\(Y = X_1 \beta_1 + u\)</span>.</li>
+<li class="fragment">Em geral, <span class="math inline">\(\mathbb{E}(\hat{\beta}_1) \neq \beta_1\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\hat{\beta}_1) = \beta_1\)</span> se <span class="math inline">\(\beta_2 = 0\)</span> ou <span class="math inline">\(X_1'X_2 = 0\)</span> (ortogonal). Se <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> forem centradas, é equivalente a dizer que a correlação deve ser 0.</li>
+</ul>
+</div>
+</section>
+<section id="variáveis-omitidas-7" class="slide level2">
+<h2>Variáveis omitidas</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>betas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>betas_o <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  u <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>  x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb5-8"><a href="#cb5-8"></a>  x1 <span class="ot">&lt;-</span> x[,<span class="dv">1</span>]</span>
+<span id="cb5-9"><a href="#cb5-9"></a>  x2 <span class="ot">&lt;-</span> x[,<span class="dv">2</span>]</span>
+<span id="cb5-10"><a href="#cb5-10"></a>  x3 <span class="ot">&lt;-</span> x[,<span class="dv">3</span>]</span>
+<span id="cb5-11"><a href="#cb5-11"></a>  y <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">+</span> <span class="fl">0.6</span><span class="sc">*</span>x1 <span class="sc">-</span> <span class="fl">0.2</span><span class="sc">*</span>x2 <span class="sc">+</span> <span class="fl">0.9</span><span class="sc">*</span>x3 <span class="sc">+</span> u</span>
+<span id="cb5-12"><a href="#cb5-12"></a>  betas[i, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3))</span>
+<span id="cb5-13"><a href="#cb5-13"></a>  betas_o[i, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span>
+<span id="cb5-14"><a href="#cb5-14"></a>}</span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="fu">boxplot</span>(betas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="fu">boxplot</span>(betas_o, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>))</span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas - omitidas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
 <section>
 <section id="multicolinearidade" class="title-slide slide level1 center">
 <h1>Multicolinearidade</h1>
@@ -623,32 +717,32 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>vbetas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
-<span id="cb5-4"><a href="#cb5-4"></a>vbetas_m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb5-6"><a href="#cb5-6"></a>x1 <span class="ot">&lt;-</span> x[,<span class="dv">1</span>]</span>
-<span id="cb5-7"><a href="#cb5-7"></a>x2 <span class="ot">&lt;-</span> x[,<span class="dv">2</span>]</span>
-<span id="cb5-8"><a href="#cb5-8"></a>z <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.99</span>, <span class="fl">0.99</span>, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb5-9"><a href="#cb5-9"></a>z1 <span class="ot">&lt;-</span> z[,<span class="dv">1</span>]</span>
-<span id="cb5-10"><a href="#cb5-10"></a>z2 <span class="ot">&lt;-</span> z[,<span class="dv">2</span>]</span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb5-12"><a href="#cb5-12"></a>  u <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb5-13"><a href="#cb5-13"></a>  y1 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">+</span> <span class="fl">0.6</span><span class="sc">*</span>x1 <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>x2 <span class="sc">+</span> u</span>
-<span id="cb5-14"><a href="#cb5-14"></a>  vbetas[i, ] <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(y1 <span class="sc">~</span> x1 <span class="sc">+</span> x2))<span class="sc">$</span>coefficients[,<span class="dv">2</span>]</span>
-<span id="cb5-15"><a href="#cb5-15"></a>  y2 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">+</span> <span class="fl">0.6</span><span class="sc">*</span>z1 <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>z2 <span class="sc">+</span> u</span>
-<span id="cb5-16"><a href="#cb5-16"></a>  vbetas_m[i, ] <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(y2 <span class="sc">~</span> z1 <span class="sc">+</span> z2))<span class="sc">$</span>coefficients[,<span class="dv">2</span>]</span>
-<span id="cb5-17"><a href="#cb5-17"></a>}</span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="fu">boxplot</span>(vbetas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.3</span>))</span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="fu">boxplot</span>(vbetas_m, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.3</span>))</span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas + multicolinearidade"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>vbetas <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>vbetas_m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">nrow =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>x <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb6-6"><a href="#cb6-6"></a>x1 <span class="ot">&lt;-</span> x[,<span class="dv">1</span>]</span>
+<span id="cb6-7"><a href="#cb6-7"></a>x2 <span class="ot">&lt;-</span> x[,<span class="dv">2</span>]</span>
+<span id="cb6-8"><a href="#cb6-8"></a>z <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(n, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">Sigma =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.99</span>, <span class="fl">0.99</span>, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb6-9"><a href="#cb6-9"></a>z1 <span class="ot">&lt;-</span> z[,<span class="dv">1</span>]</span>
+<span id="cb6-10"><a href="#cb6-10"></a>z2 <span class="ot">&lt;-</span> z[,<span class="dv">2</span>]</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  u <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb6-13"><a href="#cb6-13"></a>  y1 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">+</span> <span class="fl">0.6</span><span class="sc">*</span>x1 <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>x2 <span class="sc">+</span> u</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  vbetas[i, ] <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(y1 <span class="sc">~</span> x1 <span class="sc">+</span> x2))<span class="sc">$</span>coefficients[,<span class="dv">2</span>]</span>
+<span id="cb6-15"><a href="#cb6-15"></a>  y2 <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="sc">+</span> <span class="fl">0.6</span><span class="sc">*</span>z1 <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>z2 <span class="sc">+</span> u</span>
+<span id="cb6-16"><a href="#cb6-16"></a>  vbetas_m[i, ] <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(y2 <span class="sc">~</span> z1 <span class="sc">+</span> z2))<span class="sc">$</span>coefficients[,<span class="dv">2</span>]</span>
+<span id="cb6-17"><a href="#cb6-17"></a>}</span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="fu">boxplot</span>(vbetas, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.3</span>))</span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="fu">boxplot</span>(vbetas_m, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.3</span>))</span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="fu">title</span>(<span class="st">"Boxplot para betas + multicolinearidade"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="multicolinearidade-3" class="slide level2">
 <h2>Multicolinearidade</h2>
 <p>Para ilustrar melhor a consequência da multicolinearidade, pense no seguinte modelo de regressão <span class="math display">\[Y = \beta_1 X_1 + \beta_2 X_2 + u.\]</span></p>

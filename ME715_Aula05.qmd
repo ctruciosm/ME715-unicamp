@@ -112,6 +112,59 @@ title("Boxplot para betas + irrelevantes")
 ```
 
 
+## Variáveis irrelevantes no modelo de regressão
+
+
+::: {.callout-tip}
+
+## Teorema FWL (Frisch-Waugh-Lovell)
+
+Sejam os modelos $$Y = \textbf{X}_1\beta_1 + \textbf{X}_2 \beta_2 + u \quad e \quad M_1Y = M_1 \textbf{X}_2 \beta_2 + \nu,$$ em que $M_1 = \textbf{I}- X_1(X_1'X_1)^{-1}X_1'$
+
+
+1. $\hat{\beta_2}$ em ambas as regressões é numericamente idêntico.
+2. $\hat{u}$ e $\hat{\nu}$ são numericamente idênticos.
+
+:::
+
+**Demostração** (ver lista)
+
+
+## Variáveis irrelevantes no modelo de regressão
+
+
+Suponha que estimamos o modelo $$Y = \textbf{X}\delta + \textbf{Z}\gamma + u, \quad u \sim IID(0, \sigma^2I )$$
+
+mas o verdadeiro modelo é $$Y = \textbf{X}\beta + u,  \quad u \sim IID(0, \sigma^2I ).$$
+
+
+. . . 
+
+
+- Pelo teorema FWL, $\hat{\delta} = (X'M_z X)^{-1} X' M_zY$.
+- $\hat{\delta} = (X'M_z X)^{-1} X' M_z(X \beta + u)$
+- $\hat{\delta} = \beta + (X'M_z X)^{-1} X' M_z u$
+- $\mathbb{E}(\hat{\delta}|X,Z) = \beta + (X'M_z X)^{-1} X' M_z \underbrace{\mathbb{E}(u|X,Z)}_{0}$
+- $\mathbb{E}(\hat{\delta}) = \beta$
+
+## Variáveis irrelevantes no modelo de regressão
+
+<center>
+Então podemos incluir variáveis sem nenhum prejuizo?
+</center>
+
+Não!.
+
+- $\mathbb{V}(\hat{\delta}|X,Z) = \sigma^2 (X' M_z X)^{-1}$.
+- $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$.
+
+. . . 
+
+- Provar que $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$ é equivalente a provar que $\mathbb{V}(\hat{\beta}|X)^{-1} \geq \mathbb{V}(\hat{\delta}|X,Z)^{-1}$
+- Mas $X'X - X'M_zX = X'(I - M_z)X = X'P_z'P_zX = (P_z X)'P_zX \geq 0$.
+- Então, $\underbrace{\sigma^{-2} X'X}_{\mathbb{V}(\hat{\beta}|X)^{-1}} - \underbrace{\sigma^{-2}X'M_zX}_{\mathbb{V}(\hat{\delta}|X,Z)^{-1}} \geq 0$.
+- Logo, $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$.
+
 
 # Variáveis omitidas
 ## Variáveis omitidas
@@ -154,9 +207,9 @@ for (i in 1:1000) {
   betas_o[i, ] <- coef(lm(y ~ x1 + x2))
 }
 par(mfrow = c(1, 2))
-boxplot(betas)
+boxplot(betas, ylim = c(-0.3, 1))
 title("Boxplot para betas")
-boxplot(betas_o)
+boxplot(betas_o, ylim = c(-0.3, 1))
 title("Boxplot para betas - omitidas")
 ```
 
@@ -182,9 +235,9 @@ for (i in 1:1000) {
   betas_o[i, ] <- coef(lm(y ~ x1 + x2))
 }
 par(mfrow = c(1, 2))
-boxplot(betas)
+boxplot(betas, ylim = c(-0.3, 1))
 title("Boxplot para betas")
-boxplot(betas_o)
+boxplot(betas_o, ylim = c(-0.3, 1))
 title("Boxplot para betas - omitidas")
 ```
 
@@ -210,9 +263,9 @@ for (i in 1:1000) {
   betas_o[i, ] <- coef(lm(y ~ x1 + x2))
 }
 par(mfrow = c(1, 2))
-boxplot(betas)
+boxplot(betas, ylim = c(-0.3, 1))
 title("Boxplot para betas")
-boxplot(betas_o)
+boxplot(betas_o, ylim = c(-0.3, 1))
 title("Boxplot para betas - omitidas")
 ```
 
@@ -240,6 +293,47 @@ Contudo, ajustamos o modelo considerando $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X
 . . . 
 
 **Muitas vezes é dificil determinar o sinal do vies, mas o importante aqui é saber que, resultados contraintuitivos, podem ser fruto de estimadores viesados.**
+
+
+## Variáveis omitidas
+
+Sejam $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ e $\beta = [\beta_1 \beta_2]'$ e seja o modelo populacional
+
+$$Y = \textbf{X} \beta + u$$
+
+. . . 
+
+- Vamos supor que trabalhamos como se o modelo fosse $Y = X_1 \beta_1 + u$.
+- Em geral, $\mathbb{E}(\hat{\beta}_1) \neq \beta_1$
+- $\mathbb{E}(\hat{\beta}_1) = \beta_1$ se $\beta_2 = 0$ ou $X_1'X_2 = 0$ (ortogonal). Se $X_1$ e $X_2$ forem centradas, é equivalente a dizer que a correlação deve ser 0.
+
+
+## Variáveis omitidas
+
+
+```{r}
+#| echo: true
+library(MASS)
+n <- 1000
+betas <- matrix(NA, ncol = 4, nrow = 1000)
+betas_o <- matrix(NA, ncol = 3, nrow = 1000)
+for (i in 1:1000) {
+  u <- rnorm(n)
+  x <- mvrnorm(n, mu = c(0,0,0), Sigma = matrix(c(1, 0, 0, 0, 1, 0, 0, 0, 1), 3, 3))
+  x1 <- x[,1]
+  x2 <- x[,2]
+  x3 <- x[,3]
+  y <- 0.7 + 0.6*x1 - 0.2*x2 + 0.9*x3 + u
+  betas[i, ] <- coef(lm(y ~ x1 + x2 + x3))
+  betas_o[i, ] <- coef(lm(y ~ x1 + x2))
+}
+par(mfrow = c(1, 2))
+boxplot(betas, ylim = c(-0.3, 1))
+title("Boxplot para betas")
+boxplot(betas_o, ylim = c(-0.3, 1))
+title("Boxplot para betas - omitidas")
+```
+
 
 # Multicolinearidade
 ## Multicolinearidade
