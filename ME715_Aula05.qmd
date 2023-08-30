@@ -161,7 +161,7 @@ Não!.
 . . . 
 
 - Provar que $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$ é equivalente a provar que $\mathbb{V}(\hat{\beta}|X)^{-1} \geq \mathbb{V}(\hat{\delta}|X,Z)^{-1}$
-- Mas $X'X - X'M_zX = X'(I - M_z)X = X'P_z'P_zX = (P_z X)'P_zX \geq 0$.
+- Mas $X'X - X'M_zX = X'(I - M_z)X = X'H_z'H_zX = (H_z X)'H_zX \geq 0$.
 - Então, $\underbrace{\sigma^{-2} X'X}_{\mathbb{V}(\hat{\beta}|X)^{-1}} - \underbrace{\sigma^{-2}X'M_zX}_{\mathbb{V}(\hat{\delta}|X,Z)^{-1}} \geq 0$.
 - Logo, $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$.
 
@@ -333,6 +333,16 @@ title("Boxplot para betas")
 boxplot(betas_o, ylim = c(-0.3, 1))
 title("Boxplot para betas - omitidas")
 ```
+
+## Variáveis omitidas
+
+Seja o verdadeiro modelo: $$Y = \textbf{X}_1 \beta_1 + \textbf{X}_2 \beta_2 + u.$$
+
+Se omitirmos as variáveis $\textbf{X}_2$, então:
+
+- $\mathbb{E}(\hat{\beta}_1|X) = \beta_1 + (X_1'X_1)^{-1}X_1' X_2 \beta_2$.
+
+
 
 
 # Multicolinearidade

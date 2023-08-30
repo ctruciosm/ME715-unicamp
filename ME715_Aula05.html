@@ -528,7 +528,7 @@ Então podemos incluir variáveis sem nenhum prejuizo?
 <div class="fragment">
 <ul>
 <li class="fragment">Provar que <span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span> é equivalente a provar que <span class="math inline">\(\mathbb{V}(\hat{\beta}|X)^{-1} \geq \mathbb{V}(\hat{\delta}|X,Z)^{-1}\)</span></li>
-<li class="fragment">Mas <span class="math inline">\(X'X - X'M_zX = X'(I - M_z)X = X'P_z'P_zX = (P_z X)'P_zX \geq 0\)</span>.</li>
+<li class="fragment">Mas <span class="math inline">\(X'X - X'M_zX = X'(I - M_z)X = X'H_z'H_zX = (H_z X)'H_zX \geq 0\)</span>.</li>
 <li class="fragment">Então, <span class="math inline">\(\underbrace{\sigma^{-2} X'X}_{\mathbb{V}(\hat{\beta}|X)^{-1}} - \underbrace{\sigma^{-2}X'M_zX}_{\mathbb{V}(\hat{\delta}|X,Z)^{-1}} \geq 0\)</span>.</li>
 <li class="fragment">Logo, <span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span>.</li>
 </ul>
@@ -695,7 +695,15 @@ Então podemos incluir variáveis sem nenhum prejuizo?
 </details>
 
 </div>
-<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
+<img data-src="ME715_Aula05_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="variáveis-omitidas-8" class="slide level2">
+<h2>Variáveis omitidas</h2>
+<p>Seja o verdadeiro modelo: <span class="math display">\[Y = \textbf{X}_1 \beta_1 + \textbf{X}_2 \beta_2 + u.\]</span></p>
+<p>Se omitirmos as variáveis <span class="math inline">\(\textbf{X}_2\)</span>, então:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\hat{\beta}_1|X) = \beta_1 + (X_1'X_1)^{-1}X_1' X_2 \beta_2\)</span>.</li>
+</ul>
+</section></section>
 <section>
 <section id="multicolinearidade" class="title-slide slide level1 center">
 <h1>Multicolinearidade</h1>
