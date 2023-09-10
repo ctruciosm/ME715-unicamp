@@ -391,7 +391,7 @@
 
 <section id="title-slide" data-background-image="imagens/unicamp.png" data-background-opacity="1" data-background-position="99% 5%" data-background-size="20%" class="quarto-title-block center">
   <h1 class="title">ME715 - Econometria</h1>
-  <p class="subtitle">Heterocedasticidade</p>
+  <p class="subtitle">Heterocedasticidade e erros autocorrelacionados</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -406,11 +406,11 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 
 </section>
 <section>
-<section id="introdução" class="title-slide slide level1 center">
-<h1>Introdução</h1>
+<section id="heterocedasticidade" class="title-slide slide level1 center">
+<h1>Heterocedasticidade</h1>
 
 </section>
-<section id="introdução-1" class="slide level2">
+<section id="introdução" class="slide level2">
 <h2>Introdução</h2>
 <ul>
 <li class="fragment"><p>Até agora, temos assumido que HRLM5 acontece, ou seja <span class="math inline">\(\mathbb{V}(u|\textbf{X}) = \sigma^2 \textbf{I}\)</span></p></li>
@@ -432,13 +432,12 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Consequências</h2>
 <p>Seja <span class="math display">\[Y = X \beta + u, \quad com \quad \mathbb{E}(u|X) = 0 \quad e \quad \mathbb{V}(u|X) = \sigma^2 \Omega.\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\hat{\beta}\)</span> continua sendo não viesado.</li>
-<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\beta}|X) \neq \sigma^2(X'X)^{-1}\)</span>.</li>
-<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}X'\Omega X(X'X)^{-1}\)</span></li>
+<li class="fragment"><span class="math inline">\(\hat{\beta}\)</span> continua sendo não viesado?.</li>
+<li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}\)</span>?.</li>
 </ul>
 <div class="fragment">
 <blockquote>
-<p>Na presença de heterocedasticidade, <span class="math inline">\(\hat{\beta}_{MQO}\)</span> ainda são não viesados, mas para podermos fazer inferência, precisamos estimar <span class="math inline">\(\mathbb{V}(\hat{\beta}|X)\)</span> corretamente.</p>
+<p>Na presença de heterocedasticidade, <span class="math inline">\(\hat{\beta}_{MQO}\)</span> ainda são não viesados, mas <span class="math inline">\(\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}X'\Omega X(X'X)^{-1}\)</span>, ou seja, para podermos fazer inferência, precisamos estimar <span class="math inline">\(\mathbb{V}(\hat{\beta}|X)\)</span> corretamente.</p>
 </blockquote>
 </div>
 </section></section>
@@ -455,7 +454,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li class="fragment"><a href="https://www.jstor.org/stable/1912934">White (1980)</a> mostrou que não precisamos estimar <span class="math inline">\(\sigma^2 \Omega\)</span>. De fato, podemos resolver o problema estimando <span class="math inline">\(X'\sigma^2 \Omega X\)</span> (que tem dimensão bem menor).</li>
 <li class="fragment">Note que, <span class="math inline">\(X'\sigma^2 \Omega X = \displaystyle \sum_{i = 1}^n \sigma_i^2 x_i x_i'\)</span></li>
 <li class="fragment">O estimador de White substitui <span class="math inline">\(\sigma_i^2\)</span> com <span class="math inline">\(\hat{u}^2_i\)</span> (<span class="math inline">\(i = 1, \cdots, n\)</span>), em que <span class="math inline">\(\hat{u}_i = y_i - x_i' \hat{\beta}_{MQO}\)</span> como usual.</li>
-<li class="fragment">Com esta correção, teremos testes f, F e qualquer teste da forma <span class="math inline">\(H_0: R\beta = r\)</span> assintóticamente validos.</li>
+<li class="fragment">Com esta correção, teremos testes t, F e qualquer teste da forma <span class="math inline">\(H_0: R\beta = r\)</span> <strong>assintóticamente</strong> validos.</li>
 </ul>
 </section>
 <section id="estimador-de-white-2" class="slide level2">
@@ -604,7 +603,7 @@ I(tenure ** 2) -0.0005  0.0002</code></pre>
 </div>
 <div class="fragment">
 <blockquote>
-<p>Uma outra desvantagem do teste é que se no modelo <span class="math inline">\(k\)</span> for grande, no modelo auxiliar q = k(k+1)/2 - 1. Esse número elevado torna o teste com pouco poder (rejeitar <span class="math inline">\(H_0\)</span> quando <span class="math inline">\(H_0\)</span> é falso)</p>
+<p>Uma outra desvantagem do teste é que se no modelo <span class="math inline">\(k\)</span> for grande, no modelo auxiliar q = k(k+1)/2 - 1. Esse número elevado torna o teste com pouco poder (rejeitar <span class="math inline">\(H_0\)</span> quando <span class="math inline">\(H_0\)</span> é falso). Uma alternativa é regredir <span class="math inline">\(\hat{u}^2\)</span> sob <span class="math inline">\(\hat{y}\)</span> e <span class="math inline">\(\hat{y}^2\)</span>.</p>
 </blockquote>
 </div>
 </section>
@@ -703,7 +702,7 @@ BP = 4.1558, df = 2, p-value = 0.1252</code></pre>
 <ol type="1">
 <li class="fragment">Estimar o modelo original por MQO e obter <span class="math inline">\(\hat{u}_i = y_i - \hat{y}_i\)</span> e <span class="math inline">\(\tilde{\sigma}^2 = \displaystyle \sum_{i = 1}^n \hat{u}_i^2/n\)</span>.</li>
 <li class="fragment">Regredir <span class="math inline">\(\hat{u}_i^2/\tilde{\sigma}^2\)</span> sob <span class="math inline">\(z\)</span> por MQO e calcular a soma de quadrado explicada (SQE).</li>
-<li class="fragment">Sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(0.5 SQE \sim \chi^1_{p-1}\)</span></li>
+<li class="fragment">Sob <span class="math inline">\(H_0\)</span>, <span class="math inline">\(0.5 SQE \sim \chi^2_{p-1}\)</span></li>
 </ol>
 </section>
 <section id="testes-para-detetar-heterocedasticidade-6" class="slide level2">
@@ -711,7 +710,8 @@ BP = 4.1558, df = 2, p-value = 0.1252</code></pre>
 <h3 id="teste-de-breusch-pagangodfrey-2">Teste de Breusch-Pagan/Godfrey</h3>
 <ul>
 <li class="fragment">Um teste assintóticamente equivalente consiste em regredir <span class="math inline">\(\hat{u}_i^2\)</span> sob <span class="math inline">\(z\)</span>. Nesse caso, <span class="math inline">\(nR^2 \sim \chi_{p-1}^2\)</span>.</li>
-<li class="fragment">O teste requer que conhecamos as variáveis <span class="math inline">\(z\)</span> que podem causar a heterocedasticidade. Na prática essas variáveis não são conhecidas e usualmente utilizamos algumas (todas?) das variáveis em <span class="math inline">\(x\)</span>. Isto faz com que o teste seja basicamente um caso ad-hoc do teste de White.</li>
+<li class="fragment">O teste requer as variáveis <span class="math inline">\(z\)</span> que podem causar a heterocedasticidade sejam conhecidas</li>
+<li class="fragment">Na prática essas variáveis não são conhecidas e usualmente utilizamos algumas (ou todas) das variáveis em <span class="math inline">\(x\)</span>. Isto faz com que o teste seja basicamente um caso particular do teste de White.</li>
 </ul>
 </section>
 <section id="testes-para-detetar-heterocedasticidade-7" class="slide level2">
@@ -821,7 +821,7 @@ BP = 13.189, df = 8, p-value = 0.1055</code></pre>
 <section id="testes-para-detetar-heterocedasticidade-8" class="slide level2">
 <h2>Testes para detetar heterocedasticidade</h2>
 <h3 id="teste-de-goldfeld-quandt">Teste de Goldfeld-Quandt</h3>
-<p>Teste simples que pode ser aplicado quando apenas uma variável é quem causa a heterocedasticidade. Para ilustrar o procedimento, imagine que <span class="math inline">\(\sigma_i^2\)</span> esteja poitivamente correlacionado com <span class="math inline">\(X_k\)</span>. O teste funciona da seguinte forma:</p>
+<p>Teste simples que pode ser aplicado quando apenas uma variável é quem causa a heterocedasticidade. Para ilustrar o procedimento, imagine que <span class="math inline">\(\sigma_i^2\)</span> esteja positivamente correlacionado com <span class="math inline">\(X_k\)</span>. O teste funciona da seguinte forma:</p>
 <ol type="1">
 <li class="fragment">Reordenar as observações pelo valor de <span class="math inline">\(x_k\)</span>.</li>
 <li class="fragment">Omitir as <span class="math inline">\(c\)</span> observações centrais.</li>
@@ -837,10 +837,542 @@ BP = 13.189, df = 8, p-value = 0.1055</code></pre>
 </section>
 <section id="testes-para-detetar-heterocedasticidade-9" class="slide level2">
 <h2>Testes para detetar heterocedasticidade</h2>
-<h3 id="extensão-do-teste-de-goldfeld-quandt">Extensão do teste de Goldfeld-Quandt</h3>
+<h3 id="teste-de-goldfeld-quandt-1">Teste de Goldfeld-Quandt</h3>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb25-3"><a href="#cb25-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="fu">gqtest</span>(modelo, <span class="at">point =</span> <span class="fl">0.5</span>, <span class="at">fraction =</span> <span class="dv">100</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">order.by =</span> wage1<span class="sc">$</span>educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Goldfeld-Quandt test
 
-<img src="imagens/imecc.png" class="slide-logo r-stretch"><div class="footer footer-default">
+data:  modelo
+GQ = 1.0399, df1 = 204, df2 = 204, p-value = 0.78
+alternative hypothesis: variance changes from segment 1 to 2</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="erros-correlacionados" class="title-slide slide level1 center">
+<h1>Erros correlacionados</h1>
+
+</section>
+<section id="introdução-1" class="slide level2">
+<h2>Introdução</h2>
+<ul>
+<li class="fragment">Até agora, temos assumido que os erros são não correlacionados.</li>
+<li class="fragment">Mas, o que acontece se <span class="math inline">\(\mathbb{E}(u_t, u_{t+s}) \neq 0\)</span> para <span class="math inline">\(s \neq 0\)</span>?</li>
+<li class="fragment">Lembre-se que <span class="math inline">\(\rho_s = \dfrac{\mathbb{C}ov(u_t, u_{t+2})}{\sqrt{\mathbb{V}(u_t) \times \mathbb{V}(u_{t+s})}}\)</span>. - Assim, sob homocedasticidade, <span class="math inline">\(\rho_s = \dfrac{\mathbb{E}(u_t, u_{t+s})}{\sigma_u^2}\)</span></li>
+</ul>
+</section>
+<section id="introdução-2" class="slide level2">
+<h2>Introdução</h2>
+<p><span class="math display">\[\mathbb{V}(u|\textbf{X}) = \sigma^2_u \begin{bmatrix}
+1 &amp; \rho_1 &amp; \rho_2 &amp;\cdots &amp; \rho_{n-1} \\
+\rho_1 &amp; 1 &amp; \rho_1 &amp; \cdots &amp; \rho_{n-2} \\
+\vdots &amp; \cdots &amp; \ddots &amp; \cdots &amp; \vdots \\
+\rho_{n-1} &amp; \rho_{n-2} &amp; \rho_{n-3} &amp; \cdots &amp; 1 \\
+\end{bmatrix}\]</span></p>
+<p><span style="color:red;">Sem nenhuma informação adicional, este problema de estimação é intratável pois temos <span class="math inline">\(n + k + 1\)</span> parâmetros e apenas <span class="math inline">\(n\)</span> observações.</span></p>
+<div class="fragment">
+<p>Para poder abordar o problema, precisamos assumir alguma estrutura na autocorrelação.</p>
+</div>
+</section></section>
+<section>
+<section id="erros-ar1" class="title-slide slide level1 center">
+<h1>Erros AR(1)</h1>
+
+</section>
+<section id="erros-ar1-1" class="slide level2">
+<h2>Erros AR(1)</h2>
+<p>Uma das especificações mais communs é o AR(1) <a href="https://ctruciosm.github.io/ME607-unicamp/Aula01.html#/conceitos-b%C3%A1sicos-4">estacionário</a>, ou seja, <span class="math display">\[u_t = \phi u_{t-1} + \epsilon_t, \quad  \epsilon_t \sim WN(0, \sigma_e^2), \quad com \quad |\phi| &lt; 1.\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(u_t) = 0\)</span>, <span class="math inline">\(\mathbb{V}(u_t) = \dfrac{\sigma_e^2}{1-\phi^2}\)</span> e <span class="math inline">\(\rho_s = E(u_t u_{t+s}) = \phi^s\)</span></li>
+</ul>
+<div class="fragment">
+<p>Assim, <span class="math display">\[\mathbb{V}(u|\textbf{X}) = \sigma^2_u \begin{bmatrix}
+1 &amp; \phi &amp; \phi^2 &amp;\cdots &amp; \phi^{n-1} \\
+\phi &amp; 1 &amp; \phi &amp; \cdots &amp; \phi^{n-2} \\
+\vdots &amp; \cdots &amp; \ddots &amp; \cdots &amp; \vdots \\
+\phi^{n-1} &amp; \phi^{n-2} &amp; \phi^{n-3} &amp; \cdots &amp; 1 \\
+\end{bmatrix}\]</span></p>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Agora temos apenas <span class="math inline">\(k + 3\)</span> parâmetros a serem estimados.</p>
+</blockquote>
+</div>
+</section>
+<section id="além-dos-erros-ar1" class="slide level2">
+<h2>Além dos erros AR(1)</h2>
+<p>Assim como no caso dos erros AR(1), poderiamos pensar em erros MA(1). Neste caso <span class="math display">\[u_t = \epsilon_t + \theta \epsilon_{t-1}, \quad com \quad \epsilon_t \sim WN(0, \sigma_e^2).\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(u_t) = 0\)</span>, <span class="math inline">\(\mathbb{V}(u_t) = \dfrac{\sigma_e^2}{1+\theta^2}\)</span> <span class="math inline">\(\rho_1 = \dfrac{\theta}{1 + \theta^2}\)</span> e <span class="math inline">\(\rho_i = 0, \forall i&gt;1\)</span></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>Em geral, poderiamos assumir qualquer ARMA(p,q) mas em geral AR(1) ou MA(1) costumam ser suficientes na maioria dos casos.</p>
+</blockquote>
+</div>
+</section>
+<section id="o-que-pode-gerar-erros-autocorrelacionados" class="slide level2">
+<h2>O que pode gerar erros autocorrelacionados?</h2>
+<p>Seja o modelo <span class="math display">\[Y = X\beta + u.\]</span></p>
+<ul>
+<li class="fragment">Esperamos que todas as variáveis relevantes para explicar Y tenham sido incluidas no modelo. Nesses casos, esperamos que os erros sejam não correlacionados.</li>
+<li class="fragment"><span style="color:red;">Erros autocorrelacionados podem indicar má especificação no modelos de regressão.</span></li>
+</ul>
+<div class="fragment">
+<p>Suponha a seguinte situação:</p>
+<ul>
+<li class="fragment">Modelo correto: <span class="math inline">\(y_t = \beta_0 + \beta_1 x_t + \beta_2 y_{t-1} + u_t\)</span>.</li>
+<li class="fragment">Modelo má especificado <span class="math inline">\(y_t = \beta_0 + \beta_1 x_t + \nu_t\)</span></li>
+<li class="fragment">Então <span class="math inline">\(\nu_t = \beta_2 y_{t-1} + u_t\)</span> é autocorrelacionado</li>
+</ul>
+</div>
+</section>
+<section id="mqo-e-erros-correlacionados" class="slide level2">
+<h2>MQO e erros correlacionados</h2>
+<ul>
+<li class="fragment">Se <span class="math inline">\(\textbf{X}\)</span> não contem variáveis defasadas de <span class="math inline">\(Y\)</span>, <span class="math inline">\(\hat{\beta}\)</span> é não viesado mas <span class="math inline">\(\mathbb{V}(\beta|X) \neq \sigma^2 (X'X)^{-1}\)</span> (afetando os testes de hipóteses e intervalos de confiança).</li>
+<li class="fragment">Se <span class="math inline">\(\textbf{X}\)</span> contem variáveis defasadas de <span class="math inline">\(Y\)</span>, os resultados podem ser bem diferentes do caso anterior (geralmente teremos que <span class="math inline">\(\hat{\beta}\)</span> não é um estimador consistente para <span class="math inline">\(\beta\)</span>).</li>
+</ul>
+</section></section>
+<section>
+<section id="testes-para-detetar-erros-autocorrelacionados" class="title-slide slide level1 center">
+<h1>Testes para detetar erros autocorrelacionados</h1>
+
+</section>
+<section id="testes-para-detetar-erros-autocorrelacionados-1" class="slide level2">
+<h2>Testes para detetar erros autocorrelacionados</h2>
+<p>Seja o modelo <span class="math display">\[Y = X\beta + u,\]</span> e suspeitamos que <span class="math inline">\(u_t = \phi u_{t-1} + \epsilon_t\)</span>.</p>
+<div class="fragment">
+<p>A hipótese nula de erros não correlacionados implica <span class="math display">\[H_0: \phi = 0 \quad vs. \quad H_1: \phi \neq 0\]</span></p>
+</div>
+<div class="fragment">
+<blockquote>
+<p><strong>Observação:</strong> o teste é a respeito dos <span class="math inline">\(u\)</span>s (que são não observáveis). Em lugar dos <span class="math inline">\(u\)</span>s temos <span class="math inline">\(\hat{u}\)</span>s e isto gera algumas dificuldades. Sabemos que <span class="math inline">\(\hat{u} = \textbf{M}u\)</span> com <span class="math inline">\(\textbf{M} = I - X'(X'X)^{-1}X\)</span>. Assim, <span class="math inline">\(\mathbb{V}(\hat{u}|X) = \sigma_u^2M\)</span>, ou seja, mesmo quando <span class="math inline">\(H_0\)</span> é verdadeiro, os residuais apresentam algum tipo de autocorrelção.</p>
+</blockquote>
+</div>
+</section>
+<section id="teste-t" class="slide level2">
+<h2>Teste t</h2>
+<ol type="1">
+<li class="fragment">Regredir <span class="math inline">\(y\)</span> sob <span class="math inline">\(x_1, \cdots, x_k\)</span>.</li>
+<li class="fragment">Obter os resíduais <span class="math inline">\(\hat{u}_1, \cdots, \hat{u}_n\)</span></li>
+<li class="fragment">Para testar correlação serial do tipo AR(1), regredimos <span class="math inline">\(\hat{u}_t\)</span> sob <span class="math inline">\(\hat{u}_{t-1}\)</span>. Se o coeficiente associado a <span class="math inline">\(\hat{u}_{t-1}\)</span> for estatísticamente significativo (teste t usual), rejeitamos a hipótese nula de residuos não autocorrelacionados.</li>
+</ol>
+<div class="fragment">
+<blockquote>
+<p><strong>Observação:</strong> <span class="math inline">\(\textbf{X}\)</span> na regressão do item 1 não deve contar variáveis defasadas de <span class="math inline">\(Y\)</span>.</p>
+</blockquote>
+</div>
+</section>
+<section id="teste-t-1" class="slide level2">
+<h2>Teste t</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">R</a></li><li><a href="#tabset-4-2">Python</a></li><li><a href="#tabset-4-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb27-4"><a href="#cb27-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
+<span id="cb27-5"><a href="#cb27-5"></a>modelo <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
+<span id="cb27-6"><a href="#cb27-6"></a>u_hat <span class="ot">&lt;-</span> <span class="fu">resid</span>(modelo)</span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="fu">coeftest</span>(<span class="fu">dynlm</span>(u_hat <span class="sc">~</span> <span class="fu">L</span>(u_hat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept) -0.11340    0.35940 -0.3155    0.7538    
+L(u_hat)     0.57297    0.11613  4.9337 1.098e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb29-4"><a href="#cb29-4"></a></span>
+<span id="cb29-5"><a href="#cb29-5"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
+<span id="cb29-6"><a href="#cb29-6"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
+<span id="cb29-7"><a href="#cb29-7"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>)</span>
+<span id="cb29-8"><a href="#cb29-8"></a>phillips.index <span class="op">=</span> date_range.year</span>
+<span id="cb29-9"><a href="#cb29-9"></a></span>
+<span id="cb29-10"><a href="#cb29-10"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
+<span id="cb29-11"><a href="#cb29-11"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span> <span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96) </span>
+<span id="cb29-12"><a href="#cb29-12"></a>results_s <span class="op">=</span> reg_s.fit()</span>
+<span id="cb29-13"><a href="#cb29-13"></a></span>
+<span id="cb29-14"><a href="#cb29-14"></a>phillips[<span class="st">'resid_s'</span>] <span class="op">=</span> results_s.resid</span>
+<span id="cb29-15"><a href="#cb29-15"></a>phillips[<span class="st">'resid_s_lag1'</span>] <span class="op">=</span> phillips[<span class="st">'resid_s'</span>].shift(<span class="dv">1</span>)</span>
+<span id="cb29-16"><a href="#cb29-16"></a>reg <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'resid_s ~ resid_s_lag1'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
+<span id="cb29-17"><a href="#cb29-17"></a>results <span class="op">=</span> reg.fit()</span>
+<span id="cb29-18"><a href="#cb29-18"></a></span>
+<span id="cb29-19"><a href="#cb29-19"></a>table <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results.params, <span class="dv">4</span>),</span>
+<span id="cb29-20"><a href="#cb29-20"></a>                      <span class="st">'se'</span>: <span class="bu">round</span>(results.bse, <span class="dv">4</span>),</span>
+<span id="cb29-21"><a href="#cb29-21"></a>                      <span class="st">'t'</span>: <span class="bu">round</span>(results.tvalues, <span class="dv">4</span>), </span>
+<span id="cb29-22"><a href="#cb29-22"></a>                      <span class="st">'pval'</span>: <span class="bu">round</span>(results.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb29-23"><a href="#cb29-23"></a></span>
+<span id="cb29-24"><a href="#cb29-24"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   b      se       t    pval
+Intercept    -0.1134  0.3594 -0.3155  0.7538
+resid_s_lag1  0.5730  0.1161  4.9337  0.0000</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
+<span id="cb31-4"><a href="#cb31-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
+<span id="cb31-7"><a href="#cb31-7"></a>yt96.resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
+<span id="cb31-8"><a href="#cb31-8"></a>yt96.resid_s_lag1 <span class="op">=</span> <span class="fu">lag</span>(yt96.resid_s, <span class="fl">1</span>);</span>
+<span id="cb31-9"><a href="#cb31-9"></a></span>
+<span id="cb31-10"><a href="#cb31-10"></a>reg <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(resid_s <span class="op">~</span> resid_s_lag1), yt96);</span>
+<span id="cb31-11"><a href="#cb31-11"></a><span class="fu">coeftable</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>──────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error      t  Pr(&gt;|t|)  Lower 95%  Upper 95%
+──────────────────────────────────────────────────────────────────────────
+(Intercept)   -0.113397    0.359404  -0.32    0.7538  -0.836839   0.610046
+resid_s_lag1   0.572969    0.116133   4.93    &lt;1e-4    0.339205   0.806734
+──────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="teste-de-durbin-watson" class="slide level2">
+<h2>Teste de Durbin-Watson</h2>
+<center>
+Teste de correlação serial do tipo AR(1).
+</center>
+<ul>
+<li class="fragment"><span class="math inline">\(H_0:\)</span> os erros são não correlacionados.</li>
+<li class="fragment">Estatística de teste: <span class="math inline">\(DW = \displaystyle \sum_{t = 2}^n (\hat{u}_t - \hat{u}_{t-1})^2 \Big / \displaystyle \sum_{t = 1}^n \hat{u}_t^2 \approx 2(1 - \hat{\phi})\)</span></li>
+<li class="fragment">Intuitivamente:</li>
+</ul>
+<div class="fragment">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Estatística</th>
+<th style="text-align: center;">Decisão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">DW &lt; 2</td>
+<td style="text-align: center;">autocorrelação positiva</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DW &gt; 2</td>
+<td style="text-align: center;">autocorrelação negativa</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">DW <span class="math inline">\(\approx\)</span> 0</td>
+<td style="text-align: center;">autocorrelação zero</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="teste-de-durbin-watson-1" class="slide level2">
+<h2>Teste de Durbin-Watson</h2>
+<ul>
+<li class="fragment">Se DW &lt; 2, estamos interessados em saber se o valor obtido é suficiente para rejeitar <span class="math inline">\(H_0\)</span> em favor de <span class="math inline">\(H_1: \rho &gt; 0\)</span>.</li>
+<li class="fragment">Durbin-Watson derivam a distribuição de DW, mas esta depende dos valores de <span class="math inline">\(\textbf{X}\)</span>, tamanho amostral <span class="math inline">\(n\)</span>, número <span class="math inline">\(k\)</span> de variáveis do modelo, etc.</li>
+<li class="fragment">Regra de decisão:
+<ul>
+<li class="fragment"><span class="math inline">\(DW &lt; d_L\)</span> rejeitamos <span class="math inline">\(H_0\)</span>.</li>
+<li class="fragment"><span class="math inline">\(DW &gt; d_U\)</span> não rejeitamos <span class="math inline">\(H_0\)</span>.</li>
+<li class="fragment"><span class="math inline">\(d_L &lt; DW &lt; d_U\)</span> inconclussivo</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p>Se <span class="math inline">\(DW &gt; 2\)</span>, podemos estar interessados em testar <span class="math inline">\(H_1: \rho &lt; 0\)</span>. Neste caso, calculamos 4-d e comparamos esta estatística com os valores criticos tabulados <span class="math inline">\(d_L\)</span> e <span class="math inline">\(d_U\)</span> vistos anteriormente.</p>
+</blockquote>
+</div>
+</section>
+<section id="teste-de-durbin-watson-2" class="slide level2">
+<h2>Teste de Durbin-Watson</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">R</a></li><li><a href="#tabset-5-2">Python</a></li><li><a href="#tabset-5-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
+<span id="cb33-5"><a href="#cb33-5"></a>reg.s <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="fu">dwtest</span>(reg.s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
+
+data:  reg.s
+DW = 0.8027, p-value = 7.552e-07
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
+<span id="cb35-7"><a href="#cb35-7"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>) </span>
+<span id="cb35-10"><a href="#cb35-10"></a>phillips.index <span class="op">=</span> date_range.year</span>
+<span id="cb35-11"><a href="#cb35-11"></a></span>
+<span id="cb35-12"><a href="#cb35-12"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
+<span id="cb35-13"><a href="#cb35-13"></a>phillips[<span class="st">'inf_diff1'</span>] <span class="op">=</span> phillips[<span class="st">'inf'</span>].diff()</span>
+<span id="cb35-14"><a href="#cb35-14"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
+<span id="cb35-15"><a href="#cb35-15"></a></span>
+<span id="cb35-16"><a href="#cb35-16"></a>results_s <span class="op">=</span> reg_s.fit()</span>
+<span id="cb35-17"><a href="#cb35-17"></a>DW_s <span class="op">=</span> sm.stats.stattools.durbin_watson(results_s.resid)</span>
+<span id="cb35-18"><a href="#cb35-18"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.802700467848626</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-5-3">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span>, <span class="bu">StatsModels</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
+<span id="cb37-4"><a href="#cb37-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
+<span id="cb37-5"><a href="#cb37-5"></a></span>
+<span id="cb37-6"><a href="#cb37-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
+<span id="cb37-7"><a href="#cb37-7"></a>X_s <span class="op">=</span> <span class="fu">modelmatrix</span>(reg_s); </span>
+<span id="cb37-8"><a href="#cb37-8"></a>resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
+<span id="cb37-9"><a href="#cb37-9"></a></span>
+<span id="cb37-10"><a href="#cb37-10"></a>DW_s <span class="op">=</span> <span class="fu">DurbinWatsonTest</span>(X_s, resid_s);</span>
+<span id="cb37-11"><a href="#cb37-11"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Durbin-Watson autocorrelation test
+----------------------------------
+Population details:
+    parameter of interest:   sample autocorrelation parameter
+    value under h_0:         "0"
+    point estimate:          0.59865
+
+Test summary:
+    outcome with 95% confidence: reject h_0
+    two-sided p-value:           &lt;1e-5
+
+Details:
+    number of observations:     49
+    DW statistic:               0.8027</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="teste-de-durbin-watson-3" class="slide level2">
+<h2>Teste de Durbin-Watson</h2>
+<h4 id="observações">Observações:</h4>
+<ul>
+<li class="fragment">Para aplicar o teste de Durbin-Watson é necessário que o intercepto seja incluido na regressão. Quando o intercepto não é incluido, <span class="math inline">\(d_U\)</span> continua válido mas <span class="math inline">\(d_L\)</span> precisa ser subtituido por <span class="math inline">\(d_M\)</span>.</li>
+<li class="fragment">Para aplicar o teste de Durbin-Watson <span class="math inline">\(\textbf{X}\)</span> não deve conter valores defasados de <span class="math inline">\(Y\)</span>. Se valores defasados de <span class="math inline">\(Y\)</span> são incluidos em <span class="math inline">\(\textbf{X}\)</span>, a estatística DW é viesada e levara a conclusões enganosas. Uma alternativa nestas situações é a seguinte:
+<ul>
+<li class="fragment">Ajustar por MQO a regressão de <span class="math inline">\(y_t\)</span> sob <span class="math inline">\(x_{1t}, \cdots, x_{kt}\)</span> e obter os resíduos <span class="math inline">\(\hat{u}_t\)</span>.</li>
+<li class="fragment">Ajustar por MQO a regressão de <span class="math inline">\(\hat{u}_t\)</span> sob <span class="math inline">\(\hat{u}_{t-1}\)</span>, <span class="math inline">\(x_{1t}, \cdots, x_{kt}\)</span></li>
+<li class="fragment">Se o coeficiente da regresseão associado a <span class="math inline">\(\hat{u}_{t-1}\)</span> for estatísticamente significativo (utilizando um teste t usual), rejetimaos a hipótese nula de que os erros são não correlacionados.</li>
+</ul></li>
+</ul>
+</section>
+<section id="teste-para-ordens-maiores" class="slide level2">
+<h2>Teste para ordens maiores</h2>
+<p>Até agora temos assumido o modelo <span class="math display">\[Y = X\beta + u,\]</span> e suspeitams que <span class="math inline">\(u_t = \phi u_{t-1} + \epsilon_t\)</span>.</p>
+<div class="fragment">
+<p>Em geral, podemos suspeitar que <span class="math inline">\(u_t = \phi_1 u_{t-1} + \cdots + \phi_k u_{t-k} + \epsilon_t\)</span>.</p>
+</div>
+<div class="fragment">
+<p>O mesmo procedimento geral utilizado anteriormente pode também ser aplicado:</p>
+<ul>
+<li class="fragment">Ajustar por MQO a regressão de <span class="math inline">\(y_t\)</span> sob <span class="math inline">\(x_{1t}, \cdots, x_{kt}\)</span> e obter os resíduos <span class="math inline">\(\hat{u}_t\)</span>.</li>
+<li class="fragment">Ajustar por MQO a regressão de <span class="math inline">\(\hat{u}_t\)</span> sob <span class="math inline">\(\hat{u}_{t-1}, \cdots, \hat{u}_{t-k}\)</span>, <span class="math inline">\(x_{1t}, \cdots, x_{kt}\)</span></li>
+<li class="fragment">Utilizamos um teste F para testar se os coefiencientes associados a <span class="math inline">\(\hat{u}_{t-1}, \cdots, \hat{u}_{t-k}\)</span> são todos nulos. Se rejeitamos <span class="math inline">\(H_0\)</span> do teste F, rejeitamos a hipótese nula de que os erros são não correlacionados.</li>
+</ul>
+</div>
+<div class="fragment">
+<blockquote>
+<p><strong>Obs:</strong> o teste requer homocedasticidade. No caso de heterocedasticidade, um correção pode ser feita como discutido na seção de heterocedasticidade.</p>
+</blockquote>
+</div>
+</section>
+<section id="o-que-fazer-se-os-erros-são-autocorrelacionados" class="slide level2">
+<h2>O que fazer se os erros são autocorrelacionados?</h2>
+<ul>
+<li class="fragment">Precisamos estimar corretamente <span class="math inline">\(\mathbb{V}(\beta | X)\)</span>.</li>
+<li class="fragment">Assim como utilizamos o estimador de White no caso de heterocedasticidade, utilizaremos outro estimador que seja robusto a correlação serial.</li>
+<li class="fragment">O estimador HAC (heteroskedasticity and autocorrelation consistent) será utilizado.</li>
+</ul>
+</section>
+<section id="o-que-fazer-se-os-erros-são-autocorrelacionados-1" class="slide level2">
+<h2>O que fazer se os erros são autocorrelacionados?</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">R</a></li><li><a href="#tabset-6-2">Python</a></li><li><a href="#tabset-6-3">Julia</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb39-4"><a href="#cb39-4"></a></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="fu">data</span>(prminwge, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb39-6"><a href="#cb39-6"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(prminwge, <span class="at">start =</span> <span class="dv">1950</span>)</span>
+<span id="cb39-7"><a href="#cb39-7"></a>reg <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(<span class="fu">log</span>(prepop) <span class="sc">~</span> <span class="fu">log</span>(mincov) <span class="sc">+</span> <span class="fu">log</span>(prgnp) <span class="sc">+</span> <span class="fu">log</span>(usgnp) <span class="sc">+</span> <span class="fu">trend</span>(tsdata), <span class="at">data =</span> tsdata)</span>
+<span id="cb39-8"><a href="#cb39-8"></a></span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fu">coeftest</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+                Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept)   -6.6634416  1.2578286 -5.2976 7.667e-06 ***
+log(mincov)   -0.2122612  0.0401523 -5.2864 7.924e-06 ***
+log(prgnp)     0.2852380  0.0804921  3.5437  0.001203 ** 
+log(usgnp)     0.4860483  0.2219825  2.1896  0.035731 *  
+trend(tsdata) -0.0266633  0.0046267 -5.7629 1.940e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">NeweyWest</span>(reg, <span class="at">lag =</span> <span class="dv">2</span>, <span class="at">prewhite =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept)   log(mincov)    log(prgnp)    log(usgnp) trend(tsdata) 
+   1.43178840    0.04260481    0.09284990    0.26010232    0.00536379 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># coeftest(reg, vcovHAC) (Qual o valor de g?)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-6-2">
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb44-5"><a href="#cb44-5"></a></span>
+<span id="cb44-6"><a href="#cb44-6"></a>prminwge <span class="op">=</span> woo.dataWoo(<span class="st">'prminwge'</span>)</span>
+<span id="cb44-7"><a href="#cb44-7"></a>T <span class="op">=</span> <span class="bu">len</span>(prminwge)</span>
+<span id="cb44-8"><a href="#cb44-8"></a>prminwge[<span class="st">'time'</span>] <span class="op">=</span> prminwge[<span class="st">'year'</span>] <span class="op">-</span> <span class="dv">1949</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>prminwge.index <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1950'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>).year</span>
+<span id="cb44-10"><a href="#cb44-10"></a></span>
+<span id="cb44-11"><a href="#cb44-11"></a>reg <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'np.log(prepop) ~ np.log(mincov) + np.log(prgnp) + np.log(usgnp) + time'</span>, data <span class="op">=</span> prminwge)</span>
+<span id="cb44-12"><a href="#cb44-12"></a>results_regu <span class="op">=</span> reg.fit()</span>
+<span id="cb44-13"><a href="#cb44-13"></a></span>
+<span id="cb44-14"><a href="#cb44-14"></a>table_regu <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_regu.params, <span class="dv">4</span>),</span>
+<span id="cb44-15"><a href="#cb44-15"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_regu.bse, <span class="dv">4</span>),</span>
+<span id="cb44-16"><a href="#cb44-16"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_regu.tvalues, <span class="dv">4</span>),</span>
+<span id="cb44-17"><a href="#cb44-17"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_regu.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb44-18"><a href="#cb44-18"></a></span>
+<span id="cb44-19"><a href="#cb44-19"></a>results_hac <span class="op">=</span> reg.fit(cov_type <span class="op">=</span> <span class="st">'HAC'</span>, cov_kwds<span class="op">=</span>{<span class="st">'maxlags'</span>: <span class="dv">2</span>})</span>
+<span id="cb44-20"><a href="#cb44-20"></a>table_hac <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_hac.params, <span class="dv">4</span>),</span>
+<span id="cb44-21"><a href="#cb44-21"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_hac.bse, <span class="dv">4</span>),</span>
+<span id="cb44-22"><a href="#cb44-22"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_hac.tvalues, <span class="dv">4</span>), </span>
+<span id="cb44-23"><a href="#cb44-23"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_hac.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb44-24"><a href="#cb44-24"></a>                          </span>
+<span id="cb44-25"><a href="#cb44-25"></a>table_regu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     b      se       t    pval
+Intercept      -6.6634  1.2578 -5.2976  0.0000
+np.log(mincov) -0.2123  0.0402 -5.2864  0.0000
+np.log(prgnp)   0.2852  0.0805  3.5437  0.0012
+np.log(usgnp)   0.4860  0.2220  2.1896  0.0357
+time           -0.0267  0.0046 -5.7629  0.0000</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>table_hac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     b      se       t    pval
+Intercept      -6.6634  1.4318 -4.6539  0.0000
+np.log(mincov) -0.2123  0.0426 -4.9821  0.0000
+np.log(prgnp)   0.2852  0.0928  3.0720  0.0021
+np.log(usgnp)   0.4860  0.2601  1.8687  0.0617
+time           -0.0267  0.0054 -4.9710  0.0000</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-6-3">
+<p>Implementar (ver lista)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="o-que-fazer-se-os-erros-são-autocorrelacionados-2" class="slide level2">
+<h2>O que fazer se os erros são autocorrelacionados?</h2>
+<ol type="1">
+<li class="fragment">Ajustar o modelo <span class="math inline">\(y_t = \beta_0 + \beta_1 x_{1t} + \cdots, \beta_k x_{kt} + u_t\)</span></li>
+<li class="fragment">Ajustar o modelo auxiliar <span class="math inline">\(x_{1t} = \delta_0 + delta_2 x_{2t} + \cdots + \delta_k x_{kt} + r_t\)</span></li>
+<li class="fragment">Calcular <span class="math inline">\(\hat{a}_t = \hat{r}_t \hat{u}_t\)</span></li>
+<li class="fragment">Calcular <span class="math inline">\(\hat{\nu} = \displaystyle \sum_{t=1}^n \hat{a}_t^2 + 2 \sum_{h= 1}^g [1 - h/(g+1)](\sum_{t = h + 1}^n \hat{a}_t \hat{a}_{t-h})\)</span></li>
+<li class="fragment">O novo desvio padrão será dado por <span class="math display">\[[\sqrt{\mathbb{V}(\hat{\beta}_1|X)}/\hat{\sigma}]^2 \sqrt{\hat{\nu}}\]</span></li>
+</ol>
+<div class="fragment">
+<blockquote>
+<p>O mesmo pode ser feito para i = 2, 3, …, k.</p>
+</blockquote>
+<p><img src="imagens/imecc.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
+</div>
 </div>
 </section></section>
     </div>
