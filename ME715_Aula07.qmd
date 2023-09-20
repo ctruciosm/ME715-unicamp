@@ -1,0 +1,259 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Mínimos Quadrados Generalizados (MQG)"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+# Introdução
+
+## Introdução
+
+- O teorema de Gauss-Markov garante que se HRLM1--HRML5 acontecem, $\hat{\beta}_{MQO}$ é o melhor estimador linear não viesado para $\beta$.
+- Se os erros são autocorrelacionados ou heterocedásticos, $\hat{\mathbb{V}}(\hat{\beta}_{MQO}|X) \neq \sigma^2(X'X)^{-1}$.
+- Uma alternativa é utilizarmos o estimador de White ou o HAC para estimar $\hat{\mathbb{V}}(\hat{\beta}_{MQO}|X)$ e assim pudermos fazer inferência.
+- Outra alternativa é desenvolver um método de estimação que seja válido mesmo quando os erros não são homocedásticos, são autocorrelacionados ou ambos.
+- É neste contexto que nasceu o método de mínimos quadrados generalizados.
+
+# Mínimos Quadrados Generalizados
+## Mínimos Quadrados Generalizados
+
+Seja o modelo $$Y = X \beta + u, \quad com \quad E(uu' | X) = \Omega$$
+
+- Se $\Omega = \sigma^2 I$, temos o modelo linear clássico.
+- Se $\Omega = diag(\sigma_1^2, \cdots, \sigma_n^2)$, os erros são heterocadásticos mas serialmente não correlacionados.
+- Se $\Omega$ é matriz cheia com $\Omega_{ij}\neq0$, os erros são correlacionados (e se os elementos na diagonal são diferentes, os erros também são heterocedásticos)
+
+. . . 
+
+> Queremos um método de estimação que não restringa a forma de $\Omega$. Faremos isto tranformando o modelo anterior em um modelo no qual as suposições do teorema de Gauss-Markov sejam válidas.
+
+## Mínimos Quadrados Generalizados
+
+- Observe que $\Omega$ é quadrada, simétrica e definida positiva, então $\Omega^{-1}$ também é.
+- Assim, sempre podemos escrever $\Omega^{-1} = \Psi \Psi'$.
+- Premultiplicando $Y = X\beta + u$ por $\Psi'$, temos $\underbrace{\Psi' Y}_{Y^{\ast}} = \underbrace{\Psi' X}_{X^{\ast}} \beta + \underbrace{\Psi' u}_{u^{\ast}}.$
+- Note que $$\mathbb{V}(u^{\ast} | X) = \Psi'\mathbb{V}(u | X) \Psi = \Psi' \Omega \Psi = \Psi' (\Psi \Psi')^{-1} \Psi = \Psi' \Psi'^{-1} \Psi^{-1}\Psi = I.$$ 
+- Assim temos que a regressão de $Y^{\ast}$ sobre $X^{\ast}$ satisfaz as condições do teorema de Gauss-Markov.
+- Então [$$\hat{\beta} = (X^{\ast \prime} X^{\ast})^{-1} X^{\ast \prime} Y^{\ast} = (X' \Psi \Psi' X)^{-1} X' \Psi \Psi' Y = (X' \Omega^{-1}X)^{-1}X' \Omega^{-1} Y = \hat{\beta}_{MQG}$$]{style="color:red;"}
+
+
+
+## Mínimos Quadrados Generalizados
+
+### Propriedades:
+
+- $\mathbb{V}(\hat{\beta}_{MQG} | X) = (X'\Omega^{-1} X)^{-1}$
+- $\mathbb{E}(\hat{\beta}_{MQG}) = \beta$
+
+
+
+## Mínimos Quadrados Generalizados
+
+
+::: {.callout-important}
+
+Conhecido $\Omega$, MQG parece uma abordagem simples, afinal:
+
+::: {.nonincremental}
+
+- $\hat{\beta}_{MQG} = (X' \Omega^{-1}X)^{-1}X' \Omega^{-1} Y$ e 
+- $\mathbb{V}(\hat{\beta}_{MQG} | X) = (X'\Omega^{-1} X)^{-1}$. 
+:::
+
+Contudo, na prática as coisas não são tão simples quanto parecem.
+
+:::
+
+1. $\Omega$ é desconhecido.
+2. Mesmo se $\Omega$ fosse conhecido, a estimação seria apenas factível para valores pequenos de $n$, pois inverter uma matriz $n \times n$, para $n$ grande, é uma tarefa dificil.
+
+
+
+## Mínimos Quadrados Generalizados
+
+### Mínimo Quadrados Ponderados
+
+
+- Seja $\Omega$ uma matriz $n \times n$ diagonal com elementos $\omega_t^2$, $t = 1, \cdots, n.$
+- Então, $\Omega^{-1}$ é uma matriz diagonal com elementos $\omega_t^{-2}$, $t = 1, \cdots, n.$
+- Assim, $\Psi$ e $\Psi'$ são ambas matrizes diagonais com elementos $\omega_t^{-1}$, $t = 1, \cdots, n.$
+- Então, $$\Psi' Y = \Psi' X \beta + \Psi' u,$$ implica $$\omega_t^{-1}y_t = \omega_t^{-1} x_t \beta + \omega_t^{-1} u_t.$$
+
+
+
+# Mínimos Quadrados Generalizados Factíveis
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+- Na prática nunca conhecemos $\Omega$.
+- Uma suposição razoável é assumir que $\Omega$ depende  do vetor de parâmetros $\delta$ em uma forma conhecida.
+- Assim, $\Omega = \Omega(\delta)$ e estimando $\delta$, temos $\Omega(\hat{\delta})$.
+- Com $\Omega(\hat{\delta})$, obtemos $\Psi(\hat{\delta})$ e podemos aplicar MQG utilizando $\Psi(\hat{\delta})$. Este procedimento é conhecido como **MQGF**.
+
+
+. . . 
+
+[Infelizmene MQG e MQGF não tem as mesmas propriedades `r emo::ji("sad")`. De fato, se MQGF é um método de estimação _interessante_ depende de quão boa é a estimação de $\Omega$. Mas, se $\Omega(\hat{\delta})$ é uma boa estimativa, MGGF tem as mesmas propriedades de MQG `r emo::ji("smile")`.]{style="color:blue;"}
+
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+### Caso 1: Heterocedasticidade
+
+
+Seja o modelo $Y =  X \beta + u,$ com $\mathbb{V}(u_t|X) = \sigma^2 h(X_t)$ em que neste caso $h(X_t) = \exp(X_t \delta)$.
+
+- Se $\delta$ fosse conhecido, aplicariamos MQG.
+- Como não conhecemos $\delta$, vamos estimá-lo. Mas como?
+  * Rodar a regressão auxiliar por MQO $\log(\hat{u}^2_t) = X_t \delta + \nu_t,$ em que $\hat{u}_t$ são os residuos da regressão de $Y$ sob $X$ utilizando MQO.
+  * Calculamos os pesos $\hat{\omega}_t = \sqrt{\exp(X_t \delta)}$
+- Rodamos a regressão $\hat{\omega}_t^{-1}y_t = \hat{\omega}_t^{-1} x_t \beta + \hat{\omega}_t^{-1} u_t$ e obtemos $\hat{\beta}_{MQG}$
+
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+#### Exemplo: 
+
+```{r}
+#| echo: true
+library(wooldridge)
+## MQO
+modelo <- lm(cigs ~ log(income) + log(cigpric) + educ + age + I(age^2) + restaurn, data = smoke)
+
+## Teste Heterocedasticidade
+lmtest::bptest(modelo)
+
+## MQGF
+reg_aux <- lm(log(resid(modelo)^2) ~ log(income) + log(cigpric) + educ + age + I(age^2) + restaurn, data = smoke)
+w <- 1/exp(fitted(reg_aux))
+modelo_mqgf <- lm(cigs ~ log(income) + log(cigpric) + educ + age + I(age^2) + restaurn, weight = w, data = smoke)
+
+round(cbind(MQO = coef(modelo), 
+            stdMQO = summary(modelo)$coefficients[,2], 
+            pMQO = summary(modelo)$coefficients[,4],
+            MQGF = coef(modelo_mqgf), 
+            stdMQGF = summary(modelo_mqgf)$coefficients[,2],
+            pMQGF = summary(modelo_mqgf)$coefficients[,4]), 5)
+```
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+#### Exemplo: 
+
+```{r}
+#| echo: true
+y_hat <- fitted(reg_aux)
+w <- sqrt(exp(y_hat))
+new_data <- data.frame(cigs = smoke$cigs/w,
+                       ones = 1/w,
+                       lincome = log(smoke$income)/w,
+                       lcigpric = log(smoke$cigpric)/w,
+                       educ = smoke$educ/w,
+                       age = smoke$age/w,
+                       age2 = smoke$age^2/w,
+                       restaurn = smoke$restaurn/w)
+mqgf <- lm(cigs ~ ones + lincome + lcigpric + educ + age + age2 + restaurn - 1, data = new_data)
+cbind(MQGF_manual = coef(mqgf), MQGF = coef(modelo_mqgf))
+```
+
+
+. . . 
+
+
+> **Observação:** Se os $\hat{\beta}$ obtidos por MQO e MQGF produzirem resultados estatísticamente significaivos mas diferentes em sinal, cuidado!. **Isto pode indicar que alguma outra das hipóteses do teorema de Gauss-Markov não é verificada.** Em particular, devemos supeitar que $\mathbb{E}(u|X) \neq 0$
+
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+### Caso 2: Erros serialmente correlacionados
+
+Seja o modelo $Y = X \beta + u,$ com $u_t = \rho u_{t-1} + \epsilon_t$, com $\epsilon_t \sim IID(0, \sigma^2)$ e $|\rho| < 1$.
+
+- $\Omega = \Omega(\rho) = \dfrac{\sigma^2}{1-\rho^2} \begin{bmatrix}
+1 & \rho & \rho^2 &\cdots & \rho^{n-1} \\
+\rho & 1 & \rho & \cdots & \rho^{n-2} \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+\rho^{n-1} & \rho^{n-2} & \rho^{n-3} & \cdots & 1 \\
+\end{bmatrix}$
+- Para podermos aplicar MQG, precisamos encontrar a matriz $\Psi(\rho)$, tal que $\Omega^{-1} = \Psi \Psi'$.
+- Isto pode ser obtido se escolhemos $\Psi$ tal que $\Psi' u \propto \textbf{I}$ (que é o que deve acontecer se escolhermos $\Psi$, tal que $\Psi'u = \epsilon$).
+- Note que $\epsilon_t = u_t - \rho u_{t-1}$. Ou seja, para as linhas $2, \cdots, n$, a $t$-éssima linha de $\Psi'$ é 1 na posição $t$, $-\rho$ na posição $t-1$ e 0 em todos os outros casos.
+
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+### Caso 2: Erros serialmente correlacionados
+
+- O que fazer com a primeira linha de $\Psi'$?
+- Note que $\mathbb{V}(u | X) = \sigma^2_u = \dfrac{\sigma^2_{\epsilon}}{(1-\rho^2)}$ e por construção $\epsilon_t$ e $u_1$ são não correlacionados
+- Então, podemos definir a primeira linha como $\sqrt{1-\rho^2}$ na primeira posição e zero em todos os outros casos.
+- Assim, $$\Psi' = \Psi'(\rho) =  \begin{bmatrix}
+\sqrt{1-\rho^2} & 0 & 0 &\cdots & 0 \\
+-\rho & 1 & 0 & \cdots & 0 \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+0 & 0 & 0 & -\rho & 1 \\
+\end{bmatrix}$$
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+### Caso 2: Erros serialmente correlacionados
+
+- Se conhecermos $\rho$, aplicamos MQG.
+- Como $\rho$ não é conhecido, precisamos estimá-lo.
+- Se $X$ não contém valores defasados de $Y$, basta ajustar a regressão auxiliar $\hat{u}_t = \rho \hat{u}_{t-1} + \epsilon_t$ por MQO e obter $\hat{\rho}$.
+- Uma vez obtido $\hat{\rho}$, basta ajustar a regressão de $\Psi'(\hat{\rho})Y$ sob $\Psi'(\hat{\rho})X$
+
+. . . 
+
+> **Observação:** existem vários nomes para a estimação por MQGF com erros AR(1) e dependem do tratamento dado à primeira observação. **Cochrane-Orcutt** omite a primeira observação, já **Prais-Winsten** usa a primeira observação como sugerido (contudo, as implementações disponíveis fazem iterações).
+
+
+## Mínimos Quadrados Generalizados Factíveis (MQGF)
+
+### Caso 2: Erros serialmente correlacionados
+
+```{r}
+#| echo: true
+library(wooldridge)
+library(dynlm)
+library(car)
+library(orcutt)
+library(prais)
+
+tsdata <- ts(barium, start = c(1978, 2), frequency = 12)
+formula <- log(chnimp) ~ log(chempi) + log(gas) + log(rtwex) + befile6 + affile6 + afdec6
+modelo <- dynlm(formula, data = tsdata)
+modelo_co <- cochrane.orcutt(modelo)
+modelo_pw <- prais_winsten(formula, index = index(tsdata), data = tsdata)
+modelo_pw_1 <- prais_winsten(formula, index = index(tsdata), data = tsdata, twostep = TRUE)
+
+cbind(MQO = coef(modelo), CO = coef(modelo_co), PW = coef(modelo_pw), PW1 = coef(modelo_pw_1))
+```
+
