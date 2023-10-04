@@ -1,0 +1,552 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Problemas adicionais de especificação e de dados"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+# Introdução
+
+## Introdução
+
+- Vimos que heterocedasticidade não causa vies nos estimadores de MQO, mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQP.
+- Vimos também que error autocorrelacionados não cuasam vies nos estimadores (quando $\textbf{X}$ não contém variáveis defasadas de $Y$),  mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQG (MQGF).
+- Hoje veremos mais alguns detalhes aos quais devemos nos atentar na hora de construir um modelo de regressão.
+
+
+# Má-especificação da forma funcional.
+## Má-especificação da forma funcional.
+
+<center>
+"Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente." **Jeffrey Wooldrdge**
+</center>
+
+
+. . . 
+
+Suponha que $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.$$ Se, por exemplo, omitimos $exper^2$, estamos comentendo uma má-especificação da forma funcional.
+
+. . .
+
+Outros exemplos de má-especificação da forma funcional são:
+
+. . . 
+
+- utilizar $wage$ em lugar de $\log(wage)$.
+- Omitir efeitos de iteração quando estes são necessários.
+
+## Má-especificação da forma funcional.
+
+Uma forma de detectar uma forma funcional mal-especificada é através do teste F.
+
+- Podemos incluir os termos quadráticos das variáveis estatísticamente significativas.
+- Aplicamos um teste F para testar a significância conjunta destas variáveis.
+- Se os termos quadráticos forem significativos, podemos incluí-los no modelo (ao custo de complicar a interpretação).
+
+. . . 
+
+
+> **Cuidado:** termos quadráticos significativos podem ser consequência de outros problemas de má-especificação. Por exemplo, usar uma variável em nível quando o logaritmo sería mais apropriado, ou vice-versa.
+
+. . . 
+
+Geralmente, termos quadráticos e $\log(\cdot)$ são suficientes para lidar com relações não lineares. 
+
+## Má-especificação da forma funcional.
+
+#### Exemplo
+
+Estamos interessados em verificar se a média do tempo das penas cumpridas de condenações passadas (avgsen) afeta o número de presões no ano de 1986 (narr86). Para isto utilizamos o _dataset_ `crime1` do pacote `wooldridge` e as variáveis pcnv (proporção de condenações anteriores), tottime (tempo em prisão desde os 18 anos), ptime86(meses em prisão durante 1986), qemp86 (trimestres empregado), inc86 (salário em $.100), black (1 = negro), hispan (1 = hispano).
+
+. . . 
+
+```{r}
+library(wooldridge)
+library(dplyr)
+crime1 |> 
+  select(-nfarr86, -nparr86, -durat, -born60, -pcnvsq, -pt86sq, -inc86sq) |> glimpse()
+```
+
+
+
+
+## Má-especificação da forma funcional.
+
+
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo <- lm(narr86 ~ pcnv + avgsen + tottime + ptime86 + qemp86 + inc86 + black + hispan, data = crime1)
+round(summary(modelo)$coefficients, 4)
+```
+
+
+. . . 
+
+variáveis significativas: pcnv, ptime86, qemp86, inc86, black e hispan.
+
+
+## Má-especificação da forma funcional.
+
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo_quadrados <- lm(narr86 ~ pcnv + I(pcnv^2)+ avgsen + tottime + ptime86 + I(ptime86^2) + qemp86 + inc86 + I(inc86^2) + black + hispan, data = crime1)
+round(summary(modelo_quadrados)$coefficients, 4)
+```
+
+. . . 
+
+Fazendo um teste F para testar $$H_0: \beta_{pcnv^2} = \beta_{ptime86^2} = \beta_{inc86^2} = 0,$$
+
+obtemos um p-valor `r anova(modelo_quadrados, modelo)$Pr[2]`). Isto indica que o modelo original não capturou algumas não linearidades importantes
+
+
+
+## Teste RESET
+
+A ideia do teste de **erro de especificação da regressão** (RESET: regression specification error test) é que se o modelo original, digamos $$y = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k + u,$$ satisfazer HRLM4 ($\mathbb{E}(u|X) = 0$), nenhuma função não linear das variáveis explicativas deve ser estatísticamente significativa quando adicionada à regressão.
+
+. . . 
+
+Considere a regressão expandida: $$y = \beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k + \delta_1 \hat{y}^2 + \delta_2 \hat{y}^3 + v,$$
+
+. . . 
+
+Se o modelo original estiver corretamente especificado, $\delta_1, \delta_2$ na regressão expandida deveriam ser conjuntamente zero. Assim, basta fazermos um teste F para testar $H_0: \delta_1 = 0, \delta_2 = 0$.
+
+
+## Teste RESET
+```{r}
+#| echo: true
+modelo_expandido <- lm(narr86 ~ pcnv + avgsen + tottime + ptime86 + qemp86 + inc86 + black + hispan + I(fitted(modelo)^2) + I(fitted(modelo)^3), data = crime1)
+anova(modelo_expandido, modelo)$Pr[2]
+```
+
+. . . 
+
+Rejeitamos $H_0: \delta_1 = 0, \delta_2 = 0$.
+
+
+> Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada.
+
+## Teste RESET
+
+Pense no seguinte caso:
+
+```{r}
+#| echo: true
+modelo <- lm(price ~ lotsize + sqrft + bdrms, data = hprice1)
+modelo_expandido <- lm(price ~ lotsize + sqrft + bdrms + I(fitted(modelo)^2) +I(fitted(modelo)^3), data = hprice1)
+anova(modelo_expandido, modelo)$Pr[2]
+```
+
+Rejeitamos $H_0: \delta_1 = 0, \delta_2 = 0$, ou seja, temos evidência para dizer que o modelo esta mal-especificado na sua forma funcional. **O que fazer agora?**
+
+
+## Teste RESET
+
+**Ideia 1: O mesmo que fizemos no exemplo anterior (quadrados)**
+
+```{r}
+#| echo: true
+modelo_quadrado <- lm(price ~ lotsize + sqrft + bdrms + I(lotsize^2) + I(sqrft^2), data = hprice1)
+
+round(summary(modelo_quadrado)$coefficients, 4)
+```
+
+. . . 
+
+Será que funcionou?
+
+. . . 
+
+```{r}
+#| echo: true
+modelo_quadrado_expandido <- lm(price ~ lotsize + sqrft + bdrms + I(lotsize^2) + I(sqrft^2) + I(fitted(modelo_quadrado)^2) +I(fitted(modelo_quadrado)^3), data = hprice1)
+anova(modelo_quadrado_expandido, modelo_quadrado)$Pr[2]
+```
+
+
+## Teste RESET
+
+> Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada `r emo::ji("sad")`.
+
+Veja o que acontece com o seguinte modelo:
+
+```{r}
+#| echo: true
+modelo_log <- lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms, data = hprice1)
+modelo_log_expandido <- lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms + I(fitted(modelo_log)^2) + I(fitted(modelo_log)^3), data = hprice1)
+anova(modelo_log_expandido, modelo_log)$Pr[2]
+```
+. . . 
+
+Se o teste RESET rejeita $H_0$, sabemos que temos má-especificação funcional. Contudo, não sabemos como fazer a correção (neste caso, aplicar $\log(\cdot)$ em algumas das variáveis funcionou).
+
+. . . 
+
+<center>
+[O teste RESET é um teste geral da má-especificação da forma funcional. Ele nos diz se temos evidência (ou não) de má-especificação, mas não fornece orientações de como proceder se esta for detectada.]{style="color:red;"}
+</center>
+
+## Testes contra alternativas não aninhadas
+
+Suponha que estamos interessados em testar o modelo $$y_t = \beta_0 + \beta_1 x_{1t} + \beta_2 x_{2t} + u_t,$$ contra o modelo $$y_t = \beta_0 + \beta_1 \log(x_{1t}) + \beta_2 \log(x_{2t}) + u_t,$$
+ 
+::: callout-important
+Este tipo de modelos são **não aninhados**, isso significa que nenhum dos modelos é um caso particular do outro. 
+
+:::
+
+
+. . . 
+
+- Se fossem modelos aninhados, poderiamos utilizar testes F.
+- No caso de modelos não aninhados, não podemos utilizar testes F.
+
+
+## Testes contra alternativas não aninhadas
+
+#### Alternativa 1:
+
+Criar um modelo abrangente que inclua ambos os modelos como casos particulares. Em seguida, testar as restrições que levam a cada um dos modelos.
+
+**Exemplo:**
+
+$$y_t = \gamma_0 + \gamma_1 x_{1t} + \gamma_2 x_{2t} + \gamma_3 \log(x_{1t}) + \gamma_4 \log(x_{2t})+ u_t.$$
+
+- Testar $H_0: \gamma_3 = \gamma_4 = 0$.
+- Testar $H_0: \gamma_1 = \gamma_2 = 0$.
+
+. . . 
+
+> Esta abordagem foi proposta por [Mizon e Richard (1986)](https://www.jstor.org/stable/1911313)
+
+## Testes contra alternativas não aninhadas
+
+#### Alternativa 2: [Teste de Davidson-MacKinnon](https://www.jstor.org/stable/1911522)
+
+1. Ajustar o modelo $y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + u$ e obter $\hat{y}$.
+2. Ajustar o modelo $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \theta \hat{y} + u$ e fazer um teste t ($H_0: \theta = 0$).
+
+. . . 
+
+Como $\hat{y}$ obtido no passo 1 são apenas funções não lineares de $x_1$ e $x_2$, se o modelo $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$ for corretamente especificado ($\mathbb{E}(u|X) = 0$), então $\theta$ não deve ser diferente de zero.
+
+. . . 
+
+De forma análoga, podemos ajustar a regressão $y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + \theta \hat{y} + u$ (em que $\hat{y}$ é obtido da regressão $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$) e testar se $H_0: \theta = 0.$
+
+. . .
+
+Se nenhum modelo for rejeitado, podemos utilizar o $R^2_{Adj}$ para escolher um dos modelos.
+
+
+## Testes contra alternativas não aninhadas
+
+```{r}
+modelo <- lm(log(price) ~ lotsize + sqrft + bdrms, data = hprice1)
+modelo_log <- lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms, data = hprice1)
+modelo_abrangente <- lm(log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms, data = hprice1)
+anova(modelo, modelo_abrangente)
+# Rejeiamos H0
+anova(modelo_log, modelo_abrangente)
+# Não rejeitamos H0
+```
+
+Do primeiro teste, rejeitamos $H_0: \beta_{\log(lotsize)} = \beta_{\log(sqrft)} = 0$.  Já do segundo teste, não podemos rejeitar $H_0: \beta_{lotsize} = \beta_{sqrft} = 0$. Logo, o modelo com $\log(\cdot)$ é preferido.
+
+
+
+
+# Variáveis proxy
+
+## Variáveis proxy para variáveis não observadas
+
+Variáveis proxy são uma forma e lidar com variáveis omitidas que são não observadas (inteligência, honestidade, aptidão).
+
+. . . 
+
+Seja o modelo $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 abil + u.$$
+
+. . . 
+
+Se ajustarmos o modelos sem a variável _abil_ (habilidade), em geral, teremos estimadores viesados para $\beta$. Como podemos resolver, ou pelo menos aliviar, o problema de vies da variável omitada? (pelo menos para $\beta_1$ e $\beta_2$)
+
+. . .  
+
+<center>
+[Uma alternativa é utilizar uma variável _proxy_ (afinal, _abil_ não é observável)]{style="color:red;"}
+</center>
+
+
+::: callout-important
+Uma variável _proxy_ é algo que está relacionado com a variável não observada que gostaríamos de controlar.
+
+:::
+
+## Variáveis proxy para variáveis não observadas
+
+Seja o modelo $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 abil + u.$$
+
+1. Qual seria uma variável _proxy_ para _abil_?
+2. Isso significa que _abil_ e a variável _proxy_ são a mesma coisa?
+
+
+. . . 
+
+- Seja o modelo $y = \beta_0 + \beta_1 x_2 + \beta_2 x_2 + \beta_3 x_3^{\ast} + u$, em que $x_3^{\ast}$ é não observável.
+- Seja $x_3$ uma _proxy_ de $x_3^{\ast}$.
+- Como apenas precisamos que $x_3$ e $x_3^{\ast}$ sejam relacionadas, isto pode ser capturado pela equação $$x_3^{\ast} = \delta_0 + \delta_1 x_3 + v$$
+
+## Variáveis proxy para variáveis não observadas
+
+- Como podemos utilizar $x_3$ para obter estimadores não viesados (ou pelo menos consistentes) para $\beta_1$ e $\beta_2$?
+- Utilizar $x_3$ como se fosse $x_3^{\ast}$ e regredir $y$ sobre $x_1, x_2, x_3$ (método conhecido como **solução plugada do problema de variáveis omitidas**).
+- Como $x_3$ e $x_3^{\ast}$ não são as mesmas, devemos determinar quando, de fato, este procedimento produzira estimadores consistentes para $\beta_1$ e $\beta_2$.
+
+
+## Variáveis proxy para variáveis não observadas
+
+**Hipóteses necessárias para que a solução plugada forneça estimadores consistentes para $\beta_1$ e $\beta_2$.**
+
+1. $u$ é não correlacionado com $x_1, x_2, x_3^{\ast}$ e $x_3$.
+2. $v$ é não correlacionado com $x_1, x_2, x_3$.
+
+. . . 
+
+$$y = \beta_0 + \beta_1x_1 + \beta_2 x_2 + \beta_3 \underbrace{x_3^{\ast}}_{x_3^{\ast} = \delta_0 + \delta_1 x_3 + v} + u$$
+
+. . .
+
+$$y = \underbrace{\beta_0 + \beta_3 \delta_0}_{\alpha_0} + \beta_1 x_1 + \beta_2 x_2 + \underbrace{\beta_3 \delta_1}_{\alpha_3}x_3 + \underbrace{u + \beta_3 v}_{\epsilon}$$
+
+
+## Variáveis dependentes defasadas como proxy
+
+- Em alguns casos (como no exemplo anterior) temos uma vaga ideia de qual variável podemos incluir como proxy.
+- Em outras aplicações, suspeitamos que as variáveis independentes estejam relacionadas com uma variável não observada, mas não temos ideia de como obter uma proxy para esta variável.
+- Nessas situações, podemos incluir o valor da variável dependente de um período anterior (isto implica em modificar algumas suposições do modelo. Isto será visto na matéria de séries temporais).
+
+. . . 
+
+[Em geral, o uso de uma variável proxy ainda pode conduzir a vies se ela não satisfazer as hipóteses precedentes. Contudo, esperamos que o vies seja menor do que aquele obtido se omitirmos totalmente a variável.]{style="color:red;"}
+
+
+# MQO e erros de medida
+## MQO e erros de medida
+
+
+- Algumas vezes, não podemos coletar dados da variável que verdadeiramente afeta o fenômeno de interesse.
+- Quando utilizamos uma medida imprecisa de uma variável no modelo, o modelo conterá erro de medida.
+- Este erro de medida tem algumas consequências na estimação por MQO.
+
+. . . 
+
+::: callout-important
+
+::: {.nonincremental}
+- Variável proxy: procuramos por uma variável que está associada com a variável não observada.
+- Erro de medida: a variável que não observamos tem um significado quantitativo bem definido, mas as medidas sobre elas registradas por nós podem conter erros.
+:::
+
+**Exemplo:**
+QI é proxy de aptidão, já renda anual declarada é uma medida (com erro) da renda anual efetiva.
+
+:::
+
+
+## Erro de medida na variável dependente
+
+Seja $y^{\ast}$  a variável que queremos explicar e seja o modelo correto $$y^{\ast} = \beta_0 + \beta_1x_1 + \cdots + \beta_k x_k + u$$
+
+. . . 
+
+Seja $y$ a variável declarada (pensem em $y^{\ast}$ como o a poupança familiar anual e em $y$ como a poupança anual registrada).
+
+. . . 
+
+O **erro de medida** é definido como a diferença entre o valor observado e o valor real, $$e_0 = y - y^{\ast}$$
+
+. . . 
+
+Subtituindo no modelo original, temos $$y = \beta_0 + \beta_1x_1 + \cdots + \beta_k x_k + \underbrace{u + e_0}_{erro}$$
+
+. . . 
+
+Qual o efeito de aplicar MQO com $y$ em lugar de $y^{\ast}$?
+
+
+## Erro de medida na variável dependente
+
+Qual o efeito de aplicar MQO com $y$ em lugar de $y^{\ast}$?
+
+- Se $\mathbb{E}(e_0) \neq 0$, teremos um estimador viesado para $\beta_0$.
+- Se $\mathbb{E}(e_0|x) = 0$, teremos estimadores não viesados para $\beta$.
+- Se $u$ e $e_0$ forem não correlacionados, $\mathbb{V}(u + e_0) = \sigma^2_u + \sigma^2_{e_0} > \sigma^2_u·$
+
+. . . 
+
+> O erro de medida na variável dependente pode causar vies no método MQO  se este for relacionado com uma ou mais variáveis explicativas. Já se o  erro de medida for não correlacionado com as variáveis explicativas, a estimação por MQO possuirá boas propriedades.
+
+
+## Erro de medida em uma variável explicativa
+
+Seja $$y = \beta_0 + \beta_1 x_1^{\ast} + u,$$ e assuma que as hipóteses de Gauss-Markow são satisfeitas.
+
+. . . 
+
+O problema é que $x_1^{\ast}$ não é observado. 
+
+. . . 
+
+Em vez disso, temos uma medida de $x_1^{\ast}$  que chamaremos de $x_1$. O erro de medida é $$e_1 = x_1 - x_1^{\ast}.$$
+
+. . . 
+
+O que acontece se simplesmente substituirmos $x_1$ por $x_1^{\ast}$ e aplicamos MQO?
+
+. . . 
+
+<center>
+[A resposta depende fortemente das suposições que fizermos sobre o erro de medida]{style="color:red;"}
+
+
+</center>
+
+## Erro de medida em uma variável explicativa
+
+Duas hipóteses têm sido enfaizadas na litertura:
+
+1. $\mathbb{C}ov(x_1, e_1) = 0$:
+
+. . . 
+
+Se substituirmos $x_1^{\ast}$ no modelo anterior por $x_1 - e_1,$ temos $$y = \beta_0 + \beta_1 x_1 + u - \beta_1e_1,$$ 
+
+. . . 
+
+Uma suposição presente em ambas as hipóteses que tem sido enfatizadas é que  $u$ e $e_1$ tem média zero.
+
+. . . 
+
+Se além disso, utlizarmos o fato que tanto $u$ quanto $e_1$ são não correlacionados com $x_1$, $\hat{\beta}_{MQO}$ terá boas propriedades mas a variâncias de $\mathbb{V}(u - \beta_1e_1) = \sigma_u^2 + \beta_1^2 \sigma_{e_1}^2 > \sigma_u^2$.
+
+
+## Erro de medida em uma variável explicativa
+
+
+2.  $\mathbb{C}ov(x_1^{\ast}, e_1) = 0$ (suposição conhecida como erro clássico nas variáveis - **CEV**):
+
+. . . 
+
+$$\mathbb{C}ov(x_1,e_1) = \mathbb{E}(x_1e_1) = \mathbb{E}((x_1^{\ast} + e_1)e_1) = \underbrace{\mathbb{E}(x_1^{\ast}e_1)}_{0} + \underbrace{\mathbb{E}(e_1^2)}_{\sigma^2_{e_1}} \neq 0$$
+
+. . . 
+
+
+Assim, $$\mathbb{C}ov(x_1, u-\beta_1e_1) = \mathbb{C}ov(x_1, u) - \mathbb{C}ov(x_1, \beta_1e_1) = -\beta_1\sigma^2_{e_1}$$
+
+. . . 
+
+O que levara a um estimador viesado.
+
+
+
+# Problemas com dados
+
+## Dados faltantes
+
+- Não é raro que, após coletarmos informações de uma a.a de pessoas*, descubramos que estão faltandando informações em uma ou mais variáveis.
+- Via de regra, quando uma dado faltante for detectado (seja na variável dependente ou alguma das independentes), a observação toda não é levada em consideração na análise de regressão.
+- Um estimador que usa unicamente observações "completas" é chamado **estimador de caso completo.**
+- Será que, além da diminuição do tamanho amostral, existe alguma consequência de usar um estimador de caso completo?
+
+## Dados faltantes
+
+
+Se os dados estão ausentes de forma completamente aleatória (**MCAR:** _missing completely at random_), então excluir essas observações com dados faltantes não causa maiores problemas `r emo::ji("smile")`. 
+
+
+. . . 
+
+MCAR implica que os dados faltantes não são determinados pelo valor da observação na variável (_random_) nem pelo valor de alguma outra variável (também _random_). 
+
+. . . 
+
+<center>
+Infelizmente, MCAR não é o único tipo de dado faltante que pode acontecer.
+</center>
+
+
+## Dados faltantes
+
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+#### MAR 
+
+- MAR (_missing at random_): Quando o dado faltante é aleatório na variável mas relacionado com os valores de outras variáveis.
+- Este tipo de dado faltante precisa de um método mais sofisticado de imputação (como [MICE](https://amices.org/mice/))
+:::
+
+
+::: {.column width="50%"}
+
+#### MNAR
+
+- MNAR (_missing not at random_): Quando existe um padrão de dados faltante na variável.
+- Exemplo: pessoas com altos salarios às vezes preferem não declarar o salário.
+- Neses casos, a solução é coletar mais dados.
+:::
+
+::::
+
+
+
+## Dados faltantes
+
+Outra solução, quanto temos valores faltantes MCAR, consiste no seguinte:
+
+. . . 
+
+- Imagine o modelo de RLM e que estão disponíveis as variáveis $Y$, $X_1, \cdots, X_{k-1}$ sem dados faltantes.
+- Contudo, a variável $X_k$, também no modelo, está disponível mas com alguns dados faltantes.
+- Em lugar de exclur todas as observações que tem dados faltantes nessa variável, podemos criar duas novas variáveis, $Z_k$ e $m_k$.
+- $Z_k = X_k$ quando não tivermos dado faltante e 0 caso contrário. $m_k$ será uma dummy que funciona como "indicador de dados faltantes". Dessa forma, incluimos todas as observações na regressão de $Y$ sobre $X_1, \cdots, X_{k-1}, Z_k, m_k$.
+
+
+
+
