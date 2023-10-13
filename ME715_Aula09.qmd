@@ -1,0 +1,649 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Variáveis Instrumentais (IV)"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+# Introdução
+
+## Introdução
+
+Seja o modelo $$Y = X \beta + u.$$
+
+- Se $\mathbb{E}(u|X) = 0$, então $\mathbb{E}(\hat{\beta}_{MQO}) = \beta$ e $\hat{\beta}_{MQO} \xrightarrow{p} \beta$.
+- Se $\mathbb{E}(u|X) \neq 0$, en geral $\mathbb{E}(\hat{\beta}_{MQO}) \neq \beta$ e $\hat{\beta}_{MQO} \nrightarrow_p \beta$
+
+. . . 
+
+<center>
+Na prática, existem situações em que o erro e algum dos regressores estão correlacionados. Isto faz com que $\hat{\beta}_{MQO}$ não tenha mais boas propriedades.
+</center>
+
+
+# Correlação entre o erro e os regressores
+## Correlação entre o erro e os regressores
+
+
+#### Caso 1: variáveis omitidas
+
+Seja o modelo $$Y = \beta_0 + \beta_1X_1 + \beta_2 X_2 + v$$
+
+. . . 
+
+Suponha que por algum motivo, não temos acesso a $X_2$ e o modelo ajustado é da forma $$Y = \beta_0 + \beta_1X_1 + u$$
+
+. . . 
+
+Note que $u = \beta_2 X_2 + v$
+
+. . . 
+
+$$\mathbb{C}ov(X_1, u) = \mathbb{C}ov(X_1, \beta_2 X_2 + v) = \mathbb{C}ov(X_1, \beta_2 X_2) + \mathbb{C}ov(X_1, v) = \beta_2 \mathbb{C}ov(X_1, X_2)$$
+
+. . . 
+
+<center>
+[Se $X_1$ e $X_2$ forem correlacionados (e $\beta_2 \neq 0$), então $\mathbb{C}ov(X_1, u) \neq 0$.]{style="color:red;"}
+</center>
+
+## Correlação entre o erro e os regressores
+
+#### Caso 2: erro nas variáveis explicativas
+
+Seja o modelo $$Y = \beta_0 + \beta_1 X^{\ast} + v, \quad com \quad \mathbb{E}(v|X^{\ast}) = 0$$
+
+. . . 
+
+Se apenas observarmos $X = X^{\ast} + e$, em que $e \sim IID(0, \sigma^2_{e})$ e $e \perp X^{\ast}, v$. Temos, $$Y = \beta_0 + \beta_1 (X - e) + v = \beta_0 + \beta_1 X + \underbrace{v - \beta_1 e}_{u}$$
+
+. . . 
+
+
+$$\mathbb{C}ov(X, u) = \mathbb{E}(Xu) - \mathbb{E}(X) \mathbb{E}(u)$$
+
+## Correlação entre o erro e os regressores
+
+- $\mathbb{E}(u) = \mathbb{E}[\mathbb{E}(u| X^{\ast}, e)]$
+- $\mathbb{E}(u| X^{\ast}, e) = \mathbb{E}(v-\beta_1e|X^{\ast},e) = \underbrace{\mathbb{E}(v|X^{\ast},e)}_{0} - \beta_1 \mathbb{E}(e|X^{\ast},e)] = -\beta_1e$
+- $\mathbb{E}(u) = 0$
+
+. . . 
+
+Então:
+
+- $\mathbb{C}ov(X, u) = \mathbb{E}(Xu) = \mathbb{E}[\mathbb{E}(Xu | X^{\ast}, e)]$ 
+- $\mathbb{E}(Xu | X^{\ast}, e) = \mathbb{E}([X^{\ast} + e]u | X^{\ast}, e) = (X^{\ast} + e) \mathbb{E}(u|X^{\ast}, e) = -(X^{\ast} + e)\beta_1e$
+- $\mathbb{E}(Xu) = \mathbb{E}[\mathbb{E}(Xu | X^{\ast}, e)] = \mathbb{E}(-(X^{\ast} + e)\beta_1e) = -\beta_1 \sigma^2_e \neq 0$
+
+
+. . . 
+
+
+[$$\mathbb{C}ov(X,u) \neq 0$$]{style="color:red;"}
+
+
+# Definições prévias
+
+## Definições prévias
+
+
+::: callout-tip
+#### Exógena vs Endógena:
+Os termos _variável exógena_ e _variável endógena_ orignaram-se na análise de equações simultâneas, mas o termo evoluiu e dizemos que uma _variável explicativa endógena_ é aquela variável em $\textbf{X}$ que é correlacionada com $u$. Se HRLM4 se mantém, dizemos que temos _variáveis explicativas exógenas_.
+:::
+
+
+. . . 
+
+
+
+::: callout-tip
+#### Fortemente exógena vs. fracamente exógena
+- Os regressores $\textbf{X}$ são ditos fortemente exógenos se $\mathbb{E}(u|\textbf{X})$.
+- Os regressores $\textbf{X}$ são ditos fracamente exógenos se $\mathbb{E}(u_i|\textbf{x}_i),  \forall i$.
+
+:::
+
+
+
+
+
+# Variáveis Instrumentais (IV)
+## Variáveis Instrumentais (IV)
+
+
+Seja o modelo $$Y = \textbf{X} \beta + u, \quad \text{com pelo menos uma variável endógena}.$$
+
+. . . 
+
+Vamos supor que existe $\textbf{Z}$ (da mesma dimensão do que $\textbf{X}$ ou com mais colunas) tal que $\mathbb{E}(u | \textbf{Z}) = 0$ ($\textbf{Z}$ e $u$ são não correlacionados).
+
+. . . 
+
+<center>
+[As colunas em $\textbf{Z}$ são chamadas de **variáveis instrumentais** ou **instrumentos**.]{style="color:red;"}
+</center>
+
+. . . 
+
+#### Observação
+
+Se particionarmos $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ tal que $\textbf{X}_1$ (com $k_1$ colunas) são exógenas e $\textbf{X}_2$ (com $k_2$ colunas) são endógenas ($k_1 + k_2 = k$). A matriz $\textbf{Z}$ é da forma $\textbf{Z} = [\textbf{Z}_1 \textbf{X}_1]$, ou seja, buscamos novas variáveis $\textbf{Z}_1$ que sejam não correlacionadas com $u$.
+
+
+## Variáveis Instrumentais (IV)
+
+
+
+::: callout-important
+#### Instrumentos válidos
+
+Instrumentos válidos, devem satisfazer dois requerimenso: relevância e exogeneidade:
+
+::: {.nonincremental}
+- **Relevância do instrumento:** $\mathbb{C}ov(Z, X) \neq 0$
+- **Exogeneidade do instrumento:** $\mathbb{C}ov(Z, u) = 0$.
+:::
+
+São instrumentos válidos naqueles que estamos interessados!
+
+:::
+
+
+. . . 
+
+
+<center>
+[Encontrar instrumentos pode ser _fácil_ em alguns casos, mas em outros pode ser bastante dificil. De fato, controvérsias em economia são essencialmente disputas sobre se certas variáveis são ou não instrumentos válidos.]{style="color:violet;"}
+</center>
+
+
+
+## Variáveis Instrumentais (IV)
+
+Considere o problema da _aptidão_ (*aptid*) não observada na seguinte equação: $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 aptid + e.$$
+
+. . . 
+
+1. Podemos utilizar uma variável proxy, como IQ, e susbtituir _aptidão_ na equação de regressão. Se IQ for uma boa proxy, teremos um estimador consistente para $\beta_1$. 
+2. Mas, e se a variável proxy não estiver disponível? (ou se estiver disponível mas não for uma boa proxy). Podemos fazer a regressão $$\log(wage) = \beta_0 + \beta_1 educ + u, \quad \text{em que u contem } \textit{aptid}$$
+
+. . .
+
+<center>
+[Neste caso, MQO levará a um estimador viesado e inconsistente para $\beta_1$  `r emo::ji("sad")`.]{style="color:red;"}
+</center>
+
+
+## Variáveis Instrumentais (IV)
+
+
+Suponha que temos uma variável observável $Z$ que seja não correlacionada com $u$ (o que implica ser não correlacionada com a variável omitida) mas correlacionada com $educ$. Então dizemos que $Z$ é um instrumento de $educ.$
+
+
+. . . 
+
+**Quem pode ser esse $Z$?**
+
+- O primeiro dígito do CPF é gerado aleatóriamente, então se $Z$ for o primeiro dígito do CPF, teremos que $Z$ e $u$ são não correlacionados `r emo::ji("smile")`.
+- Contudo, por ser gerado aleatoriamente, não teremos que $Z$ e $educ$ são correlacionados `r emo::ji("sad")`.
+
+. . . 
+
+
+[Situações como esta, representam uma variável intrumental **fraca**, pois viola o requisito da relevância do instrumento (relevância do instrumento: $Z$ e a variável endógena devem ser correlacionados).]{style="color:red;"}
+
+
+
+
+
+## Variáveis Instrumentais (IV)
+
+**Quem pode ser esse $Z$?** (outras alternativas)
+
+- _Escolaridade da mãe:_ é positivamente correlacionada com _educ_ (relevância do instrumento). O problemaé que _escolaridade da mãe_ pode também estár relacionada com _aptid_, tornamdo-se um instrumento pobre `r emo::ji("sad")`.
+- _Número de irmãos durante o crescimento:_ é negativamente correlacionada com _educ_  (relevância do instrumento). Se o número de irmãos durante o crescimento for não correlacionado com _aptid_, então teremos um bom instrumento.
+
+. . . 
+
+<center>
+[Encontrar instrumentos pode ser fácil em alguns casos, mas em outros pode ser bastante dificil. De fato, controvérsias em economia são essencialmente disputas sobre se certas variáveis são ou não instrumentos válidos.]{style="color:violet;"}
+</center>
+
+
+# Estimação
+
+## Estimação
+
+Seja o modelo $$Y = \textbf{X}\beta + u, \quad com \quad \mathbb{V}(u) = \sigma^2 I \quad e \quad \mathbb{E}(u | \textbf{X}_t) \neq 0$$
+
+. . . 
+
+
+suponha que é possível encontrar uma matriz $\textbf{Z}_{n \times l}$ ($l \geq k$) tal que:
+
+1. $\textbf{Z}$ e $\textbf{X}_{n \times k}$ são correlacionados
+2. $\mathbb{E}(u | \textbf{Z}) = 0$ ($\textbf{Z}$ e $u$ são não correlacionados).
+
+. . . 
+
+Então, premultiplicando $Z'$ em ambos os lados:
+
+$$Z'Y = Z'X \beta + Z'u, \quad com \quad \mathbb{V}(Z'u) = \sigma^2(Z'Z)$$
+
+. . . 
+
+
+<center>
+`r emo::ji("surfing")` Podemos obter $\hat{\beta}$ utilizando MQG! `r emo::ji("surfing")`
+</center>
+
+
+## Estimação
+
+
+::: callout-note
+
+#### MQG
+
+Seja o modelo $Y = X \beta + u$ com  $\mathbb{E}(uu' | X) = \Omega$ e $\Omega^{-1} = \Psi \Psi'$. Então,
+$$\hat{\beta}_{MQG} = (X' \Psi \Psi' X)^{-1} X' \Psi \Psi' Y = (X' \Omega^{-1}X)^{-1}X' \Omega^{-1} Y$$
+:::
+
+. . . 
+
+No nosso caso, $\underbrace{Z'Y}_{Y^{\ast}} = \underbrace{Z'X}_{X^{\ast}} \beta + \underbrace{Z'u}_{u^{\ast}}$ com $\mathbb{V}(u^{\ast}) = \sigma^2(Z'Z)$. 
+
+$$\hat{\beta}_{MQG} = \hat{\beta}_{IV} = (X'Z(Z'Z)^{-1}Z'X)^{-1}X'Z(Z'Z)^{-1}Z'Y = (X'P_ZX)^{-1}X'P_zY$$
+
+e $\mathbb{V}(\hat{\beta}_{IV}| X^{\ast}) = \sigma^2 (X'P_Z X)^{-1}$. 
+
+<center>
+Pode-se mostrar que $\hat{\beta}_{IV}$ é assintóticamente não viesado.
+</center>
+
+
+
+## Estimação
+
+#### MQ em 2 estágios (2SLS: Two-Steage Least Squares)
+
+O estimador IV pode ser visto como a aplicação de MQO em dois estágios:
+
+1. **Estágio 1:** regredir $X$ sobre $Z$, então $$\hat{X} = Z(Z'Z)^{-1}Z'X$$
+
+
+2. **Estágio 2:** regredir $Y$ sobre $\hat{X}$, então $$\hat{\beta}_{IV} = (\hat{X}'\hat{X})^{-1}\hat{X}'Y = (X'Z(Z'Z)^{-1}Z'X)^{-1} X'Z(Z'Z)^{-1}Z'Y = (X'P_ZX)^{-1} X'P_ZY$$
+
+
+## Estimação
+
+#### Caso particular
+
+Quando $l = k$, temos que $\textbf{X}$ e $\textbf{Z}$ tem a mesma dimensão. Então,
+
+$$\hat{\beta}_{IV} = (\hat{X}'\hat{X})^{-1}\hat{X}'Y = (X'Z(Z'Z)^{-1}Z'X)^{-1} X'Z(Z'Z)^{-1}Z'Y = (Z'X)^{-1}Z'Y$$
+
+. . . 
+
+
+> **Observação:** Se $A$ e $B$ são matrizes não singulares da mesma ordem, então $(AB)^{-1} = B^{-1}A^{-1}$. Como $X'Z$ é não singular, podemos aplicar o resultado.
+
+
+. . . 
+
+
+::: callout-important
+Quando trabalhamos com IV, é facil verificar se $Z$ e $X$ são correlacionados (basta fazer uma regressão) mas verificar que $Z$ e $u$ são não correlacionados não é possível e é preciso argumentar (teoricamente) que isto é verdadeiro.
+
+**Ps:** Não, não podemos utilizar $\hat{u}$ obtido por MQO, pois MQO produzira estimadores viesados e inconsistentes, então $\hat{u} = Y - X\hat{\beta}_{MQO}$ não é mais uma estimativa útil de $u$.
+:::
+
+
+## Estimação
+
+#### Exemplo: IV fraca
+
+Suponha que queremos estimar o efeito do hábito de fumar sobre o peso dos recém-nascido. Se não considerarmos outras covariáveis, o modelo é $$\log(bwght) = \beta_0 + \beta_1 packs + u$$
+
+
+- _bwght:_ peso do recém nascido (onças)
+- _packs:_ número de maços de cigarro fumados pela mãe por dia.
+
+
+. . . 
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo_01 <- lm(log(bwght) ~ packs, data = bwght)
+```
+
+
+. . . 
+
+[Mas, podemos suspeitar que _packs_ esteja correlacionado com outros fatores relativos à saude ou à existênca de um bom programa pré-natal. Sendo assim, MQO levará a estimadores viesados e inconsistentes.]{style="color:red;"}
+
+
+## Estimação
+
+#### Exemplo: IV fraca
+
+Uma possível variável instrumental de _packs_ seria o preço médio dos cigarros (*cigprice*), assumindo, é claro que _cigprice_ e $u$ sejam não correlacionados.
+
+- A teoria econômica sugere que _packs_ e _cigprice_ estejam negativamente correlacionados.
+- Para verificar isto, ajustamos a regressão de _packs_ sobre _cigprice_
+
+
+. . . 
+
+
+```{r}
+#| echo: true
+modelo_aux <- lm(packs ~ cigprice, data = bwght)
+summary(modelo_aux)
+```
+
+
+## Estimação
+
+#### Exemplo: IV fraca
+
+Como _packs_ e _cigprice_ não são correlacionados, não deveriamos usar _cigprice_ como IV. Mas, o que acontece se o fizermos?
+
+```{r}
+#| echo: true
+library(AER)
+modelo_iv <- ivreg(log(bwght) ~ packs | cigprice, data = bwght)
+summary(modelo_iv)
+```
+
+
+## Estimação
+
+#### Exemplo: IV fraca
+
+
+```{r}
+library(AER)
+modelo_iv <- ivreg(log(bwght) ~ packs | cigprice, data = bwght)
+coef(summary(modelo_iv))
+```
+
+
+. . . 
+
+- O coeficiente de _packs_ é enorme e com sinal inesperado.
+- O erro padrão é muito grande, _packs_ não é estatísticamente significativo.
+
+. . . 
+
+_cigprice_  não atende o requisito de relevância do instrumento (o único requisito que sempre podemos testar). Entretanto, as estimativas não têm significado.
+
+
+## Estimação
+
+
+#### Exemplo: RLM
+
+
+Seja o modelo $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 + \beta_4 black + \beta_5 smsa + \beta_6 south + \cdots + u,$$ em que _south_ é uma dummy caso a pessoa residir no sul e _smsa_ é uma dummy caso a pessoa residir na área metropolitana, _reg66k_ é uma dummy que toma valor 1 se for da região k.
+
+
+```{r}
+#| echo: true
+#| eval: false
+modelo_mqo <- lm(log(wage) ~ educ + exper + I(exper^2) + black + smsa + south + smsa66 +reg662 + reg663 + reg664 + reg665 + reg666 + reg667 + reg668 + reg669, data = card)
+summary(modelo_mqo)
+```
+
+
+
+## Estimação
+
+
+#### Exemplo: RLM
+
+```{r}
+modelo_mqo <- lm(log(wage) ~ educ + exper + I(exper^2) + black + smsa + south + smsa66 +reg662 + reg663 + reg664 + reg665 + reg666 + reg667 + reg668 + reg669, data = card)
+summary(modelo_mqo)
+```
+
+. . . 
+
+Contudo, _educ_ pode estar correlacionada com outros fatores contidos em $u$. Card (1995) usou a dummy _nearc4_ (1 caso alguem tenha crescido perto de uma faculdade com cursos de graduação de 4 anos) como uma IV de _educ_.
+
+
+## Estimação
+
+
+#### Exemplo: RLM
+
+Para _nearc4_ ser uma IV válida, deve:
+
+1. Ser não correlacionada com $u$ (o que nunca podemos verificar, mas pressumimos válidos e pode ser justificado utilizando teorica econômica).
+2. Ser correlacionado com _educ_, o que verificaremos a seguir.
+
+. . . 
+
+```{r}
+#| echo: true
+modelo_aux <- lm(educ ~ nearc4 + exper + I(exper^2) + black + smsa + south + smsa66 +reg662 + reg663 + reg664 + reg665 + reg666 + reg667 + reg668 + reg669, data = card)
+summary(modelo_aux)
+```
+
+
+
+## Estimação
+
+
+#### Exemplo: RLM
+
+
+```{r}
+#| echo: true
+modelo_iv <- ivreg(log(wage) ~ educ + exper + I(exper^2) + black + smsa + south + smsa66 +reg662 + reg663 + reg664 + reg665 + reg666 + reg667 + reg668 + reg669 | nearc4 + exper + I(exper^2) + black + smsa + south + smsa66 +reg662 + reg663 + reg664 + reg665 + reg666 + reg667 + reg668 + reg669, data = card)
+summary(modelo_iv)
+```
+
+. . . 
+
+<center>
+Como saber se IV é uma opção melhor a MQO?
+</center>
+
+
+# Testes de Hipóteses
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman 
+
+
+
+<center>
+![**Usar ou não usar IV, essa é a questão**](imagens/be_or_not.jpg)
+</center>
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman 
+
+- Podemos suspeitar de que uma variável é endógena, mas não temos certeza se de fato é:
+    * Se for endógena, utilizar IV é melhor do que MQO (desde que utilizemos instrumentos válidos).
+    * Se não for endógena, é melhor utilizar MQO (BLUE!)
+- Podemos suspeitar que uma variável foi medida com erro, mas não sabemos se o erro de medição é grande o suficiente como para nos preocupar e fugir de MQO.
+- Etc.
+
+. . . 
+
+<center>
+[Assim, torna-se útil testar a hipótese nula de que os erros são não correlacionados com todos os regressores contra a hipótese alternativa de que estão correlacionados com alguns dos regressores.]{style="color:blue;"}
+</center>
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman 
+
+Sejam as hipóteses: 
+
+$$H_0: Y = X \beta + u, \quad \text{com  } u \sim IID(0, \sigma^2I) \text{ e } \mathbb{E}(X'u) = 0$$
+
+$$H_1: Y = X \beta + u, \quad \text{com  } u \sim IID(0, \sigma^2I) \text{ e } \mathbb{E}(Z'u) = 0$$
+
+. . . 
+
+
+- Sob $H_1$, $\hat{\beta}_{IV}$ é consistente mas $\hat{\beta}_{MQO}$ não é. 
+- Sob $H_0$, $\hat{\beta}_{IV}$ e $\hat{\beta}_{MQO}$ são ambos consistentes (o que implica que $\hat{\beta}_{IV} - \hat{\beta}_{MQO} \xrightarrow{p} 0$).
+
+. . . 
+
+<center>
+A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estatísticamente diferentes de de zero na amostra.
+</center>
+
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman  
+
+$$\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y$$
+
+. . . 
+
+Testar que $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é diferente de zero é equivalente a testar que  $X'P_ZM_X Y$ é diferentes de zero ([Por que?]{style="color:red;"}).
+
+. . . 
+
+Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $P_Z X$ e $\hat{u}$ são ortogonais. 
+
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman  
+
+Seja $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ em que as $k_1$ colunas de $\textbf{X}_1$ estão inclussas na matriz de instrumentos $\textbf{Z}$ e as $k_2$ colunas de $\textbf{X}_2$ são tratadas como potenciais endógenas ($k_1 + k_2 = k$).
+
+. . . 
+
+Por construção $\hat{u}$ é ortogonal a todas as colunas em $\textbf{X}$, em particular, para as colunas em $\textbf{X}_1$. Então, $$\textbf{X}'P_Z M_X Y = [\textbf{X}_1 \textbf{X}_2]' P_Z M_X Y = \textbf{X}_1' P_Z M_X Y + \textbf{X}_2' P_Z M_XY$$
+
+
+. . . 
+
+
+Mas, $P_Z \textbf{X}_1 = \textbf{X}_1$ e $M_X \textbf{X}_1 = 0$, então: $$\textbf{X}_1' P_Z M_X Y = \textbf{X}_1'M_XY = 0.$$
+
+. . . 
+
+Basta verificar se $\textbf{X}_2'P_ZM_XY = 0 \longrightarrow H_0: \textbf{X}_2'P_ZM_XY = 0$ 
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman  
+
+
+Seja o modelo, $$Y = \textbf{X}\beta + P_Z \textbf{X}_2 \delta + u,$$ pelo teorema FWL, podemos obter $\hat{\delta}$ da regressão $M_XY$ sobre $M_XP_ZY$. Então,
+
+$$\hat{\delta} = (\textbf{X}_2' P_Z M_X P_Z \textbf{X}_2)^{-1} \textbf{X}_2' P_Z M_X Y$$
+
+::: callout-note
+### Teorema FWL (Frisch-Waugh-Lovell)
+
+Sejam os modelos $$Y = \textbf{X}_1\beta_1 + \textbf{X}_2 \beta_2 + u \quad e \quad M_1Y = M_1 \textbf{X}_2 \beta_2 + \nu,$$ em que $M_1 = \textbf{I}- X_1(X_1'X_1)^{-1}X_1'$. Então $\hat{\beta_2}$ em ambas as regressões é numericamente idêntico e $\hat{u}$ e $\hat{\nu}$ são numericamente idênticos.
+:::
+
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman  
+
+$$\hat{\delta} = (\textbf{X}_2' P_Z M_X P_Z \textbf{X}_2)^{-1} \textbf{X}_2' P_Z M_X Y$$
+
+Como $(\textbf{X}_2' P_Z M_X P_Z \textbf{X}_2)^{-1} > 0$ ([Por que?]{style="color:red;"}), testar se $\delta = 0$ equivale a testar se $\textbf{X}_2'P_ZM_XY = 0$ (que é o que queremos).
+
+. . . 
+
+<center>
+[Então, o procedimento resume-se a um teste F.]{style="color:red;"}
+</center>
+
+
+## Testes de Hipóteses
+
+#### Teste Durbin-Wu-Hausman  
+
+
+```{r}
+#| echo: true
+summary(modelo_iv, diagnostics = TRUE)
+```
+
+
+
+## Testes de Hipóteses
+
+O teste _Weak instruments_ que aparece no diagnóstico, testas as hipóteses:
+
+$$H_0: \text{todos os instrumentos são fracos } \quad vs. \quad H_1: H_0 \text{ não é verdade}$$
+
+
+
+
+
+
+# Comentários Adicionais
+
+## Comentários Adicionais
+
+
+#### Heterocedsticidade:
+
+- Heterocedasticidade no contexto de 2SLS (MQ2E) produz os mesmos problemas vistos para MQO.
+- Podemos testar a heterocedasticidade utilizando um teste de Breuch-Pagan (considerando $\hat{u}_{MQ2E}$ e todas as variáveis exógenas, incluindo os instrumentos).
+- Detectada a heterocedasticidade, podemos utilizar estimadores robustos para poder fazer inferência.
+
+
+## Comentários Adicionais
+
+
+#### R-quadrado
+
+- $R^2 = 1 - SQR/SQT$
+- O $R^2$ da estimação por IV pode ser negativo, pois SQR de IV pode ser maior que SQT.
+- O foco de IV é estimar corretamente o efeito _ceteris paribus_ de $x$ sobre $y$ quando $x$ for endógena, a qualidade do ajuste passa a um plano secundário.
+- Se a meta for um $R^2$ alto, MQO é a respostas. Contudo, de pouco serve um $R^2$ alto se não pudermos estimar consistentemente $\beta$.
