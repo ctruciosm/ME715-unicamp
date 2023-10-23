@@ -36,7 +36,7 @@ format:
 ## Introdução
 
 - Vimos que heterocedasticidade não causa vies nos estimadores de MQO, mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQP.
-- Vimos também que error autocorrelacionados não cuasam vies nos estimadores (quando $\textbf{X}$ não contém variáveis defasadas de $Y$),  mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQG (MQGF).
+- Vimos também que erros autocorrelacionados não causam vies nos estimadores (quando $\textbf{X}$ não contém variáveis defasadas de $Y$),  mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQG (MQGF).
 - Hoje veremos mais alguns detalhes aos quais devemos nos atentar na hora de construir um modelo de regressão.
 
 
@@ -50,7 +50,7 @@ format:
 
 . . . 
 
-Suponha que $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.$$ Se, por exemplo, omitimos $exper^2$, estamos comentendo uma má-especificação da forma funcional.
+Suponha que $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.$$ Se, por exemplo, omitirmos $exper^2$, estamos comentendo uma má-especificação da forma funcional.
 
 . . .
 
@@ -82,7 +82,7 @@ Geralmente, termos quadráticos e $\log(\cdot)$ são suficientes para lidar com 
 
 #### Exemplo
 
-Estamos interessados em verificar se a média do tempo das penas cumpridas de condenações passadas (avgsen) afeta o número de presões no ano de 1986 (narr86). Para isto utilizamos o _dataset_ `crime1` do pacote `wooldridge` e as variáveis pcnv (proporção de condenações anteriores), tottime (tempo em prisão desde os 18 anos), ptime86(meses em prisão durante 1986), qemp86 (trimestres empregado), inc86 (salário em $.100), black (1 = negro), hispan (1 = hispano).
+Estamos interessados em verificar se a média do tempo das penas cumpridas de condenações passadas (avgsen) afeta o número de prisões no ano de 1986 (narr86). Para isto utilizamos o _dataset_ `crime1` do pacote `wooldridge` e as variáveis pcnv (proporção de condenações anteriores), tottime (tempo em prisão desde os 18 anos), ptime86(meses em prisão durante 1986), qemp86 (trimestres empregado), inc86 (salário em $.100), black (1 = negro), hispan (1 = hispano).
 
 . . . 
 
@@ -153,7 +153,7 @@ anova(modelo_expandido, modelo)$Pr[2]
 
 . . . 
 
-Rejeitamos $H_0: \delta_1 = 0, \delta_2 = 0$.
+Rejeitamos $H_0: \delta_1 = 0, \delta_2 = 0$ (ou seja, temos má-especificação da forma funcional.
 
 
 > Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada.
@@ -274,16 +274,30 @@ Se nenhum modelo for rejeitado, podemos utilizar o $R^2_{Adj}$ para escolher um 
 ## Testes contra alternativas não aninhadas
 
 ```{r}
+#| echo: true
 modelo <- lm(log(price) ~ lotsize + sqrft + bdrms, data = hprice1)
-modelo_log <- lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms, data = hprice1)
 modelo_abrangente <- lm(log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms, data = hprice1)
 anova(modelo, modelo_abrangente)
-# Rejeiamos H0
-anova(modelo_log, modelo_abrangente)
-# Não rejeitamos H0
 ```
 
-Do primeiro teste, rejeitamos $H_0: \beta_{\log(lotsize)} = \beta_{\log(sqrft)} = 0$.  Já do segundo teste, não podemos rejeitar $H_0: \beta_{lotsize} = \beta_{sqrft} = 0$. Logo, o modelo com $\log(\cdot)$ é preferido.
+. . . 
+
+Rejeitamos $H_0: \beta_{\log(lotsize)} = \beta_{\log(sqrft)} = 0$, ou seja, o modelo $\log(price) = \beta_0 + \beta_1 lotsize + \beta_2 sqrft + bdrms  + u$ está mal-especificado.
+
+
+## Testes contra alternativas não aninhadas
+
+
+```{r}
+#| echo: true
+modelo_log <- lm(log(price) ~ log(lotsize) + log(sqrft) + bdrms, data = hprice1)
+anova(modelo_log, modelo_abrangente)
+```
+
+. . . 
+
+
+Não rejeitamos $H_0: \beta_{lotsize} = \beta_{sqrft} = 0$. Logo, não encontramos evidência que o modelo $\log(price) = \beta_0 + \beta_1 \log(lotsize) + \log(sqrft) + bdrms  + u$ seja mal-especificado. Assim, o modelo com $\log(\cdot)$ é preferido.
 
 
 
@@ -310,7 +324,7 @@ Se ajustarmos o modelos sem a variável _abil_ (habilidade), em geral, teremos e
 
 
 ::: callout-important
-Uma variável _proxy_ é algo que está relacionado com a variável não observada que gostaríamos de controlar.
+Uma variável _proxy_ é uma variável que está relacionada com a variável não observada que gostaríamos de controlar.
 
 :::
 
@@ -373,6 +387,8 @@ $$y = \underbrace{\beta_0 + \beta_3 \delta_0}_{\alpha_0} + \beta_1 x_1 + \beta_2
 . . . 
 
 ::: callout-important
+
+#### Importante
 
 ::: {.nonincremental}
 - Variável proxy: procuramos por uma variável que está associada com a variável não observada.

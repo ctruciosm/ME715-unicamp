@@ -414,7 +414,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Introdução</h2>
 <ul>
 <li class="fragment">Vimos que heterocedasticidade não causa vies nos estimadores de MQO, mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQP.</li>
-<li class="fragment">Vimos também que error autocorrelacionados não cuasam vies nos estimadores (quando <span class="math inline">\(\textbf{X}\)</span> não contém variáveis defasadas de <span class="math inline">\(Y\)</span>), mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQG (MQGF).</li>
+<li class="fragment">Vimos também que erros autocorrelacionados não causam vies nos estimadores (quando <span class="math inline">\(\textbf{X}\)</span> não contém variáveis defasadas de <span class="math inline">\(Y\)</span>), mas a variância do estimador precisa ser corrigida para termos inferências válidas. Podemos também utilizar MQG (MQGF).</li>
 <li class="fragment">Hoje veremos mais alguns detalhes aos quais devemos nos atentar na hora de construir um modelo de regressão.</li>
 </ul>
 </section></section>
@@ -429,7 +429,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 “Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente.” <strong>Jeffrey Wooldrdge</strong>
 </center>
 <div class="fragment">
-<p>Suponha que <span class="math display">\[\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.\]</span> Se, por exemplo, omitimos <span class="math inline">\(exper^2\)</span>, estamos comentendo uma má-especificação da forma funcional.</p>
+<p>Suponha que <span class="math display">\[\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.\]</span> Se, por exemplo, omitirmos <span class="math inline">\(exper^2\)</span>, estamos comentendo uma má-especificação da forma funcional.</p>
 </div>
 <div class="fragment">
 <p>Outros exemplos de má-especificação da forma funcional são:</p>
@@ -461,7 +461,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="má-especificação-da-forma-funcional.-3" class="slide level2">
 <h2>Má-especificação da forma funcional.</h2>
 <h4 id="exemplo">Exemplo</h4>
-<p>Estamos interessados em verificar se a média do tempo das penas cumpridas de condenações passadas (avgsen) afeta o número de presões no ano de 1986 (narr86). Para isto utilizamos o <em>dataset</em> <code>crime1</code> do pacote <code>wooldridge</code> e as variáveis pcnv (proporção de condenações anteriores), tottime (tempo em prisão desde os 18 anos), ptime86(meses em prisão durante 1986), qemp86 (trimestres empregado), inc86 (salário em $.100), black (1 = negro), hispan (1 = hispano).</p>
+<p>Estamos interessados em verificar se a média do tempo das penas cumpridas de condenações passadas (avgsen) afeta o número de prisões no ano de 1986 (narr86). Para isto utilizamos o <em>dataset</em> <code>crime1</code> do pacote <code>wooldridge</code> e as variáveis pcnv (proporção de condenações anteriores), tottime (tempo em prisão desde os 18 anos), ptime86(meses em prisão durante 1986), qemp86 (trimestres empregado), inc86 (salário em $.100), black (1 = negro), hispan (1 = hispano).</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -559,7 +559,7 @@ hispan         0.1636     0.0395  4.1474   0.0000</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p>Rejeitamos <span class="math inline">\(H_0: \delta_1 = 0, \delta_2 = 0\)</span>.</p>
+<p>Rejeitamos <span class="math inline">\(H_0: \delta_1 = 0, \delta_2 = 0\)</span> (ou seja, temos má-especificação da forma funcional.</p>
 <blockquote>
 <p>Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada.</p>
 </blockquote>
@@ -620,7 +620,7 @@ I(sqrft^2)     0.0000     0.0000  1.1713   0.2449</code></pre>
 <section id="teste-reset-4" class="slide level2">
 <h2>Teste RESET</h2>
 <blockquote>
-<p>Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada 😢.</p>
+<p>Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada 🙍.</p>
 </blockquote>
 <p>Veja o que acontece com o seguinte modelo:</p>
 <div class="cell" data-layout-align="center">
@@ -702,6 +702,12 @@ I(sqrft^2)     0.0000     0.0000  1.1713   0.2449</code></pre>
 <section id="testes-contra-alternativas-não-aninhadas-3" class="slide level2">
 <h2>Testes contra alternativas não aninhadas</h2>
 <div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(price) <span class="sc">~</span> lotsize <span class="sc">+</span> sqrft <span class="sc">+</span> bdrms, <span class="at">data =</span> hprice1)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>modelo_abrangente <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(price) <span class="sc">~</span> <span class="fu">log</span>(lotsize) <span class="sc">+</span> lotsize <span class="sc">+</span> <span class="fu">log</span>(sqrft) <span class="sc">+</span> sqrft <span class="sc">+</span> bdrms, <span class="at">data =</span> hprice1)</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="fu">anova</span>(modelo, modelo_abrangente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -713,6 +719,19 @@ Model 2: log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
+</div>
+<div class="fragment">
+<p>Rejeitamos <span class="math inline">\(H_0: \beta_{\log(lotsize)} = \beta_{\log(sqrft)} = 0\)</span>, ou seja, o modelo <span class="math inline">\(\log(price) = \beta_0 + \beta_1 lotsize + \beta_2 sqrft + bdrms + u\)</span> está mal-especificado.</p>
+</div>
+</section>
+<section id="testes-contra-alternativas-não-aninhadas-4" class="slide level2">
+<h2>Testes contra alternativas não aninhadas</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(price) <span class="sc">~</span> <span class="fu">log</span>(lotsize) <span class="sc">+</span> <span class="fu">log</span>(sqrft) <span class="sc">+</span> bdrms, <span class="at">data =</span> hprice1)</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">anova</span>(modelo_log, modelo_abrangente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -723,7 +742,9 @@ Model 2: log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms
 2     82 2.7325  2   0.13007 1.9516 0.1486</code></pre>
 </div>
 </div>
-<p>Do primeiro teste, rejeitamos <span class="math inline">\(H_0: \beta_{\log(lotsize)} = \beta_{\log(sqrft)} = 0\)</span>. Já do segundo teste, não podemos rejeitar <span class="math inline">\(H_0: \beta_{lotsize} = \beta_{sqrft} = 0\)</span>. Logo, o modelo com <span class="math inline">\(\log(\cdot)\)</span> é preferido.</p>
+<div class="fragment">
+<p>Não rejeitamos <span class="math inline">\(H_0: \beta_{lotsize} = \beta_{sqrft} = 0\)</span>. Logo, não encontramos evidência que o modelo <span class="math inline">\(\log(price) = \beta_0 + \beta_1 \log(lotsize) + \log(sqrft) + bdrms + u\)</span> seja mal-especificado. Assim, o modelo com <span class="math inline">\(\log(\cdot)\)</span> é preferido.</p>
+</div>
 </section></section>
 <section>
 <section id="variáveis-proxy" class="title-slide slide level1 center">
@@ -752,7 +773,7 @@ Model 2: log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p>Uma variável <em>proxy</em> é algo que está relacionado com a variável não observada que gostaríamos de controlar.</p>
+<p>Uma variável <em>proxy</em> é uma variável que está relacionada com a variável não observada que gostaríamos de controlar.</p>
 </div>
 </div>
 </div>
@@ -825,7 +846,7 @@ Model 2: log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Important</strong></p>
+<p><strong>Importante</strong></p>
 </div>
 <div class="callout-content">
 <div>
