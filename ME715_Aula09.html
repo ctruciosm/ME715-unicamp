@@ -576,7 +576,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 </div>
 <div class="fragment">
 <center>
-<span style="color:red;">Neste caso, MQO levará a um estimador viesado e inconsistente para <span class="math inline">\(\beta_1\)</span> 🙍.</span>
+<span style="color:red;">Neste caso, MQO levará a um estimador viesado e inconsistente para <span class="math inline">\(\beta_1\)</span> 😿.</span>
 </center>
 </div>
 </section>
@@ -587,7 +587,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 <p><strong>Quem pode ser esse <span class="math inline">\(Z\)</span>?</strong></p>
 <ul>
 <li class="fragment">O primeiro dígito do CPF é gerado aleatóriamente, então se <span class="math inline">\(Z\)</span> for o primeiro dígito do CPF, teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(u\)</span> são não correlacionados 😄.</li>
-<li class="fragment">Contudo, por ser gerado aleatoriamente, não teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(educ\)</span> são correlacionados 😭.</li>
+<li class="fragment">Contudo, por ser gerado aleatoriamente, não teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(educ\)</span> são correlacionados 😢.</li>
 </ul>
 </div>
 <div class="fragment">
@@ -628,7 +628,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 </div>
 <div class="fragment">
 <center>
-🏄‍♂️ Podemos obter <span class="math inline">\(\hat{\beta}\)</span> utilizando MQG! 🏄
+🏄‍♀️ Podemos obter <span class="math inline">\(\hat{\beta}\)</span> utilizando MQG! 🏄‍♂️
 </center>
 </div>
 </section>
@@ -652,7 +652,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 <p><span class="math display">\[\hat{\beta}_{MQG} = \hat{\beta}_{IV} = (X'Z(Z'Z)^{-1}Z'X)^{-1}X'Z(Z'Z)^{-1}Z'Y = (X'P_ZX)^{-1}X'P_zY\]</span></p>
 <p>e <span class="math inline">\(\mathbb{V}(\hat{\beta}_{IV}| X^{\ast}) = \sigma^2 (X'P_Z X)^{-1}\)</span>.</p>
 <center>
-Pode-se mostrar que <span class="math inline">\(\hat{\beta}_{IV}\)</span> é assintóticamente não viesado.
+Pode-se mostrar que <span class="math inline">\(\hat{\beta}_{IV}\)</span> é consistente.
 </center>
 </div>
 </section>
@@ -1020,7 +1020,7 @@ Como saber se IV é uma opção melhor a MQO?
 </div>
 <div class="fragment">
 <center>
-A ideia do teste é verificar se <span class="math inline">\(\hat{\beta}_{IV} - \hat{\beta}_{MQO}\)</span> é estatísticamente diferentes de de zero na amostra.
+A ideia do teste é verificar se <span class="math inline">\(\hat{\beta}_{IV} - \hat{\beta}_{MQO}\)</span> é estatísticamente diferentes de de zero.
 </center>
 </div>
 </section>
@@ -1135,7 +1135,7 @@ Wald test: 51.01 on 15 and 2994 DF,  p-value: &lt; 2.2e-16 </code></pre>
 </section>
 <section id="testes-de-hipóteses-9" class="slide level2">
 <h2>Testes de Hipóteses</h2>
-<p>O teste <em>Weak instruments</em> que aparece no diagnóstico, testas as hipóteses:</p>
+<p>O teste <em>Weak instruments</em> que aparece no diagnóstico, testar as hipóteses:</p>
 <p><span class="math display">\[H_0: \text{todos os instrumentos são fracos } \quad vs. \quad H_1: H_0 \text{ não é verdade}\]</span></p>
 </section></section>
 <section>

@@ -286,7 +286,7 @@ $$\hat{\beta}_{MQG} = \hat{\beta}_{IV} = (X'Z(Z'Z)^{-1}Z'X)^{-1}X'Z(Z'Z)^{-1}Z'Y
 e $\mathbb{V}(\hat{\beta}_{IV}| X^{\ast}) = \sigma^2 (X'P_Z X)^{-1}$. 
 
 <center>
-Pode-se mostrar que $\hat{\beta}_{IV}$ é assintóticamente não viesado.
+Pode-se mostrar que $\hat{\beta}_{IV}$ é consistente.
 </center>
 
 
@@ -529,7 +529,7 @@ $$H_1: Y = X \beta + u, \quad \text{com  } u \sim IID(0, \sigma^2I) \text{ e } \
 . . . 
 
 <center>
-A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estatísticamente diferentes de de zero na amostra.
+A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estatísticamente diferentes de de zero.
 </center>
 
 
@@ -617,7 +617,7 @@ summary(modelo_iv, diagnostics = TRUE)
 
 ## Testes de Hipóteses
 
-O teste _Weak instruments_ que aparece no diagnóstico, testas as hipóteses:
+O teste _Weak instruments_ que aparece no diagnóstico, testar as hipóteses:
 
 $$H_0: \text{todos os instrumentos são fracos } \quad vs. \quad H_1: H_0 \text{ não é verdade}$$
 

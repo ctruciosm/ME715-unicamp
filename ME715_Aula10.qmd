@@ -1,0 +1,258 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Modelos SUR"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Introdução
+
+## Introdução
+
+- Até agora, temos estudado casos que envolvem apenas uma unica equação.
+- Agora, discutiremos modelos que determinam conjuntamente os valores de duas ou mais variáveis dependentes utilizando dois ou mais equações.
+- Estes modeos são chamados de multivariados (porque eles tentam explicar múltiplas variáveis dependentes).
+- Dois modelos multivariados amplamente utilizados são o modelo SUR (tópico da aula de hoje) e o modelo de equaões simultâneas (tema da próxima aula).
+
+
+# Modelos SUR
+
+## Modelos SUR
+
+Os modelos de Regressão linear aparentemente não relacionada, ou modelos **SUR** (*Seemingly Unrelated Regression*), como comumente conhecido, envolvem $n$ observações em cada uma das $g$ variáveis dependentes.
+
+. . . 
+
+
+Suponha que temos $g$ variáveis dependentes (indexadas por $i$), então a $i$-éssima equação do modelo linear multivariado pode ser escrito como $$\textbf{y}_i = \textbf{X}_i \beta_i + u_i \quad com \quad \mathbb{E}(u_i u_i') = \sigma_{ii} I_n,$$ em que:
+
+::: {.nonincremental}
+
+- $\textbf{y}_i$ denota o vetor de tamanho $n$ da $i$-éssima variável dependente, 
+- $\textbf{X}_i$ denota a matriz de regressores da $i$-éssima equação ($\textbf{X}_i$ tem dimensão $n \times k_i$)
+- $\beta_i$ denota o vetor $k_i$-dimensional de parâmetros e 
+- $\textbf{u}_i$ denota o vetor de erros de tamanho $n$
+
+:::
+
+
+## Modelos SUR
+
+
+- Se $\mathbb{E}(u_i | \textbf{X}_i) = 0$, aparentemente podemos aplicr MQO para cada equação.
+- Se fizermos isto, ignoramos a possibilidade de que, por exemplo, $u_{ti}$ e $u_{tj}$ sejam correlacionados.
+- Para incluir este tipo de informação, assumimos que $$\mathbb{E}(u_{ti}u_{ij}) = \sigma_{ij} \quad e \quad \mathbb{E}(u_{ti}u_{sj}) = 0,$$ em que  $\sigma_{ij}$ é o elemento $ij$ da matriz $\Sigma_{g \times g} > 0$ (matriz de covariância contemporanea).
+
+. . . 
+
+> As $g$ equações do slide anterior e as suposições aqui impostas, definem o modelo SUR clássico.
+
+
+## Modelos SUR
+
+
+- Seja $\textbf{X} = \textbf{X}_1 \cup \textbf{X}_2 \cup \cdots \cup \textbf{X}_g$, a suposição $\mathbb{E}(\textbf{U}|\textbf{X}) = 0$ é análoga  à HRLM4 no caso univariado.
+- A suposição $\mathbb{E}(\textbf{U}|\textbf{X}) = 0$ é bastante forte para muitos casos, uma suposição um pouco mais fraca é $\mathbb{E}(\textbf{U}_t|\textbf{X}_t) = 0$.
+- Os resultados a seguir são válidos em ambos os casos.
+
+
+
+## Modelos SUR
+
+
+<center>
+Como estimar este tipo de modelos?
+
+![](imagens/homero_duvida.gif)
+
+</center>
+
+
+. . . 
+
+
+
+<center>
+[O método a utilizar depende das suposições que fizermos acerca de $\Sigma$ e da distribuição dos termos de erro.]{style="color:red;"}
+</center>
+
+- $\Sigma$ conhecido $\rightarrow$ MQG
+- $\Sigma$ desconhecido $\rightarrow$ MGQF
+- $\Sigma$ desconhecido e erros normalmente distribuidos $\rightarrow$ MV
+
+
+# Estimação
+## Estimação
+
+
+<center>
+**Como trabalhar com essas equações todas?**
+
+
+![](imagens/duvida.png)
+</center>
+
+. . . 
+
+> [Converteremos o sistema de $g$ equações e $n$ observações em um sistema de 1 equação e $ng$ observações com matriz de covariância de dimensão $ng \times ng$ que depende de $\Sigma$.]{style="color:blue;"}
+
+## Estimação
+
+Seja o modelo $$\textbf{y}_{\bullet} = \textbf{X}_{\bullet} \boldsymbol{\beta}_{\bullet} + \textbf{u}_{\bullet}, \quad \text{em que:}$$
+
+
+- $\textbf{y}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\textbf{y}_1, \cdots, \textbf{y}_g$ empilhados.
+- $\textbf{u}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\textbf{u}_1, \cdots, \textbf{u}_g$ empilhados.
+- $\boldsymbol{\beta}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\boldsymbol{\beta}_1, \cdots, \boldsymbol{\beta}_g$ empilhados.
+- $$\textbf{X}_{\bullet}  = \begin{bmatrix}
+\textbf{X}_1 & \textbf{0} & \cdots & \textbf{0} \\
+\textbf{0} & \textbf{X}_2 & \cdots & \textbf{0} \\
+\vdots & \cdots & \ddots & \vdots \\
+\textbf{0} & \textbf{0} & \cdots  & \textbf{X}_g \\
+\end{bmatrix}$$
+
+
+## Estimação
+
+1. Qual seria o estimador MQO?
+2. Um estimador MQO seria uma boa escolha?
+
+. . . 
+
+#### Respostas:
+
+O estimador MQO é da forma: 
+$$\hat{\boldsymbol{\beta}}_{\bullet}^{MQO} = (\textbf{X}_{\bullet}' \textbf{X}_{\bullet})^{-1} \textbf{X}_{\bullet}' \textbf{y}_{\bullet}$$
+
+. . . 
+
+Contudo, $$\mathbb{E}(\textbf{u}_{\bullet} \textbf{u}_{\bullet}') = \begin{bmatrix}
+\mathbb{E}(u_1 u_1') & \cdots & \mathbb{E}(u_1 u_g') \\
+\vdots & \ddots & \vdots \\
+\mathbb{E}(u_g u_1') & \cdots & \mathbb{E}(u_g u_g') \\
+\end{bmatrix} = \begin{bmatrix}
+\sigma_{11}I_n & \cdots & \sigma_{1g}I_n  \\
+\vdots & \ddots & \vdots \\
+\sigma_{g1}I_n  & \cdots & \sigma_{gg}I_n  \\
+\end{bmatrix} = \boldsymbol{\Sigma}_{\bullet}$$
+
+
+## Estimação
+
+::: {.callout-tip}
+
+#### Produto de Kronecker
+
+Seja $A$ uma matriz $p \times q$ e seja $B$ uma matriz $r \times s$. Então, o produto de Kronecker, denotado por $\otimes$, entre A e B é dado por: $$A \otimes B  = \begin{bmatrix}
+a_{11}B & \cdots & a_{1q}B \\
+\vdots & \ddots & \vdots \\
+a_{p1}B & \cdots & a_{pq}B \\
+\end{bmatrix}.$$
+
+
+##### Propriedades
+
+::: {.nonincremental}
+- $(A \otimes B)' = A' \otimes B'$
+- $(A \otimes B)(C \otimes D) = (AC) \otimes (BD)$
+- $(A \otimes B)^{-1} = A^{-1} \otimes B^{-1}$
+:::
+
+:::
+
+
+
+## Estimação
+
+- $$\mathbb{E}(\textbf{u}_{\bullet} \textbf{u}_{\bullet}') =
+\begin{bmatrix}
+\sigma_{11}I_n & \cdots & \sigma_{1g}I_n  \\
+\vdots & \ddots & \vdots \\
+\sigma_{g1}I_n  & \cdots & \sigma_{gg}I_n  \\
+\end{bmatrix} = \boldsymbol{\Sigma}_{\bullet} = \Sigma \otimes I_n \neq \sigma I$$
+- Então, MQO não é BLUE.
+- Contudo, se $\Sigma$ for conhecido, podemos aplicar MQG `emo::ji("smile")`.
+
+
+## Estimação
+
+::: callout-note
+
+#### MQG
+
+Seja o modelo $Y = X \beta + u$ com  $\mathbb{E}(uu' | X) = \Omega$ e $\Omega^{-1} = \Psi \Psi'$. Então,
+$$\hat{\beta}_{MQG} = (X' \Psi \Psi' X)^{-1} X' \Psi \Psi' Y = (X' \Omega^{-1}X)^{-1}X' \Omega^{-1} Y$$
+:::
+
+. . . 
+
+
+$$\hat{\boldsymbol{\beta}}_{\bullet}^{MQG} = (\textbf{X}_{\bullet}'(\Sigma^{-1} \otimes I_n)\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet}' (\Sigma^{-1} \otimes I_n) \textbf{y}_{\bullet}$$
+
+. . . 
+
+> **Observação:** para $gn$ grande, a forma apresentada do estimador não é computacionalmente eficiente e formas alternativas são preferidas para sua implementação.
+
+
+## Estimação
+
+Uma forma mais eficiente de implementar $\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}$ é utilizando a seguinte fórmula:
+
+$$\hat{\boldsymbol{\beta}}_{\bullet}^{MQG} = \begin{bmatrix}
+\sigma^{11} \textbf{X}_1' \textbf{X}_1 & \cdots & \sigma^{ig} \textbf{X}_1' \textbf{X}_g \\
+\vdots & \ddots & \vdots \\
+\sigma^{g1} \textbf{X}_g' \textbf{X}_1 & \cdots & \sigma^{gg} \textbf{X}_g' \textbf{X}_g \\
+\end{bmatrix}^{-1} \begin{bmatrix} \displaystyle \sum_{j = 1}^g\sigma^{1j} \textbf{X}_1' \textbf{y}_j \\ \vdots \\
+\displaystyle \sum_{j = 1}^g\sigma^{gj} \textbf{X}_g' \textbf{y}_j
+\end{bmatrix},$$
+
+em que $\sigma^{ij}$ é o elemento $ij$ da matriz $\Sigma^{-1}.$
+
+
+## Estimação
+
+
+$$\mathbb{V}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}|\textbf{X}) = (\textbf{X}_{\bullet}' (\Sigma^{-1} \otimes I_n) \textbf{X}_{\bullet})^{-1} = \begin{bmatrix}
+\sigma^{11} \textbf{X}_1' \textbf{X}_1 & \cdots & \sigma^{ig} \textbf{X}_1' \textbf{X}_g \\
+\vdots & \ddots & \vdots \\
+\sigma^{g1} \textbf{X}_g' \textbf{X}_1 & \cdots & \sigma^{gg} \textbf{X}_g' \textbf{X}_g \\
+\end{bmatrix}^{-1}.$$
+
+
+
+# MQGF
+
+## MQGF
+
+
+Na prática, $\Sigma$ não é conhecido, devendo ser estimados. Assim, em lugar de aplicar MQG, aplicaremos MGQF.
+
+
+
