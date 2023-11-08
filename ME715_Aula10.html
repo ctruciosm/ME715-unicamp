@@ -28,6 +28,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #767676;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #767676;  padding-left: 4px; }
+    div.sourceCode
+      { color: #545454; background-color: #fefefe; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #545454; } /* Normal */
+    code span.al { color: #7928a1; } /* Alert */
+    code span.an { color: #696969; } /* Annotation */
+    code span.at { color: #a55a00; } /* Attribute */
+    code span.bn { color: #7928a1; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #d91e18; } /* ControlFlow */
+    code span.ch { color: #008000; } /* Char */
+    code span.cn { color: #d91e18; } /* Constant */
+    code span.co { color: #696969; } /* Comment */
+    code span.cv { color: #696969; font-style: italic; } /* CommentVar */
+    code span.do { color: #696969; font-style: italic; } /* Documentation */
+    code span.dt { color: #7928a1; } /* DataType */
+    code span.dv { color: #7928a1; } /* DecVal */
+    code span.er { color: #7928a1; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #a55a00; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #696969; } /* Information */
+    code span.kw { color: #d91e18; } /* Keyword */
+    code span.op { color: #00769e; } /* Operator */
+    code span.ot { color: #d91e18; } /* Other */
+    code span.pp { color: #7928a1; } /* Preprocessor */
+    code span.sc { color: #00769e; } /* SpecialChar */
+    code span.ss { color: #008000; } /* SpecialString */
+    code span.st { color: #008000; } /* String */
+    code span.va { color: #a55a00; } /* Variable */
+    code span.vs { color: #008000; } /* VerbatimString */
+    code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="ME715_Aula10_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="ME715_Aula10_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -351,7 +415,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <ul>
 <li class="fragment">Até agora, temos estudado casos que envolvem apenas uma unica equação.</li>
 <li class="fragment">Agora, discutiremos modelos que determinam conjuntamente os valores de duas ou mais variáveis dependentes utilizando dois ou mais equações.</li>
-<li class="fragment">Estes modeos são chamados de multivariados (porque eles tentam explicar múltiplas variáveis dependentes).</li>
+<li class="fragment">Estes modelos são chamados de <em>modelos multivariados</em> (tentam explicar múltiplas variáveis dependentes).</li>
 <li class="fragment">Dois modelos multivariados amplamente utilizados são o modelo SUR (tópico da aula de hoje) e o modelo de equaões simultâneas (tema da próxima aula).</li>
 </ul>
 </section></section>
@@ -362,9 +426,13 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </section>
 <section id="modelos-sur-1" class="slide level2">
 <h2>Modelos SUR</h2>
-<p>Os modelos de Regressão linear aparentemente não relacionada, ou modelos <strong>SUR</strong> (<em>Seemingly Unrelated Regression</em>), como comumente conhecido, envolvem <span class="math inline">\(n\)</span> observações em cada uma das <span class="math inline">\(g\)</span> variáveis dependentes.</p>
-<div class="fragment">
-<p>Suponha que temos <span class="math inline">\(g\)</span> variáveis dependentes (indexadas por <span class="math inline">\(i\)</span>), então a <span class="math inline">\(i\)</span>-éssima equação do modelo linear multivariado pode ser escrito como <span class="math display">\[\textbf{y}_i = \textbf{X}_i \beta_i + u_i \quad com \quad \mathbb{E}(u_i u_i') = \sigma_{ii} I_n,\]</span> em que:</p>
+<center>
+<p>Os modelos de Regressão linear aparentemente não relacionados, ou modelos <strong>SUR</strong> (<em>Seemingly Unrelated Regression</em>), como comumente conhecido, envolvem <span class="math inline">\(n\)</span> observações em cada uma das <span class="math inline">\(g\)</span> variáveis dependentes.</p>
+</center>
+</section>
+<section id="modelos-sur-2" class="slide level2">
+<h2>Modelos SUR</h2>
+<p>Suponha que temos <span class="math inline">\(g\)</span> variáveis dependentes (indexadas por <span class="math inline">\(i\)</span>), então a <span class="math inline">\(i\)</span>-éssima equação do modelo linear multivariado pode ser escrito como <span class="math display">\[\textbf{y}_i = \textbf{X}_i \beta_i + \textbf{u}_i \quad com \quad \mathbb{E}(\textbf{u}_i \textbf{u}_i') = \sigma_{ii} I_n,\]</span> em que:</p>
 <div>
 <ul>
 <li><span class="math inline">\(\textbf{y}_i\)</span> denota o vetor de tamanho <span class="math inline">\(n\)</span> da <span class="math inline">\(i\)</span>-éssima variável dependente,</li>
@@ -373,14 +441,13 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li><span class="math inline">\(\textbf{u}_i\)</span> denota o vetor de erros de tamanho <span class="math inline">\(n\)</span></li>
 </ul>
 </div>
-</div>
 </section>
-<section id="modelos-sur-2" class="slide level2">
+<section id="modelos-sur-3" class="slide level2">
 <h2>Modelos SUR</h2>
 <ul>
-<li class="fragment">Se <span class="math inline">\(\mathbb{E}(u_i | \textbf{X}_i) = 0\)</span>, aparentemente podemos aplicr MQO para cada equação.</li>
+<li class="fragment">Se <span class="math inline">\(\mathbb{E}(u_i | \textbf{X}_i) = 0\)</span>, aparentemente podemos aplicar MQO para cada equação.</li>
 <li class="fragment">Se fizermos isto, ignoramos a possibilidade de que, por exemplo, <span class="math inline">\(u_{ti}\)</span> e <span class="math inline">\(u_{tj}\)</span> sejam correlacionados.</li>
-<li class="fragment">Para incluir este tipo de informação, assumimos que <span class="math display">\[\mathbb{E}(u_{ti}u_{ij}) = \sigma_{ij} \quad e \quad \mathbb{E}(u_{ti}u_{sj}) = 0,\]</span> em que <span class="math inline">\(\sigma_{ij}\)</span> é o elemento <span class="math inline">\(ij\)</span> da matriz <span class="math inline">\(\Sigma_{g \times g} &gt; 0\)</span> (matriz de covariância contemporanea).</li>
+<li class="fragment">Para incluir este tipo de informação, assumimos que <span class="math display">\[\mathbb{E}(u_{ti}u_{tj}) = \sigma_{ij} \quad e \quad \mathbb{E}(u_{ti}u_{sj}) = 0,\]</span> em que <span class="math inline">\(\sigma_{ij}\)</span> é o elemento <span class="math inline">\(ij\)</span> da matriz <span class="math inline">\(\Sigma_{g \times g} &gt; 0\)</span> (matriz de covariância contemporanea).</li>
 </ul>
 <div class="fragment">
 <blockquote>
@@ -388,7 +455,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </blockquote>
 </div>
 </section>
-<section id="modelos-sur-3" class="slide level2">
+<section id="modelos-sur-4" class="slide level2">
 <h2>Modelos SUR</h2>
 <ul>
 <li class="fragment">Seja <span class="math inline">\(\textbf{X} = \textbf{X}_1 \cup \textbf{X}_2 \cup \cdots \cup \textbf{X}_g\)</span>, a suposição <span class="math inline">\(\mathbb{E}(\textbf{U}|\textbf{X}) = 0\)</span> é análoga à HRLM4 no caso univariado.</li>
@@ -396,7 +463,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li class="fragment">Os resultados a seguir são válidos em ambos os casos.</li>
 </ul>
 </section>
-<section id="modelos-sur-4" class="slide level2">
+<section id="modelos-sur-5" class="slide level2">
 <h2>Modelos SUR</h2>
 <center>
 <p>Como estimar este tipo de modelos?</p>
@@ -434,9 +501,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Estimação</h2>
 <p>Seja o modelo <span class="math display">\[\textbf{y}_{\bullet} = \textbf{X}_{\bullet} \boldsymbol{\beta}_{\bullet} + \textbf{u}_{\bullet}, \quad \text{em que:}\]</span></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\textbf{y}_{\bullet}\)</span> é um vetor de tamanho <span class="math inline">\(ng\)</span> que contem os vetores <span class="math inline">\(\textbf{y}_1, \cdots, \textbf{y}_g\)</span> empilhados.</li>
-<li class="fragment"><span class="math inline">\(\textbf{u}_{\bullet}\)</span> é um vetor de tamanho <span class="math inline">\(ng\)</span> que contem os vetores <span class="math inline">\(\textbf{u}_1, \cdots, \textbf{u}_g\)</span> empilhados.</li>
-<li class="fragment"><span class="math inline">\(\boldsymbol{\beta}_{\bullet}\)</span> é um vetor de tamanho <span class="math inline">\(ng\)</span> que contem os vetores <span class="math inline">\(\boldsymbol{\beta}_1, \cdots, \boldsymbol{\beta}_g\)</span> empilhados.</li>
+<li class="fragment"><span class="math inline">\(\textbf{y}_{\bullet}\)</span> é um vetor de tamanho <span class="math inline">\(ng\)</span> que contém os vetores <span class="math inline">\(\textbf{y}_1, \cdots, \textbf{y}_g\)</span> empilhados.</li>
+<li class="fragment"><span class="math inline">\(\textbf{u}_{\bullet}\)</span> é um vetor de tamanho <span class="math inline">\(ng\)</span> que contém os vetores <span class="math inline">\(\textbf{u}_1, \cdots, \textbf{u}_g\)</span> empilhados.</li>
+<li class="fragment"><span class="math inline">\(\boldsymbol{\beta}_{\bullet}\)</span> é um vetor que contém os vetores <span class="math inline">\(\boldsymbol{\beta}_1, \cdots, \boldsymbol{\beta}_g\)</span> empilhados.</li>
 <li class="fragment"><span class="math display">\[\textbf{X}_{\bullet}  = \begin{bmatrix}
 \textbf{X}_1 &amp; \textbf{0} &amp; \cdots &amp; \textbf{0} \\
 \textbf{0} &amp; \textbf{X}_2 &amp; \cdots &amp; \textbf{0} \\
@@ -505,7 +572,7 @@ a_{p1}B &amp; \cdots &amp; a_{pq}B \\
 \sigma_{g1}I_n  &amp; \cdots &amp; \sigma_{gg}I_n  \\
 \end{bmatrix} = \boldsymbol{\Sigma}_{\bullet} = \Sigma \otimes I_n \neq \sigma I\]</span></li>
 <li class="fragment">Então, MQO não é BLUE.</li>
-<li class="fragment">Contudo, se <span class="math inline">\(\Sigma\)</span> for conhecido, podemos aplicar MQG <code>emo::ji("smile")</code>.</li>
+<li class="fragment">Contudo, se <span class="math inline">\(\Sigma\)</span> for conhecido, podemos aplicar MQG 😄.</li>
 </ul>
 </section>
 <section id="estimação-6" class="slide level2">
@@ -551,6 +618,19 @@ a_{p1}B &amp; \cdots &amp; a_{pq}B \\
 \vdots &amp; \ddots &amp; \vdots \\
 \sigma^{g1} \textbf{X}_g' \textbf{X}_1 &amp; \cdots &amp; \sigma^{gg} \textbf{X}_g' \textbf{X}_g \\
 \end{bmatrix}^{-1}.\]</span></p>
+</section>
+<section id="estimação-9" class="slide level2">
+<h2>Estimação</h2>
+<center>
+<p><span style="color:red;"><strong>O que acontece se apenas sairmos aplicando MQO?</strong></span></p>
+<p><img data-src="imagens/travolta.gif"></p>
+</center>
+<ol type="1">
+<li class="fragment">Se <span class="math inline">\(\sigma_{ij} = 0\)</span>, <span class="math inline">\(\forall i\neq j\)</span>, então não há ganhos em aplicar outro metodo além de MQO.</li>
+<li class="fragment">Se <span class="math inline">\(\textbf{X}_i = \textbf{X}_j\)</span>, <span class="math inline">\(\forall i\neq j\)</span>, então MQO e MQG são idênticos.</li>
+<li class="fragment">Enquanto maior a correlação entre <span class="math inline">\(u_{ti}\)</span> e <span class="math inline">\(u_{tj}\)</span>, maior a eficiencia de MQG sobre MQO.</li>
+<li class="fragment">Enquanto menos correlacionadas as matrices em <span class="math inline">\(\textbf{X}\)</span> estiverem, maiores serão os ganhos de utilizar MQG sobre MQO.</li>
+</ol>
 </section></section>
 <section>
 <section id="mqgf" class="title-slide slide level1 center">
@@ -559,10 +639,231 @@ a_{p1}B &amp; \cdots &amp; a_{pq}B \\
 </section>
 <section id="mqgf-1" class="slide level2">
 <h2>MQGF</h2>
-<p>Na prática, <span class="math inline">\(\Sigma\)</span> não é conhecido, devendo ser estimados. Assim, em lugar de aplicar MQG, aplicaremos MGQF</p>
+<p>Na prática, <span class="math inline">\(\Sigma\)</span> não é conhecido, devendo ser estimados. Assim, em lugar de aplicar MQG, aplicaremos MGQF.</p>
+<div class="fragment">
+<ol type="1">
+<li class="fragment">Substituir <span class="math inline">\(\Sigma\)</span> por <span class="math display">\[\hat{\Sigma} = n^{-1} \hat{\textbf{U}}'\hat{\textbf{U}},\]</span> em que <span class="math inline">\(\hat{\textbf{U}}\)</span> é uma matriz <span class="math inline">\(n \times g\)</span> com i-éssima coluna <span class="math inline">\(\hat{\textbf{u}}_i\)</span> e <span class="math inline">\(\hat{\textbf{u}}_i\)</span> é o vetor de resíduos da equação <span class="math inline">\(i\)</span> obtidos por MQO.</li>
+<li class="fragment"><span class="math display">\[\hat{\boldsymbol{\beta}}_{\bullet}^{MQGF} = (\textbf{X}_{\bullet}'(\hat{\Sigma}^{-1} \otimes I_n)\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet}' (\hat{\Sigma}^{-1} \otimes I_n) \textbf{y}_{\bullet}\]</span></li>
+<li class="fragment"><span class="math display">\[\mathbb{V}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}|\textbf{X}) = (\textbf{X}_{\bullet}' (\hat{\Sigma}^{-1} \otimes I_n) \textbf{X}_{\bullet})^{-1}\]</span></li>
+</ol>
+</div>
+</section>
+<section id="mqgf-2" class="slide level2">
+<h2>MQGF</h2>
+<h4 id="observações">Observações</h4>
+<ul>
+<li class="fragment">Para estimar <span class="math inline">\(\hat{\Sigma}\)</span>, temos utilizado <span class="math inline">\(n\)</span>. Isto levara a um estimador viesado.</li>
+<li class="fragment">Se <span class="math inline">\(k_i = k_j = k\)</span> <span class="math inline">\(\forall i \neq j\)</span>, podemos utilizar <span class="math inline">\(n - k\)</span> para obter um estimador não viesado para os elementos da diagional.</li>
+<li class="fragment">Tentar dividir diferentes elementos de <span class="math inline">\(\hat{\textbf{U}}'\hat{\textbf{U}}\)</span> por diferentes valores, não garante que <span class="math inline">\(\hat{\Sigma}\)</span> seja definida positiva.</li>
+<li class="fragment">Sim, subtituir <span class="math inline">\(\Sigma\)</span> por <span class="math inline">\(\hat{\Sigma}\)</span> afeta as propriedades de MQG. Isto torna-se um problema, principalmente, quando <span class="math inline">\(n\)</span> é pequeno e <span class="math inline">\(g\)</span> é grande.</li>
+<li class="fragment">Técnicas de Bootstrap podem ser utilizadas para obter inferência estatística válida.</li>
+</ul>
+</section></section>
+<section>
+<section id="exemplo" class="title-slide slide level1 center">
+<h1>Exemplo</h1>
 
-<img src="imagens/imecc.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+<section id="exemplo-1" class="slide level2">
+<h2>Exemplo</h2>
+<p>Sejam as equações:</p>
+<p><span class="math display">\[\text{Equação 1: } \quad read = \beta_0 + \beta_1 female + \beta_2 ses + \beta_3 socst + u_1.\]</span> <span class="math display">\[\text{Equação 2: } \quad math = \beta_0 + \beta_1 female + \beta_2 ses + \beta_3 science + u_2.\]</span></p>
+<div>
+<ul>
+<li><em>ses:</em> nível socio-economico (baixo, médio, alto).</li>
+<li><em>science:</em> nota (padronizada) em ciências.</li>
+<li><em>socst:</em> nota (padronizada) em estudos sociais.</li>
+<li><em>female:</em> female ou male</li>
+<li><em>read:</em> nota (padronizada) em leitura.</li>
+<li><em>math:</em> nota (padronizada) em matemática</li>
+</ul>
+</div>
+</section>
+<section id="exemplo-2" class="slide level2">
+<h2>Exemplo</h2>
+<p>Estimando o modelo SUR</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(systemfit)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>hsb2 <span class="ot">&lt;-</span> <span class="fu">read.dta</span>(<span class="st">"https://stats.idre.ucla.edu/stat/stata/notes/hsb2.dta"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">glimpse</span>(hsb2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 200
+Columns: 11
+$ id      &lt;dbl&gt; 70, 121, 86, 141, 172, 113, 50, 11, 84, 48, 75, 60, 95, 104, 3…
+$ female  &lt;fct&gt; male, female, male, male, male, male, male, male, male, male, …
+$ race    &lt;fct&gt; white, white, white, white, white, white, african-amer, hispan…
+$ ses     &lt;fct&gt; low, middle, high, high, middle, middle, middle, middle, middl…
+$ schtyp  &lt;fct&gt; public, public, public, public, public, public, public, public…
+$ prog    &lt;fct&gt; general, vocation, general, vocation, academic, academic, gene…
+$ read    &lt;dbl&gt; 57, 68, 44, 63, 47, 44, 50, 34, 63, 57, 60, 57, 73, 54, 45, 42…
+$ write   &lt;dbl&gt; 52, 59, 33, 44, 52, 52, 59, 46, 57, 55, 46, 65, 60, 63, 57, 49…
+$ math    &lt;dbl&gt; 41, 53, 54, 47, 57, 51, 42, 45, 54, 52, 51, 51, 71, 57, 50, 43…
+$ science &lt;dbl&gt; 47, 63, 58, 53, 53, 63, 53, 39, 58, 50, 53, 63, 61, 55, 31, 50…
+$ socst   &lt;dbl&gt; 57, 61, 31, 56, 61, 61, 61, 36, 51, 51, 61, 61, 71, 46, 56, 56…</code></pre>
+</div>
+</div>
+</section>
+<section id="exemplo-3" class="slide level2">
+<h2>Exemplo</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Definimos as equações</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>eq01 <span class="ot">&lt;-</span> read <span class="sc">~</span> female <span class="sc">+</span> <span class="fu">as.numeric</span>(ses) <span class="sc">+</span> socst</span>
+<span id="cb3-3"><a href="#cb3-3"></a>eq02 <span class="ot">&lt;-</span> math <span class="sc">~</span> female <span class="sc">+</span> <span class="fu">as.numeric</span>(ses) <span class="sc">+</span> science</span>
+<span id="cb3-4"><a href="#cb3-4"></a>equacoes <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">readreg =</span> eq01, <span class="at">mathreg =</span> eq02)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Ajustamos o modelo SUR</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>fit_sur <span class="ot">&lt;-</span> <span class="fu">systemfit</span>(equacoes, <span class="at">method =</span> <span class="st">"SUR"</span>, <span class="at">data =</span> hsb2, <span class="at">control =</span> <span class="fu">systemfit.control</span>(<span class="at">methodResidCov =</span> <span class="st">"noDfCor"</span>))</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="fu">summary</span>(fit_sur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+systemfit results 
+method: SUR 
+
+         N  DF     SSR detRCov   OLS-R2 McElroy-R2
+system 400 392 22980.7 3048.39 0.401314    0.32618
+
+          N  DF     SSR     MSE    RMSE       R2   Adj R2
+readreg 200 196 12610.6 64.3396 8.02120 0.397184 0.387957
+mathreg 200 196 10370.1 52.9088 7.27384 0.406261 0.397174
+
+The covariance matrix of the residuals used for estimation
+        readreg mathreg
+readreg 62.7544 11.2653
+mathreg 11.2653 51.4218
+
+The covariance matrix of the residuals
+        readreg mathreg
+readreg 63.0528 14.8640
+mathreg 14.8640 51.8506
+
+The correlations of the residuals
+         readreg  mathreg
+readreg 1.000000 0.259961
+mathreg 0.259961 1.000000
+
+
+SUR estimates for 'readreg' (equation 1)
+Model Formula: read ~ female + as.numeric(ses) + socst
+
+                  Estimate Std. Error  t value   Pr(&gt;|t|)    
+(Intercept)     22.9006917  2.9203811  7.84168 2.7911e-13 ***
+femalefemale    -1.3996913  1.1393243 -1.22853   0.220722    
+as.numeric(ses)  1.4953140  0.8298821  1.80184   0.073107 .  
+socst            0.5155857  0.0548183  9.40535 &lt; 2.22e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.021196 on 196 degrees of freedom
+Number of observations: 200 Degrees of Freedom: 196 
+SSR: 12610.559569 MSE: 64.33959 Root MSE: 8.021196 
+Multiple R-Squared: 0.397184 Adjusted R-Squared: 0.387957 
+
+
+SUR estimates for 'mathreg' (equation 2)
+Model Formula: math ~ female + as.numeric(ses) + science
+
+                  Estimate Std. Error t value   Pr(&gt;|t|)    
+(Intercept)     22.4477793  2.9353302 7.64745 8.9928e-13 ***
+femalefemale     1.0316289  1.0310144 1.00060   0.318256    
+as.numeric(ses)  1.6570425  0.7340503 2.25740   0.025086 *  
+science          0.5058777  0.0529013 9.56267 &lt; 2.22e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.273841 on 196 degrees of freedom
+Number of observations: 200 Degrees of Freedom: 196 
+SSR: 10370.116995 MSE: 52.90876 Root MSE: 7.273841 
+Multiple R-Squared: 0.406261 Adjusted R-Squared: 0.397174 </code></pre>
+</div>
+</div>
+</section>
+<section id="exemplo-4" class="slide level2">
+<h2>Exemplo</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Ajustamos o modelo SUR por OLS</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>fit_ols <span class="ot">&lt;-</span> <span class="fu">systemfit</span>(equacoes, <span class="at">data =</span> hsb2)</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">summary</span>(fit_ols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+systemfit results 
+method: OLS 
+
+         N  DF     SSR detRCov   OLS-R2 McElroy-R2
+system 400 392 22835.2 3227.86 0.405103   0.342707
+
+          N  DF     SSR     MSE   RMSE       R2   Adj R2
+readreg 200 196 12550.9 64.0351 8.0022 0.400037 0.390854
+mathreg 200 196 10284.4 52.4712 7.2437 0.411171 0.402158
+
+The covariance matrix of the residuals
+        readreg mathreg
+readreg 64.0351 11.4952
+mathreg 11.4952 52.4712
+
+The correlations of the residuals
+        readreg mathreg
+readreg 1.00000 0.19831
+mathreg 0.19831 1.00000
+
+
+OLS estimates for 'readreg' (equation 1)
+Model Formula: read ~ female + as.numeric(ses) + socst
+
+                  Estimate Std. Error  t value   Pr(&gt;|t|)    
+(Intercept)     20.6824980  2.9789550  6.94287 5.5019e-11 ***
+femalefemale    -1.5111280  1.1510793 -1.31279    0.19079    
+as.numeric(ses)  1.2183658  0.8399004  1.45061    0.14849    
+socst            0.5699327  0.0562967 10.12373 &lt; 2.22e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 8.002195 on 196 degrees of freedom
+Number of observations: 200 Degrees of Freedom: 196 
+SSR: 12550.883066 MSE: 64.035118 Root MSE: 8.002195 
+Multiple R-Squared: 0.400037 Adjusted R-Squared: 0.390854 
+
+
+OLS estimates for 'mathreg' (equation 2)
+Model Formula: math ~ female + as.numeric(ses) + science
+
+                 Estimate Std. Error  t value   Pr(&gt;|t|)    
+(Intercept)     19.305181   2.998047  6.43925 9.0557e-10 ***
+femalefemale     1.160903   1.041641  1.11449   0.266432    
+as.numeric(ses)  1.399639   0.742390  1.88531   0.060867 .  
+science          0.575330   0.054328 10.58993 &lt; 2.22e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.243704 on 196 degrees of freedom
+Number of observations: 200 Degrees of Freedom: 196 
+SSR: 10284.364144 MSE: 52.471246 Root MSE: 7.243704 
+Multiple R-Squared: 0.411171 Adjusted R-Squared: 0.402158 </code></pre>
+</div>
+</div>
+</section>
+<section id="comentários-finais" class="slide level2">
+<h2>Comentários Finais</h2>
+<ul>
+<li class="fragment">A qualidade de ajuste em cada equação pode ser analisada com o <span class="math inline">\(R^2\)</span> tradicional.</li>
+<li class="fragment">A qualidade de ajuste global, pode ser analisada com <span class="math inline">\(R^2\)</span> de McElroy. Sua interpretação é análoga ao clássico <span class="math inline">\(R^2\)</span>.</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[R^2_{\bullet} = 1 - \dfrac{\textbf{u}' \hat{\Omega}^{-1} \textbf{u}}{\textbf{y}'(\hat{\Sigma}^{-1} \otimes (I_n - \dfrac{11'}{N}))\textbf{y}},\]</span> em que <span class="math inline">\(\hat{\Omega} = \hat{\Sigma} \otimes I_N\)</span></p>
+<p><img src="imagens/imecc.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
+</div>
 </div>
 </section></section>
     </div>

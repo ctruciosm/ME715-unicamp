@@ -38,7 +38,7 @@ format:
 
 - Até agora, temos estudado casos que envolvem apenas uma unica equação.
 - Agora, discutiremos modelos que determinam conjuntamente os valores de duas ou mais variáveis dependentes utilizando dois ou mais equações.
-- Estes modeos são chamados de multivariados (porque eles tentam explicar múltiplas variáveis dependentes).
+- Estes modelos são chamados de _modelos multivariados_ (tentam explicar múltiplas variáveis dependentes).
 - Dois modelos multivariados amplamente utilizados são o modelo SUR (tópico da aula de hoje) e o modelo de equaões simultâneas (tema da próxima aula).
 
 
@@ -46,12 +46,17 @@ format:
 
 ## Modelos SUR
 
-Os modelos de Regressão linear aparentemente não relacionada, ou modelos **SUR** (*Seemingly Unrelated Regression*), como comumente conhecido, envolvem $n$ observações em cada uma das $g$ variáveis dependentes.
+<center>
 
-. . . 
+Os modelos de Regressão linear aparentemente não relacionados, ou modelos **SUR** (*Seemingly Unrelated Regression*), como comumente conhecido, envolvem $n$ observações em cada uma das $g$ variáveis dependentes.
+
+</center>
 
 
-Suponha que temos $g$ variáveis dependentes (indexadas por $i$), então a $i$-éssima equação do modelo linear multivariado pode ser escrito como $$\textbf{y}_i = \textbf{X}_i \beta_i + u_i \quad com \quad \mathbb{E}(u_i u_i') = \sigma_{ii} I_n,$$ em que:
+## Modelos SUR
+
+
+Suponha que temos $g$ variáveis dependentes (indexadas por $i$), então a $i$-éssima equação do modelo linear multivariado pode ser escrito como $$\textbf{y}_i = \textbf{X}_i \beta_i + \textbf{u}_i \quad com \quad \mathbb{E}(\textbf{u}_i \textbf{u}_i') = \sigma_{ii} I_n,$$ em que:
 
 ::: {.nonincremental}
 
@@ -66,9 +71,9 @@ Suponha que temos $g$ variáveis dependentes (indexadas por $i$), então a $i$-�
 ## Modelos SUR
 
 
-- Se $\mathbb{E}(u_i | \textbf{X}_i) = 0$, aparentemente podemos aplicr MQO para cada equação.
+- Se $\mathbb{E}(u_i | \textbf{X}_i) = 0$, aparentemente podemos aplicar MQO para cada equação.
 - Se fizermos isto, ignoramos a possibilidade de que, por exemplo, $u_{ti}$ e $u_{tj}$ sejam correlacionados.
-- Para incluir este tipo de informação, assumimos que $$\mathbb{E}(u_{ti}u_{ij}) = \sigma_{ij} \quad e \quad \mathbb{E}(u_{ti}u_{sj}) = 0,$$ em que  $\sigma_{ij}$ é o elemento $ij$ da matriz $\Sigma_{g \times g} > 0$ (matriz de covariância contemporanea).
+- Para incluir este tipo de informação, assumimos que $$\mathbb{E}(u_{ti}u_{tj}) = \sigma_{ij} \quad e \quad \mathbb{E}(u_{ti}u_{sj}) = 0,$$ em que  $\sigma_{ij}$ é o elemento $ij$ da matriz $\Sigma_{g \times g} > 0$ (matriz de covariância contemporanea).
 
 . . . 
 
@@ -128,9 +133,9 @@ Como estimar este tipo de modelos?
 Seja o modelo $$\textbf{y}_{\bullet} = \textbf{X}_{\bullet} \boldsymbol{\beta}_{\bullet} + \textbf{u}_{\bullet}, \quad \text{em que:}$$
 
 
-- $\textbf{y}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\textbf{y}_1, \cdots, \textbf{y}_g$ empilhados.
-- $\textbf{u}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\textbf{u}_1, \cdots, \textbf{u}_g$ empilhados.
-- $\boldsymbol{\beta}_{\bullet}$ é um vetor de tamanho $ng$ que contem os vetores $\boldsymbol{\beta}_1, \cdots, \boldsymbol{\beta}_g$ empilhados.
+- $\textbf{y}_{\bullet}$ é um vetor de tamanho $ng$ que contém os vetores $\textbf{y}_1, \cdots, \textbf{y}_g$ empilhados.
+- $\textbf{u}_{\bullet}$ é um vetor de tamanho $ng$ que contém os vetores $\textbf{u}_1, \cdots, \textbf{u}_g$ empilhados.
+- $\boldsymbol{\beta}_{\bullet}$ é um vetor que contém os vetores $\boldsymbol{\beta}_1, \cdots, \boldsymbol{\beta}_g$ empilhados.
 - $$\textbf{X}_{\bullet}  = \begin{bmatrix}
 \textbf{X}_1 & \textbf{0} & \cdots & \textbf{0} \\
 \textbf{0} & \textbf{X}_2 & \cdots & \textbf{0} \\
@@ -198,7 +203,8 @@ a_{p1}B & \cdots & a_{pq}B \\
 \sigma_{g1}I_n  & \cdots & \sigma_{gg}I_n  \\
 \end{bmatrix} = \boldsymbol{\Sigma}_{\bullet} = \Sigma \otimes I_n \neq \sigma I$$
 - Então, MQO não é BLUE.
-- Contudo, se $\Sigma$ for conhecido, podemos aplicar MQG `emo::ji("smile")`.
+- Contudo, se $\Sigma$ for conhecido, podemos aplicar MQG `r emo::ji("smile")`.
+
 
 
 ## Estimação
@@ -246,6 +252,21 @@ $$\mathbb{V}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}|\textbf{X}) = (\textbf{X}_
 \end{bmatrix}^{-1}.$$
 
 
+## Estimação
+
+<center>
+[**O que acontece se apenas sairmos aplicando MQO?**]{style="color:red;"}
+
+![](imagens/travolta.gif)
+
+</center>
+
+1. Se $\sigma_{ij} = 0$,  $\forall i\neq j$, então não há ganhos em aplicar outro metodo além de MQO.
+2. Se $\textbf{X}_i = \textbf{X}_j$, $\forall i\neq j$, então MQO e MQG são idênticos.
+3. Enquanto maior a correlação entre $u_{ti}$ e $u_{tj}$, maior a eficiencia de MQG sobre MQO.
+4. Enquanto menos correlacionadas as matrices em $\textbf{X}$ estiverem, maiores serão os ganhos de utilizar MQG sobre MQO.
+
+
 
 # MQGF
 
@@ -253,6 +274,91 @@ $$\mathbb{V}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}|\textbf{X}) = (\textbf{X}_
 
 
 Na prática, $\Sigma$ não é conhecido, devendo ser estimados. Assim, em lugar de aplicar MQG, aplicaremos MGQF.
+
+. . . 
+
+1. Substituir $\Sigma$ por $$\hat{\Sigma} = n^{-1} \hat{\textbf{U}}'\hat{\textbf{U}},$$ em que $\hat{\textbf{U}}$ é uma matriz $n \times g$ com i-éssima coluna $\hat{\textbf{u}}_i$ e $\hat{\textbf{u}}_i$ é o vetor de resíduos da equação $i$ obtidos por MQO.
+2. $$\hat{\boldsymbol{\beta}}_{\bullet}^{MQGF} = (\textbf{X}_{\bullet}'(\hat{\Sigma}^{-1} \otimes I_n)\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet}' (\hat{\Sigma}^{-1} \otimes I_n) \textbf{y}_{\bullet}$$
+3. $$\mathbb{V}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQG}|\textbf{X}) = (\textbf{X}_{\bullet}' (\hat{\Sigma}^{-1} \otimes I_n) \textbf{X}_{\bullet})^{-1}$$
+
+## MQGF
+
+
+#### Observações
+
+- Para estimar $\hat{\Sigma}$, temos utilizado $n$. Isto levara a um estimador viesado.
+- Se $k_i = k_j = k$ $\forall i \neq j$, podemos utilizar $n - k$ para obter um estimador não viesado para os elementos da diagional.
+- Tentar dividir diferentes elementos de $\hat{\textbf{U}}'\hat{\textbf{U}}$ por diferentes valores, não garante que $\hat{\Sigma}$ seja definida positiva.
+- Sim, subtituir $\Sigma$ por $\hat{\Sigma}$ afeta as propriedades de MQG. Isto torna-se um problema, principalmente, quando $n$ é pequeno e $g$ é grande. 
+- Técnicas de Bootstrap podem ser utilizadas para obter inferência estatística válida.
+
+# Exemplo
+
+## Exemplo
+
+Sejam as equações:
+
+$$\text{Equação 1: } \quad read = \beta_0 + \beta_1 female + \beta_2 ses + \beta_3 socst + u_1.$$
+$$\text{Equação 2: } \quad math = \beta_0 + \beta_1 female + \beta_2 ses + \beta_3 science + u_2.$$
+
+::: {.nonincremental}
+- _ses:_ nível socio-economico (baixo, médio, alto).
+- _science:_ nota (padronizada) em ciências.
+- _socst:_ nota (padronizada) em estudos sociais.
+- _female:_ female ou male
+- _read:_ nota (padronizada) em leitura.
+- _math:_ nota (padronizada) em matemática
+:::
+
+
+## Exemplo
+
+Estimando o modelo SUR
+
+```{r}
+#| echo: true
+library(systemfit)
+library(foreign)
+library(dplyr)
+
+hsb2 <- read.dta("https://stats.idre.ucla.edu/stat/stata/notes/hsb2.dta")
+glimpse(hsb2)
+```
+
+
+## Exemplo 
+
+```{r}
+#| echo: true
+# Definimos as equações
+eq01 <- read ~ female + as.numeric(ses) + socst
+eq02 <- math ~ female + as.numeric(ses) + science
+equacoes <- list(readreg = eq01, mathreg = eq02)
+# Ajustamos o modelo SUR
+fit_sur <- systemfit(equacoes, method = "SUR", data = hsb2, control = systemfit.control(methodResidCov = "noDfCor"))
+summary(fit_sur)
+```
+
+
+
+## Exemplo 
+
+```{r}
+#| echo: true
+# Ajustamos o modelo SUR por OLS
+fit_ols <- systemfit(equacoes, data = hsb2)
+summary(fit_ols)
+```
+
+
+## Comentários Finais
+
+- A qualidade de ajuste em cada equação pode ser analisada com o $R^2$ tradicional. 
+- A qualidade de ajuste global, pode ser analisada com $R^2$ de McElroy. Sua interpretação é análoga ao clássico $R^2$.
+
+. . . 
+
+$$R^2_{\bullet} = 1 - \dfrac{\textbf{u}' \hat{\Omega}^{-1} \textbf{u}}{\textbf{y}'(\hat{\Sigma}^{-1} \otimes (I_n - \dfrac{11'}{N}))\textbf{y}},$$ em que $\hat{\Omega} = \hat{\Sigma} \otimes I_N$
 
 
 
