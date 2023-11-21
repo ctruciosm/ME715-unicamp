@@ -1,0 +1,698 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Modelos de Equações Simultâneas"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+
+# Motivação
+## Motivação 1
+
+
+**[Wooldridge, 2023]** Sejam:
+
+- $h_o$ o total anual de horas cumpridas por trabalhadores na agricultura.
+- Seja $w$ a média do salário por hora oferecida a esses trabalhadores, 
+- Seja $z_1$ a média dos salários da indústria
+
+. . . 
+
+Então, uma função simples da oferta de mão de obra é $$h_o = \alpha_1 w + \beta_1 z_1 + u_1$$
+
+## Motivação 
+
+Sejam:
+
+- $h_d$ o total anual de horas demandadas pela agricultura.
+- Seja $w$ a média do salário por hora oferecida a esses trabalhadores.
+- Seja $z_2$ a área agrícola.
+
+. . .
+
+Então, uma função simples da demanda de mão de obra é $$h_d = \alpha_2 w + \beta_2 z_2 + u_2$$
+
+
+## Motivação 
+
+
+Note que ambas as equações descrevem relações diferentes. A primeira é uma equação comportamental dos trabalhadores e a segunda é uma equação comportamental dos fazendeiros.
+
+
+. . . 
+
+[Se ambas as equações tem relações diferentes e tem uma interpretação causal diferente, como é que elas se tormam interligadas?]{style="color:blue;"}
+
+. . . 
+
+
+Elas se tornam interligadas porque salários e horas observadas são determinadas pela interseção da oferta e da demanda. Ou seja, por exemplo, para cada município $i$, as horas observadas e os salários observados são determinados pela condição de equilibrio $$h_{io} = h_{id}$$
+
+
+
+## Motivação 
+
+
+Assim, nossas equações se tornam:
+
+
+
+$$h_i = \alpha_1 w_i + \beta_1 z_{i1} + u_{i1}$$
+
+$$h_i = \alpha_2 w_i + \beta_2 z_{i2} + u_{i2}$$
+
+
+. . . 
+
+
+<center>
+Essas equações constituem um **modelo de equações simultâneas**
+</center>
+
+
+## Motivação 2
+
+Os municípios estão interessados em determinar em que proporção a imposição de mais policiais diminuirá suas taxas de assaltos. Um modelo simples para tratar desta questão é o seguinte:
+
+
+$$assalpc = \alpha_1 polpc + \beta_{10} + \beta_{11}incpc + u_1,$$ em que:
+
+- assalpc: quantidade de assaltos _per capita_
+- polpc: quantidade de policiais _per capita_
+- incpc: renda _per capita_ (considerado exógeno)
+
+
+. . . 
+
+
+<center>
+[Se uma cidade aumentar sua força policial, esse aumento, em média, dimunuirá a taxa de assaltos? **Podemos estimar esse modelo por MQO?**]{style="color:violet;"}
+</center>
+
+
+
+## Motivação 2
+
+
+
+Se _polpc_ for exógeno,  poderiamos aplicar MQO sem problemas. Mas... será que _polpc_ é exógeno?
+
+. . . 
+
+**Provavelmente não.** O gasto com a força policial é, pelo menos parcialmente, determinado pelo número esperado de assaltos _per capita_ (afinal, em uma cidade com poucos assaltos, por que invistiriamos tanto em policiais?). Ou seja
+
+$$polpc = \alpha_2 assalpc + \beta_{20} + \text{outros fatores}$$
+
+. . . 
+
+Assim, cidades com taxas (esperadas) maiores de assalto, terão mais policiais _per capita_.
+
+. . . 
+
+Assim que especificarmos os outros fatores, teremos um modelo de equações simultâneas!
+
+. . . 
+
+Ainda queremos saber se, [se uma cidade aumentar sua força policial, esse aumento, em média, dimunuirá a taxa de assaltos?.]{style="color:violet;"} [Contudo, para responder à pergunta precisamos saber a relação existente na segunda equação.]{style="color:red;"}
+
+
+
+# Introdução
+## Introdução
+
+- Com exceção dos modelos SUR, a maior parte da matéria tem focado em modelos de apenas uma única equação.
+- Os modelos SUR, embora envolvam mais do que uma equação, não levam em consideração o fato de termos, em cada umas equações, tanto variáveis exógenas quanto endógenas.
+- Hoje aprenderemos a lidar com um conjunto de equações com variáveis endógenas (equações simultâneas).
+- Exemplos:
+  * equilibrio de mercado,
+  * modelos macroenômicos,
+  
+. . . 
+
+
+<center>
+[Seja que estamos interessados em apenas uma parte ou no sistema como um todo, a interação de todas as variáveis no modelo terão um papel importante na interpretação e estimação do modelo.]{style="color:red;"}
+</center>
+
+
+
+# Modelo
+## Modelo de Equações Simultâneas
+
+Seja um modelo com $g$ equações em que a $i$-éssima equação é dada por:
+
+$$\textbf{y}_i = \textbf{X}_i \boldsymbol{\beta}_i + \textbf{u}_i,$$
+
+em que: 
+
+- $\textbf{X}_i = [\textbf{X}_{1i} \textbf{X}_{2i}]$ é a matriz de covariáveis da equação $i$ e tem dimensão $n \times k_i$, com $\textbf{X}_{1i}$ sendo as variáveis exógenas ($n \times k_{1i}$) e $\textbf{X}_{2i}$ as variáveis endôgenas ($n \times k_{2i}$),
+- $\boldsymbol{\beta}_i = [\boldsymbol{\beta}_{1i} \vdots \boldsymbol{\beta}_{2i}]$ é o vetor de parâmetros da equação $i$,
+- $\textbf{u}_i$ é o termo de erro da equação $i$.
+
+
+. . . 
+
+Assim,
+
+
+$$\textbf{y}_i = \textbf{X}_{1i} \boldsymbol{\beta}_{1i} + \textbf{X}_{2i} \boldsymbol{\beta}_{2i} + \textbf{u}_i,$$
+
+## Modelo de Equações Simultâneas
+
+
+Adicionalmente, vamos assumir que $$\mathbb{E}(u_{ti} u_{tj}) = \sigma_{ij} \quad \forall t, \quad e \quad  \mathbb{E}(u_{ti}u_{sj}) = 0 \quad \forall t \neq s.$$
+
+
+em que $\sigma_{ij}$ é o elemento $ij$ da matriz de covariância $g \times g$, $\Sigma$.
+
+
+. . . 
+
+
+
+Assim como fizemos no modelo SUR, podemos converter o sistema de $g$ equações em um sistema de apenas uma equação:
+
+$$\textbf{y}_{\bullet} = \textbf{X}_{\bullet} \boldsymbol{\beta}_{\bullet} + \textbf{u}_{\bullet}, \quad \mathbb{E}(\textbf{u}_{\bullet}\textbf{u}_{\bullet}') = \Sigma \otimes I_n,$$
+
+em que a notação utilizada é a mesma dos modelos SUR.
+
+
+
+## Modelo de Equações Simultâneas
+
+
+:::: {.columns}
+
+
+::: {.column width="60%"}
+
+[Então...]{style="color:red;"}
+
+[Se não fossse pelo fato de que $\textbf{X}_i$ tem variáveis exógenas ($\textbf{X}_{1i}$) e endôgenas ($\textbf{X}_{2i}$), estariamos no caso de um modelo SUR?]{style="color:red;"}
+
+:::
+
+::: {.column width="40%"}
+
+<center>
+![](imagens/meme_nazare.jpg)
+</center>
+
+:::
+
+::::
+
+. . . 
+
+<center>
+[**Não exatamente, no caso dos modelos de equações simultâneas, $\textbf{y}_i$ para $i = 1, \cdots, g$, não necessáriamente são todos diferentes.**]{style="color:blue;"}
+</center>
+
+
+
+
+# Forma Estrutural e Reduzida
+## Forma Estrutural
+
+Geralmente, quando o sistema da equações é escrito da forma $$\textbf{y}_i = \textbf{X}_i \boldsymbol{\beta}_i + \textbf{u}_i = \textbf{X}_{1i} \boldsymbol{\beta}_{1i} + \textbf{X}_{2i} \boldsymbol{\beta}_{2i} + \textbf{u}_i,$$
+
+cada equação tem uma interpretação econômica direta. Cada uma destas equações, que retratam a estrutura de uma economia, são chamadas de **equações estruturais** e o sistema todo é dito estar na sua **forma estrutural.**
+
+## Forma Reduzida
+
+Considere $\textbf{Y} = [\textbf{y}_1, \cdots, \textbf{y}_g]$ e $\textbf{U} = [\textbf{u}_1, \cdots, \textbf{u}_g]$  matrizes $n \times g$. Nesta notação, a forma estrutural pode ser representada como $$\textbf{Y} \boldsymbol{\Gamma} = \textbf{W} \textbf{B} + \textbf{U},$$
+
+em que $\textbf{W}_{n \times l}$ é uma matriz de variáveis exógenas cujas colunas são todas as colunas linearmente independentes dos $\textbf{X}_{1i}$ e $\boldsymbol{\Gamma}_{g \times g}$, bem como $\textbf{B}_{l \times g}$ são escolhidas de tal forma que a forma reduzida e a forma estrutural sejam equivalentes ($\boldsymbol{\Gamma}$ é não singular).
+
+. . . 
+
+
+$$\textbf{Y}  = \textbf{W} \textbf{B} \boldsymbol{\Gamma}^{-1}+ \underbrace{\textbf{U}  \boldsymbol{\Gamma}^{-1}}_{\textbf{V}} = \textbf{W} \textbf{B} \boldsymbol{\Gamma}^{-1} + \textbf{V}.$$
+
+. . . 
+
+Esta representação é chamada de **forma reduzida** e as equações que a componem são chamadas de **equações na forma reduzida**.
+
+
+## Forma Reduzida
+
+$$\textbf{Y}  = \textbf{W} \textbf{B} \boldsymbol{\Gamma}^{-1} + \textbf{V}.$$
+
+Esta representação é chamada de **forma reduzida** e as equações que a componem são chamadas de **equações na forma reduzida**.
+
+
+. . . 
+
+::: callout-note
+
+#### Forma reduzida
+
+Uma equação na forma reduzida é aquela que expressa uma
+variável endógena apenas em termos das variáveis exógenas e dos termos de erros.
+
+:::
+
+
+
+
+
+
+
+# Identificação
+
+## Identificação
+
+
+::: callout-note
+
+#### Problema de identificação
+
+
+Entendemos por problema de identificação à possibilidade de recuperar (ou não) os parâmetros de uma _equação estrutural_ a partir dos coeficientes estimados da forma reduzida.
+
+:::
+
+
+. . . 
+
+::: callout-note
+
+#### Forma reduzida
+
+Uma equação na forma reduzida é aquela que expressa uma
+variável endógena apenas em termos das variáveis exógenas e dos termos de erros.
+
+:::
+
+
+## Identificação
+
+
+- Se a recuperação dos parâmetros estruturais, com base nos parâmetros da forma reduzida, pode ser feita, então dizemos que a equação estrutural é **identificada**.
+- Caso a recuperação não seja possível, então a equação estrutural é dita **não identificada** (ou **subidentificada**).
+- Quando identificada, uma equação estrutural pode ser **exatamente identificada** (solução única) ou **superidentificada** (mais do que uma solução).
+
+
+
+
+## Identificação
+
+Considere o seguinte modelo estrutural:
+
+$$\text{Função de demanda:} \quad q^d = \alpha_1 + \beta_1p + u_1 \quad (\beta_1 < 0)$$
+
+$$\text{Função de oferta:} \quad q^o = \alpha_2 + \beta_2 p + u_2 \quad (\beta_2 > 0)$$
+
+
+em que $q$ é o consumo _per capita_ de leite e $p$ o preço médio por litro. 
+
+. . . 
+
+<center>
+**Quais equações são identificadas?**
+</center>
+
+. . . 
+
+
+<center>
+[Se a recuperação dos parâmetros estruturais, com base nos parâmetros da forma reduzida, pode ser feita, então dizemos que a equação estrutural é identificada.]{style="color:red;"}
+</center>
+
+
+## Identificação
+
+Pela condição de equilibrio: 
+
+$$\alpha_1 + \beta_1 p + u_1 = \alpha_2 + \beta_2 p + u_2$$
+
+. . . 
+
+
+Isolando o preço, temos a equação reduzida para o preço:
+
+
+$$ p  =  \underbrace{\dfrac{\alpha_2 - \alpha_1}{\beta_1 - \beta_2}}_{\pi_1}  + \underbrace{\dfrac{u_2 - u_1}{\beta_1 - \beta_2}}_{v_1}$$
+
+
+
+
+## Identificação
+
+
+Substituindo na segunda equação: $$q = \alpha_2 + \beta_2 \dfrac{\alpha_2 - \alpha_1}{\beta_1 - \beta_2} + \beta_2 \dfrac{u_2 - u_1}{\beta_1 - \beta_2} + u_2$$
+
+
+. . . 
+
+
+$$q = \underbrace{\dfrac{\alpha_2 \beta_1- \alpha_1 \beta_2}{\beta_1 - \beta_2}}_{\pi_2} + \underbrace{\dfrac{\beta_1 u_2 - \beta_2 u_1}{\beta_1 - \beta_2}}_{v_2}$$
+
+
+
+. . . 
+
+Note que nas equações da forma reduzida existem apenas 2 parâmetros a serem estimados e que estes são funções dos parâmetros estruturais. Assim, em geral, de forma indireta, podemos tentar estimar os parâmetros reduzidos por MQO e tentar recuperar os parâmetros estruturais (procedimento conhecido como **mínimos quadrados indiretos**).
+
+
+## Identificação
+
+Infelizmente, recuperar os parâmetros não sempre é possível. De fato, no exemplo apresentado é impossível recuperar os parâmetros estruturais com base nos parâmetros reduzidos (temos 2 parâmetros na forma reduzida e 4 parâmetros na forma estrutural), ou seja, as equações não são identificadas.
+
+
+. . . 
+
+
+Na prática, existem condições simples para saber se uma equação é ou não identificada:
+
+- Condição de classificação.
+- Condição de ordem.
+- Condição de posto*.
+
+
+## Identificação
+
+
+::: callout-tip
+
+#### Condição de classificação
+
+A primeira equação em um modelo de equações simultâneas com duas equações será identificada se, e somente se, a segunda equação contiver ao menos uma variável exógena (com coefificiente diferente de zero) que esteja excluida da primeira equação
+
+:::
+
+
+. . . 
+
+
+::: callout-tip
+
+#### Condição de ordem
+
+Seja $M$ o número de v. endógenas no modelo, $m$ o número de v. endógenas em uma dada equação, $K$ o número de variáveis exógenas no modelo (incluino o intercepto) e $k$ o número de variáveis exógenas em uma data equação (incluindo o intercepto, se for o caso). Em um modelo com $M$ equações simultâneas, para que uma dada equação seja identificada, deve ocorrer que $$K - k \geq m - 1.$$
+
+::: {.nonincremental}
+
+- Se $K - k > m - 1$ (sobreidentificado)
+- Se $K - k = m - 1$ (exatamente identificado)
+
+:::
+
+:::
+
+
+
+# Estimação
+## Estimação
+
+<center>
+[**O que acontece se aplicarmos MQO?**]{style="color:red;"}
+</center>
+
+. . . 
+
+Pense no seguinte sistema de equações:
+
+$$y_1 = \alpha_1 y_2 + \beta_1 z_1 + u_1,$$
+
+$$y_2 = \alpha_2 y_1 + \beta_2 z_2 + u_2.$$
+
+
+Em que o interesse principal está em estimar a primeira equação.
+
+. . . 
+
+
+
+<center>
+[Se $y_2$ e $u_1$ são não correlacionados, podemos aplicar MQO sem problemas. Vejamos se $\mathbb{C}or(y_2, u_1) = 0$.]{style="color:blue;"}
+</center>
+
+
+
+## Estimação
+
+Susbtituindo a primeira na segunda equação:
+
+$$y_2 = \alpha_2 (\alpha_1 y_2 + \beta_1 z_1 + u_1) + \beta_2 z_2 + u_2$$
+
+
+. . . 
+
+$$(1 - \alpha_1 \alpha_2) y_2 = \alpha_2 \beta_1 z_1 + \alpha_2 u_1 + \beta_2 z_2 + u_2$$
+
+
+. . . 
+
+Assumindo que $\alpha_1 \alpha_2 \neq 1$, 
+
+$$y_2 = \underbrace{\dfrac{\alpha_2 \beta_1}{(1 - \alpha_1 \alpha_2)}}_{\pi_{21}}z_1 + \underbrace{\dfrac{\beta_2}{(1 - \alpha_1 \alpha_2)}}_{\pi_{22}}z_2 + \underbrace{\dfrac{\alpha_2 u_1 + u_2}{(1 - \alpha_1 \alpha_2)}}_{v_2},$$
+
+(note que, se fosse nosso objetivo, poderimos utilizar MQO para estimar $\pi_{21}$ e $\pi_{22}$).
+
+
+
+## Estimação
+
+$$\mathbb{C}ov(y_2, u_1) = \mathbb{C}ov(\pi_{21}z_1 + \pi_{22}z_2 + v_2, u_1)$$
+
+. . . 
+
+
+$$\mathbb{C}ov(y_2, u_1) = \pi_{21} \mathbb{C}ov(z_1, u_1) + \pi_{22} \mathbb{C}ov(z_2, u_1), + \mathbb{C}ov(v_2, u_1)$$
+
+. . . 
+
+$$\mathbb{C}ov(y_2, u_1) = \mathbb{C}ov(v_2, u_1) = \mathbb{C}ov(\dfrac{\alpha_2 u_1 + u_2}{(1 - \alpha_1 \alpha_2)}, u_1) = \dfrac{\alpha_2}{1-\alpha_1 \alpha_2} \sigma^2_1 \neq 0$$
+
+
+
+. . . 
+
+<center>
+Quando $y_2$ for correlacionado com $u_1$ por causa da simultaneidade, dizemos que MQO sobre de **viés de simultaneidade**.
+
+[**MQO produz estimadores viesados e incosistentes quando aplicado a uma equação estrutural em um sistema de equações simultânes.**]{style="color:red;"}
+</center>
+
+
+
+## Estimação
+
+
+<center>
+**Se MQO não funciona para estimar os parâmetros estruturais, o que podemos fazer?**
+
+![](imagens/chapolin.png)
+
+</center>
+
+
+
+
+
+## Estimação
+
+
+1. Se a equação de interesse estiver exatamente identificada, então podemos recuperar os parâmetros estruturais via método dos mínimos quadrados indiretos. Ou seja, via estimação dos parâmetros da forma reduzida (por MQO). 
+
+. . . 
+
+
+> O que mais acontece na prática é termos equações sobreidentificadas.
+
+. . . 
+
+2. Se a equação de interesse estiver sobreidentificada, então o método dos mínimos quadrados indiretos levará a estimadores inconsistentes. Como alternativa, usamos o método dos mínimos quadrados em 2 estágios (MQ2E).
+
+
+. . . 
+
+
+Uma vez que tenhamos a equação identificada, podemos estimá-la por MQ2E, onde as variáveis instrumentais consistirão das variáveis exógenas que aparecem em cada equação.
+
+
+
+## Estimação.
+
+Estamos interessados em estimar a equação da oferta de mão de obra de mulheres casadas que já estejam na força de trabalho. Para isto consideraremos a seguinte equação:
+
+
+$$hour = \beta_{10} + \alpha_1 \log(wage) + \beta_{11}educ + \beta_{12} age + \beta_{13}kidslt6 + \beta_{14} nwifeinc + u_1,$$
+
+em que:
+
+::: {.nonincremental}
+
+- age: idade da mulher (em anos)
+- kidslt6: número de filhos menores de seis anos.
+- nwifeinc: renda da outra pessoa da família que não a mulher
+- educ: educação (formal) em anos
+- exper: anos de experiência
+:::
+
+. . . 
+
+
+## Estimação
+
+- Utilizaria MQO? (Justifique).
+- MQO sería uma boa ideia se todas as variáveis fossem exógenas.
+- Contudo, $$\log(wage) = \beta_{20} + \alpha_2 hours + \beta_{21} educ + \beta_{22}exper + \beta_{23} exper^2 + u_2$$
+ ($\log(wage)$ é endógena!)
+- Se a equação da oferta da mão de obra for identificável, podemos estimá-la por MQ2E, onde os instrimentos consistirão nas variáveis exógenas que aparecem em cada equação.
+
+. . .
+
+variáveis exógenas: $educ$, $age$, $kidslt6$, $nwifeinc$, $exper$, $exper^2$
+
+
+## Estimação
+
+
+<center>
+[**A equação estrutural na qual temos interesse é identificável?**]{style="color:red;"}
+</center>
+
+
+. . . 
+
+**Pela condição de classificação:** a primeira equação (no nosso caso a equação da oferta) será identificada se, e somente se, a segunda equação contiver ao menos uma variável exógena (com coeficiente diferente de zero) que esteja excluida da primeira equação. 
+
+
+. . . 
+
+
+Note que na primeira equação nem $exper$ nem $exper^2$ aparecem, ou seja, a segunda equação contem duas variáveis exógenas que foram excluidas da primeira equação. Basta apenas verificar que pelo menos um dos parâmetros associados a essas variáveis é diferente de zero (o que pode ser feito utlizando a forma reduzida e um teste F).
+
+## Estimação
+
+```{r}
+#| echo: true
+library(dplyr)
+library(wooldridge)
+
+forma_reduzida <- lm(log(wage) ~ educ + age + kidslt6 + nwifeinc + exper + I(exper^2), data = mroz)
+forma_reduzida_r <- lm(log(wage) ~ educ + age + kidslt6 + nwifeinc, data = mroz)
+anova(forma_reduzida_r, forma_reduzida)
+```
+
+
+## Estimação
+
+Exatamente identificado ou sobreidentificado?
+
+
+- M = 2
+- m = 1
+- K = 6
+- k = 4
+
+
+. . . 
+
+
+$$\underbrace{K - k}_{2} \geq \underbrace{m - 1}_{0}?$$
+
+Sim, e  o modelo é sobreidentificado ($K - k > m - 1$).
+
+
+. . . 
+ 
+
+Basta então aplicarmos MQ2E considerando todas as variáveis exógenas no sistema como instrumentos.
+
+
+## Estimação
+
+```{r}
+#| echo: true
+library(AER)
+
+equacao01 <- ivreg(hours ~ log(wage) +  educ + age + kidslt6 + nwifeinc | educ + age + kidslt6 + nwifeinc + exper + I(exper^2), data = mroz)
+equacao02 <- ivreg(log(wage) ~ hours + educ + exper + I(exper^2) | educ + age + kidslt6 + nwifeinc + exper + I(exper^2), data = mroz)
+```
+
+## Estimação
+
+```{r}
+#| echo: true
+summary(equacao01)
+```
+
+## Estimação
+
+```{r}
+#| echo: true
+summary(equacao02)
+```
+
+
+
+
+
+## Estimação
+
+#### MQ3E
+
+
+1. Ajuste MQ2E  no sistema de equações.
+2. Utilize os resíduos para estimar a matriz de covariância.
+3. Aplique MQGF.
+
+. . . 
+
+
+
+$$\hat{\boldsymbol{\beta}}_{\bullet}^{MQ3E} = (\textbf{X}_{\bullet}' (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}})\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet} (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}}) \textbf{y}_{\bullet}$$
+
+$$\hat{\mathbb{V}}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQ3E}) = (\textbf{X}_{\bullet}' (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}})\textbf{X}_{\bullet})^{-1} $$
+
+
+A função `systemfit()` estima por MQ3E.
+
+
+
+## Estimação
+
+
+#### Resumo:
+
+- **MQO:** incosistentes e viesados.
+- **MQI**: estimadores consistentes mas viesados. 
+- **MQ2E**: estimadores consistentes mas viesados.
+- **MQ3E**: estimadores consistentes e mais eficientes do que os obtidos por MQI ou MQ2E.
+
+
+. . . 
+
+<center>
+Se o objetivo está em estimar apenas uma das equações, MQ2E é uma alternativa interessante. Já se o sistema todo é de interesse, MQ3E é nossa opção a ser implementada.
+</center>
