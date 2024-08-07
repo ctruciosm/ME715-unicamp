@@ -424,7 +424,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <div class="callout-content">
 <div>
 <ul>
-<li><strong>HRLM1</strong>: O modelo populacional é linear nos parâmetros, <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + u\)</span> (equivalentemete, em forma matrcial, <span class="math inline">\(Y = \textbf{X} \beta + \textbf{u}\)</span>).</li>
+<li><strong>HRLM1</strong>: O modelo populacional é linear nos parâmetros, <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + u\)</span> (equivalentemente, em forma matricial, <span class="math inline">\(Y = \textbf{X} \beta + \textbf{u}\)</span>).</li>
 <li><strong>HRLM2</strong>: <span class="math inline">\((Y_1, X_{1,1}, \ldots, X_{1,k}), \cdots, (Y_n, X_{n,1}, \ldots, X_{n,k})\)</span> constituem uma a.a. de tamanho <span class="math inline">\(n\)</span> do modelo populacional.</li>
 <li><strong>HRLM3</strong>: Não existe colinearidade perfeita entre as variáveis independentes e nenhuma das variáveis independentes é constante.</li>
 <li><strong>HRLM4</strong>: <span class="math inline">\(\mathbb{E}(\textbf{u}|\textbf{X}) = 0\)</span></li>
@@ -434,7 +434,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 </div>
 </div>
-<p>Além ds hipóteses já vistas, a seguente hipótese é algumas vezes também utilizada.</p>
+<p>Além ds hipóteses já vistas, a seguinte hipótese é algumas vezes também utilizada.</p>
 <center>
 <strong>HRLM6</strong>: <span class="math inline">\(u\)</span> é independente das variáveis explicativas e <span class="math inline">\(u | \textbf{X} \sim N(0,\sigma^2 I)\)</span>.
 </center>
@@ -532,8 +532,8 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="propriedades-assintóticas-do-emqo-6" class="slide level2">
 <h2>Propriedades Assintóticas do EMQO</h2>
 <ul>
-<li class="fragment"><strong>HRLM1–HRLM6</strong> garante que a distribuição de <span class="math inline">\(\beta\)</span> seja normalmente distribuida (independente do tamanho amostral).</li>
-<li class="fragment">A convergência em distribuição (teoria assintótica) nos diz que, mesmo que <span class="math inline">\(u\)</span> não tenha uma distirbuição normal, <span class="math inline">\(\beta\)</span> será normalmente distribuida desde que o tamanho amostral seja grande.</li>
+<li class="fragment"><strong>HRLM1–HRLM6</strong> garante que <span class="math inline">\(\hat{\beta}\)</span> seja normalmente distribuiía (independentemente do tamanho amostral).</li>
+<li class="fragment">A convergência em distribuição (teoria assintótica) nos diz que, mesmo que <span class="math inline">\(u\)</span> não tenha uma distribuição normal, <span class="math inline">\(\hat{\beta}\)</span> será normalmente distribuida desde que o tamanho amostral seja grande.</li>
 </ul>
 </section></section>
 <section>
@@ -581,7 +581,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </section>
 <section id="unidades-de-medida-2" class="slide level2">
 <h2>Unidades de medida</h2>
-<p>Mudar as unidades de medida da variável independente, não muda <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
+<p>Mudar as unidades de medida da variável independente não muda <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
 <details>
@@ -674,7 +674,7 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="unidades-de-medida-4" class="slide level2">
 <h2>Unidades de medida</h2>
-<p>Quando mudamos as unidades de medida da variável (seja esta independente ou dependente) quando ela aparece em escala logaritmica, nada acontece com a inclinação mas o intercepto muda.</p>
+<p>Quando mudamos as unidades de medida da variável (seja esta independente ou dependente) quando ela aparece em escala logarítmica, nada acontece com a inclinação mas o intercepto muda.</p>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
@@ -709,13 +709,13 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Não linearidades</h2>
 <ul>
 <li class="fragment">Em geral, relações lineares não são suficientes para todas as aplicações.</li>
-<li class="fragment">Duas opções simmples para incluir não linearidades são: (a) aplicar <span class="math inline">\(\log(\cdot)\)</span>, (b) incluir termos polinomiais.</li>
+<li class="fragment">Duas opções simples para incluir não linearidades são: (a) aplicar <span class="math inline">\(\log(\cdot)\)</span>, (b) incluir termos polinomiais.</li>
 <li class="fragment">Em termos de estimação, nada muda. Contudo, devemos nos atentar à interpretação do modelo.</li>
 </ul>
 </section>
 <section id="não-linearidades-2" class="slide level2">
 <h2>Não linearidades</h2>
-<h4 id="transformação-logaritmica">Transformação logaritmica</h4>
+<h4 id="transformação-logaritmica">Transformação logarítmica</h4>
 <ul>
 <li class="fragment">A transformação pode linearizar a variável</li>
 <li class="fragment">Gera um modelo com (aproximadamente) um efeito percentual constante <span class="math inline">\(\log(y) = \beta_0 + \beta_1 x + u\)</span></li>
@@ -724,7 +724,7 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 <div class="fragment">
 <center>
-(para uma revisao de <span class="math inline">\(\log(\cdot)\)</span> ver Apêndice <strong>A.4b</strong>)
+(para uma revisão de <span class="math inline">\(\log(\cdot)\)</span> ver Apêndice <strong>A.4b</strong>)
 </center>
 </div>
 </section>
@@ -814,7 +814,7 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="não-linearidades-6" class="slide level2">
 <h2>Não linearidades</h2>
-<p><strong>Exemplo:</strong> O dataset <code>MEAP93</code> do pacote <code>wooldridge</code> contém informação de 408.</p>
+<p><strong>Exemplo:</strong> O dataset <code>MEAP93</code> do pacote <code>wooldridge</code> contém informação de 408 escolas de Ensino Médio do estado de Michigan em 1993.</p>
 <p>Se ajustarmos o modelo <span class="math display">\[math10 = \beta_0 + \beta_1 \log(expend) + \beta_2lnchprg + u,\]</span> obtemos:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -894,9 +894,9 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ul>
 <li class="fragment">Para o segundo ano: <span class="math inline">\(0.2981 - 2 \times 0.0061(1) = 0.2859\)</span></li>
 <li class="fragment">Para o terceiro ano: <span class="math inline">\(0.2981 - 2 \times 0.0061(2) = 0.2737\)</span></li>
-<li class="fragment">Para o decimo ano: <span class="math inline">\(0.2981 - 2 \times 0.0061(9) = 0.1883\)</span></li>
+<li class="fragment">Para o décimo ano: <span class="math inline">\(0.2981 - 2 \times 0.0061(9) = 0.1883\)</span></li>
 </ul></li>
-<li class="fragment">Note que o <strong>ponto de infleção</strong> é <span class="math inline">\(x* = - \hat{\beta}_1 / 2 \hat{\beta}_2\)</span>, no nosso caso <span class="math inline">\(x* = 0.2981/(2 \times 0.0061) = 24.43\)</span></li>
+<li class="fragment">Note que o <strong>ponto de inflexão</strong> é <span class="math inline">\(x* = - \hat{\beta}_1 / 2 \hat{\beta}_2\)</span>, no nosso caso <span class="math inline">\(x* = 0.2981/(2 \times 0.0061) = 24.43\)</span></li>
 </ul>
 </section>
 <section id="não-linearidades-11" class="slide level2">
@@ -985,7 +985,7 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="r2-3" class="slide level2">
 <h2>R2</h2>
 <ul>
-<li class="fragment">Não é uma conincidencia que <span class="math inline">\(R^2\)</span> nunca tenha diminuido. De fato, <span class="math inline">\(R^2\)</span> tem a desvantagem que nunca diminui quando incluimos uma nova variavel no modelo (mesmo se a variável não for importante)</li>
+<li class="fragment">Não é uma coincidência que <span class="math inline">\(R^2\)</span> nunca tenha diminuido. De fato, <span class="math inline">\(R^2\)</span> tem a desvantagem que nunca diminui quando incluímos uma nova variável no modelo (mesmo se a variável não for importante)</li>
 <li class="fragment">Uma alternativa é usar uma nova medida de qualidade de ajuste.</li>
 </ul>
 <div class="fragment">
@@ -993,7 +993,7 @@ F-statistic: 131.6 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="fragment">
 <blockquote>
-<p><span class="math inline">\(R^2_{Adj}\)</span> penaliza o número de variáveis incluidas no modelo.</p>
+<p><span class="math inline">\(R^2_{Adj}\)</span> penaliza o número de variáveis incluídas no modelo.</p>
 </blockquote>
 </div>
 </section>
