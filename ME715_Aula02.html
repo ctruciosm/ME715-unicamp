@@ -418,7 +418,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <img data-src="imagens/Francis_Galton.jpg">
 </center>
 </div><div class="column" style="width:60%;">
-<p>Embora Legendre e Gauss tenham utilizado o método de mínimos quadrados muito antes do que Galton (a começos de 1800), o termo “regressão” aparece por primeira vez em 1886, no trabalho de Francis Galton intitulado <a href="https://www.jstor.org/stable/2841583?casa_token=Hbb88KLhX8kAAAAA%3AAAJt5rJGYRZdDJNiqMigl6XspV56TVYrSjcrGHis2NRsF55BUR_8m5RUpVpf-Mg1PCtNALWYY0DVjP_mE3-uYU8QZucaVsLDp4KvzbKwdLxadXgW21p1"><em>Regression towards mediocrity in hereditary stature</em></a> e é a este a quem lhe é atribuido o método.</p>
+<p>Embora Legendre e Gauss tenham utilizado o método de mínimos quadrados muito antes do que Galton (a começos de 1800), o termo “regressão” aparece pela primeira vez em 1886, no trabalho de Francis Galton intitulado <a href="https://www.jstor.org/stable/2841583?casa_token=Hbb88KLhX8kAAAAA%3AAAJt5rJGYRZdDJNiqMigl6XspV56TVYrSjcrGHis2NRsF55BUR_8m5RUpVpf-Mg1PCtNALWYY0DVjP_mE3-uYU8QZucaVsLDp4KvzbKwdLxadXgW21p1"><em>Regression towards mediocrity in hereditary stature</em></a> e é a este a quem lhe é atribuido o método.</p>
 </div>
 </div>
 
@@ -434,7 +434,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h4 id="regressão-linear-simples">Regressão Linear Simples</h4>
 <p><span class="math display">\[Y = \beta_0 + \beta_1 X_1 + u\]</span></p>
 </div><div class="column" style="width:55%;">
-<h4 id="regressão-linear-multipla">Regressão Linear Multipla</h4>
+<h4 id="regressão-linear-multipla">Regressão Linear Múltipla</h4>
 <p><span class="math display">\[Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_k X_k + u\]</span></p>
 </div>
 </div>
@@ -527,11 +527,11 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 <div class="callout-content">
 <ul>
-<li class="fragment"><strong>HRLM1</strong>: O modelo populacional é linear nos parâmetros, <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + u\)</span> (equivalentemete, em forma matrcial, <span class="math inline">\(Y = \textbf{X} \beta + \textbf{u}\)</span>).</li>
+<li class="fragment"><strong>HRLM1</strong>: O modelo populacional é linear nos parâmetros, <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k + u\)</span> (equivalentemente, em forma matricial, <span class="math inline">\(Y = \textbf{X} \beta + \textbf{u}\)</span>).</li>
 <li class="fragment"><strong>HRLM2</strong>: <span class="math inline">\((Y_1, X_{1,1}, \ldots, X_{1,k}), \cdots, (Y_n, X_{n,1}, \ldots, X_{n,k})\)</span> constituem uma a.a. de tamanho <span class="math inline">\(n\)</span> do modelo populacional.</li>
 <li class="fragment"><strong>HRLM3</strong>: Não existe colinearidade perfeita entre as variáveis independentes e nenhuma das variáveis independentes é constante.</li>
 <li class="fragment"><strong>HRLM4</strong>: <span class="math inline">\(\mathbb{E}(\textbf{u}|\textbf{X}) = 0\)</span></li>
-<li class="fragment"><strong>HRLM5</strong>: Os erros tem variância constante (homocedasticidade), <span class="math inline">\(\mathbb{V}(\textbf{u}|\textbf{X}) = \sigma^2 \textbf{I}\)</span></li>
+<li class="fragment"><strong>HRLM5</strong>: Os erros tem variância constante (homoscedasticidade), <span class="math inline">\(\mathbb{V}(\textbf{u}|\textbf{X}) = \sigma^2 \textbf{I}\)</span></li>
 </ul>
 </div>
 </div>
@@ -570,7 +570,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li class="fragment">Quando <span class="math inline">\(X = x_i\)</span>, estimamos o valor de <span class="math inline">\(y_i\)</span> em <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span>.</li>
 </ul>
 </div><div class="column" style="width:50%;">
-<h4 id="regressão-linear-multipla-1">Regressão Linear Multipla</h4>
+<h4 id="regressão-linear-multipla-1">Regressão Linear Múltipla</h4>
 <p><span class="math display">\[\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_{i,1} + \cdots + \hat{\beta}_k x_{i,k},\]</span></p>
 <ul>
 <li class="fragment"><span class="math inline">\(\hat{u}_i = y_i - \hat{y}_i = y_i - \hat{\beta}_0 - \hat{\beta}_1 x_{i,1} - \cdots - \hat{\beta}_k x_{i,k}\)</span>.</li>
@@ -605,7 +605,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="interpretação-4" class="slide level2">
 <h2>Interpretação</h2>
 <h4 id="case">Case:</h4>
-<p>Imagine que estamos interessamos em saber se os anos de educação formal (<em>educ</em>) influenciam o salário-hora (<em>wage</em>). Para isto, utilizamos o conjunto de datos <em>WAGE1</em>, que contém informação de 516 pessoas que fazem parte da população economicamente ativa dos Estados Unidos em 1976.</p>
+<p>Imagine que estamos interessados em saber se os anos de educação formal (<em>educ</em>) influenciam o salário-hora (<em>wage</em>). Para isso, utilizamos o conjunto de datos <em>WAGE1</em>, que contém informação de 516 pessoas que fazem parte da população economicamente ativa dos Estados Unidos em 1976.</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
 <details>
@@ -679,14 +679,14 @@ $ tenursq  &lt;int&gt; 0, 4, 0, 784, 4, 64, 49, 9, 16, 441, 4, 0, 0, 9, 225, 0, 
 </div><div class="column" style="width:60%;">
 <div>
 <ul>
-<li class="fragment">Isso significa que uma pessoa sem nenhum ano de eduacação formal tem um salário-hora de <span class="math inline">\(\approx\)</span> USD$-0.90?</li>
+<li class="fragment">Isso significa que uma pessoa sem nenhum ano de educação formal tem um salário-hora de <span class="math inline">\(\approx\)</span> USD$-0.90?</li>
 <li class="fragment">Isso faz sentido? O que poderia estar acontecendo?</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="fragment">
-<p><strong>Resultados contra-intuitivos precisam de maior atenção</strong>. Se avaliarmos a amostra, temos pouquissimas observações com níveis de educação baixos. Assim, não é de se surpreender que a reta de regressão não faça boas predições para níveis de educação muito baixos.</p>
+<p><strong>Resultados contra-intuitivos precisam de maior atenção</strong>. Se avaliarmos a amostra, temos pouquíssimas observações com níveis de educação baixos. Assim, não é de se surpreender que a reta de regressão não faça boas predições para níveis de educação muito baixos.</p>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
@@ -707,7 +707,7 @@ $ tenursq  &lt;int&gt; 0, 4, 0, 784, 4, 64, 49, 9, 16, 441, 4, 0, 0, 9, 225, 0, 
 </section>
 <section id="estimação-1" class="slide level2">
 <h2>Estimação</h2>
-<p>No caso mais geral (regressão linear multipla), pode-se provar que o estimador MQO é dado por <span class="math display">\[\hat{\beta} = (X'X)^{-1}X'Y\]</span></p>
+<p>No caso mais geral (regressão linear múltipla), pode-se provar que o estimador MQO é dado por <span class="math display">\[\hat{\beta} = (X'X)^{-1}X'Y\]</span></p>
 <div class="fragment">
 <p><strong>Demostração: (no quadro) </strong></p>
 </div>
