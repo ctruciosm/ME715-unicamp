@@ -119,7 +119,7 @@ Pense no modelo de regressão linear simples. Se todos os outros fatores em $u$ 
 
 . . . 
 
-[**Infelizmente não.**]{style="color:red;"}
+[**Infelizmente não...**]{style="color:red;"}
 
 . . . 
 
