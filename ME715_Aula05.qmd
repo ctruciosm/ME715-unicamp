@@ -150,10 +150,10 @@ mas o verdadeiro modelo é $$Y = \textbf{X}\beta + u,  \quad u \sim IID(0, \sigm
 ## Variáveis irrelevantes no modelo de regressão
 
 <center>
-Então podemos incluir variáveis sem nenhum prejuizo?
+Então podemos incluir variáveis sem nenhum prejuízo?
 </center>
 
-Não!.
+Não!
 
 - $\mathbb{V}(\hat{\delta}|X,Z) = \sigma^2 (X' M_z X)^{-1}$.
 - $\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)$.
@@ -292,7 +292,7 @@ Contudo, ajustamos o modelo considerando $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X
 
 . . . 
 
-**Muitas vezes é dificil determinar o sinal do vies, mas o importante aqui é saber que, resultados contraintuitivos, podem ser fruto de estimadores viesados.**
+**Muitas vezes é dificil determinar o sinal do viés, mas o importante aqui é saber que resultados contraintuitivos podem ser fruto de estimadores viesados.**
 
 
 ## Variáveis omitidas
@@ -354,7 +354,7 @@ $$\text{Multicolinearidade} \neq \text{colinearidade perfeita}$$
 
 - Multicolinearidade tem um efeito na variância dos estimadores, fazendo com que sejam grandes demais.
 - Lidar com o problema não é trivial.
-- Uma forma de detetar multicolnearidade é através do **fator de inflação da variância (FIV)**, $$FIV_j = \dfrac{1}{R_j^2},$$ em que $R_j^2$ é o coeficifiente de determinação da regressão de $X_j$ sobre todas as outras variáveis independentes.
+- Uma forma de detetar multicolnearidade é através do **fator de inflação da variância (FIV)**, $$FIV_j = \dfrac{1}{1-R_j^2},$$ em que $R_j^2$ é o coeficiente de determinação da regressão de $X_j$ sobre todas as outras variáveis independentes.
 
 
 ## Multicolinearidade
