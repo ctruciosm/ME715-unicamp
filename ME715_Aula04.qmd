@@ -35,7 +35,7 @@ format:
 # Teste t
 ## Teste t
 
-Sob HRLM1--HRLM6 e condicional aos valores amostrais de $X$, $$\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\mathbb{V}(\hat{\beta}_j | X)}} \sim N(0,1)$$
+Sob HRLM1--HRLM6 e condicionando nos valores amostrais de $X$, $$\dfrac{\hat{\beta}_j - \beta_j}{\sqrt{\mathbb{V}(\hat{\beta}_j | X)}} \sim N(0,1)$$
 
 . . . 
 
@@ -64,7 +64,7 @@ $$H_0: \beta_j \geq b \quad vs \quad H_1: \beta_j < b$$
 ## Teste t
 
 
-Para testar hipóteses  é preciso uma **estatística de teste**. A estatística utilizada no **Teste T** é chamada de **estatística t**
+Para testar hipóteses, é preciso ter uma **estatística de teste**. A estatística utilizada no **Teste T** é chamada de **estatística t**
 
 $$t_{\hat{\beta}_j} = \dfrac{\hat{\beta}_j - b}{\sqrt{\widehat{\mathbb{V}}(\hat{\beta}_j|X)}} \stackrel{H_0}{\sim} t_{n-(k+1)}$$
 
@@ -82,7 +82,7 @@ em que $c$ é um quantil da distribuição $t_{n-k-1}$ e depende do _nível de s
 ## Teste t
 
 
-Para um nível de significância$\alpha$:
+Para um nível de significância $\alpha$:
 
 **Teste Bilateral:** $$H_0: \beta_j = b \quad \text{vs} \quad H_1: \beta_j \neq b,$$ rejeitamos $H_0$  se $|t_{\hat{\beta}_j}|> c_0 = |t_{\alpha/2,n-(k+1)}| = t_{1-\alpha/2,n-(k+1)}$
 
@@ -131,7 +131,7 @@ polygon(x=c(1.64,seq(1.64,5,l=50),5), y=c(0,f(seq(1.64,5,l=50)), 0), col="gray")
 ## Teste t
 
 
-Resumindo, para testar hipóteses precisamos:
+Resumindo, para testar hipóteses, precisamos:
 
 0. Definir o nível de significância $\alpha$. 
 1. Calcular a estatística de teste $t_{\hat{\beta}_j}$.
@@ -139,7 +139,7 @@ Resumindo, para testar hipóteses precisamos:
     - Para $H_0: \beta_j = b \quad vs. \quad H_1: \beta_j \neq b,$ rejeitar $H_0$ se $|t_{\hat{\beta}_j}| > |t_{\alpha/2,n-(k+1)}|$
     - Para $H_0: \beta_j \geq b \quad \text{vs} \quad H_1: \beta_j < b,$ rejeitar $H_0$ se  $t_{\hat{\beta}_j} < t_{\alpha,n-(k+1)}$ 
     - Para  $H_0: \beta_j \leq b \quad \text{vs} \quad H_1: \beta_j > b,$ rejeitar $H_0$ se $t_{\hat{\beta}_j} > t_{1-\alpha,n-(k+1)}.$
-3. Se não temos evidência para rejeitar $H_0$, então  **não rejeitamos $H_0$**.
+3. Se não temos evidências para rejeitar $H_0$, então **não rejeitamos $H_0$**.
 
 
 ## Teste t
@@ -159,13 +159,13 @@ qt(1 - alpha, df = n - k - 1)
 ## Teste t
 
 - A maioria de softwares testam a hipótese $H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0$, e fornecem os *p-valores*.
-- Olhando para os *p-valores* podemos rejeitar ou não $H_0$ sem precisar calcular $c$
+- Olhando para os *p-valores*, podemos rejeitar ou não $H_0$ sem precisar calcular $c$
 - **Cuidado**, se nosso interesse é testar $H_0: \beta_j = b$ (com $b \neq 0$) precisaremos fazer as contas **manualmente**
 
 
 ## Teste t: Exemplo
 
-Assumindo que todas as suposições do modelo são verificadas, quais variáveis são estatísticamente significativas? ($\beta_j \neq 0$)
+Assumindo que todas as suposições do modelo são verificadas, quais variáveis são estatisticamente significativas? ($\beta_j \neq 0$)
 
 ::: {.panel-tabset}
 
@@ -246,7 +246,7 @@ round(summary(modelo)$coefficients,4)
 - A **estatística t** é utilizada para testar **individualmente** os parâmetros do modelo.
 - Seja o modelo $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k$$ e suponha que queremos testar $$H_0: \beta_2 = 0, \beta_3 = 0, \beta_5 = 0 \quad \text{vs} \quad H_1: H_0 \text{ não é verdadeiro}$$
 - Fazer um **teste t** para cada $\beta$?
-- **Não!**. Precisamos fazer o teste de forma conjunta!
+- **Não!** Precisamos fazer o teste de forma conjunta!
 - O teste F nos permite testar $H_0$ de forma conjunta!
 
 
@@ -256,7 +256,7 @@ Seja o modelo \textbf{irrestrito} $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \l
 
 . . . 
 
-> Sob HRLM1--HRLM6, o \textbf{teste F} é dado por $$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)}$$
+> Sob HRLM1--HRLM6, o \textbf{teste F} é dado por $$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k+1)},$$ onde $SQR_r$ é a Soma de Quadrados dos Resíduos do modelo reduzido e $SQR_i$ é a Soma de Quadrados dos Resíduos do modelo irrestrito
 
 
 ## Teste F
@@ -266,7 +266,7 @@ $$F = \dfrac{(SQR_r - SQR_i)/q}{SQR_i /(n-(k+1))} \stackrel{H_0}{\sim} F_{q,n-(k
 - Intuitivamente, estamos analisando quanto aumenta a SQR quando retiramos algumas das variáveis.
 - Se o aumento no SQR for grande (em relação ao SQR do modelo irrestrito) rejeitamos $H_0$ (pois a eliminação dessas variáveis aumeta muito a SQR)
 - Isto implica que se $F$ for suficientemente grande, rejeitamos $H_0$
-- Quão grande? depende do nível de significância $\alpha$.
+- Quão grande? Depende do nível de significância $\alpha$.
 - Como $SQR_r \geq SQR_i$ (sempre) o numerador será sempre $\geq 0$, e valores grandes de $F$ nos levarão a rejeitar $H_0$ (teste unilateral).
 
 ## Teste F
@@ -354,7 +354,7 @@ $$H_0: \beta_1 = 0, \beta_2 = 0, \ldots, \beta_k=0 \quad \text{vs} \quad H_0: H_
 
 . . . 
 
-Estes testes são geralmente feitos por padrão nos pacotes e quando encontrar "Teste F" estão-se referindo ao teste da significância global do modelo.
+Estes testes são geralmente feitos por padrão nos pacotes e, quando encontrar "Teste F", estão se referindo ao teste da significância global do modelo.
 
 
 ## Teste F (significância geral do modelo)
@@ -400,11 +400,9 @@ teste_F
 
 ## Teste F
 
-## Teste F
-
-- O **teste F** a diferença do **teste T**, permite que testemos conjuntamente hipóteses com mais de uma restrição.
-- Às vezes os resultados obtidos pelos testes **t** e **F** podem levar a conclusões diferentes, nestes casos é preciso analisar cuidadosamente cada caso (em geral, na presença de multicolinearidade, o teste F é menos afetado. Por outro lado, quado utilizamos múltiplos testes T, [aumenta a chance de obtermos falsos positivos](https://stats.stackexchange.com/questions/152805/difference-between-f-test-and-separate-t-tests-on-each-variable).).
-- No **teste F** quando $q = 1$, o **teste F** e o **teste t** são equivalentes.
+- O **teste F**, diferentemente do **teste T**, permite que testemos conjuntamente hipóteses com mais de uma restrição.
+- Às vezes, os resultados obtidos pelos testes **t** e **F** podem levar a conclusões diferentes. Nestes casos, é preciso analisar cuidadosamente cada caso (em geral, na presença de multicolinearidade, o teste F é menos afetado; por outro lado, quado utilizamos múltiplos testes T, [aumenta a chance de obtermos falsos positivos](https://stats.stackexchange.com/questions/152805/difference-between-f-test-and-separate-t-tests-on-each-variable).).
+- No **teste F**, quando $q = 1$, o **teste F** e o **teste t** são equivalentes.
 
 # Testes de hipóteses mais gerais
 ## Testes de hipóteses mais gerais
@@ -456,7 +454,7 @@ em que
 
 ## Testes de hipóteses mais gerais
 
-Sob as hipóteses do modelo linear clássico e condicional em $\textbf{X}$, $$\hat{\beta} \sim N(\beta, \sigma^2 (X'X)^{-1}),$$
+Sob as hipóteses do modelo linear clássico e condicionando em $\textbf{X}$, $$\hat{\beta} \sim N(\beta, \sigma^2 (X'X)^{-1}),$$
 
 . . . 
 
@@ -567,6 +565,6 @@ $$\dfrac{(Y'M_1Y - \hat{u}'\hat{u})/k_2}{\hat{u}'\hat{u}/(n - k -1)} = \dfrac{(S
 
 - Todos os testes foram obtidos sob HRLM1--HRML6.
 - O que acontece se HRML6 não se verifica? A estatística t e estatística F não terão mais distribuições t e F, respecivamente.
-- Quando o tamanho amostral é grande, a estaística t e estatística F terão distribuições aproximadamente t e F, respectivamente.
+- Quando o tamanho amostral é grande, a estatística t e estatística F terão distribuições aproximadamente t e F, respectivamente.
 - E se o tamanho amostral não for grande? Bootstrap!
 
