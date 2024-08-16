@@ -51,18 +51,18 @@ format:
 
 ::: incremental
 -   Ciência de testar teorias econômicas.
--   Conjunto de ferramentas utilizadas para fazer previsão de variaveis economicas.
--   Processo de ajustar modelos economicos-matemáticos em conjuntos de dados reais.
--   Ciência e arte de utilizar dados historicos para fazer recomendacoes (baseadas em resultados quantitativos) em governos e empresas.
+-   Conjunto de ferramentas utilizadas para fazer previsão de variáveis econômicas.
+-   Processo de ajustar modelos econômico-matemáticos em conjuntos de dados reais.
+-   Ciência e arte de utilizar dados históricos para fazer recomendações (baseadas em resultados quantitativos) em governos e empresas.
 -   etc
 :::
 
 . . .
 
 ::: callout-tip
-## Minha definicão favorita:
+## Minha definição favorita:
 
-*É a ciência que combina teoria econômica, estatística e ciência da computacão para responder perguntas de tipo causa-efeito e/ou fazer previsões.* **Hill, Judge e Griffiths** (2010)
+*É a ciência que combina teoria econômica, estatística e ciência da computação para responder perguntas de tipo causa-efeito e/ou fazer previsões.* **Hill, Judge e Griffiths** (2010)
 :::
 
 # Material e Software
@@ -99,7 +99,7 @@ Os autores de *Using R/Python/Julia for Introductory Econometrics* disponibiliza
 
 <center>![](imagens/RPythonJulia.png)</center>
 
-A materia será ministrada utilizando, principalmente, R e algumas vezes Julia. Contudo, os alunos são "encorajados" a utilizarem as três linguagens e compararem os resultados (**parte da sua nota depende disso**).
+A matéria será ministrada utilizando, principalmente, R e algumas vezes Julia. Contudo, os alunos são "encorajados" a utilizarem as três linguagens e compararem os resultados (**parte da sua nota depende disso**).
 
 # Introdução
 
@@ -109,7 +109,7 @@ A materia será ministrada utilizando, principalmente, R e algumas vezes Julia. 
 
 -   Temos uma teoria econômica para testar
 -   Temos em mente uma relação que apresenta alguma importância na tomada de decisão
--   Queremos saber como o aumento/diminuição em uma variavel influencia em outra.
+-   Queremos saber como o aumento/diminuição em uma variável influencia em outra.
 -   Queremos fazer previsão
 -   Queremos avaliar/implementar políticas de governos e de negócios.
 
@@ -143,15 +143,15 @@ Vamos supor também que a relação entre $Y$ e $X_1, X_2, \ldots, X_p$ é da fo
 
 #### Dados observacionais
 
--   Não são obtidos por meio de experimentos controlados de individuos\*
+-   Não são obtidos por meio de experimentos controlados de indivíduos\*
 -   Obtidos através da observacão do atual comportamento do grupo de estudo.
 -   Geralmente obtidos utilizando enquetes.
 -   São os dados que usualmente chegam até nós.
--   Dados observacionais possuem um desafio ainda maior para estimar relaçcões de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.
+-   Dados observacionais possuem um desafio ainda maior para estimar relações de causa-efeito e as ferramentas desenvolvidas em econometria são desenhadas para lidar com esses desafios.
 
 ## Dados
 
-Independente de termos dados experimentais ou observacionais, os conjuntos de dados aos quais nos enfrentamos podem ser classificados em:
+Independentemente de termos dados experimentais ou observacionais, os conjuntos de dados aos quais nos enfrentamos podem ser classificados em:
 
 -   Corte transversal
 -   Séries temporais
@@ -160,14 +160,14 @@ Independente de termos dados experimentais ou observacionais, os conjuntos de da
 
 . . .
 
-> As características inherentes a cada tipo de dados devem ser levadas em consideracão no processo da modelagem para podermos extrair a maior informacão possível contida nos dados.
+> As características inerentes a cada tipo de dados devem ser levadas em consideração no processo da modelagem para podermos extrair a maior informacão possível contida nos dados.
 
 ## Dados
 
 ::: callout-note
 ## Corte transversal
 
-Consiste em uma amostra de indivídios\* (consumidores, empresas, cidades, paises, etc) tomadas em determinado período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma **foto** (panorâmica).
+Consiste em uma amostra de indivíduos\* (consumidores, empresas, cidades, paises, etc) tomadas em determinado período no tempo. Podemos pensar nesse conjunto de dados como quando tiramos uma **foto** (panorâmica).
 :::
 
 . . .
@@ -207,16 +207,16 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 . . .
 
 ::: callout-important
-## X: aleatorio ou não aleatorio?
+## X: aleatório ou não aleatório?
 
-[*"The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables"*. (Extraido do StackExchange)](https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression)
+[*"The idea of fixed regressors is usually traced back to developments in statistics for experiments. In a highly controlled trial, regressors can sometimes be fixed, chosen, or controlled by the experimenter and are thus not stochastic. In domains such as social sciences, or really most observational sources of data, it is often not realistic to think of regressors as being fixed quantities, they are typically realizations from probabalistic processes and just as random as the outcome variables"*. (Extraído do StackExchange)](https://stats.stackexchange.com/questions/486042/x-fixed-in-a-linear-regression)
 :::
 
 ## Dados
 
 <center>
 
-[Mas, e quando X incluir elementos não aleatorios como um termo constante, uma variável dummy ou uma tendência temporal?]{style="color:red;"}
+[Mas, e quando X incluir elementos não aleatórios como um termo constante, uma variável dummy ou uma tendência temporal?]{style="color:red;"}
 
 ![](imagens/duvida_meme.jpg)
 
@@ -227,19 +227,19 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 ::: callout-note
 ### Greene (2003)
 
-*"...vamos a permitir que **X** seja uma mistura de variáveis aleatórioas e não aleatórias, e que a média e a variância de* $u_i$ *sejam independentes de todos os elementos de **X**"*
+*"...vamos a permitir que **X** seja uma mistura de variáveis aleatórias e não aleatórias, e que a média e a variância de* $u_i$ *sejam independentes de todos os elementos de **X**"*
 :::
 
 # Ceteris paribus
 
 ## Ceteris paribus
 
--   O interesse da análise econométrica está em encontrar relacões de causa-efeito (queremos inferir que uma variável tem efieto causal sobre outra).
+-   O interesse da análise econométrica está em encontrar relações de causa-efeito (queremos inferir que uma variável tem efeito causal sobre outra).
 -   A noção de *ceteris paribus* desempenha um papel importante nesta análise de causalidade.
 -   *Ceteris paribus* significa "outros fatores (relevantes) permanecendo iguais/fixos/constantes".
 -   Se outros fatores não são mantidos fixos, não podemos conhecer o efeito causal que uma variável exerce sobre outra.
--   Embora pareca simples, é muito dificil manter todos os outros fatores fixos.
--   Então, a questão fundamental é se foram mantidos fixos um número suficiente de fatores para que possamos inferir causalide.
+-   Embora pareca simples, é muito difícil manter todos os outros fatores fixos.
+-   Então, a questão fundamental é se foram mantidos fixos um número suficiente de fatores para que possamos inferir causalidade.
 
 # Exemplos (Wooldridge, 2023)
 
@@ -259,13 +259,13 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 ## Efeitos dos fertilizantes sobre a produção agricola (Wooldridge, 2023)
 
-> Se os níveis de fertilizante são atribuidos independentemente de outras características da área (*i.e.* se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível `r emo::ji("smile")`.
+> Se os níveis de fertilizante são atribuídos independentemente de outras características da área (*i.e.* se ignorarmos as outras características quando são decididas as quantidades de fertilizante), então é possível `r emo::ji("smile")`.
 
 <center>![](imagens/meme_yes.png)</center>
 
 ## Retorno da educação
 
--   Pense na seguinte pergunta: *"se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salario aumentado?"*
+-   Pense na seguinte pergunta: *"se uma pessoa é escolhida ao acaso de uma população e esta recebe um ano a mais de educação, em quanto terá seu salário aumentado?"*
 
 . . .
 
@@ -273,11 +273,11 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 . . .
 
--   Suponha que selecionamos um grupo de pessoas e atribuimos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.
+-   Suponha que selecionamos um grupo de pessoas e atribuímos aleatoriamente uma quantidade (em anos) de educação que terão ao longo da vida.
 
 . . .
 
--   Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc). Basta coletar o salario de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.
+-   Se atribuirmos estes anos de forma aleatória e independente de outras caracteristicas (experiência, aptidão, etc), basta coletar o salário de cada uma das pessoas e analisar se os anos de educação tiveram algum efeito no salário.
 
 ## Retorno da educação
 
@@ -285,7 +285,7 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 . . .
 
--   O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as proprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna dificil estimar o efeito *ceteris paribus da educação* `r emo::ji("sad")`.
+-   O que temos na prática são dados não experimentais (uma a.a. de trabalhadores em que, entre outras coisas, temos informação do salário e anos de educação). Contudo, nestes casos, são as próprias pessoas que escolhem os anos de educação e isto não independe de outros fatores, o que torna difícil estimar o efeito *ceteris paribus da educação* `r emo::ji("sad")`.
 
 . . .
 
@@ -301,7 +301,7 @@ Consiste em uma série temporal para cada observação de corte transversal. A d
 
 . . .
 
--   Se duas cidades, A e B, forem identicas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?
+-   Se duas cidades, A e B, forem idênticas em tudo, exceto que A tem 100 policiais a mais do que B. em quanto difeririaim as taxas de criminalidade entre as cidades?
 
 . . .
 
