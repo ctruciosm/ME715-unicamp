@@ -128,7 +128,7 @@ Sejam os modelos $$Y = \textbf{X}_1\beta_1 + \textbf{X}_2 \beta_2 + u \quad e \q
 :::
 
 **Demostração** (ver lista)
-
+- Existe um resultado interessante para o caso em que se tem interesse em $\beta_1$, mas assume-se que o efeito de $\textbf{X}_2$ pode ter outra forma (ou seja, podemos estimar por random forest, xgboosting, redes neurais, etc), que pode ser encontrado em [Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, James Robins, Double/debiased machine learning for treatment and structural parameters, The Econometrics Journal, Volume 21, Issue 1, 1 February 2018, Pages C1–C68, https://doi.org/10.1111/ectj.12097](https://doi.org/10.1111/ectj.12097)
 
 ## Variáveis irrelevantes no modelo de regressão
 
