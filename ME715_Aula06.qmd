@@ -128,7 +128,6 @@ print(table_white)
 
 ```{julia}
 #| echo: true
-#| eval: false
 using WooldridgeDatasets, GLM, DataFrames, CovarianceMatrices, LinearAlgebra
 
 wage1 = DataFrame(wooldridge("wage1"));
