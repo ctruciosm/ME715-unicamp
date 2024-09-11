@@ -589,7 +589,7 @@ Teste de correlação serial do tipo AR(1).
 |:-----------:|:------------------:|
 | DW < 2      | autocorrelação positiva |
 | DW > 2      | autocorrelação negativa |
-| DW $\approx$ 0      | autocorrelação zero |
+| DW $\approx$ 2      | autocorrelação zero |
 
 ## Teste de Durbin-Watson
 
