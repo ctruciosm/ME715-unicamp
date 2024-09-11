@@ -33,6 +33,13 @@ format:
 
 # Heterocedasticidade
 
+
+```{r}
+library(JuliaCall)
+julia_setup(JULIA_HOME = "/Users/ctruciosm/.juliaup/bin")
+```
+
+
 ## Introdução
 
 - Até agora, temos assumido que HRLM5 acontece, ou seja $\mathbb{V}(u|\textbf{X}) = \sigma^2 \textbf{I}$

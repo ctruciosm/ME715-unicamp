@@ -408,7 +408,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section>
 <section id="heterocedasticidade" class="title-slide slide level1 center">
 <h1>Heterocedasticidade</h1>
+<div class="cell" data-layout-align="center">
 
+</div>
 </section>
 <section id="introdução" class="slide level2">
 <h2>Introdução</h2>
@@ -450,7 +452,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Estimador de White</h2>
 <ul>
 <li class="fragment"><span class="math inline">\(\sigma^2 \Omega\)</span> contém <span class="math inline">\(n\)</span> parametros. Assim, no total temos <span class="math inline">\(n + k + 1\)</span> parâmetros a serem estimados.</li>
-<li class="fragment">Temos apenas <span class="math inline">\(n\)</span> observações. Isto torna o problema impossível de ser resolvido.</li>
+<li class="fragment">Temos apenas <span class="math inline">\(n\)</span> observações.</li>
 <li class="fragment"><a href="https://www.jstor.org/stable/1912934">White (1980)</a> mostrou que não precisamos estimar <span class="math inline">\(\sigma^2 \Omega\)</span>. De fato, podemos resolver o problema estimando <span class="math inline">\(X'\sigma^2 \Omega X\)</span> (que tem dimensão bem menor).</li>
 <li class="fragment">Note que, <span class="math inline">\(X'\sigma^2 \Omega X = \displaystyle \sum_{i = 1}^n \sigma_i^2 x_i x_i'\)</span></li>
 <li class="fragment">O estimador de White substitui <span class="math inline">\(\sigma_i^2\)</span> com <span class="math inline">\(\hat{u}^2_i\)</span> (<span class="math inline">\(i = 1, \cdots, n\)</span>), em que <span class="math inline">\(\hat{u}_i = y_i - x_i' \hat{\beta}_{MQO}\)</span> como usual.</li>
@@ -475,7 +477,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>wage1)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">summary</span>(modelo)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -556,11 +558,48 @@ I(tenure ** 2) -0.0005  0.0002</code></pre>
 </div>
 </div>
 <div id="tabset-1-3">
-<p>Não existe um função pronta em Julia. Opções:</p>
-<ol type="a">
-<li class="fragment">Implementar nossa propria função (ver lista de exercícios).</li>
-<li class="fragment">Chamar funções do R ou do Python para funcionarem em Julia (mas precisa configurar corretamente o ambiente para isso).</li>
-</ol>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">CovarianceMatrices</span>, <span class="bu">LinearAlgebra</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb9-4"><a href="#cb9-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> married <span class="op">*</span> female <span class="op">+</span> educ <span class="op">+</span> exper <span class="op">+</span> exper<span class="op">^</span><span class="fl">2</span> <span class="op">+</span> tenure <span class="op">+</span> tenure<span class="op">^</span><span class="fl">2</span>), wage1);</span>
+<span id="cb9-5"><a href="#cb9-5"></a>table_reg <span class="op">=</span> <span class="fu">coeftable</span>(modelo);</span>
+<span id="cb9-6"><a href="#cb9-6"></a>table_reg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>────────────────────────────────────────────────────────────────────────────────────────
+                         Coef.   Std. Error      t  Pr(&gt;|t|)     Lower 95%     Upper 95%
+────────────────────────────────────────────────────────────────────────────────────────
+(Intercept)        0.321378     0.100009      3.21    0.0014   0.124904      0.517852
+married            0.212676     0.0553572     3.84    0.0001   0.103923      0.321428
+female            -0.11035      0.0557421    -1.98    0.0483  -0.219859     -0.000841431
+educ               0.0789103    0.0066945    11.79    &lt;1e-27   0.0657585     0.092062
+exper              0.0268006    0.00524285    5.11    &lt;1e-06   0.0165007     0.0371005
+exper ^ 2         -0.000535245  0.000110426  -4.85    &lt;1e-05  -0.000752184  -0.000318307
+tenure             0.0290875    0.006762      4.30    &lt;1e-04   0.0158031     0.0423719
+tenure ^ 2        -0.000533143  0.000231243  -2.31    0.0215  -0.000987434  -7.88514e-5
+married &amp; female  -0.300593     0.0717669    -4.19    &lt;1e-04  -0.441584     -0.159602
+────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">sqrt</span>.(<span class="fu">diag</span>(<span class="fu">vcov</span>(<span class="fu">HC0</span>(), modelo)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>9-element Vector{Float64}:
+ 0.10852842400201362
+ 0.056650948605455255
+ 0.056625513886463266
+ 0.0073509601540335005
+ 0.005094965963443007
+ 0.00010542583499793276
+ 0.006881282215940505
+ 0.00024159118246408338
+ 0.07174996293208932</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -617,10 +656,10 @@ I(tenure ** 2) -0.0005  0.0002</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>wage1)</span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">bptest</span>(modelo, <span class="sc">~</span> <span class="fu">fitted</span>(modelo) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">fitted</span>(modelo)<span class="sc">^</span><span class="dv">2</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>wage1)</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="fu">bptest</span>(modelo, <span class="sc">~</span> <span class="fu">fitted</span>(modelo) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">fitted</span>(modelo)<span class="sc">^</span><span class="dv">2</span>) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -635,21 +674,21 @@ BP = 4.1558, df = 2, p-value = 0.1252</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb11-6"><a href="#cb11-6"></a></span>
-<span id="cb11-7"><a href="#cb11-7"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
-<span id="cb11-8"><a href="#cb11-8"></a>modelo <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1)</span>
-<span id="cb11-9"><a href="#cb11-9"></a>results <span class="op">=</span> modelo.fit()</span>
-<span id="cb11-10"><a href="#cb11-10"></a></span>
-<span id="cb11-11"><a href="#cb11-11"></a>X_wh <span class="op">=</span> pd.DataFrame({<span class="st">'const'</span>: <span class="dv">1</span>, </span>
-<span id="cb11-12"><a href="#cb11-12"></a>                     <span class="st">'fitted_reg'</span>: results.fittedvalues,</span>
-<span id="cb11-13"><a href="#cb11-13"></a>                     <span class="st">'fitted_reg_sq'</span>: results.fittedvalues<span class="op">**</span><span class="dv">2</span>}) </span>
-<span id="cb11-14"><a href="#cb11-14"></a>result_white <span class="op">=</span> sm.stats.diagnostic.het_breuschpagan(results.resid, X_wh)</span>
-<span id="cb11-15"><a href="#cb11-15"></a>result_white[<span class="dv">1</span>] <span class="co"># pvalor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>modelo <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1)</span>
+<span id="cb15-9"><a href="#cb15-9"></a>results <span class="op">=</span> modelo.fit()</span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-11"><a href="#cb15-11"></a>X_wh <span class="op">=</span> pd.DataFrame({<span class="st">'const'</span>: <span class="dv">1</span>, </span>
+<span id="cb15-12"><a href="#cb15-12"></a>                     <span class="st">'fitted_reg'</span>: results.fittedvalues,</span>
+<span id="cb15-13"><a href="#cb15-13"></a>                     <span class="st">'fitted_reg_sq'</span>: results.fittedvalues<span class="op">**</span><span class="dv">2</span>}) </span>
+<span id="cb15-14"><a href="#cb15-14"></a>result_white <span class="op">=</span> sm.stats.diagnostic.het_breuschpagan(results.resid, X_wh)</span>
+<span id="cb15-15"><a href="#cb15-15"></a>result_white[<span class="dv">1</span>] <span class="co"># pvalor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.12519488113966223</code></pre>
@@ -660,14 +699,14 @@ BP = 4.1558, df = 2, p-value = 0.1252</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb13-1"><a href="#cb13-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
-<span id="cb13-4"><a href="#cb13-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> married <span class="op">*</span> female <span class="op">+</span> educ <span class="op">+</span> exper <span class="op">+</span> (exper<span class="op">^</span><span class="fl">2</span>) <span class="op">+</span> tenure <span class="op">+</span> (tenure<span class="op">^</span><span class="fl">2</span>)), wage1);</span>
-<span id="cb13-5"><a href="#cb13-5"></a></span>
-<span id="cb13-6"><a href="#cb13-6"></a>X_wh <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">ones</span>(<span class="fu">size</span>(wage1)[<span class="fl">1</span>]), <span class="fu">predict</span>(modelo), <span class="fu">predict</span>(modelo)<span class="op">.^</span> <span class="fl">2</span>);</span>
-<span id="cb13-7"><a href="#cb13-7"></a>result_white <span class="op">=</span> <span class="fu">WhiteTest</span>(X_wh, <span class="fu">residuals</span>(modelo), <span class="kw">type</span><span class="op">=:</span>linear);</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="fu">pvalue</span>(result_white)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb17-4"><a href="#cb17-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> married <span class="op">*</span> female <span class="op">+</span> educ <span class="op">+</span> exper <span class="op">+</span> (exper<span class="op">^</span><span class="fl">2</span>) <span class="op">+</span> tenure <span class="op">+</span> (tenure<span class="op">^</span><span class="fl">2</span>)), wage1);</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a>X_wh <span class="op">=</span> <span class="fu">hcat</span>(<span class="fu">ones</span>(<span class="fu">size</span>(wage1)[<span class="fl">1</span>]), <span class="fu">predict</span>(modelo), <span class="fu">predict</span>(modelo)<span class="op">.^</span> <span class="fl">2</span>);</span>
+<span id="cb17-7"><a href="#cb17-7"></a>result_white <span class="op">=</span> <span class="fu">WhiteTest</span>(X_wh, <span class="fu">residuals</span>(modelo), <span class="kw">type</span><span class="op">=:</span>linear);</span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="fu">pvalue</span>(result_white)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.12519488113965127</code></pre>
@@ -724,10 +763,10 @@ BP = 4.1558, df = 2, p-value = 0.1252</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb15-3"><a href="#cb15-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="fu">bptest</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb19-3"><a href="#cb19-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="fu">bptest</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -742,28 +781,28 @@ BP = 13.189, df = 8, p-value = 0.1055</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="im">import</span> patsy <span class="im">as</span> pt</span>
-<span id="cb17-7"><a href="#cb17-7"></a></span>
-<span id="cb17-8"><a href="#cb17-8"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
-<span id="cb17-9"><a href="#cb17-9"></a>modelo <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1)</span>
-<span id="cb17-10"><a href="#cb17-10"></a>results <span class="op">=</span> modelo.fit()</span>
-<span id="cb17-11"><a href="#cb17-11"></a></span>
-<span id="cb17-12"><a href="#cb17-12"></a>y, X_bp <span class="op">=</span> pt.dmatrices(<span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1, return_type <span class="op">=</span> <span class="st">'dataframe'</span>)</span>
-<span id="cb17-13"><a href="#cb17-13"></a></span>
-<span id="cb17-14"><a href="#cb17-14"></a>result_bp <span class="op">=</span> sm.stats.diagnostic.het_breuschpagan(results.resid, X_bp)</span>
-<span id="cb17-15"><a href="#cb17-15"></a>result_bp[<span class="dv">1</span>] <span class="co"># pvalor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="im">import</span> patsy <span class="im">as</span> pt</span>
+<span id="cb21-7"><a href="#cb21-7"></a></span>
+<span id="cb21-8"><a href="#cb21-8"></a>wage1 <span class="op">=</span> woo.dataWoo(<span class="st">'wage1'</span>)</span>
+<span id="cb21-9"><a href="#cb21-9"></a>modelo <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1)</span>
+<span id="cb21-10"><a href="#cb21-10"></a>results <span class="op">=</span> modelo.fit()</span>
+<span id="cb21-11"><a href="#cb21-11"></a></span>
+<span id="cb21-12"><a href="#cb21-12"></a>y, X_bp <span class="op">=</span> pt.dmatrices(<span class="st">'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)'</span>, data <span class="op">=</span> wage1, return_type <span class="op">=</span> <span class="st">'dataframe'</span>)</span>
+<span id="cb21-13"><a href="#cb21-13"></a></span>
+<span id="cb21-14"><a href="#cb21-14"></a>result_bp <span class="op">=</span> sm.stats.diagnostic.het_breuschpagan(results.resid, X_bp)</span>
+<span id="cb21-15"><a href="#cb21-15"></a>result_bp[<span class="dv">1</span>] <span class="co"># pvalor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.10549994226505134</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1"></a>X_bp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a>X_bp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Intercept  married  female  ...  I(exper ** 2)  tenure  I(tenure ** 2)
@@ -787,31 +826,31 @@ BP = 13.189, df = 8, p-value = 0.1055</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span>, <span class="bu">StatsModels</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="kw">function</span> <span class="fu">getMats</span>(formula, df)</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  f <span class="op">=</span> <span class="fu">apply_schema</span>(formula, <span class="fu">schema</span>(formula, df)) </span>
-<span id="cb21-5"><a href="#cb21-5"></a>  resp, pred <span class="op">=</span> <span class="fu">modelcols</span>(f, df)</span>
-<span id="cb21-6"><a href="#cb21-6"></a>  <span class="cf">return</span> (resp, pred)</span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span>, <span class="bu">StatsModels</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="kw">function</span> <span class="fu">getMats</span>(formula, df)</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  f <span class="op">=</span> <span class="fu">apply_schema</span>(formula, <span class="fu">schema</span>(formula, df)) </span>
+<span id="cb25-5"><a href="#cb25-5"></a>  resp, pred <span class="op">=</span> <span class="fu">modelcols</span>(f, df)</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="cf">return</span> (resp, pred)</span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>getMats (generic function with 1 method)</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1"></a></span>
-<span id="cb23-2"><a href="#cb23-2"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
-<span id="cb23-3"><a href="#cb23-3"></a>f <span class="op">=</span> <span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> married <span class="op">*</span> female <span class="op">+</span> educ <span class="op">+</span> exper <span class="op">+</span> (exper<span class="op">^</span><span class="fl">2</span>) <span class="op">+</span> tenure <span class="op">+</span> (tenure<span class="op">^</span><span class="fl">2</span>));</span>
-<span id="cb23-4"><a href="#cb23-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(f, wage1);</span>
-<span id="cb23-5"><a href="#cb23-5"></a></span>
-<span id="cb23-6"><a href="#cb23-6"></a>X_bp <span class="op">=</span>  <span class="fu">hcat</span>(<span class="fu">ones</span>(<span class="fu">size</span>(wage1)[<span class="fl">1</span>]), <span class="fu">getMats</span>(f, wage1)[<span class="fl">2</span>]);</span>
-<span id="cb23-7"><a href="#cb23-7"></a></span>
-<span id="cb23-8"><a href="#cb23-8"></a>result_bp <span class="op">=</span> <span class="fu">WhiteTest</span>(X_bp, <span class="fu">residuals</span>(modelo), <span class="kw">type</span><span class="op">=:</span>linear);</span>
-<span id="cb23-9"><a href="#cb23-9"></a><span class="fu">pvalue</span>(result_bp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1"></a></span>
+<span id="cb27-2"><a href="#cb27-2"></a>wage1 <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"wage1"</span>));</span>
+<span id="cb27-3"><a href="#cb27-3"></a>f <span class="op">=</span> <span class="pp">@formula</span>(<span class="fu">log</span>(wage) <span class="op">~</span> married <span class="op">*</span> female <span class="op">+</span> educ <span class="op">+</span> exper <span class="op">+</span> (exper<span class="op">^</span><span class="fl">2</span>) <span class="op">+</span> tenure <span class="op">+</span> (tenure<span class="op">^</span><span class="fl">2</span>));</span>
+<span id="cb27-4"><a href="#cb27-4"></a>modelo <span class="op">=</span> <span class="fu">lm</span>(f, wage1);</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a>X_bp <span class="op">=</span>  <span class="fu">hcat</span>(<span class="fu">ones</span>(<span class="fu">size</span>(wage1)[<span class="fl">1</span>]), <span class="fu">getMats</span>(f, wage1)[<span class="fl">2</span>]);</span>
+<span id="cb27-7"><a href="#cb27-7"></a></span>
+<span id="cb27-8"><a href="#cb27-8"></a>result_bp <span class="op">=</span> <span class="fu">WhiteTest</span>(X_bp, <span class="fu">residuals</span>(modelo), <span class="kw">type</span><span class="op">=:</span>linear);</span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="fu">pvalue</span>(result_bp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.10549994226505131</code></pre>
+<pre><code>0.10549994226505133</code></pre>
 </div>
 </div>
 </div>
@@ -841,11 +880,11 @@ BP = 13.189, df = 8, p-value = 0.1055</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb25-3"><a href="#cb25-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
-<span id="cb25-4"><a href="#cb25-4"></a><span class="fu">gqtest</span>(modelo, <span class="at">point =</span> <span class="fl">0.5</span>, <span class="at">fraction =</span> <span class="dv">100</span>,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">order.by =</span> wage1<span class="sc">$</span>educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wage) <span class="sc">~</span> married <span class="sc">*</span> female <span class="sc">+</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> tenure <span class="sc">+</span> <span class="fu">I</span>(tenure<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> wage1)</span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="fu">gqtest</span>(modelo, <span class="at">point =</span> <span class="fl">0.5</span>, <span class="at">fraction =</span> <span class="dv">100</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">order.by =</span> wage1<span class="sc">$</span>educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -867,7 +906,8 @@ alternative hypothesis: variance changes from segment 1 to 2</code></pre>
 <ul>
 <li class="fragment">Até agora, temos assumido que os erros são não correlacionados.</li>
 <li class="fragment">Mas, o que acontece se <span class="math inline">\(\mathbb{E}(u_t, u_{t+s}) \neq 0\)</span> para <span class="math inline">\(s \neq 0\)</span>?</li>
-<li class="fragment">Lembre-se que <span class="math inline">\(\rho_s = \dfrac{\mathbb{C}ov(u_t, u_{t+2})}{\sqrt{\mathbb{V}(u_t) \times \mathbb{V}(u_{t+s})}}\)</span>. - Assim, sob homocedasticidade, <span class="math inline">\(\rho_s = \dfrac{\mathbb{E}(u_t, u_{t+s})}{\sigma_u^2}\)</span></li>
+<li class="fragment">Lembre-se que <span class="math inline">\(\rho_s = \dfrac{\mathbb{C}ov(u_t, u_{t+2})}{\sqrt{\mathbb{V}(u_t) \times \mathbb{V}(u_{t+s})}}\)</span>.</li>
+<li class="fragment">Assim, sob homocedasticidade, <span class="math inline">\(\rho_s = \dfrac{\mathbb{E}(u_t, u_{t+s})}{\sigma_u^2}\)</span></li>
 </ul>
 </section>
 <section id="introdução-2" class="slide level2">
@@ -982,13 +1022,13 @@ alternative hypothesis: variance changes from segment 1 to 2</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(dynlm)</span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
-<span id="cb27-4"><a href="#cb27-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
-<span id="cb27-5"><a href="#cb27-5"></a>modelo <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
-<span id="cb27-6"><a href="#cb27-6"></a>u_hat <span class="ot">&lt;-</span> <span class="fu">resid</span>(modelo)</span>
-<span id="cb27-7"><a href="#cb27-7"></a><span class="fu">coeftest</span>(<span class="fu">dynlm</span>(u_hat <span class="sc">~</span> <span class="fu">L</span>(u_hat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb31-4"><a href="#cb31-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
+<span id="cb31-5"><a href="#cb31-5"></a>modelo <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>u_hat <span class="ot">&lt;-</span> <span class="fu">resid</span>(modelo)</span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="fu">coeftest</span>(<span class="fu">dynlm</span>(u_hat <span class="sc">~</span> <span class="fu">L</span>(u_hat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1006,30 +1046,30 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb29-4"><a href="#cb29-4"></a></span>
-<span id="cb29-5"><a href="#cb29-5"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
-<span id="cb29-6"><a href="#cb29-6"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
-<span id="cb29-7"><a href="#cb29-7"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>)</span>
-<span id="cb29-8"><a href="#cb29-8"></a>phillips.index <span class="op">=</span> date_range.year</span>
-<span id="cb29-9"><a href="#cb29-9"></a></span>
-<span id="cb29-10"><a href="#cb29-10"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
-<span id="cb29-11"><a href="#cb29-11"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span> <span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96) </span>
-<span id="cb29-12"><a href="#cb29-12"></a>results_s <span class="op">=</span> reg_s.fit()</span>
-<span id="cb29-13"><a href="#cb29-13"></a></span>
-<span id="cb29-14"><a href="#cb29-14"></a>phillips[<span class="st">'resid_s'</span>] <span class="op">=</span> results_s.resid</span>
-<span id="cb29-15"><a href="#cb29-15"></a>phillips[<span class="st">'resid_s_lag1'</span>] <span class="op">=</span> phillips[<span class="st">'resid_s'</span>].shift(<span class="dv">1</span>)</span>
-<span id="cb29-16"><a href="#cb29-16"></a>reg <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'resid_s ~ resid_s_lag1'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
-<span id="cb29-17"><a href="#cb29-17"></a>results <span class="op">=</span> reg.fit()</span>
-<span id="cb29-18"><a href="#cb29-18"></a></span>
-<span id="cb29-19"><a href="#cb29-19"></a>table <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results.params, <span class="dv">4</span>),</span>
-<span id="cb29-20"><a href="#cb29-20"></a>                      <span class="st">'se'</span>: <span class="bu">round</span>(results.bse, <span class="dv">4</span>),</span>
-<span id="cb29-21"><a href="#cb29-21"></a>                      <span class="st">'t'</span>: <span class="bu">round</span>(results.tvalues, <span class="dv">4</span>), </span>
-<span id="cb29-22"><a href="#cb29-22"></a>                      <span class="st">'pval'</span>: <span class="bu">round</span>(results.pvalues, <span class="dv">4</span>)})</span>
-<span id="cb29-23"><a href="#cb29-23"></a></span>
-<span id="cb29-24"><a href="#cb29-24"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb33-4"><a href="#cb33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
+<span id="cb33-6"><a href="#cb33-6"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
+<span id="cb33-7"><a href="#cb33-7"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>)</span>
+<span id="cb33-8"><a href="#cb33-8"></a>phillips.index <span class="op">=</span> date_range.year</span>
+<span id="cb33-9"><a href="#cb33-9"></a></span>
+<span id="cb33-10"><a href="#cb33-10"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
+<span id="cb33-11"><a href="#cb33-11"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span> <span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96) </span>
+<span id="cb33-12"><a href="#cb33-12"></a>results_s <span class="op">=</span> reg_s.fit()</span>
+<span id="cb33-13"><a href="#cb33-13"></a></span>
+<span id="cb33-14"><a href="#cb33-14"></a>phillips[<span class="st">'resid_s'</span>] <span class="op">=</span> results_s.resid</span>
+<span id="cb33-15"><a href="#cb33-15"></a>phillips[<span class="st">'resid_s_lag1'</span>] <span class="op">=</span> phillips[<span class="st">'resid_s'</span>].shift(<span class="dv">1</span>)</span>
+<span id="cb33-16"><a href="#cb33-16"></a>reg <span class="op">=</span> smf.ols(formula <span class="op">=</span> <span class="st">'resid_s ~ resid_s_lag1'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
+<span id="cb33-17"><a href="#cb33-17"></a>results <span class="op">=</span> reg.fit()</span>
+<span id="cb33-18"><a href="#cb33-18"></a></span>
+<span id="cb33-19"><a href="#cb33-19"></a>table <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results.params, <span class="dv">4</span>),</span>
+<span id="cb33-20"><a href="#cb33-20"></a>                      <span class="st">'se'</span>: <span class="bu">round</span>(results.bse, <span class="dv">4</span>),</span>
+<span id="cb33-21"><a href="#cb33-21"></a>                      <span class="st">'t'</span>: <span class="bu">round</span>(results.tvalues, <span class="dv">4</span>), </span>
+<span id="cb33-22"><a href="#cb33-22"></a>                      <span class="st">'pval'</span>: <span class="bu">round</span>(results.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb33-23"><a href="#cb33-23"></a></span>
+<span id="cb33-24"><a href="#cb33-24"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   b      se       t    pval
@@ -1042,24 +1082,24 @@ resid_s_lag1  0.5730  0.1161  4.9337  0.0000</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a></span>
-<span id="cb31-3"><a href="#cb31-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
-<span id="cb31-4"><a href="#cb31-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
-<span id="cb31-5"><a href="#cb31-5"></a></span>
-<span id="cb31-6"><a href="#cb31-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
-<span id="cb31-7"><a href="#cb31-7"></a>yt96.resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
-<span id="cb31-8"><a href="#cb31-8"></a>yt96.resid_s_lag1 <span class="op">=</span> <span class="fu">lag</span>(yt96.resid_s, <span class="fl">1</span>);</span>
-<span id="cb31-9"><a href="#cb31-9"></a></span>
-<span id="cb31-10"><a href="#cb31-10"></a>reg <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(resid_s <span class="op">~</span> resid_s_lag1), yt96);</span>
-<span id="cb31-11"><a href="#cb31-11"></a><span class="fu">coeftable</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a></span>
+<span id="cb35-3"><a href="#cb35-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
+<span id="cb35-4"><a href="#cb35-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
+<span id="cb35-5"><a href="#cb35-5"></a></span>
+<span id="cb35-6"><a href="#cb35-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
+<span id="cb35-7"><a href="#cb35-7"></a>yt96.resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
+<span id="cb35-8"><a href="#cb35-8"></a>yt96.resid_s_lag1 <span class="op">=</span> <span class="fu">lag</span>(yt96.resid_s, <span class="fl">1</span>);</span>
+<span id="cb35-9"><a href="#cb35-9"></a></span>
+<span id="cb35-10"><a href="#cb35-10"></a>reg <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(resid_s <span class="op">~</span> resid_s_lag1), yt96);</span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="fu">coeftable</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>──────────────────────────────────────────────────────────────────────────
                   Coef.  Std. Error      t  Pr(&gt;|t|)  Lower 95%  Upper 95%
 ──────────────────────────────────────────────────────────────────────────
 (Intercept)   -0.113397    0.359404  -0.32    0.7538  -0.836839   0.610046
-resid_s_lag1   0.572969    0.116133   4.93    &lt;1e-4    0.339205   0.806734
+resid_s_lag1   0.572969    0.116133   4.93    &lt;1e-04   0.339205   0.806734
 ──────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
@@ -1095,7 +1135,7 @@ Teste de correlação serial do tipo AR(1).
 <td style="text-align: center;">autocorrelação negativa</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">DW <span class="math inline">\(\approx\)</span> 0</td>
+<td style="text-align: center;">DW <span class="math inline">\(\approx\)</span> 2</td>
 <td style="text-align: center;">autocorrelação zero</td>
 </tr>
 </tbody>
@@ -1129,12 +1169,12 @@ Teste de correlação serial do tipo AR(1).
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">library</span>(dynlm)</span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
-<span id="cb33-4"><a href="#cb33-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
-<span id="cb33-5"><a href="#cb33-5"></a>reg.s <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="fu">dwtest</span>(reg.s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="fu">data</span>(phillips, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb37-4"><a href="#cb37-4"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(phillips, <span class="at">start =</span> <span class="dv">1948</span>)</span>
+<span id="cb37-5"><a href="#cb37-5"></a>reg.s <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(inf <span class="sc">~</span> unem, <span class="at">data =</span> tsdata, <span class="at">end =</span> <span class="dv">1996</span>)</span>
+<span id="cb37-6"><a href="#cb37-6"></a><span class="fu">dwtest</span>(reg.s)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1150,24 +1190,24 @@ alternative hypothesis: true autocorrelation is greater than 0</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb35-3"><a href="#cb35-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb35-4"><a href="#cb35-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb35-5"><a href="#cb35-5"></a></span>
-<span id="cb35-6"><a href="#cb35-6"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
-<span id="cb35-7"><a href="#cb35-7"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
-<span id="cb35-8"><a href="#cb35-8"></a></span>
-<span id="cb35-9"><a href="#cb35-9"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>) </span>
-<span id="cb35-10"><a href="#cb35-10"></a>phillips.index <span class="op">=</span> date_range.year</span>
-<span id="cb35-11"><a href="#cb35-11"></a></span>
-<span id="cb35-12"><a href="#cb35-12"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
-<span id="cb35-13"><a href="#cb35-13"></a>phillips[<span class="st">'inf_diff1'</span>] <span class="op">=</span> phillips[<span class="st">'inf'</span>].diff()</span>
-<span id="cb35-14"><a href="#cb35-14"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
-<span id="cb35-15"><a href="#cb35-15"></a></span>
-<span id="cb35-16"><a href="#cb35-16"></a>results_s <span class="op">=</span> reg_s.fit()</span>
-<span id="cb35-17"><a href="#cb35-17"></a>DW_s <span class="op">=</span> sm.stats.stattools.durbin_watson(results_s.resid)</span>
-<span id="cb35-18"><a href="#cb35-18"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb39-5"><a href="#cb39-5"></a></span>
+<span id="cb39-6"><a href="#cb39-6"></a>phillips <span class="op">=</span> woo.dataWoo(<span class="st">'phillips'</span>) </span>
+<span id="cb39-7"><a href="#cb39-7"></a>T <span class="op">=</span> <span class="bu">len</span>(phillips)</span>
+<span id="cb39-8"><a href="#cb39-8"></a></span>
+<span id="cb39-9"><a href="#cb39-9"></a>date_range <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1948'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>) </span>
+<span id="cb39-10"><a href="#cb39-10"></a>phillips.index <span class="op">=</span> date_range.year</span>
+<span id="cb39-11"><a href="#cb39-11"></a></span>
+<span id="cb39-12"><a href="#cb39-12"></a>yt96 <span class="op">=</span> (phillips[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="dv">1996</span>)</span>
+<span id="cb39-13"><a href="#cb39-13"></a>phillips[<span class="st">'inf_diff1'</span>] <span class="op">=</span> phillips[<span class="st">'inf'</span>].diff()</span>
+<span id="cb39-14"><a href="#cb39-14"></a>reg_s <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'Q("inf") ~ unem'</span>, data <span class="op">=</span> phillips, subset <span class="op">=</span> yt96)</span>
+<span id="cb39-15"><a href="#cb39-15"></a></span>
+<span id="cb39-16"><a href="#cb39-16"></a>results_s <span class="op">=</span> reg_s.fit()</span>
+<span id="cb39-17"><a href="#cb39-17"></a>DW_s <span class="op">=</span> sm.stats.stattools.durbin_watson(results_s.resid)</span>
+<span id="cb39-18"><a href="#cb39-18"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.802700467848626</code></pre>
@@ -1178,17 +1218,17 @@ alternative hypothesis: true autocorrelation is greater than 0</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span>, <span class="bu">StatsModels</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a></span>
-<span id="cb37-3"><a href="#cb37-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
-<span id="cb37-4"><a href="#cb37-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
-<span id="cb37-5"><a href="#cb37-5"></a></span>
-<span id="cb37-6"><a href="#cb37-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
-<span id="cb37-7"><a href="#cb37-7"></a>X_s <span class="op">=</span> <span class="fu">modelmatrix</span>(reg_s); </span>
-<span id="cb37-8"><a href="#cb37-8"></a>resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
-<span id="cb37-9"><a href="#cb37-9"></a></span>
-<span id="cb37-10"><a href="#cb37-10"></a>DW_s <span class="op">=</span> <span class="fu">DurbinWatsonTest</span>(X_s, resid_s);</span>
-<span id="cb37-11"><a href="#cb37-11"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource julia number-lines code-with-copy"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1"></a><span class="im">using</span> <span class="bu">WooldridgeDatasets</span>, <span class="bu">GLM</span>, <span class="bu">DataFrames</span>, <span class="bu">HypothesisTests</span>, <span class="bu">StatsModels</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a>phillips <span class="op">=</span> <span class="fu">DataFrame</span>(<span class="fu">wooldridge</span>(<span class="st">"phillips"</span>));</span>
+<span id="cb41-4"><a href="#cb41-4"></a>yt96 <span class="op">=</span> <span class="fu">subset</span>(phillips, <span class="op">:</span>year <span class="op">=&gt;</span> <span class="fu">ByRow</span>(<span class="op">&lt;=</span>(<span class="fl">1996</span>)));</span>
+<span id="cb41-5"><a href="#cb41-5"></a></span>
+<span id="cb41-6"><a href="#cb41-6"></a>reg_s <span class="op">=</span> <span class="fu">lm</span>(<span class="pp">@formula</span>(inf <span class="op">~</span> unem), yt96);</span>
+<span id="cb41-7"><a href="#cb41-7"></a>X_s <span class="op">=</span> <span class="fu">modelmatrix</span>(reg_s); </span>
+<span id="cb41-8"><a href="#cb41-8"></a>resid_s <span class="op">=</span> <span class="fu">residuals</span>(reg_s);</span>
+<span id="cb41-9"><a href="#cb41-9"></a></span>
+<span id="cb41-10"><a href="#cb41-10"></a>DW_s <span class="op">=</span> <span class="fu">DurbinWatsonTest</span>(X_s, resid_s);</span>
+<span id="cb41-11"><a href="#cb41-11"></a>DW_s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Durbin-Watson autocorrelation test
@@ -1200,7 +1240,7 @@ Population details:
 
 Test summary:
     outcome with 95% confidence: reject h_0
-    two-sided p-value:           &lt;1e-5
+    two-sided p-value:           &lt;1e-05
 
 Details:
     number of observations:     49
@@ -1261,15 +1301,15 @@ Details:
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(dynlm)</span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="fu">library</span>(sandwich)</span>
-<span id="cb39-4"><a href="#cb39-4"></a></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="fu">data</span>(prminwge, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
-<span id="cb39-6"><a href="#cb39-6"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(prminwge, <span class="at">start =</span> <span class="dv">1950</span>)</span>
-<span id="cb39-7"><a href="#cb39-7"></a>reg <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(<span class="fu">log</span>(prepop) <span class="sc">~</span> <span class="fu">log</span>(mincov) <span class="sc">+</span> <span class="fu">log</span>(prgnp) <span class="sc">+</span> <span class="fu">log</span>(usgnp) <span class="sc">+</span> <span class="fu">trend</span>(tsdata), <span class="at">data =</span> tsdata)</span>
-<span id="cb39-8"><a href="#cb39-8"></a></span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fu">coeftest</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb43-4"><a href="#cb43-4"></a></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="fu">data</span>(prminwge, <span class="at">package =</span> <span class="st">'wooldridge'</span>)</span>
+<span id="cb43-6"><a href="#cb43-6"></a>tsdata <span class="ot">&lt;-</span> <span class="fu">ts</span>(prminwge, <span class="at">start =</span> <span class="dv">1950</span>)</span>
+<span id="cb43-7"><a href="#cb43-7"></a>reg <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(<span class="fu">log</span>(prepop) <span class="sc">~</span> <span class="fu">log</span>(mincov) <span class="sc">+</span> <span class="fu">log</span>(prgnp) <span class="sc">+</span> <span class="fu">log</span>(usgnp) <span class="sc">+</span> <span class="fu">trend</span>(tsdata), <span class="at">data =</span> tsdata)</span>
+<span id="cb43-8"><a href="#cb43-8"></a></span>
+<span id="cb43-9"><a href="#cb43-9"></a><span class="fu">coeftest</span>(reg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1286,7 +1326,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">NeweyWest</span>(reg, <span class="at">lag =</span> <span class="dv">2</span>, <span class="at">prewhite =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">NeweyWest</span>(reg, <span class="at">lag =</span> <span class="dv">2</span>, <span class="at">prewhite =</span> <span class="cn">FALSE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  (Intercept)   log(mincov)    log(prgnp)    log(usgnp) trend(tsdata) 
@@ -1294,7 +1334,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># coeftest(reg, vcovHAC) (Qual o valor de g?)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># coeftest(reg, vcovHAC) (Qual o valor de g?)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1302,31 +1342,31 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell" data-layout-align="center">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb44-4"><a href="#cb44-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
-<span id="cb44-5"><a href="#cb44-5"></a></span>
-<span id="cb44-6"><a href="#cb44-6"></a>prminwge <span class="op">=</span> woo.dataWoo(<span class="st">'prminwge'</span>)</span>
-<span id="cb44-7"><a href="#cb44-7"></a>T <span class="op">=</span> <span class="bu">len</span>(prminwge)</span>
-<span id="cb44-8"><a href="#cb44-8"></a>prminwge[<span class="st">'time'</span>] <span class="op">=</span> prminwge[<span class="st">'year'</span>] <span class="op">-</span> <span class="dv">1949</span></span>
-<span id="cb44-9"><a href="#cb44-9"></a>prminwge.index <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1950'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>).year</span>
-<span id="cb44-10"><a href="#cb44-10"></a></span>
-<span id="cb44-11"><a href="#cb44-11"></a>reg <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'np.log(prepop) ~ np.log(mincov) + np.log(prgnp) + np.log(usgnp) + time'</span>, data <span class="op">=</span> prminwge)</span>
-<span id="cb44-12"><a href="#cb44-12"></a>results_regu <span class="op">=</span> reg.fit()</span>
-<span id="cb44-13"><a href="#cb44-13"></a></span>
-<span id="cb44-14"><a href="#cb44-14"></a>table_regu <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_regu.params, <span class="dv">4</span>),</span>
-<span id="cb44-15"><a href="#cb44-15"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_regu.bse, <span class="dv">4</span>),</span>
-<span id="cb44-16"><a href="#cb44-16"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_regu.tvalues, <span class="dv">4</span>),</span>
-<span id="cb44-17"><a href="#cb44-17"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_regu.pvalues, <span class="dv">4</span>)})</span>
-<span id="cb44-18"><a href="#cb44-18"></a></span>
-<span id="cb44-19"><a href="#cb44-19"></a>results_hac <span class="op">=</span> reg.fit(cov_type <span class="op">=</span> <span class="st">'HAC'</span>, cov_kwds<span class="op">=</span>{<span class="st">'maxlags'</span>: <span class="dv">2</span>})</span>
-<span id="cb44-20"><a href="#cb44-20"></a>table_hac <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_hac.params, <span class="dv">4</span>),</span>
-<span id="cb44-21"><a href="#cb44-21"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_hac.bse, <span class="dv">4</span>),</span>
-<span id="cb44-22"><a href="#cb44-22"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_hac.tvalues, <span class="dv">4</span>), </span>
-<span id="cb44-23"><a href="#cb44-23"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_hac.pvalues, <span class="dv">4</span>)})</span>
-<span id="cb44-24"><a href="#cb44-24"></a>                          </span>
-<span id="cb44-25"><a href="#cb44-25"></a>table_regu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1"></a><span class="im">import</span> wooldridge <span class="im">as</span> woo</span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb48-4"><a href="#cb48-4"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb48-5"><a href="#cb48-5"></a></span>
+<span id="cb48-6"><a href="#cb48-6"></a>prminwge <span class="op">=</span> woo.dataWoo(<span class="st">'prminwge'</span>)</span>
+<span id="cb48-7"><a href="#cb48-7"></a>T <span class="op">=</span> <span class="bu">len</span>(prminwge)</span>
+<span id="cb48-8"><a href="#cb48-8"></a>prminwge[<span class="st">'time'</span>] <span class="op">=</span> prminwge[<span class="st">'year'</span>] <span class="op">-</span> <span class="dv">1949</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a>prminwge.index <span class="op">=</span> pd.date_range(start <span class="op">=</span> <span class="st">'1950'</span>, periods <span class="op">=</span> T, freq <span class="op">=</span> <span class="st">'Y'</span>).year</span>
+<span id="cb48-10"><a href="#cb48-10"></a></span>
+<span id="cb48-11"><a href="#cb48-11"></a>reg <span class="op">=</span> smf.ols(formula<span class="op">=</span><span class="st">'np.log(prepop) ~ np.log(mincov) + np.log(prgnp) + np.log(usgnp) + time'</span>, data <span class="op">=</span> prminwge)</span>
+<span id="cb48-12"><a href="#cb48-12"></a>results_regu <span class="op">=</span> reg.fit()</span>
+<span id="cb48-13"><a href="#cb48-13"></a></span>
+<span id="cb48-14"><a href="#cb48-14"></a>table_regu <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_regu.params, <span class="dv">4</span>),</span>
+<span id="cb48-15"><a href="#cb48-15"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_regu.bse, <span class="dv">4</span>),</span>
+<span id="cb48-16"><a href="#cb48-16"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_regu.tvalues, <span class="dv">4</span>),</span>
+<span id="cb48-17"><a href="#cb48-17"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_regu.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb48-18"><a href="#cb48-18"></a></span>
+<span id="cb48-19"><a href="#cb48-19"></a>results_hac <span class="op">=</span> reg.fit(cov_type <span class="op">=</span> <span class="st">'HAC'</span>, cov_kwds<span class="op">=</span>{<span class="st">'maxlags'</span>: <span class="dv">2</span>})</span>
+<span id="cb48-20"><a href="#cb48-20"></a>table_hac <span class="op">=</span> pd.DataFrame({<span class="st">'b'</span>: <span class="bu">round</span>(results_hac.params, <span class="dv">4</span>),</span>
+<span id="cb48-21"><a href="#cb48-21"></a>                          <span class="st">'se'</span>: <span class="bu">round</span>(results_hac.bse, <span class="dv">4</span>),</span>
+<span id="cb48-22"><a href="#cb48-22"></a>                          <span class="st">'t'</span>: <span class="bu">round</span>(results_hac.tvalues, <span class="dv">4</span>), </span>
+<span id="cb48-23"><a href="#cb48-23"></a>                          <span class="st">'pval'</span>: <span class="bu">round</span>(results_hac.pvalues, <span class="dv">4</span>)})</span>
+<span id="cb48-24"><a href="#cb48-24"></a>                          </span>
+<span id="cb48-25"><a href="#cb48-25"></a>table_regu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     b      se       t    pval
@@ -1338,7 +1378,7 @@ time           -0.0267  0.0046 -5.7629  0.0000</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1"></a>table_hac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1"></a>table_hac</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     b      se       t    pval
@@ -1360,7 +1400,7 @@ time           -0.0267  0.0054 -4.9710  0.0000</code></pre>
 <h2>O que fazer se os erros são autocorrelacionados?</h2>
 <ol type="1">
 <li class="fragment">Ajustar o modelo <span class="math inline">\(y_t = \beta_0 + \beta_1 x_{1t} + \cdots, \beta_k x_{kt} + u_t\)</span></li>
-<li class="fragment">Ajustar o modelo auxiliar <span class="math inline">\(x_{1t} = \delta_0 + delta_2 x_{2t} + \cdots + \delta_k x_{kt} + r_t\)</span></li>
+<li class="fragment">Ajustar o modelo auxiliar <span class="math inline">\(x_{1t} = \delta_0 + \delta_2 x_{2t} + \cdots + \delta_k x_{kt} + r_t\)</span></li>
 <li class="fragment">Calcular <span class="math inline">\(\hat{a}_t = \hat{r}_t \hat{u}_t\)</span></li>
 <li class="fragment">Calcular <span class="math inline">\(\hat{\nu} = \displaystyle \sum_{t=1}^n \hat{a}_t^2 + 2 \sum_{h= 1}^g [1 - h/(g+1)](\sum_{t = h + 1}^n \hat{a}_t \hat{a}_{t-h})\)</span></li>
 <li class="fragment">O novo desvio padrão será dado por <span class="math display">\[[\sqrt{\mathbb{V}(\hat{\beta}_1|X)}/\hat{\sigma}]^2 \sqrt{\hat{\nu}}\]</span></li>
