@@ -499,7 +499,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 </div>
 </div>
-<p><strong>Demostração</strong> (ver lista)</p>
+<p><strong>Demostração</strong> (ver lista) - Existe um resultado interessante para o caso em que se tem interesse em <span class="math inline">\(\beta_1\)</span>, mas assume-se que o efeito de <span class="math inline">\(\textbf{X}_2\)</span> pode ter outra forma (ou seja, podemos estimar por random forest, xgboosting, redes neurais, etc), que pode ser encontrado em <a href="https://doi.org/10.1111/ectj.12097">Victor Chernozhukov, Denis Chetverikov, Mert Demirer, Esther Duflo, Christian Hansen, Whitney Newey, James Robins, Double/debiased machine learning for treatment and structural parameters, The Econometrics Journal, Volume 21, Issue 1, 1 February 2018, Pages C1–C68, https://doi.org/10.1111/ectj.12097</a></p>
 </section>
 <section id="variáveis-irrelevantes-no-modelo-de-regressão-6" class="slide level2">
 <h2>Variáveis irrelevantes no modelo de regressão</h2>
@@ -518,9 +518,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="variáveis-irrelevantes-no-modelo-de-regressão-7" class="slide level2">
 <h2>Variáveis irrelevantes no modelo de regressão</h2>
 <center>
-Então podemos incluir variáveis sem nenhum prejuizo?
+Então podemos incluir variáveis sem nenhum prejuízo?
 </center>
-<p>Não!.</p>
+<p>Não!</p>
 <ul>
 <li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) = \sigma^2 (X' M_z X)^{-1}\)</span>.</li>
 <li class="fragment"><span class="math inline">\(\mathbb{V}(\hat{\delta}|X,Z) \geq \mathbb{V}(\hat{\beta}|X)\)</span>.</li>
@@ -653,7 +653,7 @@ Então podemos incluir variáveis sem nenhum prejuizo?
 </ul>
 </div>
 <div class="fragment">
-<p><strong>Muitas vezes é dificil determinar o sinal do vies, mas o importante aqui é saber que, resultados contraintuitivos, podem ser fruto de estimadores viesados.</strong></p>
+<p><strong>Muitas vezes é dificil determinar o sinal do viés, mas o importante aqui é saber que resultados contraintuitivos podem ser fruto de estimadores viesados.</strong></p>
 </div>
 </section>
 <section id="variáveis-omitidas-6" class="slide level2">
@@ -716,7 +716,7 @@ Então podemos incluir variáveis sem nenhum prejuizo?
 <ul>
 <li class="fragment">Multicolinearidade tem um efeito na variância dos estimadores, fazendo com que sejam grandes demais.</li>
 <li class="fragment">Lidar com o problema não é trivial.</li>
-<li class="fragment">Uma forma de detetar multicolnearidade é através do <strong>fator de inflação da variância (FIV)</strong>, <span class="math display">\[FIV_j = \dfrac{1}{R_j^2},\]</span> em que <span class="math inline">\(R_j^2\)</span> é o coeficifiente de determinação da regressão de <span class="math inline">\(X_j\)</span> sobre todas as outras variáveis independentes.</li>
+<li class="fragment">Uma forma de detetar multicolnearidade é através do <strong>fator de inflação da variância (FIV)</strong>, <span class="math display">\[FIV_j = \dfrac{1}{1-R_j^2},\]</span> em que <span class="math inline">\(R_j^2\)</span> é o coeficiente de determinação da regressão de <span class="math inline">\(X_j\)</span> sobre todas as outras variáveis independentes.</li>
 </ul>
 </div>
 </section>
