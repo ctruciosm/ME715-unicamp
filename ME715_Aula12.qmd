@@ -1,0 +1,385 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Métodos simples de dados em painel"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Introdução
+## Introdução
+
+- Até agora temos aprendido algumas técnicas para trabalhar com: (a) dados de corte transversal e (b) dados de séries temporais
+- Embora ambas as estruturas mencionadas acima sejam as mais utilizadas, em algumas situações precisaremos lidar com conjuntos de dados que possuem tanto corte transversal quando estrutura temporal.
+- Estas estruturas podem ser divididas em:
+    * Corte transversal agrupados (ou agrupamento independente de cortes transversais)
+    * Dados em painel (ou longitudinais)
+
+
+# Agrupamento independente de cortes transversais
+## Agrupamento independente de cortes transversais
+
+
+<center>
+[Um agrupamento independente de cortes transversais é obtido fazendo-se uma amostragem aleatória de uma população em diferentes periodos de tempo (geralmente, mas não necessáriamente, em anos diferentes)]{style="color:red;"}
+</center>
+
+
+. . . 
+
+
+-  Agrupar amostras aleatórias extraídas da mesma população, mas em períodos de tempo diferentes, pode nos ajudar a melhorar a qualidade dos estimadores.
+- Contudo, o agrupamento apenas é util se a relação entre a variável dependente e pelo menos uma das variáveis independentes, permanecer constante ao longo do tempo.
+
+. . . 
+
+
+::: {.callout-important}
+### Importante
+$$\text{Agrupamento independente de cortes transversais} \neq \text{amostra aleatória}$$
+:::
+
+
+
+
+
+. . . 
+
+<center>
+A diferença é que ao fazer amostragem de uma população em períodos diferentes pode acontecer que observações não serão mais  identicamente distribuidas
+</center>
+
+
+## Agrupamento independente de cortes transversais
+
+::: {.callout-important}
+### Importante
+$$\text{Agrupamento independente de cortes transversais} \neq \text{dados em painel}$$
+:::
+
+
+
+> Nos dados em painel ou longitudinais, a **mesma amostra** é acompanhada ao longo do tempo.  Já no agrupamento independente de cortes transversais, as amostras são independentes.
+
+
+
+
+## Agrupamento independente de cortes transversais
+
+- Pesquisas sobre pessoas, famílias, empresas, etc são repetidas a intervalos regulares (geralmente um ano).
+- Se uma amostra aleatória for extraida a cada período de tempo, teremos um agrupamento independente de cortes transversais.
+- **Quando utilizamos agrupamentos independentes de cortes transversais?**
+    * Quando queremos aumentar o tamanho da amostra!
+- **Cuidado!** não devemos analisar os dados como vindo de uma única amostra, mas em geral são necessárias apenas pequenas modificações.
+- Em geral, para incorporar o fato de que a população pode ter distribuições diferentes em períodos de tempo diferentes, permitimos que o intercepto mude ao longo dos períodos.
+- Isto é feito com a inclusão de variáveis _dummy_ (o primeiro ano da amostra é considerado o ano base).
+
+
+
+## Agrupamento independente de cortes transversais
+
+
+::: {.callout-note}
+### Exemplo 1
+O _dataset_ `fertil1` provém da Pesquisa Social Geral (realizada de dois em dois anos, começando em 1972) do Centro de Pesquisa e Opinião Nacional. Utilizaremos este conjunto de dados para construir um modelo que explique o número total de nascimentos por mulheres (*kids*).
+
+Em particular, estamos interessados em saber o que aconteceu com as taxas de fertilidade ao longo do tempo após termos controlado os outros fatores observáveis (anos de educação, idade, raça, região do país onde as mulherem moravam quando tinham 16 anos e o ambiente em que viviam quando tinham a mesma idade).
+
+
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo <- lm(kids  ~ educ + age + I(age^2) + black + east + northcen + west + 
+               farm + othrural + town + smcity + y74 + y76 + y78 + y80 + y82 +
+               y84, data = fertil1)
+summary(modelo)
+```
+:::
+
+
+
+## Agrupamento independente de cortes transversais
+
+
+::: {.callout-note}
+### Exemplo 2
+Estamos interessados em estudar as mudanças no retorno da educação (sob o salário) e a diferença salarial por gênero. Utilizaremos o _dataset_ `cps78_85` e utilizaremos o seguinte modelo:
+
+$$\log(wage) = \beta_0 + \gamma_0 y85 + \beta_1 educ + \gamma_1 y85 \times educ + \beta_2 exper +$$
+$$\beta_3 exper^2 + \beta_4 union + \beta_5 female + \gamma_5 y85 \times female + u$$
+
+
+- $union:$ 1 se a pessoa é sindicalizada.
+- $y85:$ 1 se observação corresponde a 1985 e 0 se corresponde a 1978 (ano base)
+
+:::
+
+. . . 
+
+**Observação:** [o poder de compra em 1978 e em 1985 não é o mesmo. Ou seja, o salario hora em 1978 e o salário hora em 1985, mesmo que tenham o mesmo valor (nominal) não representam o mesmo. De forma semelhantes, diferenças de valores podem não significar muito devido às correções da inflação. **O que devemos fazer nestes casos?**]{style="color:blue;"}
+
+
+. . . 
+
+
+<center>
+[**Considerar a inflação!**]{style="color:red;"}
+</center>
+
+
+## Agrupamento independente de cortes transversais
+
+- O procedimento padrão é **deflacionar** os dados, ou seja, passar tudo para valores correntes do ano base.
+- Isto é feito considerando algúm índice que permita termos ideia da inflação (IPC, por exemplo).
+- O livro texto utiliza o IPC do ![Economic Report of the President](https://www.govinfo.gov/content/pkg/ERP-1997/pdf/ERP-1997.pdf) (Tabela B-58).
+    * IPC 1978: 65.2, 
+    * IPC: 1985: 107.6
+    * Deflator = $107.6 / 65.2 = 1.65$  (devemos dividir os salário de 1985 por 1.65)
+    
+
+
+. . . 
+
+
+::: {.callout-important}
+### Importante
+Neste caso particular, como temos incluido uma _dummy_ (y85) que altera o intercepto e como estamos trabalhando com $\log(wage)$, não será necessário fazer a deflação. Veja que se denotarmos por $P85$ o fator de deflação para os salário hora de 1985, temos que $\log(wage_i  / P85) = \log(wage_i) - \log(P85)$
+:::
+
+
+## Agrupamento independente de cortes transversais
+
+```{r}
+#| echo: true
+modelo <- lm(lwage ~ y85*educ + exper + I(exper^2) + union + y85*female, data = cps78_85)
+summary(modelo)
+```
+
+
+
+## Agrupamento independente de cortes transversais
+
+```{r}
+#| echo: true
+coef(summary(modelo))
+```
+
+#### Interpretação: V ou F?
+
+- O retorno da educação é de $\approx$ 0.075 centavos por ano de educação formal.
+- O retorno da educação é de 7.5\% por ano de educação formal.
+- A diferença salarial é de 31\%
+- O retorno da educação em 1978 era de 7.5\% e em 1985 e 9.35\%
+- A diferença salarial em 1978 era de 31\% e em 1985 esta diferença era de 23.2\%
+
+
+## Agrupamento independente de cortes transversais
+
+
+::: {.callout-tip}
+### Para pensar
+
+<center>
+O que acontece se ajustarmos um modelo incluindo a interação de $y85$ com todas as outras variáveis independentes?
+</center>
+
+:::
+
+
+
+. . . 
+
+
+::: {.panel-tabset}
+
+## Caso 1
+```{r}
+#| echo: true
+modelo <- lm(lwage ~ y85*(educ + exper + I(exper^2) + union + female), data = cps78_85)
+summary(modelo)
+```
+
+
+
+## Caso 2
+```{r}
+#| echo: true
+modelo_01 <- lm(lwage ~ educ + exper + I(exper^2) + union + female, weights = y85, data = cps78_85)
+modelo_02 <- lm(lwage ~ educ + exper + I(exper^2) + union + female, weights = 1- y85, data = cps78_85)
+summary(modelo_01)
+```
+
+
+
+## Caso 2 - II
+
+```{r}
+#| echo: true
+summary(modelo_02)
+```
+
+:::
+
+
+
+
+## Teste de Chow
+
+- Utilizado para determinar de uma função de regressão multipla difere entre dois grupos (ou, em nosso caso, em dois períodos de tempo).
+- É basicamente um teste F.
+- Procedimento:
+    *   Seja SQRr (restrito) a SQR da estimação agrupada.
+    *   Seja SQRi (irrestrita) a soma da SQR dos modelo estimados por separado
+    *   $F = \dfrac{SQRr - SQRi}{SQRi} \times \dfrac{n - 2(k + 1)}{k + 1}$, em que $k$ é o número de variáveis explicativas (sem incluir os interceptos das *dummies*) na equação.
+
+
+## Cases
+
+<center>
+[Cortes transversais agrupados poder ser muito úteis para avaliar o impacto de determinados eventos ou decisões políticas.]{style="color:red;"}      
+</center>
+
+
+
+::: {.callout-note}
+### Exemplo: Efeito da localização de um incinerador de lixo sobre os preços do imóveis
+
+O objetivo estudar o efeito que um novo incinerador de lixo teve sobre os valores dos imóveis em uma determinada região. O rumor de que um novo incinerador seria construido começou após 1978 e a construção começou em 1981. Utilizaremos dados de preços de imóveis vendidos em dois períodos de tempo: 1978 e 1981. A hipótese é que os preços dos imóveis localizados próximos (raio de 4.8km) ao incinerador cairiam em relação aos preços dos imóveis mais distantes. A variável `rprice` representa os preços dos imóveis já em termos reais e o conjunto de dados a utilizar é o `kielmc` do pacote `wooldridge`
+:::
+
+
+
+## Cases
+
+
+
+::: {.panel-tabset}
+
+## Altern. 1
+```{r}
+#| echo: true
+modelo_01 <- lm(rprice ~ nearinc, data = kielmc, subset = (year==1981))
+summary(modelo_01)
+```
+
+
+
+## Altern.2
+Infelizmente, as conclusões anteriores não são o que parecem. De fato, se analizarmos apenas os dados de 1978 (quando nem rumores do incinerador existiam), veremos que imóveis nessa mesma região já eram mais baratos.
+
+```{r}
+#| echo: true
+modelo_02 <- lm(rprice ~ nearinc, data = kielmc, subset = (year==1978))
+summary(modelo_02)
+```
+
+
+## Altern. 2-II
+
+Da análise anterior, émais coerente pensar que o incinerador foi contruido em uma área de imóveis de menor valor.
+
+
+## Altern. 3
+
+- Como então podemos verificar se a construção do novo incinerador reduz os valores dos imóveis?
+- A clave está em verificar como o coeficiente assoaciado a `nearinc` mudou entre 1978 e 1981.
+- A diferença na média dos valores dos imóveis em 1981 era muito maior (\$. 30688,27) do que em 1978 (\$.18824,37).
+- A diferença destes valores ($\hat{\gamma}_1$ = \$. 30688,27 - \$. 18824,37 = \$. 11863,9) é a estimativa do efeito do incinerador sobre os valores dos imóveis próximos ao incinerador.
+
+
+## Altern. 3-II
+
+- $\hat{\gamma}_1$ tornou-se conhecido como estimador de diferença em deferenças (diff-in-diff) pois pode ser escrito como $$\hat{\gamma}_1 = (\bar{rprice}_{81, próximo} - \bar{rprice}_{81, afastado}) - (\bar{rprice}_{78, próximo} - \bar{rprice}_{78, afastado}) $$
+- $\hat{\gamma}_1$ é a diferença, ao longo do tempo, das diferenças das médias dos preços dos imóveis nas duas localizações.
+- Falta apenas determinar se $\gamma_1$ é significativo, o que poder ser feito através de uma regressão com efeito de interação.
+
+
+## Altern. 3-III
+
+```{r}
+#| echo: true
+modelo_03 <- lm(rprice ~ nearinc * y81 , data = kielmc)
+summary(modelo_03)
+```
+
+
+Repare que o foco no termo de interação está em saber se a presença do incinerador fez os preços cairem, o que leva a um teste unilateral (p-valor = 0.0562975). 
+:::
+
+
+## Cases
+
+O que acontece se trabalharmos com $\log(rprice)$ e com controles?
+
+```{r}
+#| echo: true
+modelo_04 <- lm(log(rprice) ~ nearinc*y81 + age + I(age^2) + log(intst) + 
+                  log(land) + log(area) + rooms + baths, data = kielmc)
+summary(modelo_04)
+```
+
+
+. . . 
+
+Em razão do incinerador próximo, os imóveis perderam 13.15\% do seu valor.
+
+
+# Análise de dados em painel de dois períodos
+
+## Análise de dados em painel de dois períodos
+
+- O conjunto de dados `crime2` contém, entre outras coisas, informação sobre as taxas de criminalidade (`crmrte`) e desemprego (`unem`) de 46 cidades entre 1982 e 1987.
+- O que acontece se utilizarmos o corte transversal de 1987 e ajustarmos a regressão de `crmrte` sobre `unem`?
+
+. . . 
+
+```{r}
+#| echo: true
+modelo_01 <- lm(crmrte ~ unem, data = crime2, subset = (year == 87))
+coef(summary(modelo_01))
+```
+
+
+- Como sabemos, esse modelo pode ter variáveis omitidas e uma maneira de solucionar o problema é incluir todas as variáveis relevantes no modelo.
+- Infelizmente, isto pode ser dificil de se fazer.
+- Uma solução é incluir a variável dependente defasada.
+
+## Análise de dados em painel de dois períodos
+
+- Outra solução é separar os fatores não observados que afetam a variável dependente em dois tipos:
+    *   os que são constantes,
+    *   os que variam ao longo do tempo.
+- Assim, se $i$ representar a unidade de corte transversal e $t$ o período de tempo, podemos escrever um modelo da forma $$y_{it} = \beta_0 + \gamma_0D_t + \beta_1 x_{it} + a_i + u_{it},$$ em que $y_{it}$ representa a $i$-éssima unidade experimental no tempo $t$, $D_t$ é uma dummy igual a zero quando $t=1$, $a_i$ capta todos os fatores não observados (mas constantes no tempo) que afetam $y_{it}$ ($a_i$ é também conhecido como efeito não observado, efeito fixo ou heterogeneidade não observada) e $u_{it}$ é chamado de erro idiossincrático (ou de variação temporal) e representa os fatores não observados que mudam ao longo do tempo.
+
+
+## Análise de dados em painel de dois períodos
+- O Modelo apresentado é chamado de **modelos de efeitos não observados** ou **modelo de efeitos fixos**
+- Para o exemplo das taxas de crimialidade de uma cidade em 1982 e 1987, um modelo de efeito fixos (ou de efeitos não observados) é dado por $$crmrte_{it} = \beta_0 + \gamma_0 d87_t, \beta_1 unem_{it} + a_i + u_{it},$$ em que $d87$ é uma dummy para 1987 (recebe o valor 1 se o ano for 1987 e zero se o ano for 1982) e, neste caso, $a_i$ é o efeito não observadoo (ou fixo) da cidade (todos os fatores que afetam a taxa de criminalidade da cidade que não mudam ao longo do tempo).
+- [Como estimamos o parâmetro de interesse $\beta_1$?]{style="color:red;"}

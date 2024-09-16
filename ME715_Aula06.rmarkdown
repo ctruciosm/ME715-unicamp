@@ -1,0 +1,828 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Heterocedasticidade e erros autocorrelacionados"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Heterocedasticidade
+
+## Introdução
+
+- Até agora, temos assumido que HRLM5 acontece, ou seja $\mathbb{V}(u|\textbf{X}) = \sigma^2 \textbf{I}$
+
+- Mas, o que acontece se esta hipótese não se verifica?
+
+- Suponha que em geral, temos: $$\mathbb{V}(u|\textbf{X}) = \begin{bmatrix}
+\sigma^2_1 & 0 & 0 &\cdots & 0\\
+0 & \sigma^2_2 & 0 & \cdots & 0 \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+0 & 0 & 0 & \cdots & \sigma^2_n \\
+\end{bmatrix} = \sigma^2 \Omega $$
+
+
+# Consequências
+
+## Consequências
+
+Seja $$Y = X \beta + u, \quad com \quad \mathbb{E}(u|X) = 0 \quad e \quad \mathbb{V}(u|X) = \sigma^2 \Omega.$$
+
+- $\hat{\beta}$ continua sendo não viesado?.
+- $\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}$?.
+
+. . . 
+
+> Na presença de heterocedasticidade, $\hat{\beta}_{MQO}$ ainda são não viesados, mas $\mathbb{V}(\hat{\beta}|X) = \sigma^2(X'X)^{-1}X'\Omega X(X'X)^{-1}$, ou seja, para podermos fazer inferência, precisamos estimar $\mathbb{V}(\hat{\beta}|X)$ corretamente.
+
+
+# Estimador de White
+
+## Estimador de White
+
+- $\sigma^2 \Omega$ contém $n$ parametros. Assim, no total temos $n + k + 1$ parâmetros a serem estimados.
+- Temos apenas $n$ observações.
+- [White (1980)](https://www.jstor.org/stable/1912934) mostrou que não precisamos estimar $\sigma^2 \Omega$. De fato, podemos resolver o problema estimando $X'\sigma^2 \Omega X$ (que tem dimensão bem menor).
+- Note que, $X'\sigma^2 \Omega X = \displaystyle \sum_{i = 1}^n \sigma_i^2 x_i x_i'$
+- O estimador de White substitui $\sigma_i^2$ com $\hat{u}^2_i$ ($i = 1, \cdots, n$), em que $\hat{u}_i = y_i - x_i' \hat{\beta}_{MQO}$ como usual.
+- Com esta correção, teremos testes t, F e qualquer teste da forma $H_0: R\beta = r$ **assintóticamente** validos.
+
+
+## Estimador de White
+
+- O estimador de White funciona bem quando $n \rightarrow \infty$.
+- Pode não funcionar muito bem quando $n$ é pequeno.
+- Em amostras pequenas, utilizar $n\hat{u}_i^2/(n - k - 1)$ ou $\hat{u}_i^2/(1-h_i)$ em lugar de $\hat{u}_i^2$ ($h_i = x_i'(X'X)^{-1}x_i$) melhora o desempenho do estimador.
+
+
+## Estimador de White
+
+
+::: {.panel-tabset}
+
+## R
+
+
+```{r}
+#| echo: true
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data = wage1)
+summary(modelo)$coefficients
+# Estimador de White
+library(car) # Contém a função para o estimador de White
+white_estimator <- hccm(modelo, type = "hc0") 
+## hco: White clássico, 
+## hc1: correção para pequenas amostras
+round(sqrt(diag(white_estimator)), 8)
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.formula.api as smf
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+table = pd.DataFrame({'b': round(results.params, 4), 'se': round(results.bse, 4)})
+print(table)
+
+results_white = modelo.fit(cov_type = 'HC0')
+table_white = pd.DataFrame({'b': round(results_white.params, 4), 'se': round(results_white.bse, 4)})
+print(table_white)
+```
+
+
+
+## Julia
+
+
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, CovarianceMatrices, LinearAlgebra
+
+wage1 = DataFrame(wooldridge("wage1"));
+modelo = lm(@formula(log(wage) ~ married * female + educ + exper + exper^2 + tenure + tenure^2), wage1);
+table_reg = coeftable(modelo);
+table_reg
+sqrt.(diag(vcov(HC0(), modelo)))
+```
+
+0.10852842400201362
+ 0.05665094860545523
+ 0.0566255138864633
+ 0.007350960154033487
+ 0.005094965963443025
+ 0.00010542583499793275
+ 0.006881282215940507
+ 0.0002415911824640835
+ 0.0717499629320893
+
+:::
+
+
+## Estimador de White
+
+
+- No exemplo anterior, os valores estimados do desvio padrão são muito próximos. 
+- Muito provavelmente, teremos que no exemplo a hipótese de homocedasticidade não pode ser rejeitada.
+- O estimador de White funciona também quando temos homocedasticidade.
+- Se White também funciona sob homocedasticidade, por que não usar diretamente este estimador?
+- O estimador de White tem um bom desempenho quando $n \rightarrow \infty$. Em amostras pequenas (mesmo depois da correção), se todas as outras hipóteses forem satisfeitas, é melhor utilizar a versão padrão de $\widehat{\mathbb{V}}(\hat{\beta}|X)$.
+- Em amostras grandes, podemos sim utilizar diretamente White.
+
+
+
+# Testes para detetar heterocedasticidade
+
+## Testes para detetar heterocedasticidade
+
+
+- Sob HRML4, $\mathbb{E}(u|\textbf{X}) = 0$.
+- Isto implica que, $\mathbb{V}(u|\textbf{X}) = \mathbb{E}(u^2|\textbf{X})$.
+- Assim, homocedasticidade equivale a $\mathbb{E}(u^2|\textbf{X}) = \sigma^2I$.
+- Assim, para verificar homocedasticidade, podemos verificar se $u^2$ está relacionado a uma ou mais variáveis explicativas. Por exemplo, ajustar a regressão $u^2 = \delta_0 + \delta_1 x_1 + \cdots + \delta_k x_k + \nu$ e verificar se $H_0: \delta_1 = \delta_2 = \cdots = \delta_k = 0$.
+- Nunca conhecemos $u_i$, mas temos estimativas dele ($\hat{u}_i$). Assim, podemos testar homocedasticidade verificando se $\hat{u}^2$ está relacionado a uma ou mais variáveis explicativas
+
+## Testes para detetar heterocedasticidade
+
+
+### Teste de White
+
+O procedimento consiste em fazer uma regressão auxiliar de $\hat{u}^2$ sob todas as variaveis, seus quadrados e produtos cruzados.
+
+. . . 
+
+Sob $H_0$ (homocedasticidade), $$nR^2 \sim \chi^2_q,$$ em que $q$ é o número de variáveis no modelo auxiliar.
+
+. . . 
+
+[Se rejeitamos $H_0$, temos evidência de heterocedasticidade (mas não sabemos a forma que tem).]{style="color:red;"}
+
+. . . 
+
+> Uma outra desvantagem do teste é que se no modelo $k$ for grande, no modelo auxiliar q = k(k+1)/2 - 1. Esse número elevado torna o teste com pouco poder (rejeitar $H_0$ quando $H_0$ é falso). Uma alternativa é regredir $\hat{u}^2$ sob $\hat{y}$ e $\hat{y}^2$.
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de White
+
+
+::: {.panel-tabset}
+
+## R
+
+
+```{r}
+#| echo: true
+library(lmtest)
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data=wage1)
+bptest(modelo, ~ fitted(modelo) + I(fitted(modelo)^2) )
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+X_wh = pd.DataFrame({'const': 1, 
+                     'fitted_reg': results.fittedvalues,
+                     'fitted_reg_sq': results.fittedvalues**2}) 
+result_white = sm.stats.diagnostic.het_breuschpagan(results.resid, X_wh)
+result_white[1] # pvalor
+```
+
+
+
+
+
+## Julia
+
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, HypothesisTests
+
+wage1 = DataFrame(wooldridge("wage1"));
+modelo = lm(@formula(log(wage) ~ married * female + educ + exper + (exper^2) + tenure + (tenure^2)), wage1);
+
+X_wh = hcat(ones(size(wage1)[1]), predict(modelo), predict(modelo).^ 2);
+result_white = WhiteTest(X_wh, residuals(modelo), type=:linear);
+pvalue(result_white)
+```
+
+
+
+:::
+
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+Seja o modelo $$Y = X\beta + u, \quad com \quad \mathbb{E}(u|X) = 0 \quad e \quad \mathbb{V}(u_i) = \sigma_i^2 = h(z_i'\alpha),$$ em que:
+
+::: {non-incremental}
+- $z_i' = [1, z_{i1}, \cdots, z_{pi}]$ é um vetor de variáveis
+- $\alpha = [\alpha_1, \alpha_2, \cdots, \alpha_p]$ é um vetor de coeficientes desconhecidos e
+- $h(\cdot): \mathbb{R} \rightarrow \mathbb{R}^{+}$
+:::
+
+. . . 
+
+$$H_0: \alpha_2 = \cdots = \alpha_p = 0 \quad (homocedasticidade)$$
+
+. . . 
+
+Sob $H_0$, $\sigma_i^2 = h(\alpha_1), \forall i$ (ou seja, homocedasticidade)
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+O procedimento funciona da seguinte forma:
+
+1. Estimar o modelo original por MQO e obter $\hat{u}_i = y_i - \hat{y}_i$ e $\tilde{\sigma}^2 = \displaystyle \sum_{i = 1}^n \hat{u}_i^2/n$.
+2. Regredir $\hat{u}_i^2/\tilde{\sigma}^2$ sob $z$ por MQO e calcular a soma de quadrado explicada (SQE).
+3. Sob $H_0$, $0.5 SQE \sim \chi^2_{p-1}$
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+- Um teste assintóticamente equivalente consiste em regredir $\hat{u}_i^2$ sob $z$. Nesse caso, $nR^2 \sim \chi_{p-1}^2$.
+- O teste requer as variáveis $z$ que podem causar a heterocedasticidade sejam conhecidas
+- Na prática essas variáveis não são conhecidas e usualmente utilizamos algumas (ou todas) das variáveis em $x$. Isto faz com que o teste seja basicamente um caso particular do teste de White.
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Breusch-Pagan/Godfrey
+
+
+::: {.panel-tabset}
+
+## R
+
+
+```{r}
+#| echo: true
+library(lmtest)
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data = wage1)
+bptest(modelo)
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import patsy as pt
+
+wage1 = woo.dataWoo('wage1')
+modelo = smf.ols(formula = 'np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1)
+results = modelo.fit()
+
+y, X_bp = pt.dmatrices('np.log(wage) ~ married*female + educ + exper + I(exper**2) + tenure + I(tenure**2)', data = wage1, return_type = 'dataframe')
+
+result_bp = sm.stats.diagnostic.het_breuschpagan(results.resid, X_bp)
+result_bp[1] # pvalor
+
+X_bp
+```
+
+
+
+
+
+## Julia
+
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, HypothesisTests, StatsModels
+
+function getMats(formula, df)
+  f = apply_schema(formula, schema(formula, df)) 
+  resp, pred = modelcols(f, df)
+  return (resp, pred)
+end
+
+wage1 = DataFrame(wooldridge("wage1"));
+f = @formula(log(wage) ~ married * female + educ + exper + (exper^2) + tenure + (tenure^2));
+modelo = lm(f, wage1);
+
+X_bp =  hcat(ones(size(wage1)[1]), getMats(f, wage1)[2]);
+
+result_bp = WhiteTest(X_bp, residuals(modelo), type=:linear);
+pvalue(result_bp)
+```
+
+
+
+:::
+
+
+
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Goldfeld-Quandt
+
+Teste simples que pode ser aplicado quando apenas uma variável é quem causa a heterocedasticidade. Para ilustrar o procedimento, imagine que $\sigma_i^2$ esteja positivamente correlacionado com $X_k$. O teste funciona da seguinte forma:
+
+1. Reordenar as observações pelo valor de $x_k$.
+2. Omitir as $c$ observações centrais.
+3. Ajustar dois modelos de regressão por MQO (cada um com $(n - c)/2$ observações).
+4. Calcular a Soma de Quadrados dos Residuos em ambas as regressões e então calcular $R = \dfrac{SQR_2}{SQR_1}$.
+5. Sob $H_0$, $R \sim F_{(n - c - 2(k+1))/2, (n - c - 2(k+1))/2}$
+
+. . . 
+
+> O poder do teste depende do valor $c$. Um valor usual é $c = n/3$
+
+
+## Testes para detetar heterocedasticidade
+
+### Teste de Goldfeld-Quandt
+
+
+
+```{r}
+#| echo: true
+library(lmtest)
+library(wooldridge)
+modelo <- lm(log(wage) ~ married * female + educ + exper + I(exper^2) + tenure + I(tenure^2), data = wage1)
+gqtest(modelo, point = 0.5, fraction = 100,
+  alternative = "two.sided", order.by = wage1$educ)
+```
+
+
+
+# Erros correlacionados
+
+## Introdução
+
+- Até agora, temos assumido que os erros são não correlacionados.
+- Mas, o que acontece se $\mathbb{E}(u_t, u_{t+s}) \neq 0$ para $s \neq 0$?
+- Lembre-se que $\rho_s = \dfrac{\mathbb{C}ov(u_t, u_{t+2})}{\sqrt{\mathbb{V}(u_t) \times \mathbb{V}(u_{t+s})}}$. 
+- Assim, sob homocedasticidade, $\rho_s = \dfrac{\mathbb{E}(u_t, u_{t+s})}{\sigma_u^2}$
+
+## Introdução
+
+
+$$\mathbb{V}(u|\textbf{X}) = \sigma^2_u \begin{bmatrix}
+1 & \rho_1 & \rho_2 &\cdots & \rho_{n-1} \\
+\rho_1 & 1 & \rho_1 & \cdots & \rho_{n-2} \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+\rho_{n-1} & \rho_{n-2} & \rho_{n-3} & \cdots & 1 \\
+\end{bmatrix}$$
+
+[Sem nenhuma informação adicional, este problema de estimação é intratável pois temos $n + k + 1$ parâmetros e apenas $n$ observações.]{style="color:red;"}
+
+. . . 
+
+Para poder abordar o problema, precisamos assumir alguma estrutura na autocorrelação.
+
+# Erros AR(1) 
+
+## Erros AR(1)
+
+Uma das especificações mais communs é o AR(1) [estacionário](https://ctruciosm.github.io/ME607-unicamp/Aula01.html#/conceitos-b%C3%A1sicos-4), ou seja, $$u_t = \phi u_{t-1} + \epsilon_t, \quad  \epsilon_t \sim WN(0, \sigma_e^2), \quad com \quad |\phi| < 1.$$
+
+- $\mathbb{E}(u_t) = 0$, $\mathbb{V}(u_t) = \dfrac{\sigma_e^2}{1-\phi^2}$ e $\rho_s = E(u_t u_{t+s}) = \phi^s$
+
+. . . 
+
+Assim, $$\mathbb{V}(u|\textbf{X}) = \sigma^2_u \begin{bmatrix}
+1 & \phi & \phi^2 &\cdots & \phi^{n-1} \\
+\phi & 1 & \phi & \cdots & \phi^{n-2} \\
+\vdots & \cdots & \ddots & \cdots & \vdots \\
+\phi^{n-1} & \phi^{n-2} & \phi^{n-3} & \cdots & 1 \\
+\end{bmatrix}$$
+
+. . . 
+
+> Agora temos apenas $k + 3$ parâmetros a serem estimados.
+
+
+## Além dos erros AR(1)
+
+
+Assim como no caso dos erros AR(1), poderiamos pensar em erros MA(1). Neste caso $$u_t = \epsilon_t + \theta \epsilon_{t-1}, \quad com \quad \epsilon_t \sim WN(0, \sigma_e^2).$$
+
+- $\mathbb{E}(u_t) = 0$, $\mathbb{V}(u_t) = \dfrac{\sigma_e^2}{1+\theta^2}$ $\rho_1 = \dfrac{\theta}{1 + \theta^2}$ e $\rho_i = 0, \forall i>1$
+
+. . . 
+
+> Em geral, poderiamos assumir qualquer ARMA(p,q) mas em geral AR(1) ou MA(1) costumam ser suficientes na maioria dos casos.
+
+## O que pode gerar erros autocorrelacionados?
+
+Seja o modelo $$Y = X\beta + u.$$
+
+- Esperamos que todas as variáveis relevantes para explicar Y tenham sido incluidas no modelo. Nesses casos, esperamos que os erros sejam não correlacionados.
+- [Erros autocorrelacionados podem indicar má especificação no modelos de regressão.]{style="color:red;"}
+
+. . . 
+
+Suponha a seguinte situação:
+
+- Modelo correto: $y_t = \beta_0 + \beta_1 x_t + \beta_2 y_{t-1} + u_t$.
+- Modelo má especificado $y_t = \beta_0 + \beta_1 x_t + \nu_t$
+- Então $\nu_t = \beta_2 y_{t-1} + u_t$  é autocorrelacionado
+
+## MQO e erros correlacionados
+
+- Se $\textbf{X}$ não contem variáveis defasadas de $Y$, $\hat{\beta}$ é não viesado mas $\mathbb{V}(\beta|X) \neq \sigma^2 (X'X)^{-1}$ (afetando os testes de hipóteses e intervalos de confiança).
+- Se $\textbf{X}$ contem variáveis defasadas de $Y$, os resultados podem ser bem diferentes do caso anterior (geralmente teremos que $\hat{\beta}$ não é um estimador consistente para $\beta$).
+
+# Testes para detetar erros autocorrelacionados
+
+## Testes para detetar erros autocorrelacionados
+
+Seja o modelo $$Y = X\beta + u,$$ e suspeitamos que $u_t = \phi u_{t-1} + \epsilon_t$.
+
+. . . 
+
+A hipótese nula de erros não correlacionados implica $$H_0: \phi = 0 \quad vs. \quad H_1: \phi \neq 0$$
+
+. . . 
+
+> **Observação:** o teste é a respeito dos $u$s (que são não observáveis). Em lugar dos $u$s temos $\hat{u}$s e isto gera algumas dificuldades. Sabemos que $\hat{u} = \textbf{M}u$ com $\textbf{M} = I - X'(X'X)^{-1}X$. Assim, $\mathbb{V}(\hat{u}|X) = \sigma_u^2M$, ou seja, mesmo quando $H_0$ é verdadeiro, os residuais apresentam algum tipo de autocorrelção.
+
+## Teste t
+
+1. Regredir $y$ sob $x_1, \cdots, x_k$.
+2. Obter os resíduais $\hat{u}_1, \cdots, \hat{u}_n$
+3. Para testar correlação serial do tipo AR(1), regredimos $\hat{u}_t$ sob $\hat{u}_{t-1}$. Se o coeficiente associado a  $\hat{u}_{t-1}$ for estatísticamente significativo (teste t usual), rejeitamos a hipótese nula de residuos não autocorrelacionados.
+
+. . . 
+
+> **Observação:** $\textbf{X}$ na regressão do item 1 não deve contar variáveis defasadas de $Y$.
+
+
+## Teste t
+
+::: {.panel-tabset}
+
+## R
+
+
+```{r}
+#| echo: true
+library(dynlm)
+library(lmtest)
+data(phillips, package = 'wooldridge')
+tsdata <- ts(phillips, start = 1948)
+modelo <- dynlm(inf ~ unem, data = tsdata, end = 1996)
+u_hat <- resid(modelo)
+coeftest(dynlm(u_hat ~ L(u_hat)))
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import pandas as pd
+import statsmodels.formula.api as smf
+
+phillips = woo.dataWoo('phillips') 
+T = len(phillips)
+date_range = pd.date_range(start = '1948', periods = T, freq = 'Y')
+phillips.index = date_range.year
+
+yt96 = (phillips['year'] <= 1996)
+reg_s = smf.ols(formula= 'Q("inf") ~ unem', data = phillips, subset = yt96) 
+results_s = reg_s.fit()
+
+phillips['resid_s'] = results_s.resid
+phillips['resid_s_lag1'] = phillips['resid_s'].shift(1)
+reg = smf.ols(formula = 'resid_s ~ resid_s_lag1', data = phillips, subset = yt96)
+results = reg.fit()
+
+table = pd.DataFrame({'b': round(results.params, 4),
+                      'se': round(results.bse, 4),
+                      't': round(results.tvalues, 4), 
+                      'pval': round(results.pvalues, 4)})
+
+table
+```
+
+
+
+
+## Julia
+
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames
+
+phillips = DataFrame(wooldridge("phillips"));
+yt96 = subset(phillips, :year => ByRow(<=(1996)));
+
+reg_s = lm(@formula(inf ~ unem), yt96);
+yt96.resid_s = residuals(reg_s);
+yt96.resid_s_lag1 = lag(yt96.resid_s, 1);
+
+reg = lm(@formula(resid_s ~ resid_s_lag1), yt96);
+coeftable(reg)
+```
+
+
+
+:::
+
+
+
+## Teste de Durbin-Watson
+
+<center>
+Teste de correlação serial do tipo AR(1).
+</center>
+
+- $H_0:$ os erros são não correlacionados.
+- Estatística de teste: $DW = \displaystyle \sum_{t = 2}^n (\hat{u}_t - \hat{u}_{t-1})^2 \Big / \displaystyle \sum_{t = 1}^n \hat{u}_t^2 \approx 2(1 - \hat{\phi})$
+- Intuitivamente:
+
+. . . 
+
+| Estatística | Decisão            |
+|:-----------:|:------------------:|
+| DW < 2      | autocorrelação positiva |
+| DW > 2      | autocorrelação negativa |
+| DW $\approx$ 2      | autocorrelação zero |
+
+## Teste de Durbin-Watson
+
+
+- Se DW < 2, estamos interessados em saber se o valor obtido é suficiente para rejeitar $H_0$ em favor de $H_1: \rho > 0$.
+- Durbin-Watson derivam a distribuição de DW, mas esta depende dos valores de $\textbf{X}$, tamanho amostral $n$, número $k$ de variáveis do modelo, etc. 
+- Regra de decisão:
+  * $DW < d_L$ rejeitamos $H_0$.
+  * $DW > d_U$ não rejeitamos $H_0$.
+  * $d_L < DW < d_U$ inconclussivo
+
+
+. . . 
+
+> Se $DW > 2$, podemos estar interessados em testar $H_1: \rho < 0$. Neste caso, calculamos 4-d e comparamos esta estatística com os valores criticos tabulados $d_L$ e $d_U$ vistos anteriormente.
+
+
+## Teste de Durbin-Watson
+
+
+
+::: {.panel-tabset}
+
+## R
+
+
+```{r}
+#| echo: true
+library(dynlm)
+library(lmtest)
+data(phillips, package = 'wooldridge')
+tsdata <- ts(phillips, start = 1948)
+reg.s <- dynlm(inf ~ unem, data = tsdata, end = 1996)
+dwtest(reg.s)
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import pandas as pd
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+phillips = woo.dataWoo('phillips') 
+T = len(phillips)
+
+date_range = pd.date_range(start = '1948', periods = T, freq = 'Y') 
+phillips.index = date_range.year
+
+yt96 = (phillips['year'] <= 1996)
+phillips['inf_diff1'] = phillips['inf'].diff()
+reg_s = smf.ols(formula='Q("inf") ~ unem', data = phillips, subset = yt96)
+
+results_s = reg_s.fit()
+DW_s = sm.stats.stattools.durbin_watson(results_s.resid)
+DW_s
+```
+
+
+
+
+## Julia
+
+
+```{julia}
+#| echo: true
+using WooldridgeDatasets, GLM, DataFrames, HypothesisTests, StatsModels
+
+phillips = DataFrame(wooldridge("phillips"));
+yt96 = subset(phillips, :year => ByRow(<=(1996)));
+
+reg_s = lm(@formula(inf ~ unem), yt96);
+X_s = modelmatrix(reg_s); 
+resid_s = residuals(reg_s);
+
+DW_s = DurbinWatsonTest(X_s, resid_s);
+DW_s
+```
+
+
+
+:::
+
+
+## Teste de Durbin-Watson
+
+
+#### Observações:
+
+- Para aplicar o teste de Durbin-Watson é necessário que o intercepto seja incluido na regressão. Quando o intercepto não é incluido, $d_U$ continua válido mas $d_L$ precisa ser subtituido por $d_M$.
+- Para aplicar o teste de Durbin-Watson $\textbf{X}$ não deve conter valores defasados de $Y$. Se valores defasados de $Y$ são incluidos em $\textbf{X}$, a estatística DW é viesada e levara a conclusões enganosas. Uma alternativa nestas situações é a seguinte:
+  * Ajustar por MQO a regressão de $y_t$ sob $x_{1t}, \cdots, x_{kt}$ e obter os resíduos $\hat{u}_t$.
+  * Ajustar por MQO a regressão de $\hat{u}_t$ sob $\hat{u}_{t-1}$, $x_{1t}, \cdots, x_{kt}$
+  * Se o coeficiente da regresseão associado a $\hat{u}_{t-1}$ for estatísticamente significativo (utilizando um teste t usual), rejetimaos a hipótese nula de que os erros são não correlacionados.
+  
+
+## Teste para ordens maiores
+
+Até agora temos assumido o modelo $$Y = X\beta + u,$$
+e suspeitams que $u_t = \phi u_{t-1} + \epsilon_t$.
+
+. . . 
+
+Em geral, podemos suspeitar que $u_t = \phi_1 u_{t-1} + \cdots + \phi_k u_{t-k} + \epsilon_t$.
+
+. . . 
+
+O mesmo procedimento geral utilizado anteriormente pode também ser aplicado:
+
+- Ajustar por MQO a regressão de $y_t$ sob $x_{1t}, \cdots, x_{kt}$ e obter os resíduos $\hat{u}_t$.
+- Ajustar por MQO a regressão de $\hat{u}_t$ sob $\hat{u}_{t-1}, \cdots, \hat{u}_{t-k}$, $x_{1t}, \cdots, x_{kt}$
+- Utilizamos um teste F para testar se os coefiencientes associados a $\hat{u}_{t-1}, \cdots, \hat{u}_{t-k}$ são todos nulos. Se rejeitamos $H_0$ do teste F, rejeitamos a hipótese nula de que os erros são não correlacionados.
+
+. . .
+
+> **Obs:** o teste requer homocedasticidade. No caso de heterocedasticidade, um correção pode ser feita como discutido na seção de heterocedasticidade.
+
+## O que fazer se os erros são autocorrelacionados?
+
+- Precisamos estimar corretamente $\mathbb{V}(\beta | X)$.
+- Assim como utilizamos o estimador de White no caso de heterocedasticidade, utilizaremos outro estimador que seja robusto a correlação serial.
+- O estimador HAC (heteroskedasticity and autocorrelation consistent) será utilizado.
+
+
+
+## O que fazer se os erros são autocorrelacionados?
+
+
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| echo: true
+library(dynlm)
+library(lmtest)
+library(sandwich)
+
+data(prminwge, package = 'wooldridge')
+tsdata <- ts(prminwge, start = 1950)
+reg <- dynlm(log(prepop) ~ log(mincov) + log(prgnp) + log(usgnp) + trend(tsdata), data = tsdata)
+
+coeftest(reg)
+sqrt(diag(NeweyWest(reg, lag = 2, prewhite = FALSE)))
+# coeftest(reg, vcovHAC) (Qual o valor de g?)
+```
+
+
+
+## Python
+
+
+```{python}
+#| echo: true
+import wooldridge as woo
+import pandas as pd
+import numpy as np
+import statsmodels.formula.api as smf
+
+prminwge = woo.dataWoo('prminwge')
+T = len(prminwge)
+prminwge['time'] = prminwge['year'] - 1949
+prminwge.index = pd.date_range(start = '1950', periods = T, freq = 'Y').year
+
+reg = smf.ols(formula='np.log(prepop) ~ np.log(mincov) + np.log(prgnp) + np.log(usgnp) + time', data = prminwge)
+results_regu = reg.fit()
+
+table_regu = pd.DataFrame({'b': round(results_regu.params, 4),
+                          'se': round(results_regu.bse, 4),
+                          't': round(results_regu.tvalues, 4),
+                          'pval': round(results_regu.pvalues, 4)})
+
+results_hac = reg.fit(cov_type = 'HAC', cov_kwds={'maxlags': 2})
+table_hac = pd.DataFrame({'b': round(results_hac.params, 4),
+                          'se': round(results_hac.bse, 4),
+                          't': round(results_hac.tvalues, 4), 
+                          'pval': round(results_hac.pvalues, 4)})
+                          
+table_regu
+table_hac
+
+```
+
+
+
+## Julia
+
+Implementar (ver lista)
+
+:::
+
+
+## O que fazer se os erros são autocorrelacionados?
+
+
+1. Ajustar o modelo $y_t = \beta_0 + \beta_1 x_{1t} + \cdots, \beta_k x_{kt} + u_t$
+2. Ajustar o modelo auxiliar $x_{1t} = \delta_0 + \delta_2 x_{2t} + \cdots + \delta_k x_{kt} + r_t$
+3. Calcular $\hat{a}_t = \hat{r}_t \hat{u}_t$
+4. Calcular $\hat{\nu} = \displaystyle \sum_{t=1}^n \hat{a}_t^2 + 2 \sum_{h= 1}^g [1 - h/(g+1)](\sum_{t = h + 1}^n \hat{a}_t \hat{a}_{t-h})$
+5. O novo desvio padrão será dado por $$[\sqrt{\mathbb{V}(\hat{\beta}_1|X)}/\hat{\sigma}]^2 \sqrt{\hat{\nu}}$$
+
+. . . 
+
+> O mesmo pode ser feito para i = 2, 3, ..., k.
