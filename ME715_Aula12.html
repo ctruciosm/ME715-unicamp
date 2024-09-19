@@ -5,9 +5,10 @@
 <script src="ME715_Aula12_files/libs/quarto-html/popper.min.js"></script>
 <script src="ME715_Aula12_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="ME715_Aula12_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ME715_Aula12_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="ME715_Aula12_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="ME715_Aula12_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.280">
+  <meta name="generator" content="quarto-1.4.555">
 
   <meta name="author" content="Prof.&nbsp;Carlos Trucíos  ctrucios@unicamp.br">
   <title>ME715 - Econometria</title>
@@ -25,11 +26,12 @@
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
       width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -93,7 +95,7 @@
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="ME715_Aula12_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="ME715_Aula12_files/libs/revealjs/dist/theme/quarto.css">
   <link href="ME715_Aula12_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="ME715_Aula12_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="ME715_Aula12_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -138,44 +140,44 @@
     font-weight: 400;
   }
 
-  .callout.callout-captioned.callout-style-simple .callout-body {
+  .callout.callout-titled.callout-style-simple .callout-body {
     margin-top: 0.2em;
   }
 
-  .callout:not(.callout-captioned) .callout-body {
+  .callout:not(.callout-titled) .callout-body {
       display: flex;
   }
 
-  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
     padding-left: 1.6em;
   }
 
-  .callout.callout-captioned .callout-header {
+  .callout.callout-titled .callout-header {
     padding-top: 0.2em;
     margin-bottom: -0.2em;
   }
 
-  .callout.callout-captioned .callout-caption  p {
+  .callout.callout-titled .callout-title  p {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
     
-  .callout.callout-captioned.callout-style-simple .callout-content  p {
+  .callout.callout-titled.callout-style-simple .callout-content  p {
     margin-top: 0;
   }
 
-  .callout.callout-captioned.callout-style-default .callout-content  p {
+  .callout.callout-titled.callout-style-default .callout-content  p {
     margin-top: 0.7em;
   }
 
-  .callout.callout-style-simple div.callout-caption {
+  .callout.callout-style-simple div.callout-title {
     border-bottom: none;
     font-size: .9rem;
     font-weight: 600;
     opacity: 75%;
   }
 
-  .callout.callout-style-default  div.callout-caption {
+  .callout.callout-style-default  div.callout-title {
     border-bottom: none;
     font-weight: 600;
     opacity: 85%;
@@ -207,7 +209,7 @@
     background-size: 0.9rem 0.9rem;
   }
 
-  .callout-caption {
+  .callout-title {
     display: flex
   }
     
@@ -220,16 +222,17 @@
     display: none !important;
   }
 
-  .callout.callout-captioned .callout-body > .callout-content > :last-child {
-    margin-bottom: 0.5rem;
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
   }
 
-  .callout.callout-captioned .callout-icon::before {
+  .callout.callout-titled .callout-icon::before {
     margin-top: .5rem;
     padding-right: .5rem;
   }
 
-  .callout:not(.callout-captioned) .callout-icon::before {
+  .callout:not(.callout-titled) .callout-icon::before {
     margin-top: 1rem;
     padding-right: .5rem;
   }
@@ -244,7 +247,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
   }
 
-  div.callout-note.callout-style-default .callout-caption {
+  div.callout-note.callout-style-default .callout-title {
     background-color: #dae6fb
   }
 
@@ -256,7 +259,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
   }
 
-  div.callout-important.callout-style-default .callout-caption {
+  div.callout-important.callout-style-default .callout-title {
     background-color: #f7dddc
   }
 
@@ -268,7 +271,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-warning.callout-style-default .callout-caption {
+  div.callout-warning.callout-style-default .callout-title {
     background-color: #fcefdc
   }
 
@@ -280,7 +283,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-tip.callout-style-default .callout-caption {
+  div.callout-tip.callout-style-default .callout-title {
     background-color: #ccf1e3
   }
 
@@ -292,7 +295,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
   }
 
-  div.callout-caution.callout-style-default .callout-caption {
+  div.callout-caution.callout-style-default .callout-title {
     background-color: #ffe5d0
   }
 
@@ -439,9 +442,9 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </ul>
 </div>
 <div class="fragment">
-<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -461,9 +464,9 @@ A diferença é que ao fazer amostragem de uma população em períodos diferent
 </section>
 <section id="agrupamento-independente-de-cortes-transversais-2" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
-<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -494,9 +497,9 @@ A diferença é que ao fazer amostragem de uma população em períodos diferent
 </section>
 <section id="agrupamento-independente-de-cortes-transversais-4" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
-<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -506,13 +509,13 @@ A diferença é que ao fazer amostragem de uma população em períodos diferent
 <p>O <em>dataset</em> <code>fertil1</code> provém da Pesquisa Social Geral (realizada de dois em dois anos, começando em 1972) do Centro de Pesquisa e Opinião Nacional. Utilizaremos este conjunto de dados para construir um modelo que explique o número total de nascimentos por mulheres (<em>kids</em>).</p>
 <p>Em particular, estamos interessados em saber o que aconteceu com as taxas de fertilidade ao longo do tempo após termos controlado os outros fatores observáveis (anos de educação, idade, raça, região do país onde as mulherem moravam quando tinham 16 anos e o ambiente em que viviam quando tinham a mesma idade).</p>
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb1-2"><a href="#cb1-2"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(kids  <span class="sc">~</span> educ <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> black <span class="sc">+</span> east <span class="sc">+</span> northcen <span class="sc">+</span> west <span class="sc">+</span> </span>
-<span id="cb1-3"><a href="#cb1-3"></a>               farm <span class="sc">+</span> othrural <span class="sc">+</span> town <span class="sc">+</span> smcity <span class="sc">+</span> y74 <span class="sc">+</span> y76 <span class="sc">+</span> y78 <span class="sc">+</span> y80 <span class="sc">+</span> y82 <span class="sc">+</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>               y84, <span class="at">data =</span> fertil1)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb1-2"><a href=""></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(kids  <span class="sc">~</span> educ <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> black <span class="sc">+</span> east <span class="sc">+</span> northcen <span class="sc">+</span> west <span class="sc">+</span> </span>
+<span id="cb1-3"><a href=""></a>               farm <span class="sc">+</span> othrural <span class="sc">+</span> town <span class="sc">+</span> smcity <span class="sc">+</span> y74 <span class="sc">+</span> y76 <span class="sc">+</span> y78 <span class="sc">+</span> y80 <span class="sc">+</span> y82 <span class="sc">+</span></span>
+<span id="cb1-4"><a href=""></a>               y84, <span class="at">data =</span> fertil1)</span>
+<span id="cb1-5"><a href=""></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -559,9 +562,9 @@ F-statistic: 9.723 on 17 and 1111 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="agrupamento-independente-de-cortes-transversais-5" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
-<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -599,16 +602,16 @@ F-statistic: 9.723 on 17 and 1111 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul></li>
 </ul>
 <div class="fragment">
-<div class="callout callout-important callout-captioned callout-style-default">
+<div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <p><strong>Importante</strong></p>
 </div>
 <div class="callout-content">
-<p>Neste caso particular, como temos incluido uma <em>dummy</em> (y85) que altera o intercepto e como estamos trabalhando com <span class="math inline">\(\log(wage)\)</span>, não será necessário fazer a deflação. Veja que se denotarmos por <span class="math inline">\(P85\)</span> o fator de deflação para os salário hora de 1985, temos que <span class="math inline">\(\log(wage_i / P85) = \log(wage_i) - \log(P85)\)</span></p>
+<p>Neste caso particular, como temos incluido uma <em>dummy</em> (y85) que altera o intercepto e como estamos trabalhando com <span class="math inline">\(\log(wage)\)</span>, não será necessário fazer a deflação. Veja que se denotarmos por <span class="math inline">\(P85\)</span> o fator de deflação para os salário hora de 1985, temos que <span class="math inline">\(\log(wage_i  / P85) = \log(wage_i) - \log(P85)\)</span></p>
 </div>
 </div>
 </div>
@@ -617,10 +620,10 @@ F-statistic: 9.723 on 17 and 1111 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="agrupamento-independente-de-cortes-transversais-7" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> y85<span class="sc">*</span>educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> y85<span class="sc">*</span>female, <span class="at">data =</span> cps78_85)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> y85<span class="sc">*</span>educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> y85<span class="sc">*</span>female, <span class="at">data =</span> cps78_85)</span>
+<span id="cb3-2"><a href=""></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -655,9 +658,9 @@ F-statistic:  99.8 on 8 and 1075 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="agrupamento-independente-de-cortes-transversais-8" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 Estimate   Std. Error    t value     Pr(&gt;|t|)
@@ -683,9 +686,9 @@ y85:female   0.0850519706 5.130896e-02  1.6576435 9.768121e-02</code></pre>
 </section>
 <section id="agrupamento-independente-de-cortes-transversais-9" class="slide level2">
 <h2>Agrupamento independente de cortes transversais</h2>
-<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -704,10 +707,10 @@ O que acontece se ajustarmos um modelo incluindo a interação de <span class="m
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> y85<span class="sc">*</span>(educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female), <span class="at">data =</span> cps78_85)</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> y85<span class="sc">*</span>(educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female), <span class="at">data =</span> cps78_85)</span>
+<span id="cb7-2"><a href=""></a><span class="fu">summary</span>(modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -744,11 +747,11 @@ F-statistic: 72.79 on 11 and 1072 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="tabset-1-2">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female, <span class="at">weights =</span> y85, <span class="at">data =</span> cps78_85)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>modelo_02 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female, <span class="at">weights =</span> <span class="dv">1</span><span class="sc">-</span> y85, <span class="at">data =</span> cps78_85)</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">summary</span>(modelo_01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female, <span class="at">weights =</span> y85, <span class="at">data =</span> cps78_85)</span>
+<span id="cb9-2"><a href=""></a>modelo_02 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> union <span class="sc">+</span> female, <span class="at">weights =</span> <span class="dv">1</span><span class="sc">-</span> y85, <span class="at">data =</span> cps78_85)</span>
+<span id="cb9-3"><a href=""></a><span class="fu">summary</span>(modelo_01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -779,9 +782,9 @@ F-statistic: 49.13 on 5 and 528 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="tabset-1-3">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">summary</span>(modelo_02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">summary</span>(modelo_02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -832,9 +835,9 @@ F-statistic: 67.61 on 5 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
 <center>
 <span style="color:red;">Cortes transversais agrupados poder ser muito úteis para avaliar o impacto de determinados eventos ou decisões políticas.</span>
 </center>
-<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
-<div class="callout-caption">
+<div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -853,10 +856,10 @@ F-statistic: 67.61 on 5 and 544 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc, <span class="at">data =</span> kielmc, <span class="at">subset =</span> (year<span class="sc">==</span><span class="dv">1981</span>))</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">summary</span>(modelo_01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc, <span class="at">data =</span> kielmc, <span class="at">subset =</span> (year<span class="sc">==</span><span class="dv">1981</span>))</span>
+<span id="cb13-2"><a href=""></a><span class="fu">summary</span>(modelo_01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -884,10 +887,10 @@ F-statistic: 27.73 on 1 and 140 DF,  p-value: 5.139e-07</code></pre>
 <div id="tabset-2-2">
 <p>Infelizmente, as conclusões anteriores não são o que parecem. De fato, se analizarmos apenas os dados de 1978 (quando nem rumores do incinerador existiam), veremos que imóveis nessa mesma região já eram mais baratos.</p>
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>modelo_02 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc, <span class="at">data =</span> kielmc, <span class="at">subset =</span> (year<span class="sc">==</span><span class="dv">1978</span>))</span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">summary</span>(modelo_02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>modelo_02 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc, <span class="at">data =</span> kielmc, <span class="at">subset =</span> (year<span class="sc">==</span><span class="dv">1978</span>))</span>
+<span id="cb15-2"><a href=""></a><span class="fu">summary</span>(modelo_02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -932,10 +935,10 @@ F-statistic: 15.74 on 1 and 177 DF,  p-value: 0.0001054</code></pre>
 </div>
 <div id="tabset-2-6">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>modelo_03 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc <span class="sc">*</span> y81 , <span class="at">data =</span> kielmc)</span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">summary</span>(modelo_03)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>modelo_03 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice <span class="sc">~</span> nearinc <span class="sc">*</span> y81 , <span class="at">data =</span> kielmc)</span>
+<span id="cb17-2"><a href=""></a><span class="fu">summary</span>(modelo_03)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -969,11 +972,11 @@ F-statistic: 22.25 on 3 and 317 DF,  p-value: 4.224e-13</code></pre>
 <h2>Cases</h2>
 <p>O que acontece se trabalharmos com <span class="math inline">\(\log(rprice)\)</span> e com controles?</p>
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>modelo_04 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rprice) <span class="sc">~</span> nearinc<span class="sc">*</span>y81 <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">log</span>(intst) <span class="sc">+</span> </span>
-<span id="cb19-2"><a href="#cb19-2"></a>                  <span class="fu">log</span>(land) <span class="sc">+</span> <span class="fu">log</span>(area) <span class="sc">+</span> rooms <span class="sc">+</span> baths, <span class="at">data =</span> kielmc)</span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">summary</span>(modelo_04)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>modelo_04 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(rprice) <span class="sc">~</span> nearinc<span class="sc">*</span>y81 <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">log</span>(intst) <span class="sc">+</span> </span>
+<span id="cb19-2"><a href=""></a>                  <span class="fu">log</span>(land) <span class="sc">+</span> <span class="fu">log</span>(area) <span class="sc">+</span> rooms <span class="sc">+</span> baths, <span class="at">data =</span> kielmc)</span>
+<span id="cb19-3"><a href=""></a><span class="fu">summary</span>(modelo_04)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1023,10 +1026,10 @@ F-statistic: 84.91 on 10 and 310 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<details>
+<details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(crmrte <span class="sc">~</span> unem, <span class="at">data =</span> crime2, <span class="at">subset =</span> (year <span class="sc">==</span> <span class="dv">87</span>))</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo_01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(crmrte <span class="sc">~</span> unem, <span class="at">data =</span> crime2, <span class="at">subset =</span> (year <span class="sc">==</span> <span class="dv">87</span>))</span>
+<span id="cb21-2"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo_01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
@@ -1056,12 +1059,279 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
 <h2>Análise de dados em painel de dois períodos</h2>
 <ul>
 <li class="fragment">O Modelo apresentado é chamado de <strong>modelos de efeitos não observados</strong> ou <strong>modelo de efeitos fixos</strong></li>
-<li class="fragment">Para o exemplo das taxas de crimialidade de uma cidade em 1982 e 1987, um modelo de efeito fixos (ou de efeitos não observados) é dado por <span class="math display">\[crmrte_{it} = \beta_0 + \gamma_0 d87_t, \beta_1 unem_{it} + a_i + u_{it},\]</span> em que <span class="math inline">\(d87\)</span> é uma dummy para 1987 (recebe o valor 1 se o ano for 1987 e zero se o ano for 1982) e, neste caso, <span class="math inline">\(a_i\)</span> é o efeito não observadoo (ou fixo) da cidade (todos os fatores que afetam a taxa de criminalidade da cidade que não mudam ao longo do tempo).</li>
+<li class="fragment">Para o exemplo das taxas de crimialidade de uma cidade em 1982 e 1987, um modelo de efeito fixos (ou de efeitos não observados) é dado por <span class="math display">\[crmrte_{it} = \beta_0 + \gamma_0 d87_t  + \beta_1 unem_{it} + a_i + u_{it},\]</span> em que <span class="math inline">\(d87\)</span> é uma dummy para 1987 (recebe o valor 1 se o ano for 1987 e zero se o ano for 1982) e, neste caso, <span class="math inline">\(a_i\)</span> é o efeito não observadoo (ou fixo) da cidade (todos os fatores que afetam a taxa de criminalidade da cidade que não mudam ao longo do tempo).</li>
 <li class="fragment"><span style="color:red;">Como estimamos o parâmetro de interesse <span class="math inline">\(\beta_1\)</span>?</span></li>
 </ul>
-
-<img src="imagens/imecc.png" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-4" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="alternativa-1">Alternativa 1</h3>
+<ul>
+<li class="fragment">Agrupar e usar MQO como na primeira parte da aula.</li>
+<li class="fragment">O problema? precisamos assumir que <span class="math inline">\(a_i\)</span> e <span class="math inline">\(x_{it}\)</span> são não correlacionados. Se isso não for verdade teremos um <span class="math inline">\(\hat{\beta}\)</span> viesado e inconsistente.</li>
+<li class="fragment">Para ver isto, basta notar que <span class="math display">\[y_{it} = \beta_0 + \gamma_0D_t + \beta_1 x_{it} + \underbrace{a_i + u_{it}}_{v_{it}}\]</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="alternativa-2">Alternativa 2</h3>
+<ul>
+<li class="fragment">A razão principal para coletar dados em painel é considerar que o efeito não observado (<span class="math inline">\(a_i\)</span>) é correlacioado com as variáveis explicativas.</li>
+<li class="fragment">Isso pode ser feito através da diferenciação!
+<ul>
+<li class="fragment"><span class="math inline">\(y_{i2} = \beta_0 + \gamma_0 + \beta_1 x_{i2} + a_i + u_{i2}\)</span>,</li>
+<li class="fragment"><span class="math inline">\(y_{i1} = \beta_0 + \beta_1 x_{i1} + a_i + u_{i1}\)</span>,</li>
+<li class="fragment"><span class="math inline">\(y_{i2} - y_{i} = \gamma_0 + \beta_1 (x_{i2} - x_{i1}) + (u_{i2} - u_{i1})\)</span>,</li>
+<li class="fragment"><span class="math inline">\(\Delta y_i = \gamma_0 + \beta_1 + \Delta x_i + \Delta u_i\)</span></li>
+</ul></li>
+<li class="fragment">Aplicamos MQO (o estimador resultante é chamado de estimador de primeiras diferenças)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-5" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">library</span>(plm)</span>
+<span id="cb23-2"><a href=""></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb23-3"><a href=""></a><span class="fu">glimpse</span>(crime2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 92
+Columns: 34
+$ pop      &lt;dbl&gt; 229528, 246815, 814054, 933177, 374974, 406297, 176496, 20172…
+$ crimes   &lt;dbl&gt; 17136, 17306, 75654, 83960, 31352, 31364, 15698, 16953, 31202…
+$ unem     &lt;dbl&gt; 8.2, 3.7, 8.1, 5.4, 9.0, 5.9, 12.6, 5.7, 12.6, 7.4, 13.9, 5.7…
+$ officers &lt;int&gt; 326, 321, 1621, 1803, 633, 685, 245, 259, 504, 563, 186, 232,…
+$ pcinc    &lt;int&gt; 8532, 12155, 7551, 11363, 8343, 11729, 7592, 10802, 7558, 106…
+$ west     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ nrtheast &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ south    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ year     &lt;int&gt; 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 82, 8…
+$ area     &lt;dbl&gt; 44.6, 44.6, 375.0, 375.0, 49.8, 49.8, 74.0, 74.0, 97.3, 97.3,…
+$ d87      &lt;int&gt; 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0…
+$ popden   &lt;dbl&gt; 5146.368, 5533.969, 2170.811, 2488.472, 7529.599, 8158.574, 2…
+$ crmrte   &lt;dbl&gt; 74.65756, 70.11729, 92.93487, 89.97221, 83.61113, 77.19476, 8…
+$ offarea  &lt;dbl&gt; 7.309417, 7.197309, 4.322667, 4.808000, 12.710844, 13.755020,…
+$ lawexpc  &lt;dbl&gt; 850.8599, 2262.4399, 875.0800, 1069.6400, 1121.8999, 1545.600…
+$ polpc    &lt;dbl&gt; 1.420306, 1.300569, 1.991268, 1.932109, 1.688117, 1.685959, 1…
+$ lpop     &lt;dbl&gt; 12.34378, 12.41639, 13.60978, 13.74635, 12.83461, 12.91484, 1…
+$ loffic   &lt;dbl&gt; 5.786897, 5.771441, 7.390799, 7.497207, 6.450470, 6.529419, 5…
+$ lpcinc   &lt;dbl&gt; 9.051579, 9.405496, 8.929436, 9.338118, 9.029179, 9.369820, 8…
+$ llawexpc &lt;dbl&gt; 6.746247, 7.724199, 6.774315, 6.975078, 7.022779, 7.343167, 6…
+$ lpopden  &lt;dbl&gt; 8.546046, 8.618661, 7.682856, 7.819424, 8.926597, 9.006824, 7…
+$ lcrimes  &lt;dbl&gt; 9.748937, 9.758808, 11.233926, 11.338096, 10.353033, 10.35341…
+$ larea    &lt;dbl&gt; 3.797734, 3.797734, 5.926926, 5.926926, 3.908015, 3.908015, 4…
+$ lcrmrte  &lt;dbl&gt; 4.312912, 4.250169, 4.531899, 4.499501, 4.426177, 4.346332, 4…
+$ clcrimes &lt;dbl&gt; NA, 0.0098714828, NA, 0.1041698456, NA, 0.0003833771, NA, 0.0…
+$ clpop    &lt;dbl&gt; NA, 0.0726137161, NA, 0.1365680695, NA, 0.0802278519, NA, 0.1…
+$ clcrmrte &lt;dbl&gt; NA, -0.06274271, NA, -0.03239822, NA, -0.07984495, NA, -0.056…
+$ lpolpc   &lt;dbl&gt; 0.3508723, 0.2628021, 0.6887718, 0.6586123, 0.5236138, 0.5223…
+$ clpolpc  &lt;dbl&gt; NA, -0.088070214, NA, -0.030159533, NA, -0.001279354, NA, -0.…
+$ cllawexp &lt;dbl&gt; NA, 0.9779520, NA, 0.2007623, NA, 0.3203883, NA, 0.1313882, N…
+$ cunem    &lt;dbl&gt; NA, -4.5000000, NA, -2.7000003, NA, -3.0999999, NA, -6.900000…
+$ clpopden &lt;dbl&gt; NA, 0.0726146698, NA, 0.1365680695, NA, 0.0802278519, NA, 0.1…
+$ lcrmrt_1 &lt;dbl&gt; NA, 4.312912, NA, 4.531899, NA, 4.426177, NA, 4.487990, NA, 4…
+$ ccrmrte  &lt;dbl&gt; NA, -4.540268, NA, -2.962654, NA, -6.416374, NA, -4.901543, N…</code></pre>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-6" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>crime2_panel <span class="ot">&lt;-</span> <span class="fu">pdata.frame</span>(crime2, <span class="at">index =</span> <span class="dv">46</span>)</span>
+<span id="cb25-2"><a href=""></a><span class="fu">glimpse</span>(crime2_panel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 92
+Columns: 36
+$ pop      &lt;pseries&gt; 229528, 246815, 814054, 933177, 374974, 406297, 176496, 2…
+$ crimes   &lt;pseries&gt; 17136, 17306, 75654, 83960, 31352, 31364, 15698, 16953, 3…
+$ unem     &lt;pseries&gt; 8.2, 3.7, 8.1, 5.4, 9.0, 5.9, 12.6, 5.7, 12.6, 7.4, 13.9,…
+$ officers &lt;pseries&gt; 326, 321, 1621, 1803, 633, 685, 245, 259, 504, 563, 186, …
+$ pcinc    &lt;pseries&gt; 8532, 12155, 7551, 11363, 8343, 11729, 7592, 10802, 7558,…
+$ west     &lt;pseries&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ nrtheast &lt;pseries&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ south    &lt;pseries&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ year     &lt;pseries&gt; 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 82, 87, 8…
+$ area     &lt;pseries&gt; 44.6, 44.6, 375.0, 375.0, 49.8, 49.8, 74.0, 74.0, 97.3, 9…
+$ d87      &lt;pseries&gt; 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, …
+$ popden   &lt;pseries&gt; 5146.368, 5533.969, 2170.811, 2488.472, 7529.599, 8158.57…
+$ crmrte   &lt;pseries&gt; 74.65756, 70.11729, 92.93487, 89.97221, 83.61113, 77.1947…
+$ offarea  &lt;pseries&gt; 7.309417, 7.197309, 4.322667, 4.808000, 12.710844, 13.755…
+$ lawexpc  &lt;pseries&gt; 850.8599, 2262.4399, 875.0800, 1069.6400, 1121.8999, 1545…
+$ polpc    &lt;pseries&gt; 1.420306, 1.300569, 1.991268, 1.932109, 1.688117, 1.68595…
+$ lpop     &lt;pseries&gt; 12.34378, 12.41639, 13.60978, 13.74635, 12.83461, 12.9148…
+$ loffic   &lt;pseries&gt; 5.786897, 5.771441, 7.390799, 7.497207, 6.450470, 6.52941…
+$ lpcinc   &lt;pseries&gt; 9.051579, 9.405496, 8.929436, 9.338118, 9.029179, 9.36982…
+$ llawexpc &lt;pseries&gt; 6.746247, 7.724199, 6.774315, 6.975078, 7.022779, 7.34316…
+$ lpopden  &lt;pseries&gt; 8.546046, 8.618661, 7.682856, 7.819424, 8.926597, 9.00682…
+$ lcrimes  &lt;pseries&gt; 9.748937, 9.758808, 11.233926, 11.338096, 10.353033, 10.3…
+$ larea    &lt;pseries&gt; 3.797734, 3.797734, 5.926926, 5.926926, 3.908015, 3.90801…
+$ lcrmrte  &lt;pseries&gt; 4.312912, 4.250169, 4.531899, 4.499501, 4.426177, 4.34633…
+$ clcrimes &lt;pseries&gt; NA, 0.0098714828, NA, 0.1041698456, NA, 0.0003833771, NA,…
+$ clpop    &lt;pseries&gt; NA, 0.0726137161, NA, 0.1365680695, NA, 0.0802278519, NA,…
+$ clcrmrte &lt;pseries&gt; NA, -0.06274271, NA, -0.03239822, NA, -0.07984495, NA, -0…
+$ lpolpc   &lt;pseries&gt; 0.3508723, 0.2628021, 0.6887718, 0.6586123, 0.5236138, 0.…
+$ clpolpc  &lt;pseries&gt; NA, -0.088070214, NA, -0.030159533, NA, -0.001279354, NA,…
+$ cllawexp &lt;pseries&gt; NA, 0.9779520, NA, 0.2007623, NA, 0.3203883, NA, 0.131388…
+$ cunem    &lt;pseries&gt; NA, -4.5000000, NA, -2.7000003, NA, -3.0999999, NA, -6.90…
+$ clpopden &lt;pseries&gt; NA, 0.0726146698, NA, 0.1365680695, NA, 0.0802278519, NA,…
+$ lcrmrt_1 &lt;pseries&gt; NA, 4.312912, NA, 4.531899, NA, 4.426177, NA, 4.487990, N…
+$ ccrmrte  &lt;pseries&gt; NA, -4.540268, NA, -2.962654, NA, -6.416374, NA, -4.90154…
+$ id       &lt;fct&gt; 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10,…
+$ time     &lt;fct&gt; 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1…</code></pre>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-7" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Método 1</a></li><li><a href="#tabset-3-2">Método 2</a></li><li><a href="#tabset-3-3">Método 3</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>modelo_01 <span class="ot">&lt;-</span> <span class="fu">lm</span>(crmrte <span class="sc">~</span> unem, <span class="at">data =</span> crime2, <span class="at">subset =</span> (year <span class="sc">==</span> <span class="dv">87</span>))</span>
+<span id="cb27-2"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo_01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 128.378121  20.756628  6.184922 1.804270e-07
+unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>modelo_02 <span class="ot">&lt;-</span> <span class="fu">lm</span>(crmrte <span class="sc">~</span> d87 <span class="sc">+</span> unem, <span class="at">data =</span> crime2)</span>
+<span id="cb29-2"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo_02))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 93.4202496  12.739471 7.3331339 9.916069e-11
+d87          7.9404159   7.975325 0.9956228 3.221327e-01
+unem         0.4265473   1.188279 0.3589622 7.204735e-01</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>crime2_panel<span class="sc">$</span>dcrmrte <span class="ot">&lt;-</span> <span class="fu">diff</span>(crime2_panel<span class="sc">$</span>crmrte)</span>
+<span id="cb31-2"><a href=""></a>crime2_panel<span class="sc">$</span>dunem <span class="ot">&lt;-</span> <span class="fu">diff</span>(crime2_panel<span class="sc">$</span>unem)</span>
+<span id="cb31-3"><a href=""></a>modelo_03 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dcrmrte <span class="sc">~</span> dunem, <span class="at">data =</span> crime2_panel)</span>
+<span id="cb31-4"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo_03))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error  t value    Pr(&gt;|t|)
+(Intercept)  15.4022  4.7021169 3.275589 0.002060469
+dunem         2.2180  0.8778658 2.526581 0.015189318</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-8" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Exemplo: Dormir vs.&nbsp;Trabalhar</strong></p>
+</div>
+<div class="callout-content">
+<p>O conjunto de dados <code>slp75_81</code>, contém dados em painel de dois anos. O objetivo é estimar a relação de substituição entre o tempo gasto dormindo e trabalhando. Um modelo de efeitos não observados, é da forma <span class="math display">\[slpnap_{it} = \beta_0 + \gamma_0 d81_{t} + \beta_1 totwrk_{it} + \beta_2 educ_{it} + \beta_3 marr_{it} + \beta_4 yngkid_{it} + \beta_5 gdhlth_{it} + a_i + u_{it},\]</span> em que</p>
+<ul>
+<li class="fragment">slpnap:</li>
+<li class="fragment">d81: dummy (0: 1975, 1: 1981)</li>
+<li class="fragment">educ: anos de escolaridade</li>
+<li class="fragment">marr: dummy que indica estado civil</li>
+<li class="fragment">yngkid: dummy que indica a presença de crianças pequenas</li>
+<li class="fragment">gdhlth: dummy que indica boa saude</li>
+<li class="fragment">totwrk: tempo gasto dormindo (em mim)</li>
+<li class="fragment">slpnap: tempo gastor dormindo (em mim)</li>
+<li class="fragment"><span class="math inline">\(a_i\)</span>: efeito individual não observado</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-9" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>dslpnap <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>slpnap81 <span class="sc">-</span> slp75_81<span class="sc">$</span>slpnap75</span>
+<span id="cb33-2"><a href=""></a>dtotwrk <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>totwrk81 <span class="sc">-</span> slp75_81<span class="sc">$</span>totwrk75</span>
+<span id="cb33-3"><a href=""></a>deduc <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>educ81 <span class="sc">-</span> slp75_81<span class="sc">$</span>educ75</span>
+<span id="cb33-4"><a href=""></a>dmarr <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>marr81 <span class="sc">-</span> slp75_81<span class="sc">$</span>marr75</span>
+<span id="cb33-5"><a href=""></a>dyngkid <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>yngkid81 <span class="sc">-</span> slp75_81<span class="sc">$</span>yngkid75</span>
+<span id="cb33-6"><a href=""></a>dgdhlth <span class="ot">&lt;-</span> slp75_81<span class="sc">$</span>gdhlth81 <span class="sc">-</span> slp75_81<span class="sc">$</span>gdhlth75</span>
+<span id="cb33-7"><a href=""></a>slp75_81_panel <span class="ot">=</span> <span class="fu">data.frame</span>(dslpnap, dtotwrk, deduc, dmarr, dyngkid, dgdhlth)</span>
+<span id="cb33-8"><a href=""></a></span>
+<span id="cb33-9"><a href=""></a>modelo <span class="ot">&lt;-</span> <span class="fu">lm</span>(dslpnap <span class="sc">~</span> dtotwrk <span class="sc">+</span> deduc <span class="sc">+</span> dmarr <span class="sc">+</span> dyngkid <span class="sc">+</span> dgdhlth, <span class="at">data =</span> slp75_81_panel)</span>
+<span id="cb33-10"><a href=""></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate Std. Error       t value     Pr(&gt;|t|)
+(Intercept) -92.63403669  45.865899 -2.0196712092 4.456246e-02
+dtotwrk      -0.22666941   0.036054 -6.2869419485 1.580443e-09
+deduc        -0.02447166  48.759376 -0.0005018863 9.996000e-01
+dmarr       104.21394957  92.855362  1.1223255919 2.628792e-01
+dyngkid      94.66539870  87.652521  1.0800077148 2.812554e-01
+dgdhlth      87.57784792  76.599133  1.1433268882 2.540762e-01</code></pre>
+</div>
+</div>
+</section>
+<section id="análise-de-dados-em-painel-de-dois-períodos-10" class="slide level2">
+<h2>Análise de dados em painel de dois períodos</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">glimpse</span>(slp75_81)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 239
+Columns: 20
+$ age75    &lt;int&gt; 46, 39, 55, 39, 54, 32, 30, 27, 33, 51, 23, 46, 38, 30, 39, 5…
+$ educ75   &lt;int&gt; 16, 16, 15, 16, 17, 16, 16, 16, 17, 14, 16, 17, 12, 10, 12, 1…
+$ educ81   &lt;int&gt; 16, 16, 15, 16, 17, 16, 16, 16, 19, 14, 16, 19, 12, 10, 12, 1…
+$ gdhlth75 &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ gdhlth81 &lt;int&gt; 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1…
+$ male     &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1…
+$ marr75   &lt;int&gt; 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1…
+$ marr81   &lt;int&gt; 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1…
+$ slpnap75 &lt;int&gt; 3991, 2243, 3285, 3158, 3743, 3680, 3778, 3390, 3298, 3601, 2…
+$ slpnap81 &lt;int&gt; 4695, 2195, 3115, 3387, 3800, 3320, 3067, 3910, 3172, 3634, 3…
+$ totwrk75 &lt;int&gt; 2050, 2713, 2493, 2778, 3118, 2348, 1571, 3421, 1853, 0, 2700…
+$ totwrk81 &lt;int&gt; 2430, 2610, 0, 1787, 552, 2567, 2272, 400, 2617, 1312, 3292, …
+$ yngkid75 &lt;int&gt; 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ yngkid81 &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ ceduc    &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 0…
+$ cgdhlth  &lt;int&gt; 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -1, -1, -1, -1, 0, 0,…
+$ cmarr    &lt;int&gt; 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ cslpnap  &lt;int&gt; 704, -48, -170, 229, 57, -360, -711, 520, -126, 33, 651, 64, …
+$ ctotwrk  &lt;int&gt; 380, -103, -2493, -991, -2566, 219, 701, -3021, 764, 1312, 59…
+$ cyngkid  &lt;int&gt; 0, 0, 0, 0, 0, -1, -1, 0, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
+</div>
+</div>
+<div class="quarto-auto-generated-content">
+<p><img src="imagens/imecc.png" class="slide-logo"></p>
+<div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
+</div>
 </div>
 </section></section>
     </div>
@@ -1091,12 +1361,11 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
       Reveal.initialize({
 'controlsAuto': true,
 'previewLinksAuto': false,
-'smaller': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
 'smaller': false,
  
@@ -1339,9 +1608,23 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
       tabsets.forEach(function(tabset) {
         const tabby = new Tabby('#' + tabset.id);
       });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
       const clipboard = new window.ClipboardJS('.code-copy-button', {
-        target: function(trigger) {
-          return trigger.previousElementSibling;
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
         }
       });
       clipboard.on('success', function(e) {
@@ -1377,10 +1660,27 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
         // clear code selection
         e.clearSelection();
       });
-      function tippyHover(el, contentFn) {
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
-          content: contentFn,
           maxWidth: 500,
           delay: 100,
           arrow: false,
@@ -1389,9 +1689,18 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
           },
           interactive: true,
           interactiveBorder: 10,
-          theme: 'quarto-reveal',
-          placement: 'bottom-start'
+          theme: 'light-border',
+          placement: 'bottom-start',
         };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
           config['offset'] = [0,0];
           config['maxWidth'] = 700;
         window.tippy(el, config); 
@@ -1405,7 +1714,11 @@ unem         -4.161134   3.416456 -1.217968 2.297273e-01</code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

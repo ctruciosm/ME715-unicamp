@@ -44,7 +44,7 @@ format:
 ## Má-especificação da forma funcional.
 
 <center>
-"Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente." **Jeffrey Wooldrdge**
+"Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente." **Jeffrey Wooldridge**
 </center>
 
 
@@ -264,7 +264,10 @@ Como $\hat{y}$ obtido no passo 1 são apenas funções não lineares de $x_1$ e 
 
 . . . 
 
-De forma análoga, podemos ajustar a regressão $y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + \theta \hat{y} + u$ (em que $\hat{y}$ é obtido da regressão $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$) e testar se $H_0: \theta = 0.$
+De forma análoga, podemos:
+
+1. Ajustar o modelo $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u$ e obter $\hat{y}$.
+2. Ajustar a regressão $y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + \theta \hat{y} + u$ e testar se $H_0: \theta = 0.$
 
 . . .
 
@@ -314,7 +317,8 @@ Seja o modelo $$\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 ab
 
 . . . 
 
-Se ajustarmos o modelos sem a variável _abil_ (habilidade), em geral, teremos estimadores viesados para $\beta$. Como podemos resolver, ou pelo menos aliviar, o problema de vies da variável omitada? (pelo menos para $\beta_1$ e $\beta_2$)
+- Se ajustarmos o modelos sem a variável _abil_ (habilidade), em geral, teremos estimadores viesados para $\beta$. 
+- Como podemos resolver, ou pelo menos aliviar, o problema de vies da variável omitada? (pelo menos para $\beta_1$ e $\beta_2$)
 
 . . .  
 

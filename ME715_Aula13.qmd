@@ -1,6 +1,6 @@
 ---
 title: "ME715 - Econometria"
-subtitle: "Métodos simples de dados em painel"
+subtitle: "Outros métodos para dados em painel"
 author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
 Email: "ctrucios@unicamp.br"
 institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."

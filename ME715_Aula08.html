@@ -7,7 +7,7 @@
 <link href="ME715_Aula08_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="ME715_Aula08_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="ME715_Aula08_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.269">
+  <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Prof.&nbsp;Carlos Trucíos  ctrucios@unicamp.br">
   <title>ME715 - Econometria</title>
@@ -426,7 +426,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="má-especificação-da-forma-funcional.-1" class="slide level2">
 <h2>Má-especificação da forma funcional.</h2>
 <center>
-“Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente.” <strong>Jeffrey Wooldrdge</strong>
+“Um modelo de regressão múltipla sofre de má-especificação da forma funcional quando não explica de maneira apropriada a relação entre as variáveis explicativas e a variável dependente.” <strong>Jeffrey Wooldridge</strong>
 </center>
 <div class="fragment">
 <p>Suponha que <span class="math display">\[\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 exper^2 +u.\]</span> Se, por exemplo, omitirmos <span class="math inline">\(exper^2\)</span>, estamos comentendo uma má-especificação da forma funcional.</p>
@@ -620,7 +620,7 @@ I(sqrft^2)     0.0000     0.0000  1.1713   0.2449</code></pre>
 <section id="teste-reset-4" class="slide level2">
 <h2>Teste RESET</h2>
 <blockquote>
-<p>Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada 🙍.</p>
+<p>Uma desvantagem do teste RESET é que ele não fornece orientações práticas de como proceder se má-especificação do modelo for detectada 😢.</p>
 </blockquote>
 <p>Veja o que acontece com o seguinte modelo:</p>
 <div class="cell" data-layout-align="center">
@@ -693,7 +693,11 @@ I(sqrft^2)     0.0000     0.0000  1.1713   0.2449</code></pre>
 <p>Como <span class="math inline">\(\hat{y}\)</span> obtido no passo 1 são apenas funções não lineares de <span class="math inline">\(x_1\)</span> e <span class="math inline">\(x_2\)</span>, se o modelo <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u\)</span> for corretamente especificado (<span class="math inline">\(\mathbb{E}(u|X) = 0\)</span>), então <span class="math inline">\(\theta\)</span> não deve ser diferente de zero.</p>
 </div>
 <div class="fragment">
-<p>De forma análoga, podemos ajustar a regressão <span class="math inline">\(y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + \theta \hat{y} + u\)</span> (em que <span class="math inline">\(\hat{y}\)</span> é obtido da regressão <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u\)</span>) e testar se <span class="math inline">\(H_0: \theta = 0.\)</span></p>
+<p>De forma análoga, podemos:</p>
+<ol type="1">
+<li class="fragment">Ajustar o modelo <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + u\)</span> e obter <span class="math inline">\(\hat{y}\)</span>.</li>
+<li class="fragment">Ajustar a regressão <span class="math inline">\(y = \beta_0 + \beta_1 \log(x_1) + \beta_2 \log(x_2) + \theta \hat{y} + u\)</span> e testar se <span class="math inline">\(H_0: \theta = 0.\)</span></li>
+</ol>
 </div>
 <div class="fragment">
 <p>Se nenhum modelo for rejeitado, podemos utilizar o <span class="math inline">\(R^2_{Adj}\)</span> para escolher um dos modelos.</p>
@@ -758,7 +762,10 @@ Model 2: log(price) ~ log(lotsize) + lotsize + log(sqrft) + sqrft + bdrms
 <p>Seja o modelo <span class="math display">\[\log(wage) = \beta_0 + \beta_1 educ + \beta_2 exper + \beta_3 abil + u.\]</span></p>
 </div>
 <div class="fragment">
-<p>Se ajustarmos o modelos sem a variável <em>abil</em> (habilidade), em geral, teremos estimadores viesados para <span class="math inline">\(\beta\)</span>. Como podemos resolver, ou pelo menos aliviar, o problema de vies da variável omitada? (pelo menos para <span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span>)</p>
+<ul>
+<li class="fragment">Se ajustarmos o modelos sem a variável <em>abil</em> (habilidade), em geral, teremos estimadores viesados para <span class="math inline">\(\beta\)</span>.</li>
+<li class="fragment">Como podemos resolver, ou pelo menos aliviar, o problema de vies da variável omitada? (pelo menos para <span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span>)</li>
+</ul>
 </div>
 <div class="fragment">
 <center>
