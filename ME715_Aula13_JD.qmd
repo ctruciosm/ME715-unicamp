@@ -1,0 +1,183 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Dados em painel"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Introdução
+## Introdução
+
+- Nesta seção, discutimos técnicas para análisar dados em painel.
+- Daos em painel são unidades de corte transversal que são acompanhadas ao longo do tempo.
+- Em particular, note que:
+    *   se $n = 1$ e $T > 1$, estamos em um problema de séries temporais.
+    *   se $T = 1$ e $n > 1$, estamos em um problema de corte transversal.
+- Dados em painel referem-se a casos em que $n > 1$ e $T > 1$.
+- Dicutiremos técnicas para paineis balanceados (o mesmo número de observações de corte transversal, $n$, é acompanhado em todos os instantes de tempo, $T$. Totalizando $n \times T$ observações) em que $n >> T$.
+- A teoría asintótica que justifica os resultados assume que $n \rightarrow \infty$ e $T$ é fixo
+
+
+
+## Notação
+
+
+A forma mais comum de organizar os dados é
+
+$$\textbf{y}_i = \begin{bmatrix}
+y_{i1} \\
+\vdots \\
+y_{iT}
+\end{bmatrix}; \quad \textbf{X}_{i} = \begin{bmatrix}
+X_{i1}^1 & X_{i1}^2 & \cdots & X_{i1}^K\\
+\vdots & \cdots & \ddots & \vdots \\
+X_{iT}^1 & X_{iT}^2 & \cdots & X_{iT}^K\\
+\end{bmatrix}; \quad \boldsymbol{\epsilon}_i = \begin{bmatrix}
+\epsilon_{i1} \\
+\vdots \\
+\epsilon_{iT}
+\end{bmatrix}$$
+
+
+em que 
+
+
+- $y_{it}$ é o valor da variável dependente para a unidade $i$ no tempo $t$ ($i = 1, \cdots, n$ e $t = 1, \cdots, T$), 
+- $X_{it}^j$ a valor da $j$-éssima variável para a unidade $i$ no tempo $t$ ($j = 1, \cdots, K$) e 
+- $\epsilon_{it}$ é a perturbação aleatótia para a unidade $i$ no tempo $t$.
+
+
+## Notação
+
+Empilhando os dados temos:
+
+$$\textbf{y} = \begin{bmatrix}
+\textbf{y}_{1} \\
+\vdots \\
+\textbf{y}_{n}
+\end{bmatrix}; \quad \textbf{X} = \begin{bmatrix}
+\textbf{X}_{1} \\
+\vdots \\
+\textbf{X}_{n}
+\end{bmatrix};\quad \boldsymbol{\epsilon} = \begin{bmatrix}
+\boldsymbol{\epsilon}_1  \\
+\vdots \\
+\boldsymbol{\epsilon}_n
+\end{bmatrix}$$
+
+. . . 
+
+e na sua forma matricial $$\textbf{y} = \textbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}, \quad \text{em que } \boldsymbol{\beta} = [\beta_1, \cdots, \beta_K]'$$
+
+
+# As origens
+
+## O Estimador agrupado
+
+O método de estimação mais simples consiste em ignorar a estrutura de painel e empilhar os dados da forma $$\textbf{y} = \begin{bmatrix}
+\textbf{y}_{1} \\
+\vdots \\
+\textbf{y}_{n}
+\end{bmatrix}; \quad \textbf{X} = \begin{bmatrix}
+\textbf{X}_{1} \\
+\vdots \\
+\textbf{X}_{n}
+\end{bmatrix};\quad \boldsymbol{\epsilon} = \begin{bmatrix}
+\boldsymbol{\epsilon}_1  \\
+\vdots \\
+\boldsymbol{\epsilon}_n
+\end{bmatrix}$$
+e assumir que  $\epsilon_{it} \sim IID(0, \sigma^2)$.
+
+- Este método é o mais simples e produz estimadores eficientes sob a suposição de que $\epsilon_{it} \sim IID(0, \sigma^2)$ (para um dado indivíduo $i$ os erros são serialmente não correlacionados e entre endividuos e tempo, os erros são homocedasticos).
+- Este modelo é inapropriado se $\epsilon_{it} \sim IID(0, \sigma^2)$ não acontece.
+
+## Duas extensões
+
+
+Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it},$$ em que $$\epsilon_{it} = \alpha_i + \eta_{it}.$$
+
+
+- $\alpha_i$ é chamado efeito individual (varia entre individuos mas não ao longo do tempo).
+- $\eta_{it}$ varia independentemente entre indivíduos e ao longo do tempo. Assumimos que $\eta_{it}$ e $X_{it}$ são não correlacionados.
+- Dois modelos tem surgido dependendo da suposição feita sobre $\alpha_i$:
+    *   se $\alpha_i$ é não correlacionado com $X_{it}$ $\rightarrow$ **Modelo de Efeitos Aleatórios**
+    *   se $\alpha_i$ é correlacionado com $X_{it}$ $\rightarrow$ **Modelo de Efeitos Fixos**
+    
+    
+# Modelo de Efeitos Aleatórios
+## Modelo de Efeitos Aleatórios
+
+Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{em que } \quad \epsilon_{it} = \alpha_i + \eta_{it},$$ com $\alpha_i$ e $X_{it}$ não correlacionados.
+
+. . . 
+
+- A suposição de que $\alpha_i$ e $X_{it}$ são não correlacionados junto à suposição de que $\eta_{it}$ e $X_{it}$ são não correlacionados, implicam que $\epsilon_{it}$ e $X_{it}$ são não correlacionados.
+- Ou seja, $\hat{\boldsymbol{\beta}}_{MQO}$ é assintóticamente não viesado
+
+. . .
+
+<center>
+[Então, utilizamos MQO e pronto?]{style="color:red;"}
+</center>
+
+
+## Modelo de Efeitos Aleatórios
+
+<center>
+[Então, utilizamos MQO e pronto?]{style="color:red;"}
+</center>
+
+- A variância de $\hat{\boldsymbol{\beta}}_{MQO}$ será subestimada
+- $\hat{\boldsymbol{\beta}}_{MQO}$ não é um estimador eficiente comparado com $\hat{\boldsymbol{\beta}}_{MQGF}$
+
+
+. . . 
+
+
+<center>
+[O modelo de efeitos aleatórios é uma forma de lidar com o fato de que $T$ observações de $n$ indivíduos não é a mesma coisa que $nT$ indivíduos diferentes.]{style="color:blue;"}
+</center>
+
+
+. . . 
+
+Isto pode ser feito derivando um estimador para a variância do erro e utilizar esta estrutura no estimador de $\boldsymbol{\beta}$.
+
+
+## Modelo de Efeitos Aleatórios
+
+- $\mathbb{E}[\boldsymbol{\eta} | \textbf{X}] = 0$
+- $\mathbb{E}[\boldsymbol{\eta}\boldsymbol{\eta}' | \textbf{X] = \sigma_{\eta}^2 I_{nT}$
+- $\mathbb{E}[\alpha_1 \alpha_j | \textbf{X] = 0$, $i \neq j$
+- $\mathbb{E}[\alpha_1 \alpha_i | \textbf{X] = \sigma_{\alpha}^2$
+- $\mathbb{E}[\alpha_1 \eta_{jt} | \textbf{X] = 0$
+- $\mathbb{E}[\alpha_i | \textbf{X] = 0$
+
