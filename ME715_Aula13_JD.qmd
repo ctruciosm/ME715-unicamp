@@ -36,7 +36,7 @@ format:
 ## Introdução
 
 - Nesta seção, discutimos técnicas para análisar dados em painel.
-- Daos em painel são unidades de corte transversal que são acompanhadas ao longo do tempo.
+- Dados em painel são unidades de corte transversal que são acompanhadas ao longo do tempo.
 - Em particular, note que:
     *   se $n = 1$ e $T > 1$, estamos em um problema de séries temporais.
     *   se $T = 1$ e $n > 1$, estamos em um problema de corte transversal.
@@ -82,15 +82,15 @@ $$\textbf{y} = \begin{bmatrix}
 \textbf{y}_{1} \\
 \vdots \\
 \textbf{y}_{n}
-\end{bmatrix}; \quad \textbf{X} = \begin{bmatrix}
+\end{bmatrix}_{nT \times 1}; \quad \textbf{X} = \begin{bmatrix}
 \textbf{X}_{1} \\
 \vdots \\
 \textbf{X}_{n}
-\end{bmatrix};\quad \boldsymbol{\epsilon} = \begin{bmatrix}
+\end{bmatrix}_{nT \times K};\quad \boldsymbol{\epsilon} = \begin{bmatrix}
 \boldsymbol{\epsilon}_1  \\
 \vdots \\
 \boldsymbol{\epsilon}_n
-\end{bmatrix}$$
+\end{bmatrix}_{nT \times 1}$$
 
 . . . 
 
@@ -101,7 +101,8 @@ e na sua forma matricial $$\textbf{y} = \textbf{X}\boldsymbol{\beta} + \boldsymb
 
 ## O Estimador agrupado
 
-O método de estimação mais simples consiste em ignorar a estrutura de painel e empilhar os dados da forma $$\textbf{y} = \begin{bmatrix}
+- O método de estimação mais simples
+- Consiste em ignorar a estrutura de painel e empilhar os dados da forma $$\textbf{y} = \begin{bmatrix}
 \textbf{y}_{1} \\
 \vdots \\
 \textbf{y}_{n}
@@ -114,19 +115,20 @@ O método de estimação mais simples consiste em ignorar a estrutura de painel 
 \vdots \\
 \boldsymbol{\epsilon}_n
 \end{bmatrix}$$
-e assumir que  $\epsilon_{it} \sim IID(0, \sigma^2)$.
+- Assume que  $\epsilon_{it} \sim IID(0, \sigma^2)$.
 
-- Este método é o mais simples e produz estimadores eficientes sob a suposição de que $\epsilon_{it} \sim IID(0, \sigma^2)$ (para um dado indivíduo $i$ os erros são serialmente não correlacionados e entre endividuos e tempo, os erros são homocedasticos).
+- Este método é o mais simples e produz estimadores eficientes sob a suposição de que $\epsilon_{it} \sim IID(0, \sigma^2)$ (para um dado indivíduo $i$ os erros são serialmente não correlacionados e entre individuos e tempo, os erros são homocedasticos).
 - Este modelo é inapropriado se $\epsilon_{it} \sim IID(0, \sigma^2)$ não acontece.
 
 ## Duas extensões
 
 
-Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it},$$ em que $$\epsilon_{it} = \alpha_i + \eta_{it}.$$
+Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \underbrace{\epsilon_{it}}_{\alpha_i + \eta_{it}}$$
 
 
 - $\alpha_i$ é chamado efeito individual (varia entre individuos mas não ao longo do tempo).
-- $\eta_{it}$ varia independentemente entre indivíduos e ao longo do tempo. Assumimos que $\eta_{it}$ e $X_{it}$ são não correlacionados.
+- $\eta_{it}$ varia independentemente entre indivíduos e ao longo do tempo. 
+- [Assumimos que $\eta_{it}$ e $X_{it}$ são não correlacionados.]{style="color:red;"}
 - Dois modelos tem surgido dependendo da suposição feita sobre $\alpha_i$:
     *   se $\alpha_i$ é não correlacionado com $X_{it}$ $\rightarrow$ **Modelo de Efeitos Aleatórios**
     *   se $\alpha_i$ é correlacionado com $X_{it}$ $\rightarrow$ **Modelo de Efeitos Fixos**
@@ -135,11 +137,11 @@ Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it},$$ em que $$\
 # Modelo de Efeitos Aleatórios
 ## Modelo de Efeitos Aleatórios
 
-Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{em que } \quad \epsilon_{it} = \alpha_i + \eta_{it},$$ com $\alpha_i$ e $X_{it}$ não correlacionados.
+Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{em que } \quad \epsilon_{it} = \alpha_i + \eta_{it},$$ com $\alpha_i$ e $X_{it}$, bem como  $\eta_{it}$ e $X_{it}$, sendo não correlacionados
 
 . . . 
 
-- A suposição de que $\alpha_i$ e $X_{it}$ são não correlacionados junto à suposição de que $\eta_{it}$ e $X_{it}$ são não correlacionados, implicam que $\epsilon_{it}$ e $X_{it}$ são não correlacionados.
+- As suposições acerca de $\alpha_i$ e $\eta_{it}$,  implicam que $\epsilon_{it}$ e $X_{it}$ são não correlacionados.
 - Ou seja, $\hat{\boldsymbol{\beta}}_{MQO}$ é assintóticamente não viesado
 
 . . .
@@ -155,9 +157,8 @@ Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{
 [Então, utilizamos MQO e pronto?]{style="color:red;"}
 </center>
 
-- A variância de $\hat{\boldsymbol{\beta}}_{MQO}$ será subestimada
-- $\hat{\boldsymbol{\beta}}_{MQO}$ não é um estimador eficiente comparado com $\hat{\boldsymbol{\beta}}_{MQGF}$
-
+- A variância de $\hat{\boldsymbol{\beta}}_{MQO}$ será subestimada.
+- $\hat{\boldsymbol{\beta}}_{MQO}$ não é um estimador eficiente.
 
 . . . 
 
@@ -169,15 +170,211 @@ Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{
 
 . . . 
 
-Isto pode ser feito derivando um estimador para a variância do erro e utilizar esta estrutura no estimador de $\boldsymbol{\beta}$.
+
+Para contornar o problema, podemos derivar um estimador que leve em consideração a variância do erro e utilizar esta estrutura no estimador de $\boldsymbol{\beta}$.
+
+. . . 
+
+
+Qual método conhecemos para estimar $\boldsymbol{\beta}$ quando a variância do erro não é da forma $\sigma^2 I$?  
+
+. . . 
+
+<center>
+`r emo::ji("surfing")` [**MQG(F)**]{style="color:red;"} `r emo::ji("surfing")`
+</center>
+
 
 
 ## Modelo de Efeitos Aleatórios
 
-- $\mathbb{E}[\boldsymbol{\eta} | \textbf{X}] = 0$
-- $\mathbb{E}[\boldsymbol{\eta}\boldsymbol{\eta}' | \textbf{X] = \sigma_{\eta}^2 I_{nT}$
-- $\mathbb{E}[\alpha_1 \alpha_j | \textbf{X] = 0$, $i \neq j$
-- $\mathbb{E}[\alpha_1 \alpha_i | \textbf{X] = \sigma_{\alpha}^2$
-- $\mathbb{E}[\alpha_1 \eta_{jt} | \textbf{X] = 0$
-- $\mathbb{E}[\alpha_i | \textbf{X] = 0$
+Consideremos as seguintes suposições acerca do termo de erro:
 
+- $\mathbb{E}[\boldsymbol{\eta} | \textbf{X}] = 0$
+- $\mathbb{E}[\boldsymbol{\eta}\boldsymbol{\eta}' | \textbf{X}] = \sigma_{\eta}^2 I_{nT}$
+- $\mathbb{E}[\alpha_i \alpha_j | \textbf{X}] = 0$, $i \neq j$
+- $\mathbb{E}[\alpha_i \alpha_i | \textbf{X}] = \sigma_{\alpha}^2$
+- $\mathbb{E}[\alpha_i | \textbf{X}] = 0$
+- $\mathbb{E}[\alpha_1 \eta_{jt} | \textbf{X}] = 0$
+
+
+. . . 
+
+
+Agora, com todas estas suposições, podemos escrever a covariância do termo de erro `r emo::ji("smile")`
+
+
+## Modelo de Efeitos Aleatórios
+
+$$\mathbb{E}[\epsilon_i \epsilon_i'] = \sigma_{\alpha}^2\boldsymbol{i}\boldsymbol{i}' + \sigma_{\eta}^2 I_T = \begin{bmatrix}
+\sigma_{\eta}^2 + \sigma_{\alpha}^2 &  \cdots & \sigma_{\alpha}^2 \\
+\sigma_{\alpha}^2 & \sigma_{\eta}^2 + \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2  \\
+\vdots & \ddots & \cdots & \vdots \\
+\sigma_{\alpha}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\eta}^2 + \sigma_{\alpha}^2
+\end{bmatrix}$$
+
+. . . 
+
+E então
+
+$$\Omega = \mathbb{E}[\boldsymbol{\epsilon}\boldsymbol{\epsilon}'] = \begin{bmatrix}
+\Sigma & 0 & \cdots & 0 \\
+0 & \Sigma & \cdots & 0 \\
+\vdots & \ddots & \ddots & \vdots \\
+0 & \cdots & 0 & \Sigma 
+\end{bmatrix} = I_n  \otimes \Sigma, \quad \text{em que } \Sigma = \mathbb{E}[\epsilon_i \epsilon_i'].$$
+
+
+## Modelo de Efeitos Aleatórios
+
+
+::: {.callout-tip}
+### Produto de Kronecker
+Se A é uma marix $m \times n$ e B uma matrix $p \times q$, então o produto de Kronecker, $A \otimes B$ é uma matriz por blocos $pm \times qn$: 
+
+$$A \otimes B = \begin{bmatrix}
+a_{11}B & \cdots & a_{1n}B \\
+\vdots & \ddots & \vdots \\
+a_{m1}B & \cdots  & a_{mn}B 
+\end{bmatrix}$$
+:::
+
+
+. . . 
+
+
+A estrutura bloco diagonal de $\Omega = \mathbb{E}[\boldsymbol{\epsilon}\boldsymbol{\epsilon}']$ faz com que calcular sua inversa seja apenas um problema de calcular $\Sigma^{-1}$
+
+
+. . . 
+
+Após longas contas, pode-se provar que:
+
+$$\Sigma^{-1/2} = \dfrac{1}{\sigma_{\eta}} \Big [ I_T - \Big ( \dfrac{1 - \theta}{T} \boldsymbol{i}\boldsymbol{i}' \Big) \Big], \quad \text{em que} \quad \theta = \sqrt{\dfrac{\sigma_{\eta}^2}{T\sigma^2_{\alpha} + \sigma^2_{\eta}}}.$$
+
+## Modelo de Efeitos Aleatórios
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+### O lado bom!
+
+<center>
+Conhecida a forma de $\Omega$, podemos aplicar MQG
+</center>
+
+<center>
+![](imagens/meme_yes.png)
+</center>
+
+
+:::
+
+
+::: {.column width="50%"}
+
+### O lado ruim!
+
+<center>
+Ainda precisamos estimar $\sigma^2_{\eta}$ e $\sigma^2_{\alpha}$ para podermos utilizar MQG(F) 
+</center>
+
+<center>
+![](imagens/triste_meme.png)
+</center>
+
+:::
+
+::::
+
+. . . 
+
+<center>
+[Para estimar $\sigma^2_{\eta}$ e $\sigma^2_{\alpha}$, recorreremos a dois estimadores que, apesar de serem consistentes, não são eficientes.]{style="color:violet;"}
+</center>
+
+
+
+## Modelo de Efeitos Aleatórios
+
+Pense no seguinte modelo: em lugar de termos $T$ observações para cada um dos $n$ indivíduos, transformamos os dados em médias específicas do individuo e aplicamos MQO nos dados transformados. 
+
+$$\bar{y}_{i\cdot} = \bar{X}_{i\cdot}\boldsymbol{\beta} + error,$$
+em que $\bar{y}_{i\cdot} = T^{-1} \sum_{t = 1}^Ty_{it}$ e $\bar{X}_{i\cdot}$ é definido de forma análoga.
+
+. . . 
+
+Para escrever isto na forma matricial: 
+
+- Utilizamos os dados originais empilhados. 
+- Definimos uma matrix $\textbf{D}_{nT \times n}$ formada por $n$ variáveis _dummy_ representando cada unidade de $i$. 
+- Definimos a matriz $\textbf{P}_D = \textbf{D}(\textbf{D}'\textbf{D})^{-1}\textbf{D}'$ que é simétrica e idempotente.
+- Premultiplicamos os dados empilhados por $\textbf{P}_D$
+
+
+## Modelo de Efeitos Aleatórios
+
+
+$$\textbf{P}_D\textbf{y} = \textbf{P}_D\textbf{X}\boldsymbol{\beta} + \textbf{P}_D\boldsymbol{\epsilon}$$
+
+. . . 
+
+- $\hat{\boldsymbol{\beta}}_{B} = (\textbf{X}' \textbf{P}_D' \textbf{P}_D\textbf{X} )^{-1} \textbf{X}' \textbf{P}_D' \textbf{P}_D\textbf{y} = (\textbf{X}' \textbf{P}_D\textbf{X} )^{-1} \textbf{X}' \textbf{P}_D\textbf{y}$
+- Premultiplicar $\textbf{P}_D$ nos dados originais, nos leva a $\bar{y}_{i\cdot} = \bar{X}_{i\cdot}\boldsymbol{\beta} + error.$
+- $\hat{\boldsymbol{\beta}}_B$ é equivalente a ajustar por MQO $\bar{y}_{i\cdot} = \bar{X}_{i\cdot}\boldsymbol{\beta} + error.$
+
+
+. . . 
+
+
+::: {.callout-important}
+### Importante
+
+$\hat{\boldsymbol{\beta}}_B$ é chamado _between estimator_, isto pois o estimador utiliza a informação entre indivíduos.
+
+:::
+
+
+
+## Modelo de Efeitos Aleatórios
+
+Por outro lado, em lugar de utilizarmos $\textbf{P}_D$, podemos utilizar $\textbf{M}_D = I_{nT} - \textbf{P}_D$ que também é simétrica e idempotente. 
+
+. . . 
+
+Premultiplicando os dados originais por $\textbf{M}_D$ e aplicando MQO, nos leva a $$\hat{\boldsymbol{\beta}}_W = (\textbf{X}' \textbf{M}_D\textbf{X} )^{-1} \textbf{X}' \textbf{M}_D\textbf{y}.$$
+
+Este estimador é equivalente ao que obteriamos se aplicarmos MQO na seguinte equação: 
+
+$$y_{it} - \bar{y}_{i\cdot} = (X_{it} - \bar{X}_{i\cdot}) \boldsymbol{\beta} + error.$$
+
+Ademais, o estimador é o mesmo que obteriamos se aplicasemos MQO nos dados originais mas inluinddo variáveis _dummy_ para cada indivíduo $i$ (ver Teorema FWL).
+
+
+. . . 
+
+::: {.callout-important}
+### Importante
+
+$\hat{\boldsymbol{\beta}}_W$ é chamado _within estimator_, isto pois o estimador utiliza a variação dentro de cada indivíduo.
+
+:::
+
+
+
+
+## Modelo de Efeitos Aleatórios
+
+Note que o estimador MQO é uma soma ponderada de $\hat{\boldsymbol{\beta}}_B$ e $\hat{\boldsymbol{\beta}}_W$:
+
+- $\hat{\boldsymbol{\beta}} = (X'X)^{-1}X'Y = (X'X)^{-1} X'(\textbf{M}_DY + \textbf{P}_DY) =  (X'X)^{-1} \underbrace{X'\textbf{M}_DY}_{(X' \textbf{M}_D X) \hat{\boldsymbol{\beta}}_W} + (X'X)^{-1} \underbrace{X'\textbf{P}_DY}_{(X' \textbf{P}_D X) \hat{\boldsymbol{\beta}}_B}$
+- Isso significa que não podemos utilizar a variância fornecida pelos softwares, pois ela não leva em consideração a verdadeira estrutura de $\Omega$.
+- Assim, **MQG(F) vem ao rescate fornecendo um melhor estimador do que MQO**
+- Os estimadores de $\sigma_{\eta}^2$ e $\sigma_{\alpha}^2$ necessários para poder utilizar MQGF são obtidos como: $$\hat{\sigma}_{\eta}^2 = \dfrac{\hat{u}_W' \hat{u}_W}{nT - nk - n} \quad e \quad  \hat{\sigma}_{\alpha}^2 = \underbrace{\dfrac{\hat{u}_B'\hat{u}_B}{n - k}}_{\hat{\sigma}_B^2} - \dfrac{\hat{\sigma}_{\eta}^2}{T},$$em que $\hat{u}_W$ são os resíduos da regressão dentro (*within*) e $\hat{u}_B$ são os resíduos da regresão entre (*between*).
+
+
+
+# Modelo de efeitos fixos
+
+## Modelo de efeitos fixos
