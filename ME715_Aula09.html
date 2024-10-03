@@ -580,7 +580,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 <p><strong>Quem pode ser esse <span class="math inline">\(Z\)</span>?</strong></p>
 <ul>
 <li class="fragment">O primeiro dígito do CPF é gerado aleatóriamente, então se <span class="math inline">\(Z\)</span> for o primeiro dígito do CPF, teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(u\)</span> são não correlacionados 😄.</li>
-<li class="fragment">Contudo, por ser gerado aleatoriamente, não teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(educ\)</span> são correlacionados 😭.</li>
+<li class="fragment">Contudo, por ser gerado aleatoriamente, não teremos que <span class="math inline">\(Z\)</span> e <span class="math inline">\(educ\)</span> são correlacionados 😞.</li>
 </ul>
 </div>
 <div class="fragment">
@@ -621,7 +621,7 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 </div>
 <div class="fragment">
 <center>
-🏄‍♀️ Podemos obter <span class="math inline">\(\hat{\beta}\)</span> utilizando MQG! 🏄‍♂️
+🏄 Podemos obter <span class="math inline">\(\hat{\beta}\)</span> utilizando MQG! 🏄‍♂️
 </center>
 </div>
 </section>
@@ -995,9 +995,9 @@ A ideia do teste é verificar se <span class="math inline">\(\hat{\beta}_{IV} - 
 <h2>Testes de Hipóteses</h2>
 <h4 id="teste-durbin-wu-hausman-3">Teste Durbin-Wu-Hausman</h4>
 <ul>
-<li class="fragment"><span class="math inline">\(\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y,\)</span> em que <span class="math inline">\(M_X = I - (X'X)^{-1}X'\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y,\)</span> em que <span class="math inline">\(M_X = I - X(X'X)^{-1}X'\)</span>.</li>
 <li class="fragment">Testar que <span class="math inline">\(\hat{\beta}_{IV} - \hat{\beta}_{MQO}\)</span> é diferente de zero é equivalente a testar que <span class="math inline">\(X'P_ZM_X Y\)</span> é diferentes de zero (<span style="color:red;">Por que?</span>).</li>
-<li class="fragment">Sob <span class="math inline">\(H_0\)</span>, temos que <span class="math inline">\(M_X Y = \hat{u}\)</span> e então queremos verificar se <span class="math inline">\(P_Z X\)</span> e <span class="math inline">\(\hat{u}\)</span> são ortogonais.</li>
+<li class="fragment">Sob <span class="math inline">\(H_0\)</span>, temos que <span class="math inline">\(M_X Y = \hat{u}\)</span> e então queremos verificar se <span class="math inline">\(X'P_Z\)</span> e <span class="math inline">\(\hat{u}\)</span> são ortogonais.</li>
 </ul>
 </section>
 <section id="testes-de-hipóteses-5" class="slide level2">

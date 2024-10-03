@@ -516,9 +516,9 @@ A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estat
 
 #### Teste Durbin-Wu-Hausman  
 
-- $\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y,$ em que $M_X = I - (X'X)^{-1}X'$.
+- $\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y,$ em que $M_X = I - X(X'X)^{-1}X'$.
 - Testar que $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é diferente de zero é equivalente a testar que  $X'P_ZM_X Y$ é diferentes de zero ([Por que?]{style="color:red;"}).
-- Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $P_Z X$ e $\hat{u}$ são ortogonais. 
+- Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $X'P_Z$ e $\hat{u}$ são ortogonais. 
 
 
 
