@@ -53,40 +53,21 @@ Na prática, existem situações em que o erro e algum dos regressores estão co
 
 #### Caso 1: variáveis omitidas
 
-Seja o modelo $$Y = \beta_0 + \beta_1X_1 + \beta_2 X_2 + v$$
+- Seja o modelo $Y = \beta_0 + \beta_1X_1 + \beta_2 X_2 + v$
 
-. . . 
-
-Suponha que por algum motivo, não temos acesso a $X_2$ e o modelo ajustado é da forma $$Y = \beta_0 + \beta_1X_1 + u$$
-
-. . . 
-
-Note que $u = \beta_2 X_2 + v$
-
-. . . 
-
-$$\mathbb{C}ov(X_1, u) = \mathbb{C}ov(X_1, \beta_2 X_2 + v) = \mathbb{C}ov(X_1, \beta_2 X_2) + \mathbb{C}ov(X_1, v) = \beta_2 \mathbb{C}ov(X_1, X_2)$$
-
-. . . 
-
-<center>
-[Se $X_1$ e $X_2$ forem correlacionados (e $\beta_2 \neq 0$), então $\mathbb{C}ov(X_1, u) \neq 0$.]{style="color:red;"}
-</center>
+- Suponha que por algum motivo, não temos acesso a $X_2$ e o modelo ajustado é da forma $$Y = \beta_0 + \beta_1X_1 + u$$
+- Note que $u = \beta_2 X_2 + v$
+- Então, $$\mathbb{C}ov(X_1, u) = \mathbb{C}ov(X_1, \beta_2 X_2 + v) = \mathbb{C}ov(X_1, \beta_2 X_2) + \mathbb{C}ov(X_1, v) = \beta_2 \mathbb{C}ov(X_1, X_2)$$
+- [Se $X_1$ e $X_2$ forem correlacionados (e $\beta_2 \neq 0$), então $\mathbb{C}ov(X_1, u) \neq 0$.]{style="color:red;"}
 
 ## Correlação entre o erro e os regressores
 
 #### Caso 2: erro nas variáveis explicativas
 
-Seja o modelo $$Y = \beta_0 + \beta_1 X^{\ast} + v, \quad com \quad \mathbb{E}(v|X^{\ast}) = 0$$
+- Seja o modelo $$Y = \beta_0 + \beta_1 X^{\ast} + v, \quad com \quad \mathbb{E}(v|X^{\ast}) = 0$$
+- Se apenas observarmos $X = X^{\ast} + e$, em que $e \sim IID(0, \sigma^2_{e})$ e $e \perp X^{\ast}, v$. Temos, $$Y = \beta_0 + \beta_1 (X - e) + v = \beta_0 + \beta_1 X + \underbrace{v - \beta_1 e}_{u}$$
+- Então, $$\mathbb{C}ov(X, u) = \mathbb{E}(Xu) - \mathbb{E}(X) \mathbb{E}(u)$$
 
-. . . 
-
-Se apenas observarmos $X = X^{\ast} + e$, em que $e \sim IID(0, \sigma^2_{e})$ e $e \perp X^{\ast}, v$. Temos, $$Y = \beta_0 + \beta_1 (X - e) + v = \beta_0 + \beta_1 X + \underbrace{v - \beta_1 e}_{u}$$
-
-. . . 
-
-
-$$\mathbb{C}ov(X, u) = \mathbb{E}(Xu) - \mathbb{E}(X) \mathbb{E}(u)$$
 
 ## Correlação entre o erro e os regressores
 
@@ -126,8 +107,8 @@ Os termos _variável exógena_ e _variável endógena_ orignaram-se na análise 
 
 ::: callout-tip
 #### Fortemente exógena vs. fracamente exógena
-- Os regressores $\textbf{X}$ são ditos fortemente exógenos se $\mathbb{E}(u|\textbf{X})$.
-- Os regressores $\textbf{X}$ são ditos fracamente exógenos se $\mathbb{E}(u_i|\textbf{x}_i),  \forall i$.
+- Os regressores $\textbf{X}$ são ditos fortemente exógenos se $\mathbb{E}(u|\textbf{X}) = 0$.
+- Os regressores $\textbf{X}$ são ditos fracamente exógenos se $\mathbb{E}(u_i|\textbf{x}_i) = 0,  \forall i$.
 
 :::
 
@@ -155,7 +136,7 @@ Vamos supor que existe $\textbf{Z}$ (da mesma dimensão do que $\textbf{X}$ ou c
 
 #### Observação
 
-Se particionarmos $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ tal que $\textbf{X}_1$ (com $k_1$ colunas) são exógenas e $\textbf{X}_2$ (com $k_2$ colunas) são endógenas ($k_1 + k_2 = k$). A matriz $\textbf{Z}$ é da forma $\textbf{Z} = [\textbf{Z}_1 \textbf{X}_1]$, ou seja, buscamos novas variáveis $\textbf{Z}_1$ que sejam não correlacionadas com $u$.
+Se particionarmos $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ tal que $\textbf{X}_1$ (com $k_1$ colunas) são exógenas e $\textbf{X}_2$ (com $k_2$ colunas) são endógenas ($k_1 + k_2 = k$). A matriz $\textbf{Z}$ é da forma $\textbf{Z} = [\textbf{X}_1 \textbf{Z}_2]$, ou seja, buscamos novas variáveis $\textbf{Z}_2$ que sejam não correlacionadas com $u$.
 
 
 ## Variáveis Instrumentais (IV)
@@ -228,7 +209,7 @@ Suponha que temos uma variável observável $Z$ que seja não correlacionada com
 
 **Quem pode ser esse $Z$?** (outras alternativas)
 
-- _Escolaridade da mãe:_ é positivamente correlacionada com _educ_ (relevância do instrumento). O problemaé que _escolaridade da mãe_ pode também estár relacionada com _aptid_, tornamdo-se um instrumento pobre `r emo::ji("sad")`.
+- _Escolaridade da mãe:_ é positivamente correlacionada com _educ_ (relevância do instrumento). O problema é que _escolaridade da mãe_ pode também estár relacionada com _aptid_, tornamdo-se um instrumento pobre `r emo::ji("sad")`.
 - _Número de irmãos durante o crescimento:_ é negativamente correlacionada com _educ_  (relevância do instrumento). Se o número de irmãos durante o crescimento for não correlacionado com _aptid_, então teremos um bom instrumento.
 
 . . . 
@@ -297,7 +278,7 @@ Pode-se mostrar que $\hat{\beta}_{IV}$ é consistente.
 
 O estimador IV pode ser visto como a aplicação de MQO em dois estágios:
 
-1. **Estágio 1:** regredir $X$ sobre $Z$, então $$\hat{X} = Z(Z'Z)^{-1}Z'X$$
+1. **Estágio 1:** regredir $X$ sobre $Z$, então $$\hat{X} = Z \hat{\beta}_{1SLS} = Z(Z'Z)^{-1}Z'X$$
 
 
 2. **Estágio 2:** regredir $Y$ sobre $\hat{X}$, então $$\hat{\beta}_{IV} = (\hat{X}'\hat{X})^{-1}\hat{X}'Y = (X'Z(Z'Z)^{-1}Z'X)^{-1} X'Z(Z'Z)^{-1}Z'Y = (X'P_ZX)^{-1} X'P_ZY$$
@@ -311,13 +292,13 @@ Quando $l = k$, temos que $\textbf{X}$ e $\textbf{Z}$ tem a mesma dimensão. Ent
 
 $$\hat{\beta}_{IV} = (\hat{X}'\hat{X})^{-1}\hat{X}'Y = (X'Z(Z'Z)^{-1}Z'X)^{-1} X'Z(Z'Z)^{-1}Z'Y = (Z'X)^{-1}Z'Y$$
 
-. . . 
+
 
 
 > **Observação:** Se $A$ e $B$ são matrizes não singulares da mesma ordem, então $(AB)^{-1} = B^{-1}A^{-1}$. Como $X'Z$ é não singular, podemos aplicar o resultado.
 
 
-. . . 
+
 
 
 ::: callout-important
@@ -338,7 +319,7 @@ Suponha que queremos estimar o efeito do hábito de fumar sobre o peso dos recé
 - _packs:_ número de maços de cigarro fumados pela mãe por dia.
 
 
-. . . 
+
 
 ```{r}
 #| echo: true
@@ -347,7 +328,7 @@ modelo_01 <- lm(log(bwght) ~ packs, data = bwght)
 ```
 
 
-. . . 
+
 
 [Mas, podemos suspeitar que _packs_ esteja correlacionado com outros fatores relativos à saude ou à existênca de um bom programa pré-natal. Sendo assim, MQO levará a estimadores viesados e inconsistentes.]{style="color:red;"}
 
@@ -362,7 +343,6 @@ Uma possível variável instrumental de _packs_ seria o preço médio dos cigarr
 - Para verificar isto, ajustamos a regressão de _packs_ sobre _cigprice_
 
 
-. . . 
 
 
 ```{r}
@@ -376,7 +356,7 @@ summary(modelo_aux)
 
 #### Exemplo: IV fraca
 
-Como _packs_ e _cigprice_ não são correlacionados, não deveriamos usar _cigprice_ como IV. Mas, o que acontece se o fizermos?
+Se _packs_ e _cigprice_ não são correlacionados, não deveriamos usar _cigprice_ como IV. Mas, o que acontece se o fizermos?
 
 ```{r}
 #| echo: true
@@ -398,12 +378,11 @@ coef(summary(modelo_iv))
 ```
 
 
-. . . 
 
 - O coeficiente de _packs_ é enorme e com sinal inesperado.
 - O erro padrão é muito grande, _packs_ não é estatísticamente significativo.
 
-. . . 
+
 
 _cigprice_  não atende o requisito de relevância do instrumento (o único requisito que sempre podemos testar). Entretanto, as estimativas não têm significado.
 
@@ -436,7 +415,7 @@ modelo_mqo <- lm(log(wage) ~ educ + exper + I(exper^2) + black + smsa + south + 
 summary(modelo_mqo)
 ```
 
-. . . 
+
 
 Contudo, _educ_ pode estar correlacionada com outros fatores contidos em $u$. Card (1995) usou a dummy _nearc4_ (1 caso alguem tenha crescido perto de uma faculdade com cursos de graduação de 4 anos) como uma IV de _educ_.
 
@@ -451,7 +430,8 @@ Para _nearc4_ ser uma IV válida, deve:
 1. Ser não correlacionada com $u$ (o que nunca podemos verificar, mas pressumimos válidos e pode ser justificado utilizando teorica econômica).
 2. Ser correlacionado com _educ_, o que verificaremos a seguir.
 
-. . . 
+
+
 
 ```{r}
 #| echo: true
@@ -473,7 +453,7 @@ modelo_iv <- ivreg(log(wage) ~ educ + exper + I(exper^2) + black + smsa + south 
 summary(modelo_iv)
 ```
 
-. . . 
+
 
 <center>
 Como saber se IV é uma opção melhor a MQO?
@@ -503,7 +483,6 @@ Como saber se IV é uma opção melhor a MQO?
 - Podemos suspeitar que uma variável foi medida com erro, mas não sabemos se o erro de medição é grande o suficiente como para nos preocupar e fugir de MQO.
 - Etc.
 
-. . . 
 
 <center>
 [Assim, torna-se útil testar a hipótese nula de que os erros são não correlacionados com todos os regressores contra a hipótese alternativa de que estão correlacionados com alguns dos regressores.]{style="color:blue;"}
@@ -520,13 +499,12 @@ $$H_0: Y = X \beta + u, \quad \text{com  } u \sim IID(0, \sigma^2I) \text{ e } \
 
 $$H_1: Y = X \beta + u, \quad \text{com  } u \sim IID(0, \sigma^2I) \text{ e } \mathbb{E}(Z'u) = 0$$
 
-. . . 
 
 
 - Sob $H_1$, $\hat{\beta}_{IV}$ é consistente mas $\hat{\beta}_{MQO}$ não é. 
 - Sob $H_0$, $\hat{\beta}_{IV}$ e $\hat{\beta}_{MQO}$ são ambos consistentes (o que implica que $\hat{\beta}_{IV} - \hat{\beta}_{MQO} \xrightarrow{p} 0$).
 
-. . . 
+
 
 <center>
 A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estatísticamente diferentes de de zero.
@@ -538,15 +516,9 @@ A ideia do teste é verificar se $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é estat
 
 #### Teste Durbin-Wu-Hausman  
 
-$$\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y$$
-
-. . . 
-
-Testar que $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é diferente de zero é equivalente a testar que  $X'P_ZM_X Y$ é diferentes de zero ([Por que?]{style="color:red;"}).
-
-. . . 
-
-Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $P_Z X$ e $\hat{u}$ são ortogonais. 
+- $\hat{\beta}_{IV} - \hat{\beta}_{MQO} = (X'P_Z X)^{-1}X'P_ZY - (X'X)^{-1}X'Y = \cdots = (X'P_Z X)^{-1}X'P_ZM_X Y,$ em que $M_X = I - (X'X)^{-1}X'$.
+- Testar que $\hat{\beta}_{IV} - \hat{\beta}_{MQO}$ é diferente de zero é equivalente a testar que  $X'P_ZM_X Y$ é diferentes de zero ([Por que?]{style="color:red;"}).
+- Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $P_Z X$ e $\hat{u}$ são ortogonais. 
 
 
 
@@ -554,21 +526,10 @@ Sob $H_0$, temos que $M_X Y = \hat{u}$ e então queremos verificar se $P_Z X$ e 
 
 #### Teste Durbin-Wu-Hausman  
 
-Seja $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ em que as $k_1$ colunas de $\textbf{X}_1$ estão inclussas na matriz de instrumentos $\textbf{Z}$ e as $k_2$ colunas de $\textbf{X}_2$ são tratadas como potenciais endógenas ($k_1 + k_2 = k$).
-
-. . . 
-
-Por construção $\hat{u}$ é ortogonal a todas as colunas em $\textbf{X}$, em particular, para as colunas em $\textbf{X}_1$. Então, $$\textbf{X}'P_Z M_X Y = [\textbf{X}_1 \textbf{X}_2]' P_Z M_X Y = \textbf{X}_1' P_Z M_X Y + \textbf{X}_2' P_Z M_XY$$
-
-
-. . . 
-
-
-Mas, $P_Z \textbf{X}_1 = \textbf{X}_1$ e $M_X \textbf{X}_1 = 0$, então: $$\textbf{X}_1' P_Z M_X Y = \textbf{X}_1'M_XY = 0.$$
-
-. . . 
-
-Basta verificar se $\textbf{X}_2'P_ZM_XY = 0 \longrightarrow H_0: \textbf{X}_2'P_ZM_XY = 0$ 
+- Seja $\textbf{X} = [\textbf{X}_1 \textbf{X}_2]$ em que as $k_1$ colunas de $\textbf{X}_1$ estão inclussas na matriz de instrumentos $\textbf{Z}$ e as $k_2$ colunas de $\textbf{X}_2$ são tratadas como potenciais endógenas ($k_1 + k_2 = k$).
+- Por construção $\hat{u}$ é ortogonal a todas as colunas em $\textbf{X}$, em particular, para as colunas em $\textbf{X}_1$. Então, $$\textbf{X}'P_Z M_X Y = [\textbf{X}_1 \textbf{X}_2]' P_Z M_X Y = \textbf{X}_1' P_Z M_X Y + \textbf{X}_2' P_Z M_XY$$
+- Mas, $P_Z \textbf{X}_1 = \textbf{X}_1$ e $M_X \textbf{X}_1 = 0$, então: $$\textbf{X}_1' P_Z M_X Y = \textbf{X}_1'M_XY = 0.$$
+- Basta verificar se $\textbf{X}_2'P_ZM_XY = 0 \longrightarrow H_0: \textbf{X}_2'P_ZM_XY = 0$ 
 
 
 ## Testes de Hipóteses
@@ -596,7 +557,8 @@ $$\hat{\delta} = (\textbf{X}_2' P_Z M_X P_Z \textbf{X}_2)^{-1} \textbf{X}_2' P_Z
 
 Como $(\textbf{X}_2' P_Z M_X P_Z \textbf{X}_2)^{-1} > 0$ ([Por que?]{style="color:red;"}), testar se $\delta = 0$ equivale a testar se $\textbf{X}_2'P_ZM_XY = 0$ (que é o que queremos).
 
-. . . 
+
+
 
 <center>
 [Então, o procedimento resume-se a um teste F.]{style="color:red;"}
