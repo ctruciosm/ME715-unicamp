@@ -352,14 +352,14 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Introdução</h2>
 <ul>
 <li class="fragment">Nesta seção, discutimos técnicas para análisar dados em painel.</li>
-<li class="fragment">Dados em painel são unidades de corte transversal que são acompanhadas ao longo do tempo.</li>
+<li class="fragment">Dados em painel são <span class="math inline">\(n\)</span> unidades de corte transversal que são acompanhadas ao longo de <span class="math inline">\(T\)</span> períodos de tempo.</li>
 <li class="fragment">Em particular, note que:
 <ul>
 <li class="fragment">se <span class="math inline">\(n = 1\)</span> e <span class="math inline">\(T &gt; 1\)</span>, estamos em um problema de séries temporais.</li>
 <li class="fragment">se <span class="math inline">\(T = 1\)</span> e <span class="math inline">\(n &gt; 1\)</span>, estamos em um problema de corte transversal.</li>
 </ul></li>
 <li class="fragment">Dados em painel referem-se a casos em que <span class="math inline">\(n &gt; 1\)</span> e <span class="math inline">\(T &gt; 1\)</span>.</li>
-<li class="fragment">Dicutiremos técnicas para paineis balanceados (o mesmo número de observações de corte transversal, <span class="math inline">\(n\)</span>, é acompanhado em todos os instantes de tempo, <span class="math inline">\(T\)</span>. Totalizando <span class="math inline">\(n \times T\)</span> observações) em que <span class="math inline">\(n &gt;&gt; T\)</span>.</li>
+<li class="fragment">Discutiremos técnicas para paineis balanceados (o mesmo número de observações de corte transversal, <span class="math inline">\(n\)</span>, é acompanhado em todos os instantes de tempo, <span class="math inline">\(T\)</span>. Totalizando <span class="math inline">\(n \times T\)</span> observações) em que <span class="math inline">\(n &gt;&gt; T\)</span>.</li>
 <li class="fragment">A teoría asintótica que justifica os resultados assume que <span class="math inline">\(n \rightarrow \infty\)</span> e <span class="math inline">\(T\)</span> é fixo</li>
 </ul>
 </section>
@@ -430,7 +430,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 \end{bmatrix}\]</span></p></li>
 <li class="fragment"><p>Assume que <span class="math inline">\(\epsilon_{it} \sim IID(0, \sigma^2)\)</span>.</p></li>
 <li class="fragment"><p>Este método é o mais simples e produz estimadores eficientes sob a suposição de que <span class="math inline">\(\epsilon_{it} \sim IID(0, \sigma^2)\)</span> (para um dado indivíduo <span class="math inline">\(i\)</span> os erros são serialmente não correlacionados e entre individuos e tempo, os erros são homocedasticos).</p></li>
-<li class="fragment"><p>Este modelo é inapropriado se <span class="math inline">\(\epsilon_{it} \sim IID(0, \sigma^2)\)</span> não acontece.</p></li>
+<li class="fragment"><p>Este modelo é inapropriado se <span class="math inline">\(\epsilon_{it} \sim IID(0, \sigma^2)\)</span> não for verdade.</p></li>
 </ul>
 </section>
 <section id="duas-extensões" class="slide level2">
@@ -473,7 +473,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 <span style="color:red;">Então, utilizamos MQO e pronto?</span>
 </center>
 <ul>
-<li class="fragment">A variância de <span class="math inline">\(\hat{\boldsymbol{\beta}}_{MQO}\)</span> será subestimada.</li>
+<li class="fragment">A variância de <span class="math inline">\(\hat{\boldsymbol{\beta}}_{MQO}\)</span> não está corretamente estimada.</li>
 <li class="fragment"><span class="math inline">\(\hat{\boldsymbol{\beta}}_{MQO}\)</span> não é um estimador eficiente.</li>
 </ul>
 <div class="fragment">
@@ -489,7 +489,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 </div>
 <div class="fragment">
 <center>
-🏄 <span style="color:red;"><strong>MQG(F)</strong></span> 🏄
+🏄‍♂️ <span style="color:red;"><strong>MQG(F)</strong></span> 🏄‍♀️
 </center>
 </div>
 </section>
@@ -511,7 +511,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 <section id="modelo-de-efeitos-aleatórios-4" class="slide level2">
 <h2>Modelo de Efeitos Aleatórios</h2>
 <p><span class="math display">\[\mathbb{E}[\epsilon_i \epsilon_i'] = \sigma_{\alpha}^2\boldsymbol{i}\boldsymbol{i}' + \sigma_{\eta}^2 I_T = \begin{bmatrix}
-\sigma_{\eta}^2 + \sigma_{\alpha}^2 &amp;  \cdots &amp; \sigma_{\alpha}^2 \\
+\sigma_{\eta}^2 + \sigma_{\alpha}^2 &amp;  \cdots &amp; \cdots &amp;\sigma_{\alpha}^2 \\
 \sigma_{\alpha}^2 &amp; \sigma_{\eta}^2 + \sigma_{\alpha}^2 &amp; \cdots &amp; \sigma_{\alpha}^2  \\
 \vdots &amp; \ddots &amp; \cdots &amp; \vdots \\
 \sigma_{\alpha}^2 &amp; \sigma_{\alpha}^2 &amp; \cdots &amp; \sigma_{\eta}^2 + \sigma_{\alpha}^2
@@ -627,7 +627,7 @@ Ainda precisamos estimar <span class="math inline">\(\sigma^2_{\eta}\)</span> e 
 <p>Premultiplicando os dados originais por <span class="math inline">\(\textbf{M}_D\)</span> e aplicando MQO, nos leva a <span class="math display">\[\hat{\boldsymbol{\beta}}_W = (\textbf{X}' \textbf{M}_D\textbf{X} )^{-1} \textbf{X}' \textbf{M}_D\textbf{y}.\]</span></p>
 <p>Este estimador é equivalente ao que obteriamos se aplicarmos MQO na seguinte equação:</p>
 <p><span class="math display">\[y_{it} - \bar{y}_{i\cdot} = (X_{it} - \bar{X}_{i\cdot}) \boldsymbol{\beta} + error.\]</span></p>
-<p>Ademais, o estimador é o mesmo que obteriamos se aplicasemos MQO nos dados originais mas inluinddo variáveis <em>dummy</em> para cada indivíduo <span class="math inline">\(i\)</span> (ver Teorema FWL).</p>
+<p>Ademais, o estimador é o mesmo que obteriamos se aplicasemos MQO nos dados originais mas incluinddo variáveis <em>dummy</em> para cada indivíduo <span class="math inline">\(i\)</span> (ver Teorema FWL).</p>
 </div>
 <div class="fragment">
 <div class="callout callout-important callout-titled callout-style-default">
@@ -662,10 +662,161 @@ Ainda precisamos estimar <span class="math inline">\(\sigma^2_{\eta}\)</span> e 
 </section>
 <section id="modelo-de-efeitos-fixos-1" class="slide level2">
 <h2>Modelo de efeitos fixos</h2>
+<p>Considere o seguinte modelo com apenas dous períodos de tempo (<span class="math inline">\(t = 1, 2\)</span>):</p>
+<p><span class="math display">\[y_{it} = X_{it} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{it},\]</span> em que</p>
+<ul>
+<li class="fragment"><span class="math inline">\(X\)</span> é a matriz de variáveis explicativas que varia entre indivíduos e ao longo do tempo.</li>
+<li class="fragment"><span class="math inline">\(Z\)</span> variáveis que mudam entre indivíduos mas não ao longo do tempo.</li>
+<li class="fragment">Como no caso anterior, consideramos <span class="math inline">\(\epsilon_{it} = \alpha_i + \eta_{it}\)</span></li>
+<li class="fragment">Consideremos tambem as seguintes suposições</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:33%;">
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\boldsymbol{\eta} | \textbf{X}, \textbf{Z}] = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\boldsymbol{\eta}\boldsymbol{\eta}' | \textbf{X}, \textbf{Z}] = \sigma_{\eta}^2 I_{nT}\)</span></li>
+</ul>
+</div><div class="column" style="width:33%;">
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\alpha_i \alpha_j | \textbf{X}, \textbf{Z}] = 0\)</span>, <span class="math inline">\(i \neq j\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\alpha_i \alpha_i | \textbf{X}, \textbf{Z}] = \sigma_{\alpha}^2\)</span></li>
+</ul>
+</div><div class="column" style="width:33%;">
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\alpha_i | \textbf{X}, \textbf{Z}] = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbb{E}[\alpha_1 \eta_{jt} | \textbf{X}, \textbf{Z}] = 0\)</span></li>
+</ul>
+</div></div>
+</section>
+<section id="modelo-de-efeitos-fixos-2" class="slide level2">
+<h2>Modelo de efeitos fixos</h2>
+<p>Seja <span class="math inline">\(\textbf{W}_{it} = [\textbf{X}_{it}, \textbf{Z}_{i}]\)</span>, vamos assumir adicionalmente que <span class="math display">\[\mathbb{E}[\textbf{W}_{it}' \epsilon_{it}] \neq 0.\]</span></p>
+<center>
+<span style="color:red;">(estamos interessados em que as v. independentes estejam correlacionadas com <span class="math inline">\(\alpha\)</span>)</span>
+</center>
+<div class="fragment">
+<p>Este ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:</p>
+<p><span class="math display">\[y_{i1} = X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1}\]</span></p>
+</div>
+<div class="fragment">
+<p>Diferente do modelo de efeitos aletarórios, MQO produzira estimadores viesados (cujo vies depende da relação entre <span class="math inline">\(\alpha_i\)</span> e as outras variáveis explicativas)</p>
+</div>
+</section>
+<section id="modelo-de-efeitos-fixos-3" class="slide level2">
+<h2>Modelo de efeitos fixos</h2>
+<p>Pode-se provar que, por exemplo, se <span class="math inline">\(\beta_2\)</span> é o coeficiente associado à segunda variável explicativa, <span class="math display">\[\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,\]</span> em que <span class="math inline">\(\pi_2\)</span> é o coeficiente associado à mesma variável explicativa na regressão <span class="math display">\[\alpha_i = \textbf{W}_{it} \pi + error.\]</span></p>
+<div class="fragment">
+<p>De forma semelhante, se ajustar MQO apenas aos dados do segundo período de tempo, temos:</p>
+<p><span class="math display">\[y_{i2} = X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2}\]</span></p>
+</div>
+</section>
+<section id="modelo-de-efeitos-fixos-4" class="slide level2">
+<h2>Modelo de efeitos fixos</h2>
+<p>A riqueza dos modelos para dados em painel residem no fato de que dado que ambas as representações (considerando os períodos 1 ou 2) são representações válidas, então qualquer combinação linear delas será também válida!</p>
+<div class="fragment">
+<p><span class="math display">\[\begin{align}
+y_{i1} &amp;= X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1} \\
+y_{i2} &amp;= X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2} \\
+y_{i2} - y_{i1} &amp;=  (X_{i2} - X_{i1}) \boldsymbol{\beta}  + (\epsilon_{i2} - \epsilon_{i1}) \\
+\Delta y &amp;= \Delta X \boldsymbol{\beta}  + \Delta \eta
+\end{align}\]</span></p>
+</div>
+<div class="fragment">
+<center>
+<span style="color:red;">A vantagem desta última representação é que agora <span class="math inline">\(\mathbb{E}[\Delta X'\Delta \eta] = 0\)</span> e com isso MQO nos dados transformados não produzira estimadores viesados (para os <span class="math inline">\(\beta\)</span>s associados a <span class="math inline">\(\textbf{X}\)</span>)</span>
+</center>
+</div>
+</section>
+<section id="modelo-de-efeitos-fixos-5" class="slide level2">
+<h2>Modelo de efeitos fixos</h2>
+<ul>
+<li class="fragment">Com dados em painel é possível obter estimadores não viesados de parâmetros de interesse mesmo diante do efeito omitido correlacionado. Coisa que MQO no corte transversal de individuos não consegue!</li>
+<li class="fragment">Com um estimador de efeitos fixos, não podemos recuperar estimadores de variáveis explicataivas invariantes no tempo.</li>
+<li class="fragment">O estimador de efeitos fixos é robusto à omissão de regressores (relevantes) que sejam invariantes no tempo.</li>
+<li class="fragment">Quando o efeito aleatório é valido, o estimador de efeitos fixos ainda produz estimadores consistentes (mas não eficiente) dos parâmetros de interesse.</li>
+</ul>
+</section></section>
+<section>
+<section id="modelo-de-efeitos-fixos-com-mais-de-dois-períodos" class="title-slide slide level1 center">
+<h1>Modelo de efeitos fixos com mais de dois períodos</h1>
+
+</section>
+<section id="modelo-de-efeitos-fixos-com-mais-de-dois-períodos-1" class="slide level2">
+<h2>Modelo de efeitos fixos com mais de dois períodos</h2>
+<p>O modelo de efeitos fixos assume que <span class="math inline">\(\mathbb{C}ov(X_{it}, \alpha_i) \neq 0\)</span>. Assim, devemos estimar o modelo condicional na presença destes efeitos fixos <span class="math display">\[y_{it} = \textbf{X}_{it}\boldsymbol{\beta} + \alpha_i + \eta_{it},\]</span> em que <span class="math inline">\(\alpha_i\)</span> devem ser tratados como parâmetros a serem estimados.</p>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Observação</strong></p>
+</div>
+<div class="callout-content">
+<p>No contexto atual (<span class="math inline">\(T\)</span> pequeno e fixo e <span class="math inline">\(n \rightarrow \infty\)</span>), não podemos obter estimadores consistentes para os parâmetros adicionais no modelo (<span class="math inline">\(\alpha_i\)</span>) pois este número de parâmetros cresce junto com <span class="math inline">\(n\)</span>. Contudo, apesar de não poder estimar <span class="math inline">\(\alpha_i\)</span> consistentemente, podemos estimar os outros parâmetros de forma consistente! 🏄‍♂️.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Para se fazer isto, basta ajustar por MQO o modelo <span class="math display">\[\textbf{y} = \textbf{X}\boldsymbol{\beta} + \textbf{D} \boldsymbol{\alpha} + \boldsymbol{\eta},\]</span> em que <span class="math inline">\(\textbf{D}\)</span> são o conjunto de <em>dummies</em> (uma para cada indivíduo <span class="math inline">\(i\)</span>).</p>
+</div>
+</section>
+<section id="modelo-de-efeitos-fixos-com-mais-de-dois-períodos-2" class="slide level2">
+<h2>Modelo de efeitos fixos com mais de dois períodos</h2>
+<p>Utilizando o Teorema FWL,</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X}'M_D \textbf{y},\]</span> em que <span class="math inline">\(M_D = I - D(D'D)^{-1}D'.\)</span></p>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Observação</strong></p>
+</div>
+<div class="callout-content">
+<p>Note que <span class="math inline">\(\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X}'M_D \textbf{y} = \hat{\boldsymbol{\beta}}_W\)</span> é uma opção (das muitas opções) de estimador de efeitos fixos.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<center>
+<span style="color:red;">De fato, qualquer transformação que “nos livra” do efeito fixo produzira um estimador de efeito fixo</span>
+</center>
+</div>
+</section></section>
+<section>
+<section id="efeito-fixo-ou-efeito-aleatório" class="title-slide slide level1 center">
+<h1>Efeito fixo ou efeito aleatório?</h1>
+
+</section>
+<section id="efeito-fixo-ou-aleatório" class="slide level2">
+<h2>Efeito fixo ou aleatório?</h2>
+<ul>
+<li class="fragment">Partindo da definição, a diferença entre efeito fixo e aleatório está na relação existente entre <span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\(\textbf{X}_{it}\)</span>.</li>
+<li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0\)</span> (efeito aleatório), mas se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0\)</span> (efeito fixo).</li>
+<li class="fragment">Quando o efeito aleatório é valido, o estimador de efeito fixo produz estimadores consistentes dos parâmetros de interesse.</li>
+<li class="fragment">Alguns pesquisadores acreditam que, tirando os casos (quase)experimentais, é pouco plausível que <span class="math inline">\(\alpha_i\)</span> seja não correlacionado com as variáveis explicativas.</li>
+<li class="fragment">Em algumas situações o estimador de efeitos fixos pode não ser uma boa ideia (erros de medida em X, X endogenos).</li>
+<li class="fragment">Um test que pode ajudar nessa escolha é o teste de Wu-Hausman</li>
+</ul>
+</section>
+<section id="teste-de-wu-hausman" class="slide level2">
+<h2>Teste de Wu-Hausman</h2>
+<ul>
+<li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0\)</span>, o estimador de efeitos aleatórios é consistente e eficientes, mas o estimador de efeito fixo é consistente mas não eficiente.</li>
+<li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0\)</span> o estimador de efeito fixo é consistente e eficiente, mas o estimador de efeito aleatório é inconsistente</li>
+</ul>
+<div class="fragment">
+<p>Seja <span class="math inline">\(H_0:\)</span> “o efeito é aleatório” e seja a estatística de teste <span class="math display">\[H = (\hat{\beta}_{RE} - \hat{\beta}_{FE})'(\Sigma_{FE} - \Sigma_{RE})^{-1} (\hat{\beta}_{RE} - \hat{\beta}_{FE}) \stackrel{H_0}{\sim} \chi^2_{k}\]</span></p>
 <div class="quarto-auto-generated-content">
 <p><img src="imagens/imecc.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
+</div>
 </div>
 </div>
 </section></section>

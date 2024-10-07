@@ -36,12 +36,12 @@ format:
 ## Introdução
 
 - Nesta seção, discutimos técnicas para análisar dados em painel.
-- Dados em painel são unidades de corte transversal que são acompanhadas ao longo do tempo.
+- Dados em painel são $n$ unidades de corte transversal que são acompanhadas ao longo de $T$ períodos de tempo.
 - Em particular, note que:
     *   se $n = 1$ e $T > 1$, estamos em um problema de séries temporais.
     *   se $T = 1$ e $n > 1$, estamos em um problema de corte transversal.
 - Dados em painel referem-se a casos em que $n > 1$ e $T > 1$.
-- Dicutiremos técnicas para paineis balanceados (o mesmo número de observações de corte transversal, $n$, é acompanhado em todos os instantes de tempo, $T$. Totalizando $n \times T$ observações) em que $n >> T$.
+- Discutiremos técnicas para paineis balanceados (o mesmo número de observações de corte transversal, $n$, é acompanhado em todos os instantes de tempo, $T$. Totalizando $n \times T$ observações) em que $n >> T$.
 - A teoría asintótica que justifica os resultados assume que $n \rightarrow \infty$ e $T$ é fixo
 
 
@@ -118,7 +118,7 @@ e na sua forma matricial $$\textbf{y} = \textbf{X}\boldsymbol{\beta} + \boldsymb
 - Assume que  $\epsilon_{it} \sim IID(0, \sigma^2)$.
 
 - Este método é o mais simples e produz estimadores eficientes sob a suposição de que $\epsilon_{it} \sim IID(0, \sigma^2)$ (para um dado indivíduo $i$ os erros são serialmente não correlacionados e entre individuos e tempo, os erros são homocedasticos).
-- Este modelo é inapropriado se $\epsilon_{it} \sim IID(0, \sigma^2)$ não acontece.
+- Este modelo é inapropriado se $\epsilon_{it} \sim IID(0, \sigma^2)$ não for verdade.
 
 ## Duas extensões
 
@@ -157,7 +157,7 @@ Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{
 [Então, utilizamos MQO e pronto?]{style="color:red;"}
 </center>
 
-- A variância de $\hat{\boldsymbol{\beta}}_{MQO}$ será subestimada.
+- A variância de $\hat{\boldsymbol{\beta}}_{MQO}$ não está corretamente estimada.
 - $\hat{\boldsymbol{\beta}}_{MQO}$ não é um estimador eficiente.
 
 . . . 
@@ -207,7 +207,7 @@ Agora, com todas estas suposições, podemos escrever a covariância do termo de
 ## Modelo de Efeitos Aleatórios
 
 $$\mathbb{E}[\epsilon_i \epsilon_i'] = \sigma_{\alpha}^2\boldsymbol{i}\boldsymbol{i}' + \sigma_{\eta}^2 I_T = \begin{bmatrix}
-\sigma_{\eta}^2 + \sigma_{\alpha}^2 &  \cdots & \sigma_{\alpha}^2 \\
+\sigma_{\eta}^2 + \sigma_{\alpha}^2 &  \cdots & \cdots &\sigma_{\alpha}^2 \\
 \sigma_{\alpha}^2 & \sigma_{\eta}^2 + \sigma_{\alpha}^2 & \cdots & \sigma_{\alpha}^2  \\
 \vdots & \ddots & \cdots & \vdots \\
 \sigma_{\alpha}^2 & \sigma_{\alpha}^2 & \cdots & \sigma_{\eta}^2 + \sigma_{\alpha}^2
@@ -349,7 +349,7 @@ Este estimador é equivalente ao que obteriamos se aplicarmos MQO na seguinte eq
 
 $$y_{it} - \bar{y}_{i\cdot} = (X_{it} - \bar{X}_{i\cdot}) \boldsymbol{\beta} + error.$$
 
-Ademais, o estimador é o mesmo que obteriamos se aplicasemos MQO nos dados originais mas inluinddo variáveis _dummy_ para cada indivíduo $i$ (ver Teorema FWL).
+Ademais, o estimador é o mesmo que obteriamos se aplicasemos MQO nos dados originais mas incluinddo variáveis _dummy_ para cada indivíduo $i$ (ver Teorema FWL).
 
 
 . . . 
@@ -378,3 +378,165 @@ Note que o estimador MQO é uma soma ponderada de $\hat{\boldsymbol{\beta}}_B$ e
 # Modelo de efeitos fixos
 
 ## Modelo de efeitos fixos
+
+Considere o seguinte modelo com apenas dous períodos de tempo ($t = 1, 2$): 
+
+$$y_{it} = X_{it} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{it},$$ em que
+
+- $X$ é a matriz de variáveis explicativas que varia entre indivíduos e ao longo do tempo.
+- $Z$ variáveis que mudam entre indivíduos mas não ao longo do tempo.
+- Como no caso anterior, consideramos $\epsilon_{it} = \alpha_i + \eta_{it}$
+- Consideremos tambem as seguintes suposições
+
+:::: {.columns}
+
+::: {.column width="33%"}
+- $\mathbb{E}[\boldsymbol{\eta} | \textbf{X}, \textbf{Z}] = 0$
+- $\mathbb{E}[\boldsymbol{\eta}\boldsymbol{\eta}' | \textbf{X}, \textbf{Z}] = \sigma_{\eta}^2 I_{nT}$
+:::
+
+::: {.column width="33%"}
+- $\mathbb{E}[\alpha_i \alpha_j | \textbf{X}, \textbf{Z}] = 0$, $i \neq j$
+- $\mathbb{E}[\alpha_i \alpha_i | \textbf{X}, \textbf{Z}] = \sigma_{\alpha}^2$
+:::
+
+::: {.column width="33%"}
+- $\mathbb{E}[\alpha_i | \textbf{X}, \textbf{Z}] = 0$
+- $\mathbb{E}[\alpha_1 \eta_{jt} | \textbf{X}, \textbf{Z}] = 0$
+:::
+
+::::
+
+
+## Modelo de efeitos fixos
+
+
+Seja $\textbf{W}_{it} = [\textbf{X}_{it}, \textbf{Z}_{i}]$, vamos assumir adicionalmente que $$\mathbb{E}[\textbf{W}_{it}' \epsilon_{it}] \neq 0.$$
+
+<center>
+[(estamos interessados em que as v. independentes estejam correlacionadas com $\alpha$)]{style="color:red;"}
+</center>
+
+. . . 
+
+Este ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:
+
+$$y_{i1} = X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1}$$
+
+. . . 
+
+Diferente do modelo de efeitos aletarórios, MQO produzira estimadores viesados (cujo vies depende da relação entre $\alpha_i$ e as outras variáveis explicativas)
+
+
+## Modelo de efeitos fixos
+
+
+
+Pode-se provar que, por exemplo, se $\beta_2$ é o coeficiente associado à segunda variável explicativa, $$\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,$$ em que $\pi_2$ é o coeficiente associado à mesma variável explicativa na regressão $$\alpha_i = \textbf{W}_{it} \pi + error.$$
+
+. . . 
+
+
+De forma semelhante, se ajustar MQO apenas aos dados do segundo período de tempo, temos:
+
+$$y_{i2} = X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2}$$
+
+## Modelo de efeitos fixos
+
+
+A riqueza dos modelos para dados em painel residem no fato de que dado que ambas as representações (considerando os períodos 1 ou 2) são representações válidas, então qualquer combinação linear delas será também válida!
+
+. . . 
+
+\begin{align}
+y_{i1} &= X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1} \\
+y_{i2} &= X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2} \\
+y_{i2} - y_{i1} &=  (X_{i2} - X_{i1}) \boldsymbol{\beta}  + (\epsilon_{i2} - \epsilon_{i1}) \\
+\Delta y &= \Delta X \boldsymbol{\beta}  + \Delta \eta
+\end{align}
+
+. . . 
+
+<center>
+[A vantagem desta última representação é que agora $\mathbb{E}[\Delta X'\Delta \eta] = 0$ e com isso MQO nos dados transformados não produzira estimadores viesados (para os $\beta$s associados a $\textbf{X}$)]{style="color:red;"}
+</center>
+
+
+## Modelo de efeitos fixos
+
+
+- Com dados em painel é possível obter estimadores não viesados de parâmetros de interesse mesmo diante do efeito omitido correlacionado. Coisa que MQO no corte transversal de individuos não consegue!
+- Com um estimador de efeitos fixos, não podemos recuperar estimadores de variáveis explicataivas invariantes no tempo.
+- O estimador de efeitos fixos é robusto à omissão de regressores (relevantes) que sejam invariantes no tempo.
+- Quando o efeito aleatório é valido, o estimador de efeitos fixos ainda produz estimadores consistentes (mas não eficiente) dos parâmetros de interesse. 
+
+
+# Modelo de efeitos fixos com mais de dois períodos
+
+## Modelo de efeitos fixos com mais de dois períodos
+
+
+O modelo de efeitos fixos assume que $\mathbb{C}ov(X_{it}, \alpha_i) \neq 0$. Assim,  devemos estimar o modelo condicional na presença destes efeitos fixos $$y_{it} = \textbf{X}_{it}\boldsymbol{\beta} + \alpha_i + \eta_{it},$$ em que $\alpha_i$ devem ser tratados como parâmetros a serem estimados. 
+
+. . . 
+
+
+::: {.callout-important}
+### Observação
+No contexto atual ($T$ pequeno e fixo e $n \rightarrow \infty$), não podemos obter estimadores consistentes para os parâmetros adicionais no modelo ($\alpha_i$) pois este número de parâmetros cresce junto com $n$. Contudo, apesar de não poder estimar $\alpha_i$ consistentemente, podemos estimar os outros parâmetros de forma consistente! `r emo::ji("surfing")`.
+:::
+
+. . . 
+
+Para se fazer isto, basta ajustar por MQO o modelo $$\textbf{y} = \textbf{X}\boldsymbol{\beta} + \textbf{D} \boldsymbol{\alpha} + \boldsymbol{\eta},$$ em que $\textbf{D}$ são o conjunto de _dummies_ (uma para cada indivíduo $i$).
+
+
+
+## Modelo de efeitos fixos com mais de dois períodos
+
+
+Utilizando o Teorema FWL, 
+
+$$\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X}'M_D \textbf{y},$$ em que $M_D = I - D(D'D)^{-1}D'.$
+
+. . . 
+
+::: {.callout-important}
+### Observação
+Note que $\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X}'M_D \textbf{y} = \hat{\boldsymbol{\beta}}_W$ é uma opção (das muitas opções) de estimador de efeitos fixos.
+:::
+
+
+. . . 
+
+
+
+<center>
+[De fato, qualquer transformação que "nos livra" do efeito fixo produzira um estimador de efeito fixo]{style="color:red;"}
+</center>
+
+
+
+
+# Efeito fixo ou efeito aleatório?
+
+## Efeito fixo ou aleatório?
+
+- Partindo da definição, a diferença entre efeito fixo e aleatório está na relação existente entre $\alpha_i$ e $\textbf{X}_{it}$. 
+- Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0$ (efeito aleatório), mas se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0$ (efeito fixo).
+- Quando o efeito aleatório é valido, o estimador de efeito fixo produz estimadores consistentes dos parâmetros de interesse.
+- Alguns pesquisadores acreditam que, tirando os casos (quase)experimentais, é pouco plausível que $\alpha_i$ seja não correlacionado com as variáveis explicativas.
+- Em algumas situações o estimador de efeitos fixos pode não ser uma boa ideia (erros de medida em X, X endogenos).
+- Um test que pode ajudar nessa escolha é o teste de Wu-Hausman
+
+
+## Teste de Wu-Hausman
+
+- Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0$, o estimador de efeitos aleatórios é consistente e eficientes, mas o estimador de efeito fixo é consistente mas não eficiente.
+- Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0$ o estimador de efeito fixo é consistente e eficiente, mas o estimador de efeito aleatório é inconsistente 
+
+. . . 
+
+
+Seja $H_0:$ "o efeito é aleatório" e seja a estatística de teste $$H = (\hat{\beta}_{RE} - \hat{\beta}_{FE})'(\Sigma_{FE} - \Sigma_{RE})^{-1} (\hat{\beta}_{RE} - \hat{\beta}_{FE}) \stackrel{H_0}{\sim} \chi^2_{k}$$
+
