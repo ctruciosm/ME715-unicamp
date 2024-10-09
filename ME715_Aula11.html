@@ -1014,6 +1014,45 @@ F-statistic: 3.162 on 5 and 422 DF,  p-value: 0.008173</code></pre>
 </section>
 <section id="estimação-13" class="slide level2">
 <h2>Estimação</h2>
+<p><span style="color:red;"><strong>Teste de endogeneidade</strong></span></p>
+<p>Suponha que temos uma única variável suspeita de ser endógena (<span class="math inline">\(y_2\)</span>),</p>
+<p><span class="math display">\[y_1 = \beta_0 + \beta_1 y_2 + \beta_2 z_1 + \beta_3 z_2 + u,\]</span> em que <span class="math inline">\(z_3\)</span> e <span class="math inline">\(z_4\)</span> são outras duas variáveis exógenas que não aparecem na equação.</p>
+<div class="fragment">
+<p>Se <span class="math inline">\(y_2\)</span> não for correlacionado com <span class="math inline">\(u\)</span>, devemos utilizar MQO, mas se isso não for verdade devemos preferir MQ2E.</p>
+</div>
+<div class="fragment">
+<center>
+<span style="color:red;">Como então testar isso?</span>
+</center>
+<ul>
+<li class="fragment">Se todas as variáveis forem exógenas, MQO e MQ2E serão ambos consistentes.</li>
+<li class="fragment">Se MQO e MQ2E diferirem significativamente, concluímos que <span class="math inline">\(y_2\)</span> deve ser endógena.</li>
+</ul>
+</div>
+</section>
+<section id="estimação-14" class="slide level2">
+<h2>Estimação</h2>
+<p><span style="color:red;"><strong>Teste de endogeneidade</strong></span></p>
+<p>Pense no modelo na sua forma reduzida, <span class="math display">\[y_2 = \pi_0 + \pi_1 z_1 + \pi_2 z_2 + \pi_3 z_3 + \pi_4 z_4 + v.\]</span></p>
+<div class="fragment">
+<p><span class="math inline">\(y_2\)</span> será não correlacionado com <span class="math inline">\(u\)</span> se e somente se <span class="math inline">\(v\)</span> e <span class="math inline">\(u\)</span> forem não correlacionados. Assim, podemos ajustar o modelo <span class="math display">\[u = \gamma v + e.\]</span> Se <span class="math inline">\(u\)</span> e <span class="math inline">\(v\)</span> forem não correolacionados, então <span class="math inline">\(\gamma = 0\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Uma forma simples de se fazer isso é ajustar a regressão <span class="math display">\[y_1 = \beta_0 + \beta_1 y_2 + \beta_2 z_1 + \beta_3 z_3 + \gemma \hat{v} + erro,\]</span> e testar através de um teste <span class="math inline">\(T\)</span> se <span class="math inline">\(H_0: \gamma = 0\)</span>.</p>
+</div>
+</section>
+<section id="estimação-15" class="slide level2">
+<h2>Estimação</h2>
+<p><span style="color:red;"><strong>Teste de endogeneidade</strong></span></p>
+<h3 id="resumo">Resumo</h3>
+<ol type="1">
+<li class="fragment">Estime a forma reduzida de <span class="math inline">\(y_2\)</span>, regredindo <span class="math inline">\(y_2\)</span> sobre <strong>todas</strong> as variáveis exógenas (inclusíve aquelas da equação estrutural e as VIs adicionais).</li>
+<li class="fragment">Obtenha <span class="math inline">\(\hat{v}\)</span></li>
+<li class="fragment">Adicione <span class="math inline">\(\hat{v}\)</span> à equação estrutural de <span class="math inline">\(y_1\)</span> e verifique se <span class="math inline">\(\hat{v}\)</span> é estatisticamente diferente de zero através de um teste T. Se rejeitamor <span class="math inline">\(H_0\)</span>, diremos que <span class="math inline">\(y_2\)</span> é endógena.</li>
+</ol>
+</section>
+<section id="estimação-16" class="slide level2">
+<h2>Estimação</h2>
 <p>O que acontece se não estivermos interessados em apenas uma equação mas no sistema todo?</p>
 <div class="fragment">
 <h3 id="mq3e">MQ3E</h3>
@@ -1024,15 +1063,15 @@ F-statistic: 3.162 on 5 and 422 DF,  p-value: 0.008173</code></pre>
 </ul>
 </div>
 </section>
-<section id="estimação-14" class="slide level2">
+<section id="estimação-17" class="slide level2">
 <h2>Estimação</h2>
 <p><span class="math display">\[\hat{\boldsymbol{\beta}}_{\bullet}^{MQ3E} = (\textbf{X}_{\bullet}' (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}})\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet} (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}}) \textbf{y}_{\bullet}\]</span></p>
 <p><span class="math display">\[\hat{\mathbb{V}}(\hat{\boldsymbol{\beta}}_{\bullet}^{MQ3E}) = (\textbf{X}_{\bullet}' (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}})\textbf{X}_{\bullet})^{-1} \]</span></p>
 <p>A função <code>systemfit()</code> estima por MQ3E.</p>
 </section>
-<section id="estimação-15" class="slide level2">
+<section id="estimação-18" class="slide level2">
 <h2>Estimação</h2>
-<h3 id="resumo">Resumo:</h3>
+<h3 id="resumo-1">Resumo:</h3>
 <ul>
 <li class="fragment"><strong>MQO:</strong> incosistentes e viesados.</li>
 <li class="fragment"><strong>MQI</strong>: estimadores consistentes mas viesados.</li>

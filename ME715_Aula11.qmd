@@ -711,9 +711,60 @@ ou seja, salário não exerce nenhum efeito sobre o salário. Isto, pois aplicam
 Para verificar que $\log(wage)$ é de fato endógeno, pode aplicar um teste de endogeneidade.
 
 
+## Estimação
+
+[**Teste de endogeneidade**]{style="color:red;"}
+
+
+Suponha que temos uma única variável suspeita de ser endógena ($y_2$), 
+
+$$y_1 = \beta_0 + \beta_1 y_2 + \beta_2 z_1 + \beta_3 z_2 + u,$$
+em que $z_3$ e $z_4$ são outras duas variáveis exógenas que não aparecem na equação.
+
+
+. . . 
+
+
+Se $y_2$ não for correlacionado com $u$, devemos utilizar MQO, mas se isso não for verdade devemos preferir MQ2E. 
+
+. . . 
+
+
+<center>
+[Como então testar isso?]{style="color:red;"}
+</center>
+
+
+- Se todas as variáveis forem exógenas, MQO e MQ2E serão ambos consistentes.
+- Se MQO e MQ2E diferirem significativamente, concluímos que $y_2$ deve ser endógena.
 
 
 
+## Estimação
+
+[**Teste de endogeneidade**]{style="color:red;"}
+
+Pense no modelo na sua forma reduzida, $$y_2 = \pi_0 + \pi_1 z_1 + \pi_2 z_2 + \pi_3 z_3 + \pi_4 z_4 + v.$$
+
+. . . 
+
+$y_2$ será não correlacionado com $u$ se e somente se $v$ e $u$ forem não correlacionados. Assim, podemos ajustar o modelo $$u = \gamma v + e.$$ Se $u$ e $v$ forem não correolacionados, então $\gamma = 0$. 
+
+. . . 
+
+Uma forma simples de se fazer isso é ajustar a regressão $$y_1 = \beta_0 + \beta_1 y_2 + \beta_2 z_1 + \beta_3 z_3 + \gemma \hat{v} + erro,$$ e testar através de um teste $T$ se $H_0: \gamma = 0$.
+
+
+
+## Estimação
+
+[**Teste de endogeneidade**]{style="color:red;"}
+
+### Resumo
+
+1. Estime a forma reduzida de $y_2$, regredindo $y_2$ sobre **todas** as variáveis exógenas (inclusíve aquelas da equação estrutural e as VIs adicionais).
+2. Obtenha $\hat{v}$
+3. Adicione $\hat{v}$ à equação estrutural de $y_1$ e verifique se $\hat{v}$ é estatisticamente diferente de zero através de um teste T. Se rejeitamor $H_0$, diremos que $y_2$ é endógena.
 
 ## Estimação
 
