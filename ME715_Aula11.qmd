@@ -41,7 +41,7 @@ format:
 
 - $h_o$ o total anual de horas cumpridas por trabalhadores na agricultura.
 - Seja $w$ a média do salário por hora oferecida a esses trabalhadores, 
-- Seja $z_1$ a média dos salários da indústria
+- Seja $z_1$ alguma variável observada que afeta a oferta de mão de obra (por exemplo, média dos salários da industria)
 
 . . . 
 
@@ -53,7 +53,8 @@ Sejam:
 
 - $h_d$ o total anual de horas demandadas pela agricultura.
 - Seja $w$ a média do salário por hora oferecida a esses trabalhadores.
-- Seja $z_2$ a área agrícola.
+- Seja $z_2$ alguma variável que afeta a demanda de mão de obra (por exemplo, a área agrícola)
+
 
 . . .
 
@@ -63,7 +64,10 @@ Então, uma função simples da demanda de mão de obra é $$h_d = \alpha_2 w + 
 ## Motivação 
 
 
-Note que ambas as equações descrevem relações diferentes. A primeira é uma equação comportamental dos trabalhadores e a segunda é uma equação comportamental dos fazendeiros.
+Note que ambas as equações descrevem relações diferentes: 
+
+- A primeira é uma equação comportamental dos trabalhadores,
+- A segunda é uma equação comportamental dos fazendeiros.
 
 
 . . . 
@@ -136,7 +140,7 @@ Assim, cidades com taxas (esperadas) maiores de assalto, terão mais policiais _
 
 . . . 
 
-Assim que especificarmos os outros fatores, teremos um modelo de equações simultâneas!
+Assim que especificarmos os outros fatores, teremos um modelo de equações simultâneas com duas equações.
 
 . . . 
 
@@ -158,7 +162,7 @@ Ainda queremos saber se, [se uma cidade aumentar sua força policial, esse aumen
 
 
 <center>
-[Seja que estamos interessados em apenas uma parte ou no sistema como um todo, a interação de todas as variáveis no modelo terão um papel importante na interpretação e estimação do modelo.]{style="color:red;"}
+[Seja que estemos interessados em apenas uma parte ou no sistema como um todo, a interação de todas as variáveis no modelo tem um papel importante na interpretação e estimação do mesmo.]{style="color:red;"}
 </center>
 
 
@@ -442,7 +446,13 @@ Pense no seguinte sistema de equações:
 
 $$y_1 = \alpha_1 y_2 + \beta_1 z_1 + u_1,$$
 
-$$y_2 = \alpha_2 y_1 + \beta_2 z_2 + u_2.$$
+$$y_2 = \alpha_2 y_1 + \beta_2 z_2 + u_2,$$
+
+em que $z_1$ e $z_2$ são exôgenas (de forma que cada uma é não correloacionada com $u_1$ e $u_2$),
+
+
+. . . 
+
 
 
 Em que o interesse principal está em estimar a primeira equação.
@@ -452,9 +462,13 @@ Em que o interesse principal está em estimar a primeira equação.
 
 
 <center>
-[Se $y_2$ e $u_1$ são não correlacionados, podemos aplicar MQO sem problemas. Vejamos se $\mathbb{C}or(y_2, u_1) = 0$.]{style="color:blue;"}
+[Se $y_2$ e $u_1$ são não correlacionados, podemos aplicar MQO sem problemas.]{style="color:blue;"}
 </center>
 
+
+. . . 
+
+Será que $\mathbb{C}or(y_2, u_1) = 0$?
 
 
 ## Estimação
@@ -474,8 +488,6 @@ $$(1 - \alpha_1 \alpha_2) y_2 = \alpha_2 \beta_1 z_1 + \alpha_2 u_1 + \beta_2 z_
 Assumindo que $\alpha_1 \alpha_2 \neq 1$, 
 
 $$y_2 = \underbrace{\dfrac{\alpha_2 \beta_1}{(1 - \alpha_1 \alpha_2)}}_{\pi_{21}}z_1 + \underbrace{\dfrac{\beta_2}{(1 - \alpha_1 \alpha_2)}}_{\pi_{22}}z_2 + \underbrace{\dfrac{\alpha_2 u_1 + u_2}{(1 - \alpha_1 \alpha_2)}}_{v_2},$$
-
-(note que, se fosse nosso objetivo, poderimos utilizar MQO para estimar $\pi_{21}$ e $\pi_{22}$).
 
 
 
@@ -555,7 +567,6 @@ em que:
 - kidslt6: número de filhos menores de seis anos.
 - nwifeinc: renda da outra pessoa da família que não a mulher
 - educ: educação (formal) em anos
-- exper: anos de experiência
 :::
 
 . . . 
@@ -567,7 +578,7 @@ em que:
 - MQO sería uma boa ideia se todas as variáveis fossem exógenas.
 - Contudo, $$\log(wage) = \beta_{20} + \alpha_2 hours + \beta_{21} educ + \beta_{22}exper + \beta_{23} exper^2 + u_2$$
  ($\log(wage)$ é endógena!)
-- Se a equação da oferta da mão de obra for identificável, podemos estimá-la por MQ2E, onde os instrimentos consistirão nas variáveis exógenas que aparecem em cada equação.
+- [Se a equação da oferta da mão de obra for identificável, podemos estimá-la por MQ2E, onde os instrumentos consistirão nas variáveis exógenas que aparecem em cada equação.]{style="color:red;"}
 
 . . .
 
@@ -610,16 +621,46 @@ anova(forma_reduzida_r, forma_reduzida)
 Exatamente identificado ou sobreidentificado?
 
 
+::: callout-tip
+
+#### Condição de ordem
+
+Seja $M$ o número de v. endógenas no modelo, $m$ o número de v. endógenas em uma dada equação, $K$ o número de variáveis exógenas no modelo (incluino o intercepto) e $k$ o número de variáveis exógenas em uma dada equação (incluindo o intercepto, se for o caso). Em um modelo com $M$ equações simultâneas, para que uma dada equação seja identificada, deve ocorrer que $$K - k \geq m - 1.$$
+
+::: {.nonincremental}
+
+- Se $K - k > m - 1$ (sobreidentificado)
+- Se $K - k = m - 1$ (exatamente identificado)
+
+:::
+
+:::
+
+
+
 - M = 2
 - m = 1
-- K = 6
+- K = 7
 - k = 4
 
 
-. . . 
+## Estimação
+
+Exatamente identificado ou sobreidentificado?
 
 
-$$\underbrace{K - k}_{2} \geq \underbrace{m - 1}_{0}?$$
+::: {.nonincremental}
+
+
+- M = 2
+- m = 1
+- K = 7
+- k = 4
+
+:::
+
+
+$$\underbrace{K - k}_3 \geq \underbrace{m - 1}_{0}?$$
 
 Sim, e  o modelo é sobreidentificado ($K - k > m - 1$).
 
@@ -637,22 +678,38 @@ Basta então aplicarmos MQ2E considerando todas as variáveis exógenas no siste
 library(AER)
 
 equacao01 <- ivreg(hours ~ log(wage) +  educ + age + kidslt6 + nwifeinc | educ + age + kidslt6 + nwifeinc + exper + I(exper^2), data = mroz)
-equacao02 <- ivreg(log(wage) ~ hours + educ + exper + I(exper^2) | educ + age + kidslt6 + nwifeinc + exper + I(exper^2), data = mroz)
 ```
 
-## Estimação
+
+. . . 
 
 ```{r}
 #| echo: true
 summary(equacao01)
 ```
 
+
 ## Estimação
+
+Note o que acontece se tivessemos ajustado o modelo por MQO
 
 ```{r}
 #| echo: true
-summary(equacao02)
+modelo_mqo <- lm(hours ~ log(wage) +  educ + age + kidslt6 + nwifeinc, data = mroz)
+summary(modelo_mqo)
 ```
+
+. . . 
+
+
+ou seja, salário não exerce nenhum efeito sobre o salário. Isto, pois aplicamos MQO mesmo sabendo que $\log(wage)$ é endógeno.
+
+
+. . . 
+
+
+Para verificar que $\log(wage)$ é de fato endógeno, pode aplicar um teste de endogeneidade.
+
 
 
 
@@ -660,15 +717,20 @@ summary(equacao02)
 
 ## Estimação
 
-#### MQ3E
-
-
-1. Ajuste MQ2E  no sistema de equações.
-2. Utilize os resíduos para estimar a matriz de covariância.
-3. Aplique MQGF.
+O que acontece se não estivermos interessados em apenas uma equação mas no sistema todo?
 
 . . . 
 
+### MQ3E
+
+
+- Ajuste MQ2E  no sistema de equações.
+- Utilize os resíduos para estimar a matriz de covariância.
+- Aplique MQGF.
+
+
+
+## Estimação
 
 
 $$\hat{\boldsymbol{\beta}}_{\bullet}^{MQ3E} = (\textbf{X}_{\bullet}' (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}})\textbf{X}_{\bullet})^{-1}\textbf{X}_{\bullet} (\hat{\Sigma}_{MQ2E} \otimes P_{\textbf{W}}) \textbf{y}_{\bullet}$$
@@ -683,7 +745,7 @@ A função `systemfit()` estima por MQ3E.
 ## Estimação
 
 
-#### Resumo:
+### Resumo:
 
 - **MQO:** incosistentes e viesados.
 - **MQI**: estimadores consistentes mas viesados. 
@@ -691,7 +753,6 @@ A função `systemfit()` estima por MQ3E.
 - **MQ3E**: estimadores consistentes e mais eficientes do que os obtidos por MQI ou MQ2E.
 
 
-. . . 
 
 <center>
 Se o objetivo está em estimar apenas uma das equações, MQ2E é uma alternativa interessante. Já se o sistema todo é de interesse, MQ3E é nossa opção a ser implementada.
