@@ -34,3 +34,237 @@ format:
 
 # Introdução
 
+## Introdução
+
+- Até agora, temos estudado as propriedades do EMQO, EMQG, EMQ2E, etc. 
+- Na aula de hoje focaremos em outro estimador: **o método dos momentos generalizado** (GMM)
+    *   Tem propriedades asintóticas desejáveis
+    *   Muitos dos estimadores visto até agora são casos particulares do GMM.
+    *   [Lars Peter Hansen ganhou o prêmio nobel em 2013 por causa do GMM](https://en.wikipedia.org/wiki/Lars_Peter_Hansen).
+- GMM tem propriedades desejáveis quando $n \rightarrow \infty$ (mas não quando $n$ for pequeno)
+- GMM precisa alguma habilidade em programação para implementá-lo
+
+
+# Método dos Momentos (MM)
+
+## Métodos dos Momentos (MM)
+
+- Seja $\gamma = \mathbb{E}(g(X))$ o momento pupulacional de $g(X)$.
+- Se $g(\cdot)$ for a função identidade, temos o primeiro momento de $X$: $\mu_1 = \mathbb{E}(X)$
+- Em geral, o MM utiliza os primeiros momentos (não centrados) de $X$. Isto é, $$\mu_r = \mathbb{E}(X^r),$$ em que $\mu_r$ é o r-éssimo momento não centrado de $X$.
+- É comum estarmos interessados em estatísticas que são função de dois ou mais momentos, por exemplo: $$\mathbb{V}(X) = \mu_2 - \mu_1^2$$
+
+## Métodos dos Momentos (MM)
+
+Definimos os momentos amostrais como a versão amostral dos momentos populacionais. 
+
+- Na sua forma geral temos $\hat{\gamma} = \dfrac{1}{n} \sum g(x).$
+- $\hat{\mu}_1 = \dfrac{1}{n} \sum x$
+- $\hat{\mu}_2 = \dfrac{1}{n} \sum x^2$
+- $\hat{\mu}_r = \dfrac{1}{n} \sum x^r$
+
+. . . 
+
+
+<center>
+[Uma vez definidos os momentos populacionais e amostrais, podemos entender a ideia por trás do MM. **Se queremos estimar o momento populacional (ou uma função de momentos populacioonais), simplesmente utilizamos o correspondente momento amostral (ou funções dos momentos amostrais**]{style="color:red;"}
+</center>
+
+## Métodos dos Momentos (MM)
+
+
+Suponha que estamos interessados em estimar $\mathbb{V}(X)$, o MM sugere substituir os momentos populacionais pelos momentos amostrais. Então:
+
+$$\mathbb{V}(X) = \mu_2 - \mu_1^2 \quad \rightarrow \quad \hat{\mathbb{V}}(X) = \dfrac{1}{n}\sum x^2 - \Big [\dfrac{1}{n} \sum x \big]^2 = \dfrac{1}{n} \sum (x - \bar{x})^2$$
+
+- O EMM é viesado mas a medida que $n \rightarrow \infty$  o vies desaparece.
+- O EMM é consistente ($\hat{\theta} \overset{p}{\to} \theta$)
+
+# MQO como um problema de momentos
+
+## MQO como um problema de momentos
+
+Um dos principais atrativos do GMM é que em muitas situações o que queremos estimar é simplesmente uma função dos momentos. 
+
+
+**O caso do EMQO:**
+
+Seja o modelo de regressão $$Y = X\beta + \epsilon.$$
+
+. . . 
+
+Assumindo que todas as hipóteses de Gauss-Markowv são satisfeitas, $$\mathbb{E}(X'\epsilon) = 0.$$
+
+. . . 
+
+Isto implica que $$\mathbb{E}(X'\epsilon) = \mathbb{E}(X'[Y - X\beta]) = 0.$$
+
+
+## MQO como um problema de momentos
+
+**O caso do EMQO:**
+
+Pelo MM, $$\dfrac{1}{n} X'[Y - X \beta] = 0 \quad \rightarrow \hat{\beta}_{MM} = (X'X)^{-1}X'Y = \hat{\beta}_{MQO}$$
+
+
+# IV como um problema de momentos
+
+## IV como um problema de momentos
+
+Seja o modelo $$Y = \alpha + X_1 \beta + \epsilon, \quad \text{com} \quad \mathbb{E}(X_1'\epsilon) \neq 0.$$
+
+. . . 
+
+- MQO é inconsistente
+- A ideia é encontrar instrumentos $\textbf{Z}$ que sejam correlacionados com X mas $\mathbb{E} (\textbf{Z}'\epsilon) = 0$
+- Suponha que encontramos dois instrumentos para $X_1$: $Z_1$ e $Z_2$.
+- Então $$\textbf{X} = [1 \quad X_1] \quad e \quad \textbf{Z} = [1 \quad Z_1 \quad Z_2]$$
+
+## IV como um problema de momentos
+
+
+\begin{align}
+\mathbb{E}(\textbf{Z}' \epsilon) = 0 \\
+\mathbb{E}(\textbf{Z}' (Y - \textbf{X}\beta)) = 0 \\
+\end{align}
+
+
+. . . 
+
+
+Pelo MM, $$\dfrac{1}{n} \textbf{Z}' (Y - \textbf{X}\beta)  = 0 \quad \rightarrow \quad \hat{\beta}_{MM} = (\textbf{Z}'\textbf{X})^{-1} \textbf{Z}'Y = \hat{\beta}_{IV}$$
+
+
+. . . 
+
+<center>
+[Mas isso só é verdade se $(\textbf{Z}'\textbf{X})$ for invertível, mas $(\textbf{Z}'\textbf{X})_{3 \times 2}$ é não invertível `r emo::ji("sad")`]{style="color:blue;"}
+</center>
+
+
+. . . 
+
+<center>
+[**O que aconteceu?**]{style="color:red;"}
+</center>
+
+
+. . . 
+
+
+
+::: {.callout-important}
+### Observação:
+No MM temos o mesmo número de condições dos momentos amostrais quanto parâmetros a serem estimados. Já no GMM, podemos ter um numero maior de condições dos momentos amostrais  do que parâmetros a serem estimados
+:::
+
+
+
+
+
+## IV como um problema de momentos
+
+- A condição de momentos $\dfrac{1}{n} \textbf{Z}' (Y - \textbf{X}\beta)  = 0$ impoõe três restrições e temos apenas dois parâmetros a serem estimados.
+- Isto faz com que o sistema a resolver seja sobreidentificado
+- O que podemos fazer?
+    *   Eliminar umas das equações (ou seja, eliminar uma das IV)
+    *   Seguir uma estratégia semelhante com MQO: ponderar igualmente as desviações de cada uma das condições de momentos e minimizar a soma dos quadrados das desviações.
+    *   Podemos ponderar as equações de acordo com a precisão (medida em termos de variância) com que ela é estimada.
+    
+    
+## IV como um problema de momentos
+
+A segunda ideia consiste em minimizar 
+
+
+$$\dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta])' I_3 \dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta]),$$ em que $I_3$ é uma matriz identidade $3 \times 3$.
+
+- Embora este método leve a estimadores consistentes, eles não são eficientes.
+- Hansen. (1982) mostra que o estimador ótimo nesta classe é obtido minimizando 
+$$\dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta])' \hat{\textbf{V}}^{-1} \dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta]),$$ em que $\hat{\textbf{V}}$ é um estimador consistente de $\mathbb{V}((1/n) \textbf{Z}'\epsilon)$.
+- Nesta formulação, restrições que são estimadas com menos menor precisão recebem menor peso do que aquelas estimadas com maior precisão.
+
+
+## IV como um problema de momentos
+
+
+Como estamos minimizando uma forma quadrática, é necessário obter as condições de primeira ordem em relação a $\beta$:
+
+\begin{align}
+(\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1} (\textbf{Z}' \textbf{Y} - \textbf{Z}'\textbf{X}\beta) = 0 \\
+(\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1} \textbf{Z}' \textbf{Y} - (\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1}\textbf{Z}'\textbf{X}\beta = 0 \\
+\hat{\beta} = (\textbf{X}'\textbf{Z} \hat{\textbf{V}}^{-1}\textbf{Z}'\textbf{X})^{-1} (\textbf{X}'\textbf{Z} \hat{\textbf{V}}^{-1} \textbf{Z}' \textbf{Y})
+\end{align}
+
+. . . 
+
+Um bom estimador para $\hat{\textbf{V}} = \dfrac{\sigma^2}{n} \textbf{Z}'\textbf{Z}$, o que nos leva ao seguinte estimador:
+
+$$\hat{\beta}_{GMM} = (\textbf{X}'\textbf{Z} (\textbf{Z}'\textbf{Z})^{-1}\textbf{Z}'\textbf{X})^{-1} (\textbf{X}'\textbf{Z} (\textbf{Z}'\textbf{Z})^{-1} \textbf{Z}' \textbf{Y}) = \hat{\beta}_{MQ2E}$$
+
+
+
+# GMM
+
+## GMM
+
+
+1. Definimos a condição de ortogonalidade $\mathbb{E}[g(y, \textbf{X}, \theta)] = 0$ (definida utilizando conhecimento teórico).
+2. Construimos a versão amostral da condição de ortogonalidade, denotada por $m(\theta)$, e minizamos (em $\theta$) a seguinte função: $$m(y, \textbf{X}, \theta)'\textbf{W}^{-1}m(y, \textbf{X}, \theta),$$ em que $\textbf{W}$ é um estimador consistente para $\mathbb{V}(m(\cdot))$.
+3. Se $\textbf{W}$ é um bom estimador, então $m(y, \textbf{X}, \theta)'\textbf{W}^{-1}m(y, \textbf{X}, \theta)$ tem distribuição assintótica $\chi^2_{R - k},$ em que $R$ é o número de condições de momentos e $k$ é o número de parâmetros sob $H_0$ (as condições de momentos são verificadas)
+
+
+
+## GMM
+
+
+### O caso de IV:
+
+1. Condição de ortogonalidade: $\mathbb{E}[\textbf{Z}'\epsilon] = 0$
+2. $m(\theta) = \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]$, então temos que minimizar $$\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],$$ em que $\textbf{W}$ é um estimador consistente para $\mathbb{V}( \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]) = \dfrac{\hat{\sigma}^2}{n} \textbf{Z}' \textbf{Z}.$
+
+
+
+## GMM
+
+
+
+Vamos supor um modelo de IV mas com $\mathbb{V}(\epsilon) = \Omega$ (diagonal). Como podemos obter estimadores consistentes para $\beta$?
+
+
+. . . 
+
+
+<center>
+[`r emo::ji("surfing")` **GMM** `r emo::ji("surfing")`]{style="color:red;"}
+</center>
+
+
+. . . 
+
+O problema a ser ressolvido é minimizar $$\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],$$ em que dessa vez $$\textbf{W} = \Big[ \dfrac{1}{n} \widehat{\textbf{Z}' \Omega \textbf{Z}} \Big]$$
+
+
+. . . 
+
+
+::: {.callout-important}
+### Observação:
+<center>
+Qual a diferença entre $\widehat{\textbf{Z}' \Omega \textbf{Z}}$ e $\textbf{Z}' \hat{\Omega} \textbf{Z}$?
+</center>
+:::
+
+
+## GMM
+
+Como fazer na prática para implementar este estimador?
+
+1. Obtemos um estimador consistente para $\beta$, digamos $\hat{\beta}_{MQ2E}$ (assumindo homocedasticidade)
+2. Com $\hat{\beta}_{MQ2E}$, estimar os residuais $r = Y - \textbf{X} \hat{\beta}_{MQ2E}$ e obter um estimador tipo White para a covariância. Isto é, $$\textbf{W} = \dfrac{1}{n^2} \sum z_i z_i'r_i^2,$$ em que $z_i$ são as colunas de $\textbf{Z}.$
+
+## GMM
+
+3. Uma vez obtido $\textbf{W} = \dfrac{1}{n^2} \sum z_i z_i'r_i^2$ basta encontrar o $\hat{\beta}$ que minimiza $$\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],$$ cuja solução é dada por $$\hat{\beta}_{GMM} = [\textbf{X}' \textbf{Z} (\widehat{\textbf{Z}' \Omega \textbf{Z}})^{-1} \textbf{Z}'\textbf{X}]^{-1} \textbf{X}' \textbf{Z} (\widehat{\textbf{Z}' \Omega \textbf{Z}})^{-1} \textbf{Z}'\textbf{Y},$$ em que $\widehat{\textbf{Z}' \Omega \textbf{Z}} = \sum z_i z_i'r_i^2$
+
+
