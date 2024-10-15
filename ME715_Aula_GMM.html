@@ -354,12 +354,12 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <li class="fragment">Até agora, temos estudado as propriedades do EMQO, EMQG, EMQ2E, etc.</li>
 <li class="fragment">Na aula de hoje focaremos em outro estimador: <strong>o método dos momentos generalizado</strong> (GMM)
 <ul>
-<li class="fragment">Tem propriedades asintóticas desejáveis</li>
-<li class="fragment">Muitos dos estimadores visto até agora são casos particulares do GMM.</li>
+<li class="fragment">Tem propriedades assintóticas desejáveis</li>
+<li class="fragment">Muitos dos estimadores vistos até agora são casos particulares do GMM.</li>
 <li class="fragment"><a href="https://en.wikipedia.org/wiki/Lars_Peter_Hansen">Lars Peter Hansen ganhou o prêmio nobel em 2013 por causa do GMM</a>.</li>
 </ul></li>
-<li class="fragment">GMM tem propriedades desejáveis quando <span class="math inline">\(n \rightarrow \infty\)</span> (mas não quando <span class="math inline">\(n\)</span> for pequeno)</li>
-<li class="fragment">GMM precisa alguma habilidade em programação para implementá-lo</li>
+<li class="fragment">GMM tem propriedades desejáveis quando <span class="math inline">\(n \rightarrow \infty\)</span> ( mas não quando <span class="math inline">\(n\)</span> for pequeno)</li>
+<li class="fragment">GMM precisa alguma habilidade em programação e em definir <em>condições de ortogonalidade</em> para implementá-lo</li>
 </ul>
 </section></section>
 <section>
@@ -387,14 +387,14 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </ul>
 <div class="fragment">
 <center>
-<span style="color:red;">Uma vez definidos os momentos populacionais e amostrais, podemos entender a ideia por trás do MM. <strong>Se queremos estimar o momento populacional (ou uma função de momentos populacioonais), simplesmente utilizamos o correspondente momento amostral (ou funções dos momentos amostrais</strong></span>
+<span style="color:red;">Uma vez definidos os momentos populacionais e amostrais, podemos entender a ideia por trás do MM. <strong>Se queremos estimar o momento populacional (ou uma função de momentos populacioonais), simplesmente utilizamos o correspondente momento amostral (ou funções dos momentos amostrais)</strong></span>
 </center>
 </div>
 </section>
 <section id="métodos-dos-momentos-mm-2" class="slide level2">
 <h2>Métodos dos Momentos (MM)</h2>
 <p>Suponha que estamos interessados em estimar <span class="math inline">\(\mathbb{V}(X)\)</span>, o MM sugere substituir os momentos populacionais pelos momentos amostrais. Então:</p>
-<p><span class="math display">\[\mathbb{V}(X) = \mu_2 - \mu_1^2 \quad \rightarrow \quad \hat{\mathbb{V}}(X) = \dfrac{1}{n}\sum x^2 - \Big [\dfrac{1}{n} \sum x \big]^2 = \dfrac{1}{n} \sum (x - \bar{x})^2\]</span></p>
+<p><span class="math display">\[\mathbb{V}(X) = \mu_2 - \mu_1^2 \quad \rightarrow \quad \hat{\mathbb{V}}(X) = \underbrace{\dfrac{1}{n}\sum x^2}_{\hat{\mu}_2} - \underbrace{\Big [\dfrac{1}{n} \sum x \big]^2}_{\hat{\mu}_2^2} = \dfrac{1}{n} \sum (x - \bar{x})^2\]</span></p>
 <ul>
 <li class="fragment">O EMM é viesado mas a medida que <span class="math inline">\(n \rightarrow \infty\)</span> o vies desaparece.</li>
 <li class="fragment">O EMM é consistente (<span class="math inline">\(\hat{\theta} \overset{p}{\to} \theta\)</span>)</li>
@@ -408,19 +408,24 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <section id="mqo-como-um-problema-de-momentos-1" class="slide level2">
 <h2>MQO como um problema de momentos</h2>
 <p>Um dos principais atrativos do GMM é que em muitas situações o que queremos estimar é simplesmente uma função dos momentos.</p>
+<div class="fragment">
 <p><strong>O caso do EMQO:</strong></p>
 <p>Seja o modelo de regressão <span class="math display">\[Y = X\beta + \epsilon.\]</span></p>
+</div>
 <div class="fragment">
 <p>Assumindo que todas as hipóteses de Gauss-Markowv são satisfeitas, <span class="math display">\[\mathbb{E}(X'\epsilon) = 0.\]</span></p>
 </div>
 <div class="fragment">
-<p>Isto implica que <span class="math display">\[\mathbb{E}(X'\epsilon) = \mathbb{E}(X'[Y - X\beta]) = 0.\]</span></p>
+<p>Isto implica que <span class="math display">\[\mathbb{E}(X'\epsilon) = \underbrace{\mathbb{E}(X'[Y - X\beta]) = 0}_{\text{Condição de ortogonalidade}}.\]</span></p>
 </div>
 </section>
 <section id="mqo-como-um-problema-de-momentos-2" class="slide level2">
 <h2>MQO como um problema de momentos</h2>
 <p><strong>O caso do EMQO:</strong></p>
-<p>Pelo MM, <span class="math display">\[\dfrac{1}{n} X'[Y - X \beta] = 0 \quad \rightarrow \hat{\beta}_{MM} = (X'X)^{-1}X'Y = \hat{\beta}_{MQO}\]</span></p>
+<p>O MM sugere substituir o momento populacional pelo momento amostral: <span class="math display">\[\mathbb{E}(X'[Y - X\beta]) = 0 \rightarrow \dfrac{1}{n} X'[Y - X \beta] = 0\]</span></p>
+<div class="fragment">
+<p>Resolvendo o sistema, temos que <span class="math display">\[\hat{\beta}_{MM} = (X'X)^{-1}X'Y = \hat{\beta}_{MQO}\]</span></p>
+</div>
 </section></section>
 <section>
 <section id="iv-como-um-problema-de-momentos" class="title-slide slide level1 center">
@@ -433,7 +438,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <div class="fragment">
 <ul>
 <li class="fragment">MQO é inconsistente</li>
-<li class="fragment">A ideia é encontrar instrumentos <span class="math inline">\(\textbf{Z}\)</span> que sejam correlacionados com X mas <span class="math inline">\(\mathbb{E} (\textbf{Z}'\epsilon) = 0\)</span></li>
+<li class="fragment">A ideia é encontrar instrumentos <span class="math inline">\(\textbf{Z}\)</span> que sejam correlacionados com <span class="math inline">\(X_1\)</span> mas <span class="math inline">\(\mathbb{E} (\textbf{Z}'\epsilon) = 0\)</span></li>
 <li class="fragment">Suponha que encontramos dois instrumentos para <span class="math inline">\(X_1\)</span>: <span class="math inline">\(Z_1\)</span> e <span class="math inline">\(Z_2\)</span>.</li>
 <li class="fragment">Então <span class="math display">\[\textbf{X} = [1 \quad X_1] \quad e \quad \textbf{Z} = [1 \quad Z_1 \quad Z_2]\]</span></li>
 </ul>
@@ -450,7 +455,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </div>
 <div class="fragment">
 <center>
-<span style="color:blue;">Mas isso só é verdade se <span class="math inline">\((\textbf{Z}'\textbf{X})\)</span> for invertível, mas <span class="math inline">\((\textbf{Z}'\textbf{X})_{3 \times 2}\)</span> é não invertível 😭</span>
+<span style="color:blue;">Mas isso só é verdade se <span class="math inline">\((\textbf{Z}'\textbf{X})\)</span> for invertível, mas <span class="math inline">\((\textbf{Z}'\textbf{X})_{3 \times 2}\)</span> é não invertível 🙍</span>
 </center>
 </div>
 <div class="fragment">
@@ -494,19 +499,43 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <ul>
 <li class="fragment">Embora este método leve a estimadores consistentes, eles não são eficientes.</li>
 <li class="fragment">Hansen. (1982) mostra que o estimador ótimo nesta classe é obtido minimizando <span class="math display">\[\dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta])' \hat{\textbf{V}}^{-1} \dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta]),\]</span> em que <span class="math inline">\(\hat{\textbf{V}}\)</span> é um estimador consistente de <span class="math inline">\(\mathbb{V}((1/n) \textbf{Z}'\epsilon)\)</span>.</li>
-<li class="fragment">Nesta formulação, restrições que são estimadas com menos menor precisão recebem menor peso do que aquelas estimadas com maior precisão.</li>
+<li class="fragment">Nesta formulação, restrições que são estimadas com menor precisão recebem menor peso do que aquelas estimadas com maior precisão.</li>
 </ul>
 </section>
 <section id="iv-como-um-problema-de-momentos-5" class="slide level2">
 <h2>IV como um problema de momentos</h2>
 <p>Como estamos minimizando uma forma quadrática, é necessário obter as condições de primeira ordem em relação a <span class="math inline">\(\beta\)</span>:</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Regra da cadeia:</strong></p>
+</div>
+<div class="callout-content">
+<p>Se <span class="math inline">\(z\)</span> for uma função escalar (trazo, determinante, função quadrática) de <span class="math inline">\(\textbf{y}\)</span>, e <span class="math inline">\(\textbf{y}\)</span> for diferenciável em <span class="math inline">\(\textbf{x}\)</span>, então: <span class="math display">\[\dfrac{\partial z}{\partial \textbf{x}} = \Big (\dfrac{\partial y}{\partial \textbf{x}'} \Big)' \dfrac{\partial z}{\partial \textbf{y}}.\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Queremos derivar:</p>
+<p><span class="math display">\[Q(\beta) = \dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta])' \hat{\textbf{V}}^{-1} \dfrac{1}{n} (\textbf{Z}'[Y - \textbf{X}\beta])\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[n^2 \dfrac{\partial Q(\beta)}{\partial \beta} = (\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1} (\textbf{Z}' \textbf{Y} - \textbf{Z}'\textbf{X}\beta)\]</span></p>
+</div>
+</section>
+<section id="iv-como-um-problema-de-momentos-6" class="slide level2">
+<h2>IV como um problema de momentos</h2>
+<p>Igualando a zero para obter as condições de primera ordem:</p>
 <p><span class="math display">\[\begin{align}
 (\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1} (\textbf{Z}' \textbf{Y} - \textbf{Z}'\textbf{X}\beta) = 0 \\
 (\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1} \textbf{Z}' \textbf{Y} - (\textbf{X}'\textbf{Z}) \hat{\textbf{V}}^{-1}\textbf{Z}'\textbf{X}\beta = 0 \\
 \hat{\beta} = (\textbf{X}'\textbf{Z} \hat{\textbf{V}}^{-1}\textbf{Z}'\textbf{X})^{-1} (\textbf{X}'\textbf{Z} \hat{\textbf{V}}^{-1} \textbf{Z}' \textbf{Y})
 \end{align}\]</span></p>
 <div class="fragment">
-<p>Um bom estimador para <span class="math inline">\(\hat{\textbf{V}} = \dfrac{\sigma^2}{n} \textbf{Z}'\textbf{Z}\)</span>, o que nos leva ao seguinte estimador:</p>
+<p>Um bom estimador para <span class="math inline">\(\hat{\textbf{V}}\)</span> é <span class="math inline">\(\dfrac{\sigma^2}{n^2} \textbf{Z}'\textbf{Z}\)</span>, o que nos leva ao seguinte estimador:</p>
 <p><span class="math display">\[\hat{\beta}_{GMM} = (\textbf{X}'\textbf{Z} (\textbf{Z}'\textbf{Z})^{-1}\textbf{Z}'\textbf{X})^{-1} (\textbf{X}'\textbf{Z} (\textbf{Z}'\textbf{Z})^{-1} \textbf{Z}' \textbf{Y}) = \hat{\beta}_{MQ2E}\]</span></p>
 </div>
 </section></section>
@@ -528,7 +557,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h3 id="o-caso-de-iv">O caso de IV:</h3>
 <ol type="1">
 <li class="fragment">Condição de ortogonalidade: <span class="math inline">\(\mathbb{E}[\textbf{Z}'\epsilon] = 0\)</span></li>
-<li class="fragment"><span class="math inline">\(m(\theta) = \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]\)</span>, então temos que minimizar <span class="math display">\[\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],\]</span> em que <span class="math inline">\(\textbf{W}\)</span> é um estimador consistente para <span class="math inline">\(\mathbb{V}( \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]) = \dfrac{\hat{\sigma}^2}{n} \textbf{Z}' \textbf{Z}.\)</span></li>
+<li class="fragment"><span class="math inline">\(m(\theta) = \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]\)</span>, então temos que minimizar <span class="math display">\[\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],\]</span> em que <span class="math inline">\(\textbf{W}\)</span> é um estimador consistente para <span class="math inline">\(\mathbb{V}( \dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta)]) = \dfrac{\hat{\sigma}^2}{n^2} \textbf{Z}' \textbf{Z}.\)</span></li>
 </ol>
 </section>
 <section id="gmm-3" class="slide level2">
@@ -536,7 +565,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <p>Vamos supor um modelo de IV mas com <span class="math inline">\(\mathbb{V}(\epsilon) = \Omega\)</span> (diagonal). Como podemos obter estimadores consistentes para <span class="math inline">\(\beta\)</span>?</p>
 <div class="fragment">
 <center>
-<span style="color:red;">🏄‍♂️ <strong>GMM</strong> 🏄</span>
+<span style="color:red;">🏄‍♀️ <strong>GMM</strong> 🏄‍♂️</span>
 </center>
 </div>
 <div class="fragment">
@@ -573,6 +602,27 @@ Qual a diferença entre <span class="math inline">\(\widehat{\textbf{Z}' \Omega 
 <ol start="3" type="1">
 <li class="fragment">Uma vez obtido <span class="math inline">\(\textbf{W} = \dfrac{1}{n^2} \sum z_i z_i'r_i^2\)</span> basta encontrar o <span class="math inline">\(\hat{\beta}\)</span> que minimiza <span class="math display">\[\Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\beta) ] \Big]' \textbf{W}^{-1} \Big[\dfrac{1}{n} [\textbf{Z}'(y - \textbf{X}\hat{\beta}) ] \Big],\]</span> cuja solução é dada por <span class="math display">\[\hat{\beta}_{GMM} = [\textbf{X}' \textbf{Z} (\widehat{\textbf{Z}' \Omega \textbf{Z}})^{-1} \textbf{Z}'\textbf{X}]^{-1} \textbf{X}' \textbf{Z} (\widehat{\textbf{Z}' \Omega \textbf{Z}})^{-1} \textbf{Z}'\textbf{Y},\]</span> em que <span class="math inline">\(\widehat{\textbf{Z}' \Omega \textbf{Z}} = \sum z_i z_i'r_i^2\)</span></li>
 </ol>
+</section>
+<section id="gmm-6" class="slide level2">
+<h2>GMM</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment">No caso anterior (chamado FGMM), obtemos um <span class="math inline">\(\hat{\beta}\)</span> inicial, para só depois obtermos um <span class="math inline">\(\hat{\beta}_{GMM}\)</span>. Este mesmo procedimento poderia ser feito de forma iterativa (obtendo, por exemplo, <span class="math inline">\(\hat{\beta}_{GMM}^0, \hat{\beta}_{GMM}^1, \cdots, \hat{\beta}_{GMM}^h\)</span>).</li>
+<li class="fragment">Este método existe (<em>continuosly updated GMM</em>)</li>
+<li class="fragment">Ambos tem a mesma distribuição em amostras grandes</li>
+<li class="fragment">Em amostras pequenas, iteração melhora o desempenho do estimador.</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="imagens/imecc.png" class="slide-logo"></p>
 <div class="footer footer-default">
