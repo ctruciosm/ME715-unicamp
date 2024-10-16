@@ -1,0 +1,95 @@
+---
+title: "ME715 - Econometria"
+subtitle: "Regressão não linear"
+author: "Prof. Carlos Trucíos </br> ctrucios@unicamp.br"
+Email: "ctrucios@unicamp.br"
+institute: "Instituto de Matemática, Estatística e Computação Científica (IMECC), </br> Universidade Estadual de Campinas (UNICAMP)."
+knitr:
+    opts_chunk: 
+      fig.align: 'center'
+execute:
+    message: false
+    warning: false
+format:
+    revealjs:
+        slide-number: true
+        show-slide-number: print
+        self-contained: false
+        chalkboard: true
+        width: 1600
+        height: 900
+        theme: [default, styles.scss]
+        incremental: true
+        code-fold: true
+        logo: "imagens/imecc.png"
+        footer: "Carlos Trucíos (IMECC/UNICAMP)  |  ME715 - Econometria  |  [ctruciosm.github.io](https://ctruciosm.github.io/)"
+        highlight-style: "a11y"
+        title-slide-attributes:
+            data-background-image: "imagens/unicamp.png"
+            data-background-size: 20%
+            data-background-position: 99% 5%
+            data-background-opacity: "1"
+---
+
+
+# Introdução
+
+## Introdução
+
+- Até agora temos estudado diversos modelos que encaixam-se no arcabouso de uma regressão linear.
+- Temos aprendido também que $\textbf{X}$ (o conjunto de variáveis explicativas) pode conter funções não lineares das variáveis originais e que isto ainda poder ser abordado utilizando regressão linear.
+- Contudo, relações não lineares (nos parâmetros) não podem ser tratados com o modelo de regressão linear.
+- Neste casos, podemos utilizar regressão não linear (foco da aula de hoje)
+
+# Regressão não linear
+## Regressão não linear
+
+
+::: {.callout-important}
+### Exemplo
+
+
+Seja o modelo $$y_i = \underbrace{f(x_i, \beta)}_{x_i(\beta)} + u_i, \quad u_i \sim IID(0, \sigma^2), \quad i = 1, \cdots, n,$$ em que $x_i(\beta)$ é chamada função de regressão não linear.
+
+. . . 
+
+
+Equivalentemente, $$\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u} \sim IID(0, \sigma^2I)$$
+
+
+## Regressão não linear
+
+Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
+
+
+. . . 
+
+A função de regressão não linear é dada por 
+
+
+
+:::
+
+
+
+
+
+Seja o modelo $$y_i = \underbrace{f(x_i, \beta)}_{x_i(\beta)} + u_i, \quad u_i \sim IID(0, \sigma^2), \quad i = 1, \cdots, n,$$ em que $x_i(\beta)$ é chamada função de regressão não linear.
+
+. . . 
+
+
+Equivalentemente, $$\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u} \sim IID(0, \sigma^2I)$$
+
+
+## Regressão não linear
+
+Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
+
+
+. . . 
+
+A função de regressão não linear é dada por 
+
+
+

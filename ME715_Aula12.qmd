@@ -113,6 +113,21 @@ Em particular, estamos interessados em saber o que aconteceu com as taxas de fer
 
 
 
+
+```{r}
+#| echo: true
+library(dplyr)
+library(wooldridge)
+glimpse(fertil1)
+```
+:::
+
+
+## Agrupamento independente de cortes transversais
+
+
+::: {.callout-note}
+### Exemplo 1
 ```{r}
 #| echo: true
 library(wooldridge)
@@ -249,14 +264,13 @@ summary(modelo_02)
 
 
 
-
 ## Teste de Chow
 
-- Utilizado para determinar de uma função de regressão multipla difere entre dois grupos (ou, em nosso caso, em dois períodos de tempo).
+- Utilizado para determinar se uma função de regressão multipla difere entre dois grupos (ou, em nosso caso, em dois períodos de tempo).
 - É basicamente um teste F.
 - Procedimento:
     *   Seja SQRr (restrito) a SQR da estimação agrupada.
-    *   Seja SQRi (irrestrita) a soma da SQR dos modelo estimados por separado
+    *   Seja SQRi (irrestrita) a soma da SQR dos modelos estimados por separado
     *   $F = \dfrac{SQRr - SQRi}{SQRi} \times \dfrac{n - 2(k + 1)}{k + 1}$, em que $k$ é o número de variáveis explicativas (sem incluir os interceptos das *dummies*) na equação.
 
 
@@ -303,20 +317,20 @@ summary(modelo_02)
 
 ## Altern. 2-II
 
-Da análise anterior, émais coerente pensar que o incinerador foi contruido em uma área de imóveis de menor valor.
+Da análise anterior, é mais coerente pensar que o incinerador foi contruido em uma área de imóveis de menor valor.
 
 
 ## Altern. 3
 
 - Como então podemos verificar se a construção do novo incinerador reduz os valores dos imóveis?
-- A clave está em verificar como o coeficiente assoaciado a `nearinc` mudou entre 1978 e 1981.
+- A clave está em verificar como o coeficiente associado a `nearinc` mudou entre 1978 e 1981.
 - A diferença na média dos valores dos imóveis em 1981 era muito maior (\$. 30688,27) do que em 1978 (\$.18824,37).
 - A diferença destes valores ($\hat{\gamma}_1$ = \$. 30688,27 - \$. 18824,37 = \$. 11863,9) é a estimativa do efeito do incinerador sobre os valores dos imóveis próximos ao incinerador.
 
 
 ## Altern. 3-II
 
-- $\hat{\gamma}_1$ tornou-se conhecido como estimador de diferença em deferenças (diff-in-diff) pois pode ser escrito como $$\hat{\gamma}_1 = (\bar{rprice}_{81, próximo} - \bar{rprice}_{81, afastado}) - (\bar{rprice}_{78, próximo} - \bar{rprice}_{78, afastado}) $$
+- $\hat{\gamma}_1$ tornou-se conhecido como estimador de diferenças em diferenças (diff-in-diff) pois pode ser escrito como $$\hat{\gamma}_1 = (\bar{rprice}_{81, próximo} - \bar{rprice}_{81, afastado}) - (\bar{rprice}_{78, próximo} - \bar{rprice}_{78, afastado}) $$
 - $\hat{\gamma}_1$ é a diferença, ao longo do tempo, das diferenças das médias dos preços dos imóveis nas duas localizações.
 - Falta apenas determinar se $\gamma_1$ é significativo, o que poder ser feito através de uma regressão com efeito de interação.
 
@@ -381,7 +395,7 @@ coef(summary(modelo_01))
 
 ## Análise de dados em painel de dois períodos
 - O Modelo apresentado é chamado de **modelos de efeitos não observados** ou **modelo de efeitos fixos**
-- Para o exemplo das taxas de crimialidade de uma cidade em 1982 e 1987, um modelo de efeito fixos (ou de efeitos não observados) é dado por $$crmrte_{it} = \beta_0 + \gamma_0 d87_t  + \beta_1 unem_{it} + a_i + u_{it},$$ em que $d87$ é uma dummy para 1987 (recebe o valor 1 se o ano for 1987 e zero se o ano for 1982) e, neste caso, $a_i$ é o efeito não observadoo (ou fixo) da cidade (todos os fatores que afetam a taxa de criminalidade da cidade que não mudam ao longo do tempo).
+- Para o exemplo das taxas de crimialidade de uma cidade em 1982 e 1987, um modelo de efeito fixos (ou de efeitos não observados) é dado por $$crmrte_{it} = \beta_0 + \gamma_0 d87_t  + \beta_1 unem_{it} + a_i + u_{it},$$ em que $d87$ é uma dummy para 1987 (recebe o valor 1 se o ano for 1987 e zero se o ano for 1982) e, neste caso, $a_i$ é o efeito não observado (ou fixo) da cidade (todos os fatores que afetam a taxa de criminalidade da cidade que não mudam ao longo do tempo).
 - [Como estimamos o parâmetro de interesse $\beta_1$?]{style="color:red;"}
 
 
@@ -405,7 +419,7 @@ coef(summary(modelo_01))
 
 ### Alternativa 2
 
-- A razão principal para coletar dados em painel é considerar que o efeito não observado ($a_i$) é correlacioado com as variáveis explicativas.
+- A razão principal para coletar dados em painel é considerar que o efeito não observado ($a_i$) é correlacionado com as variáveis explicativas.
 - Isso pode ser feito através da diferenciação!
     *   $y_{i2} = \beta_0 + \gamma_0 + \beta_1 x_{i2} + a_i + u_{i2}$,
     *   $y_{i1} = \beta_0 + \beta_1 x_{i1} + a_i + u_{i1}$,
@@ -481,7 +495,6 @@ coef(summary(modelo_03))
 
 O conjunto de dados `slp75_81`, contém dados em painel de dois anos. O objetivo é estimar a relação de substituição entre o tempo gasto dormindo e trabalhando. Um modelo de efeitos não observados, é da forma $$slpnap_{it} = \beta_0 + \gamma_0 d81_{t} + \beta_1 totwrk_{it} + \beta_2 educ_{it} + \beta_3 marr_{it} + \beta_4 yngkid_{it} + \beta_5 gdhlth_{it} + a_i + u_{it},$$ em que
 
-- slpnap:
 - d81: dummy (0: 1975, 1: 1981)
 - educ: anos de escolaridade
 - marr: dummy que indica estado civil
