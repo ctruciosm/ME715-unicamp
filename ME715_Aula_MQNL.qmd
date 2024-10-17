@@ -51,45 +51,96 @@ format:
 
 Seja o modelo $$y_i = \underbrace{f(x_i, \beta)}_{x_i(\beta)} + u_i, \quad u_i \sim IID(0, \sigma^2), \quad i = 1, \cdots, n,$$ em que $x_i(\beta)$ é chamada função de regressão não linear.
 
-. . . 
 
 
 Equivalentemente, $$\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u} \sim IID(0, \sigma^2I)$$
-
-
-## Regressão não linear
-
-Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
-
-
-. . . 
-
-A função de regressão não linear é dada por 
-
-
-
 :::
 
 
 
-
-
-Seja o modelo $$y_i = \underbrace{f(x_i, \beta)}_{x_i(\beta)} + u_i, \quad u_i \sim IID(0, \sigma^2), \quad i = 1, \cdots, n,$$ em que $x_i(\beta)$ é chamada função de regressão não linear.
-
-. . . 
-
-
-Equivalentemente, $$\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u} \sim IID(0, \sigma^2I)$$
-
-
 ## Regressão não linear
 
 Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
 
+. . . 
+
+A função de regressão não linear é dada por  $x(\beta) = \beta_0 + \beta_1 x_1 + \dfrac{1}{\beta_1}x_2$.
+
 
 . . . 
 
-A função de regressão não linear é dada por 
+- O modelo é linear nas variáveis mas não nos parâmetros.
+- O coeficiente associado a $x_2$ esta restrito a ser o inverso do coeficiente associado a $x_1$
+- Muitos modelos de regressão não linear podem ser escritos como modelos de regressão linear mas os parâmetros devem satisfazer restrições não lineares.
+
+
+
+## Regressão não linear
+
+
+Seja o MRL com erros AR(1): \begin{align}
+y_t &= \textbf{X}_t \beta + u_t, \\
+u_t &= \rho u_{t-1} + \epsilon_t, \\
+\epsilon_t &\sim IID(0, \sigma^2)
+\end{align}
+
+
+- Uma abordagem para estimar os parâmetros é MQGF
+- Por outro lado, substituindo $u_t$ por $\rho u_{t-1} + \epsilon_t$ e $u_{t-1}$ por $y_{t-1} - \textbf{X}_{t-1}\beta$, temos: $$y_t = \rho y_{t-1} + \textbf{X}_t \beta - \rho \textbf{X}_{t-1}\beta + \epsilon_t$$
+
+
+. . . 
+
+
+<center>
+[O modelo é linear nas variáveis mas não linear nos parâmetros]{style="color:red;"}
+</center>
+
+
+. . .
+
+
+<center>
+[Precisamos de métodos de estimação apropriados para lidar com a estrutura do modelo]{style="color:blue;"}
+</center>
+
+
+# Método dos Momentos para modelos não lineares
+
+## Método dos Momentos para modelos não lineares
+
+No caso dos modelos de regressão linear, temos:
+
+- $\mathbb{E}(\textbf{X} u) = \mathbb{E}[\textbf{X} (y - \textbf{X}\beta)] = 0$.
+- Condição de momentos: $\textbf{X}' (y - \textbf{X}\beta) = 0$
+- $\hat{\beta}_{MM} = \hat{\beta}_{MQO}$
+
+
+. . . 
+
+
+No caso dos modelos de regressão não linear, teremos:
+
+- $\mathbb{E}(\textbf{W}_t u_t) = \mathbb{E}[\textbf{W}_t (y_t - x_{t-1}(\beta))] = 0$
+- Condição de momentos: $\textbf{W}' (y - \textbf{x}(\beta)) = 0$
+- Para obter $\hat{\beta}_{MMNL}$ precisamos saber quem é $\textbf{W}$ e pronto.
+
+## Método dos Momentos para modelos não lineares
+
+
+- $\textbf{W}$ é uma matriz (com linhas denotadas por $\textbf{W}_t$) de dimensão $n \times k$
+- Como escolhemos $\textbf{W}$?
+    *   Quase qualquer matriz levara a estimadores consistentes (desde que o posto coluna seja, assintóticamente, $k$) `r emo::ji("smile")`.
+    *   Dependendo da escolha de $\textbf{W}$, o estimador terá diferentes matrices de covariância assintótica`r emo::ji("sad")`.
+    *   Como sempre, queremos uma escolha de $\textbf{W}$ que nos leve a termos menor variância.
+    *   O $\textbf{W}$ que minimiza a variância é $\textbf{X}(\beta)$
+    *   Na prática, utilizar $\textbf{W} = \textbf{X}(\beta)$ não é possível
+    *   Para resolver este problema, utilizaremos mínimos quadrados não lineares. Um método com as mesmas propriedades assintóticas do que MMNL mas que é factivel.
+    
+    
+# Mínimos Quadrados não Lineares
+
+## Mínimos Quadrados não Lineares
 
 
 

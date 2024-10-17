@@ -352,7 +352,7 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 <h2>Introdução</h2>
 <ul>
 <li class="fragment">Até agora temos estudado diversos modelos que encaixam-se no arcabouso de uma regressão linear.</li>
-<li class="fragment">Temos aprendido também que <span class="math inline">\(\texbf{X}\)</span> (o conjunto de variáveis explicativas) pode conter funções não lineares das variáveis originais e que isto ainda poder ser abordado utilizando regressão linear.</li>
+<li class="fragment">Temos aprendido também que <span class="math inline">\(\textbf{X}\)</span> (o conjunto de variáveis explicativas) pode conter funções não lineares das variáveis originais e que isto ainda poder ser abordado utilizando regressão linear.</li>
 <li class="fragment">Contudo, relações não lineares (nos parâmetros) não podem ser tratados com o modelo de regressão linear.</li>
 <li class="fragment">Neste casos, podemos utilizar regressão não linear (foco da aula de hoje)</li>
 </ul>
@@ -364,14 +364,105 @@ Prof.&nbsp;Carlos Trucíos <br> ctrucios@unicamp.br
 </section>
 <section id="regressão-não-linear-1" class="slide level2">
 <h2>Regressão não linear</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Exemplo</strong></p>
+</div>
+<div class="callout-content">
 <p>Seja o modelo <span class="math display">\[y_i = \underbrace{f(x_i, \beta)}_{x_i(\beta)} + u_i, \quad u_i \sim IID(0, \sigma^2), \quad i = 1, \cdots, n,\]</span> em que <span class="math inline">\(x_i(\beta)\)</span> é chamada função de regressão não linear.</p>
-<div class="fragment">
 <p>Equivalentemente, <span class="math display">\[\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u} \sim IID(0, \sigma^2I)\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="regressão-não-linear-2" class="slide level2">
+<h2>Regressão não linear</h2>
+<p>Seja o modelo <span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).\]</span></p>
+<div class="fragment">
+<p>A função de regressão não linear é dada por <span class="math inline">\(x(\beta) = \beta_0 + \beta_1 x_1 + \dfrac{1}{\beta_1}x_2\)</span>.</p>
+</div>
+<div class="fragment">
+<ul>
+<li class="fragment">O modelo é linear nas variáveis mas não nos parâmetros.</li>
+<li class="fragment">O coeficiente associado a <span class="math inline">\(x_2\)</span> esta restrito a ser o inverso do coeficiente associado a <span class="math inline">\(x_1\)</span></li>
+<li class="fragment">Muitos modelos de regressão não linear podem ser escritos como modelos de regressão linear mas os parâmetros devem satisfazer restrições não lineares.</li>
+</ul>
+</div>
+</section>
+<section id="regressão-não-linear-3" class="slide level2">
+<h2>Regressão não linear</h2>
+<p>Seja o MRL com erros AR(1): <span class="math display">\[\begin{align}
+y_t &amp;= \textbf{X}_t \beta + u_t, \\
+u_t &amp;= \rho u_{t-1} + \epsilon_t, \\
+\epsilon_t &amp;\sim IID(0, \sigma^2)
+\end{align}\]</span></p>
+<ul>
+<li class="fragment">Uma abordagem para estimar os parâmetros é MQGF</li>
+<li class="fragment">Por outro lado, substituindo <span class="math inline">\(u_t\)</span> por <span class="math inline">\(\rho u_{t-1} + \epsilon_t\)</span> e <span class="math inline">\(u_{t-1}\)</span> por <span class="math inline">\(y_{t-1} - \textbf{X}_{t-1}\beta\)</span>, temos: <span class="math display">\[y_t = \rho y_{t-1} + \textbf{X}_t \beta - \rho \textbf{X}_{t-1}\beta + \epsilon_t\]</span></li>
+</ul>
+<div class="fragment">
+<center>
+<span style="color:red;">O modelo é linear nas variáveis mas não linear nos parâmetros</span>
+</center>
+</div>
+<div class="fragment">
+<center>
+<span style="color:blue;">Precisamos de métodos de estimação apropriados para lidar com a estrutura do modelo</span>
+</center>
+</div>
+</section></section>
+<section>
+<section id="método-dos-momentos-para-modelos-não-lineares" class="title-slide slide level1 center">
+<h1>Método dos Momentos para modelos não lineares</h1>
+
+</section>
+<section id="método-dos-momentos-para-modelos-não-lineares-1" class="slide level2">
+<h2>Método dos Momentos para modelos não lineares</h2>
+<p>No caso dos modelos de regressão linear, temos:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\textbf{X} u) = \mathbb{E}[\textbf{X} (y - \textbf{X}\beta)] = 0\)</span>.</li>
+<li class="fragment">Condição de momentos: <span class="math inline">\(\textbf{X}' (y - \textbf{X}\beta) = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\hat{\beta}_{MM} = \hat{\beta}_{MQO}\)</span></li>
+</ul>
+<div class="fragment">
+<p>No caso dos modelos de regressão não linear, teremos:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbb{E}(\textbf{W}_t u_t) = \mathbb{E}[\textbf{W}_t (y_t - x_{t-1}(\beta))] = 0\)</span></li>
+<li class="fragment">Condição de momentos: <span class="math inline">\(\textbf{W}' (y - \textbf{x}(\beta)) = 0\)</span></li>
+<li class="fragment">Para obter <span class="math inline">\(\hat{\beta}_{MMNL}\)</span> precisamos saber quem é <span class="math inline">\(\textbf{W}\)</span> e pronto.</li>
+</ul>
+</div>
+</section>
+<section id="método-dos-momentos-para-modelos-não-lineares-2" class="slide level2">
+<h2>Método dos Momentos para modelos não lineares</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(\textbf{W}\)</span> é uma matriz (com linhas denotadas por <span class="math inline">\(\textbf{W}_t\)</span>) de dimensão <span class="math inline">\(n \times k\)</span></li>
+<li class="fragment">Como escolhemos <span class="math inline">\(\textbf{W}\)</span>?
+<ul>
+<li class="fragment">Quase qualquer matriz levara a estimadores consistentes (desde que o posto coluna seja, assintóticamente, <span class="math inline">\(k\)</span>) 😄.</li>
+<li class="fragment">Dependendo da escolha de <span class="math inline">\(\textbf{W}\)</span>, o estimador terá diferentes matrices de covariância assintótica😢.</li>
+<li class="fragment">Como sempre, queremos uma escolha de <span class="math inline">\(\textbf{W}\)</span> que nos leve a termos menor variância.</li>
+<li class="fragment">O <span class="math inline">\(\textbf{W}\)</span> que minimiza a variância é <span class="math inline">\(\textbf{X}(\beta)\)</span></li>
+<li class="fragment">Na prática, utilizar <span class="math inline">\(\textbf{W} = \textbf{X}(\beta)\)</span> não é possível</li>
+<li class="fragment">Para resolver este problema, utilizaremos mínimos quadrados não lineares. Um método com as mesmas propriedades assintóticas do que MMNL mas que é factivel.</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="mínimos-quadrados-não-lineares" class="title-slide slide level1 center">
+<h1>Mínimos Quadrados não Lineares</h1>
+
+</section>
+<section id="mínimos-quadrados-não-lineares-1" class="slide level2">
+<h2>Mínimos Quadrados não Lineares</h2>
 <div class="quarto-auto-generated-content">
 <p><img src="imagens/imecc.png" class="slide-logo"></p>
 <div class="footer footer-default">
 <p>Carlos Trucíos (IMECC/UNICAMP) | ME715 - Econometria | <a href="https://ctruciosm.github.io/">ctruciosm.github.io</a></p>
-</div>
 </div>
 </div>
 </section></section>
