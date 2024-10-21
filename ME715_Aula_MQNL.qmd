@@ -38,14 +38,14 @@ format:
 
 - Até agora temos estudado diversos modelos que encaixam-se no arcabouso de uma regressão linear.
 - Temos aprendido também que $\textbf{X}$ (o conjunto de variáveis explicativas) pode conter funções não lineares das variáveis originais e que isto ainda poder ser abordado utilizando regressão linear.
-- Contudo, relações não lineares (nos parâmetros) não podem ser tratados com o modelo de regressão linear.
+- Contudo, relações não lineares (nos parâmetros) não podem ser tratadas com o modelo de regressão linear.
 - Neste casos, podemos utilizar regressão não linear (foco da aula de hoje)
 
 # Regressão não linear
 ## Regressão não linear
 
 
-::: {.callout-important}
+::: {.callout-note}
 ### Exemplo
 
 
@@ -60,7 +60,7 @@ Equivalentemente, $$\textbf{Y} = \textbf{X}(\beta) + \textbf{u}, \quad \textbf{u
 
 ## Regressão não linear
 
-Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{x_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
+Seja o modelo $$y_i = \beta_0 + \beta_1 x_{i1} + \dfrac{1}{\beta_1} x_{i2} + u_i, \quad u_i \sim IID(0, \sigma^2).$$ 
 
 . . . 
 
@@ -111,7 +111,7 @@ u_t &= \rho u_{t-1} + \epsilon_t, \\
 
 No caso dos modelos de regressão linear, temos:
 
-- $\mathbb{E}(\textbf{X} u) = \mathbb{E}[\textbf{X} (y - \textbf{X}\beta)] = 0$.
+- $\mathbb{E}(\textbf{X}_t u_t) = \mathbb{E}[\textbf{X}_t (y_t - \textbf{X}_t\beta)] = 0$.
 - Condição de momentos: $\textbf{X}' (y - \textbf{X}\beta) = 0$
 - $\hat{\beta}_{MM} = \hat{\beta}_{MQO}$
 
@@ -121,26 +121,134 @@ No caso dos modelos de regressão linear, temos:
 
 No caso dos modelos de regressão não linear, teremos:
 
-- $\mathbb{E}(\textbf{W}_t u_t) = \mathbb{E}[\textbf{W}_t (y_t - x_{t-1}(\beta))] = 0$
-- Condição de momentos: $\textbf{W}' (y - \textbf{x}(\beta)) = 0$
-- Para obter $\hat{\beta}_{MMNL}$ precisamos saber quem é $\textbf{W}$ e pronto.
+- $\mathbb{E}(\textbf{W}_t u_t) = \mathbb{E}[\textbf{W}_t (y_t - x_{t}(\beta))] = 0$
+- Condição de momentos: $\textbf{W}' (y - \textbf{x}(\beta)) = 0$, em que $\textbf{W}$ é de dimensão $n \times k$ e $\beta_{k \times 1}$.
+- Para obter $\hat{\beta}_{MMNL}$ precisamos saber quem é $\textbf{W}$.
 
 ## Método dos Momentos para modelos não lineares
 
 
 - $\textbf{W}$ é uma matriz (com linhas denotadas por $\textbf{W}_t$) de dimensão $n \times k$
 - Como escolhemos $\textbf{W}$?
-    *   Quase qualquer matriz levara a estimadores consistentes (desde que o posto coluna seja, assintóticamente, $k$) `r emo::ji("smile")`.
-    *   Dependendo da escolha de $\textbf{W}$, o estimador terá diferentes matrices de covariância assintótica`r emo::ji("sad")`.
+    *   Quase qualquer matriz levara a estimadores consistentes (desde que o posto coluna seja $k$) `r emo::ji("smile")`.
+    *   Dependendo da escolha de $\textbf{W}$, o estimador terá uma matriz de covariância assintótica duiferente `r emo::ji("sad")`.
     *   Como sempre, queremos uma escolha de $\textbf{W}$ que nos leve a termos menor variância.
-    *   O $\textbf{W}$ que minimiza a variância é $\textbf{X}(\beta)$
-    *   Na prática, utilizar $\textbf{W} = \textbf{X}(\beta)$ não é possível
-    *   Para resolver este problema, utilizaremos mínimos quadrados não lineares. Um método com as mesmas propriedades assintóticas do que MMNL mas que é factivel.
+
+
+## Método dos Momentos para modelos não lineares
+
+
+::: {.callout-tip}
+### Observação
+
+- Seja $X_{ti} (\beta) = \dfrac{\partial x_t(\beta)}{\partial \beta_i}$ para $i = 1, cdots, k$
+- Seja $\textbf{X}_t(\beta) = (X_{t1}(\beta), \cdots, X_{tk}(\beta))$
+- Seja $\textbf{X}_0$ uma matriz $n \times k$ com elementos $X_{ti} (\beta)$ (equivalentemente, com linhas $\textbf{X}_1(\beta), \textbf{X}_2(\beta), \cdots, \textbf{X}_n(\beta)$). 
+
+:::
+
+
+
+- O $\textbf{W}$ que minimiza a variância é $\textbf{X}_0$
+    *   Na prática, utilizar $\textbf{W} = \textbf{X}_0$ não é possível
+    *   É aqui que MQNL entra em cena, obtendo um estimador com exatamente as mesmas propriedades assintóticas do que o EMMNL 
+ 
     
     
 # Mínimos Quadrados não Lineares
 
 ## Mínimos Quadrados não Lineares
+
+Existem (pelo menos) duas formas de aproximar o assintóticamente eficiente, mas inviável, MM que utiliza $\textbf{W} = \textbf{X}_0 = \textbf{X}_0(\beta)$.
+
+
+. . . 
+
+
+**Forma 1:**
+
+- Escolher qualquer* $\textbf{W}$
+- Obter um estimador preliminar consistente ($\tilde{\beta}$)
+- Estimar $\beta$ considerando $\textbf{W} = \textbf{X}_0(\tilde{\beta})$
+
+
+. . . 
+
+
+<center>
+[A consistência de $\tilde{\beta}$ garante que $\textbf{X}_0(\tilde{\beta}) \rightarrow \textbf{X}_0(\beta)$]{style="color:red;"}
+</center>
+
+
+
+## Mínimos Quadrados não Lineares
+
+
+**Forma 2**
+
+Considerar a condição de momentos $$\textbf{X}'_0(\beta)(\textbf{y} - x(\beta)) = 0.$$
+
+- Se $\hat{\beta}$ for consistente, então $\textbf{X}_0(\hat{\beta}) \rightarrow \textbf{X}_0 (\beta)$.
+- Para $n \rightarrow \infty$, $\hat{\beta}$ é muito próximo do $\hat{\beta}_{MMNL}$.
+
+
+. . . 
+
+
+Pode-se provar que a condição de momentos é equivalente a minimizar $$SQR(\beta) = \displaystyle \sum_{t = 1}^n (y_t - x_t(\beta))' (y_t - x_t(\beta))$$
+
+. . . 
+
+
+<center>
+[Em geral, a solução não tem forma fechada e precisamos de métodos numéricos.]{style="color:red;"}
+</center>
+
+
+
+## Mínimos Quadrados não Lineares
+
+
+::: {.callout-note}
+### Exemplo
+Utilizaremos um conjunto de dados simulados em que $$y = (a*x)/(b + x),$$ e queremos estimar um modelo que captura propriadamente a dinâmica dos dados.
+
+
+```{r}
+#| echo: true
+x <- seq(0, 100, 0.25)
+a <- runif(1, 10, 20)
+b <- runif(1, 0, 10)
+y <- (a * x) / (b + x) + rnorm(length(x), 0, 1)
+c(a, b)
+```
+
+
+
+::: 
+
+## Mínimos Quadrados não Lineares
+
+
+```{r}
+#| echo: true
+plot(x, y)
+```
+
+
+## Mínimos Quadrados não Lineares
+
+
+
+```{r}
+#| echo: true
+modelo <- nls(y ~ a * x  / (b + x), start = list(a = 1, b = 2))
+summary(modelo) 
+y_hat <- predict(modelo)
+plot(x, y) 
+lines(x, y_hat) 
+```
+
 
 
 
