@@ -458,7 +458,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 <div class="fragment">
 <ul>
 <li class="fragment">As suposições acerca de <span class="math inline">\(\alpha_i\)</span> e <span class="math inline">\(\eta_{it}\)</span>, implicam que <span class="math inline">\(\epsilon_{it}\)</span> e <span class="math inline">\(X_{it}\)</span> são não correlacionados.</li>
-<li class="fragment">Ou seja, <span class="math inline">\(\hat{\boldsymbol{\beta}}_{MQO}\)</span> é assintóticamente não viesado</li>
+<li class="fragment">Ou seja, <span class="math inline">\(\hat{\boldsymbol{\beta}}_{MQO}\)</span> é não viesado</li>
 </ul>
 </div>
 <div class="fragment">
@@ -489,7 +489,7 @@ X_{iT}^1 &amp; X_{iT}^2 &amp; \cdots &amp; X_{iT}^K\\
 </div>
 <div class="fragment">
 <center>
-🏄‍♂️ <span style="color:red;"><strong>MQG(F)</strong></span> 🏄‍♀️
+🏄‍♀️ <span style="color:red;"><strong>MQG(F)</strong></span> 🏄
 </center>
 </div>
 </section>
@@ -662,7 +662,7 @@ Ainda precisamos estimar <span class="math inline">\(\sigma^2_{\eta}\)</span> e 
 </section>
 <section id="modelo-de-efeitos-fixos-1" class="slide level2">
 <h2>Modelo de efeitos fixos</h2>
-<p>Considere o seguinte modelo com apenas dous períodos de tempo (<span class="math inline">\(t = 1, 2\)</span>):</p>
+<p>Considere o seguinte modelo com apenas dois períodos de tempo (<span class="math inline">\(t = 1, 2\)</span>):</p>
 <p><span class="math display">\[y_{it} = X_{it} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{it},\]</span> em que</p>
 <ul>
 <li class="fragment"><span class="math inline">\(X\)</span> é a matriz de variáveis explicativas que varia entre indivíduos e ao longo do tempo.</li>
@@ -695,7 +695,7 @@ Ainda precisamos estimar <span class="math inline">\(\sigma^2_{\eta}\)</span> e 
 <span style="color:red;">(estamos interessados em que as v. independentes estejam correlacionadas com <span class="math inline">\(\alpha\)</span>)</span>
 </center>
 <div class="fragment">
-<p>Este ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:</p>
+<p>Esta ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:</p>
 <p><span class="math display">\[y_{i1} = X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1}\]</span></p>
 </div>
 <div class="fragment">
@@ -704,10 +704,9 @@ Ainda precisamos estimar <span class="math inline">\(\sigma^2_{\eta}\)</span> e 
 </section>
 <section id="modelo-de-efeitos-fixos-3" class="slide level2">
 <h2>Modelo de efeitos fixos</h2>
-<p>Pode-se provar que, por exemplo, se <span class="math inline">\(\beta_2\)</span> é o coeficiente associado à segunda variável explicativa, <span class="math display">\[\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,\]</span> em que <span class="math inline">\(\pi_2\)</span> é o coeficiente associado à mesma variável explicativa na regressão <span class="math display">\[\alpha_i = \textbf{W}_{it} \pi + error.\]</span></p>
+<p>Pode-se provar que, por exemplo, se <span class="math inline">\(\beta_2\)</span> é o coeficiente associado à segunda variável explicativa, <span class="math display">\[\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,\]</span> em que <span class="math inline">\(\pi_2\)</span> é o coeficiente associado à mesma variável explicativa na regressão <span class="math display">\[\alpha_i = \textbf{W}_{2t} \pi + error.\]</span></p>
 <div class="fragment">
-<p>De forma semelhante, se ajustar MQO apenas aos dados do segundo período de tempo, temos:</p>
-<p><span class="math display">\[y_{i2} = X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2}\]</span></p>
+<p>Se escolhermos o outros período, teremos um efeito semelhante.</p>
 </div>
 </section>
 <section id="modelo-de-efeitos-fixos-4" class="slide level2">
@@ -754,7 +753,7 @@ y_{i2} - y_{i1} &amp;=  (X_{i2} - X_{i1}) \boldsymbol{\beta}  + (\epsilon_{i2} -
 <p><strong>Observação</strong></p>
 </div>
 <div class="callout-content">
-<p>No contexto atual (<span class="math inline">\(T\)</span> pequeno e fixo e <span class="math inline">\(n \rightarrow \infty\)</span>), não podemos obter estimadores consistentes para os parâmetros adicionais no modelo (<span class="math inline">\(\alpha_i\)</span>) pois este número de parâmetros cresce junto com <span class="math inline">\(n\)</span>. Contudo, apesar de não poder estimar <span class="math inline">\(\alpha_i\)</span> consistentemente, podemos estimar os outros parâmetros de forma consistente! 🏄‍♂️.</p>
+<p>No contexto atual (<span class="math inline">\(T\)</span> pequeno e fixo e <span class="math inline">\(n \rightarrow \infty\)</span>), não podemos obter estimadores consistentes para os parâmetros adicionais no modelo (<span class="math inline">\(\alpha_i\)</span>) pois este número de parâmetros cresce junto com <span class="math inline">\(n\)</span>. Contudo, apesar de não poder estimar <span class="math inline">\(\alpha_i\)</span> consistentemente, podemos estimar os outros parâmetros de forma consistente! 🏄‍♀️.</p>
 </div>
 </div>
 </div>
@@ -782,11 +781,6 @@ y_{i2} - y_{i1} &amp;=  (X_{i2} - X_{i1}) \boldsymbol{\beta}  + (\epsilon_{i2} -
 </div>
 </div>
 </div>
-<div class="fragment">
-<center>
-<span style="color:red;">De fato, qualquer transformação que “nos livra” do efeito fixo produzira um estimador de efeito fixo</span>
-</center>
-</div>
 </section></section>
 <section>
 <section id="efeito-fixo-ou-efeito-aleatório" class="title-slide slide level1 center">
@@ -807,7 +801,7 @@ y_{i2} - y_{i1} &amp;=  (X_{i2} - X_{i1}) \boldsymbol{\beta}  + (\epsilon_{i2} -
 <section id="teste-de-wu-hausman" class="slide level2">
 <h2>Teste de Wu-Hausman</h2>
 <ul>
-<li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0\)</span>, o estimador de efeitos aleatórios é consistente e eficientes, mas o estimador de efeito fixo é consistente mas não eficiente.</li>
+<li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0\)</span>, o estimador de efeitos aleatórios é consistente e eficiente, mas o estimador de efeito fixo é consistente mas não eficiente.</li>
 <li class="fragment">Se <span class="math inline">\(\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0\)</span> o estimador de efeito fixo é consistente e eficiente, mas o estimador de efeito aleatório é inconsistente</li>
 </ul>
 <div class="fragment">

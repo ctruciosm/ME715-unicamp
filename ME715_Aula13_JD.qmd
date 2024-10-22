@@ -142,7 +142,7 @@ Seja o modelo $$y_{it} = X_{it} \boldsymbol{\beta} + \epsilon_{it}, \quad \text{
 . . . 
 
 - As suposições acerca de $\alpha_i$ e $\eta_{it}$,  implicam que $\epsilon_{it}$ e $X_{it}$ são não correlacionados.
-- Ou seja, $\hat{\boldsymbol{\beta}}_{MQO}$ é assintóticamente não viesado
+- Ou seja, $\hat{\boldsymbol{\beta}}_{MQO}$ é não viesado
 
 . . .
 
@@ -379,7 +379,7 @@ Note que o estimador MQO é uma soma ponderada de $\hat{\boldsymbol{\beta}}_B$ e
 
 ## Modelo de efeitos fixos
 
-Considere o seguinte modelo com apenas dous períodos de tempo ($t = 1, 2$): 
+Considere o seguinte modelo com apenas dois períodos de tempo ($t = 1, 2$): 
 
 $$y_{it} = X_{it} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{it},$$ em que
 
@@ -419,7 +419,7 @@ Seja $\textbf{W}_{it} = [\textbf{X}_{it}, \textbf{Z}_{i}]$, vamos assumir adicio
 
 . . . 
 
-Este ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:
+Esta ausência de ortogonalidade tem consequências importantes a serem levadas em consideração. Pense no caso da estimação por MQO considerando apenas o primeiro período dos dados:
 
 $$y_{i1} = X_{i1} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i1}$$
 
@@ -432,14 +432,14 @@ Diferente do modelo de efeitos aletarórios, MQO produzira estimadores viesados 
 
 
 
-Pode-se provar que, por exemplo, se $\beta_2$ é o coeficiente associado à segunda variável explicativa, $$\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,$$ em que $\pi_2$ é o coeficiente associado à mesma variável explicativa na regressão $$\alpha_i = \textbf{W}_{it} \pi + error.$$
+Pode-se provar que, por exemplo, se $\beta_2$ é o coeficiente associado à segunda variável explicativa, $$\hat{\beta}_2 \overset{p}{\to} \beta_2 + \pi_2,$$ em que $\pi_2$ é o coeficiente associado à mesma variável explicativa na regressão $$\alpha_i = \textbf{W}_{2t} \pi + error.$$
 
 . . . 
 
 
-De forma semelhante, se ajustar MQO apenas aos dados do segundo período de tempo, temos:
+Se escolhermos o outros período, teremos um efeito semelhante.
 
-$$y_{i2} = X_{i2} \boldsymbol{\beta} + Z_i \gamma + \epsilon_{i2}$$
+
 
 ## Modelo de efeitos fixos
 
@@ -507,13 +507,7 @@ Note que $\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X
 :::
 
 
-. . . 
 
-
-
-<center>
-[De fato, qualquer transformação que "nos livra" do efeito fixo produzira um estimador de efeito fixo]{style="color:red;"}
-</center>
 
 
 
@@ -532,7 +526,7 @@ Note que $\hat{\boldsymbol{\beta}} = (\textbf{X}' M_D \textbf{X})^{-1} \textbf{X
 
 ## Teste de Wu-Hausman
 
-- Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0$, o estimador de efeitos aleatórios é consistente e eficientes, mas o estimador de efeito fixo é consistente mas não eficiente.
+- Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) = 0$, o estimador de efeitos aleatórios é consistente e eficiente, mas o estimador de efeito fixo é consistente mas não eficiente.
 - Se $\mathbb{C}or(\alpha_i, \textbf{X}_{it}) \neq 0$ o estimador de efeito fixo é consistente e eficiente, mas o estimador de efeito aleatório é inconsistente 
 
 . . . 
