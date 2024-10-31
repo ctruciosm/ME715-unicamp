@@ -68,7 +68,7 @@ Definimos os momentos amostrais como a versão amostral dos momentos populaciona
 
 
 <center>
-[Uma vez definidos os momentos populacionais e amostrais, podemos entender a ideia por trás do MM. **Se queremos estimar o momento populacional (ou uma função de momentos populacioonais), simplesmente utilizamos o correspondente momento amostral (ou funções dos momentos amostrais)**]{style="color:red;"}
+[Uma vez definidos os momentos populacionais e amostrais, podemos entender a ideia por trás do MM. **Se queremos estimar o momento populacional (ou uma função de momentos populacionais), simplesmente utilizamos o correspondente momento amostral (ou funções dos momentos amostrais).**]{style="color:red;"}
 </center>
 
 ## Métodos dos Momentos (MM)
@@ -76,7 +76,7 @@ Definimos os momentos amostrais como a versão amostral dos momentos populaciona
 
 Suponha que estamos interessados em estimar $\mathbb{V}(X)$, o MM sugere substituir os momentos populacionais pelos momentos amostrais. Então:
 
-$$\mathbb{V}(X) = \mu_2 - \mu_1^2 \quad \rightarrow \quad \hat{\mathbb{V}}(X) = \underbrace{\dfrac{1}{n}\sum x^2}_{\hat{\mu}_2} - \underbrace{\Big [\dfrac{1}{n} \sum x \big]^2}_{\hat{\mu}_2^2} = \dfrac{1}{n} \sum (x - \bar{x})^2$$
+$$\mathbb{V}(X) = \mu_2 - \mu_1^2 \quad \rightarrow \quad \hat{\mathbb{V}}(X) = \underbrace{\dfrac{1}{n}\sum x^2}_{\hat{\mu}_2} - \underbrace{\Big [\dfrac{1}{n} \sum x \big]^2}_{\hat{\mu}_1^2} = \dfrac{1}{n} \sum (x - \bar{x})^2$$
 
 - O EMM é viesado mas a medida que $n \rightarrow \infty$  o vies desaparece.
 - O EMM é consistente ($\hat{\theta} \overset{p}{\to} \theta$)
